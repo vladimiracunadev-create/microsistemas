@@ -58,8 +58,6 @@ text-decoration: underline;
 <li><a href="phpmyadmin_especifico.php" target="_blank">Microsistema 2: Php My Admin Acotado</a></li>
 <li><a href="visor_logs.php" target="_blank">Microsistema 3: Visor Archivos de Configuración</a></li>
 <li><a href="cambiophp.php" target="_blank">Microsistema 4: Migrador Parcial de php 5.4 a php 8</a></li>
-<li><a href="https://servicio5.com">Microsistema 5: Monitoreo de Proyectos</a></li>
-<li><a href="https://servicio6.com">Microsistema 6: Comunicación Interna</a></li>
 </ul>
 </div>
 </body>
