@@ -1,159 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Herramientas JavaScript</title>
-  <style>
-    :root{
-      --bg:#0b1220;
-      --text:#e8eefc;
-      --muted:#aab7dd;
-      --border:rgba(255,255,255,.10);
-      --accent:#6ea8ff;
-      --accent2:#6ef0c2;
-      --danger:#ff6b6b;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius:18px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
-      background:
-        radial-gradient(1200px 700px at 20% 10%, rgba(110,168,255,.18), transparent 50%),
-        radial-gradient(900px 600px at 90% 20%, rgba(110,240,194,.14), transparent 55%),
-        var(--bg);
-      color:var(--text);
-      min-height:100vh;
-      padding:28px 18px;
-    }
-    .wrap{max-width:1120px;margin:0 auto;}
-    header{
-      display:flex;
-      gap:14px;
-      align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;
-      margin-bottom:18px;
-    }
-    .brand{display:flex;gap:12px;align-items:center;}
-    .logo{
-      width:44px;height:44px;border-radius:14px;
-      background: linear-gradient(135deg, rgba(110,168,255,.9), rgba(110,240,194,.9));
-      box-shadow: var(--shadow);
-    }
-    h1{font-size:20px;margin:0;letter-spacing:.2px}
-    .subtitle{color:var(--muted);font-size:13px;margin:4px 0 0 0;max-width:760px;line-height:1.4}
-    .pillbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-end;}
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border:1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .toolbar{
-      padding:12px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
-      margin-bottom:14px;
-    }
-    .toolbar .left, .toolbar .right{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .btn{
-      appearance:none;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
-      padding:10px 12px;
-      border-radius: 14px;
-      cursor:pointer;
-      font-weight:700;
-      font-size:13px;
-      transition: transform .08s ease, background .15s ease, border-color .15s ease;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      user-select:none;
-      white-space:nowrap;
-    }
-    .btn:hover{background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.16)}
-    .btn:active{transform: translateY(1px)}
-    .btn.primary{background: rgba(110,168,255,.16); border-color: rgba(110,168,255,.34)}
-    .btn.primary:hover{background: rgba(110,168,255,.22)}
-    .btn.good{background: rgba(110,240,194,.14); border-color: rgba(110,240,194,.30)}
-    .btn.good:hover{background: rgba(110,240,194,.20)}
-    .btn.danger{background: rgba(255,107,107,.12); border-color: rgba(255,107,107,.28)}
-    .btn.danger:hover{background: rgba(255,107,107,.18)}
-    .btn[disabled]{opacity:.55;cursor:not-allowed;transform:none}
-    .select, .input{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
-      padding:10px 12px;
-      border-radius: 14px;
-      font-size:13px;
-      outline:none;
-    }
-    .select:focus, .input:focus{border-color: rgba(110,168,255,.55)}
-    .grid{display:grid;grid-template-columns: 1fr 1fr;gap:14px;}
-    @media (max-width: 980px){.grid{grid-template-columns: 1fr;}}
-    .panel{padding:12px;}
-    .panel h2{
-      margin:0 0 8px 0;
-      font-size:14px;
-      color: var(--muted);
-      font-weight:800;
-      letter-spacing:.2px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-    textarea{
-      width:100%;
-      min-height:320px;
-      resize:vertical;
-      padding:12px;
-      border-radius: 16px;
-      border:1px solid var(--border);
-      background: rgba(0,0,0,.22);
-      color: var(--text);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 12.5px;
-      line-height: 1.45;
-      outline:none;
-    }
-    textarea:focus{border-color: rgba(110,168,255,.55)}
-    .meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-end;color: var(--muted);font-size: 12px;}
-    .status{
-      padding:10px 12px;
-      border-radius: 14px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      color: var(--muted);
-      font-size: 12.5px;
-      margin-top: 14px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .badge{padding:6px 10px;border-radius:999px;border:1px solid var(--border);background: rgba(255,255,255,.03);color: var(--muted);font-size: 12px;white-space:nowrap;}
-    .kpi{color: var(--text); font-weight:800}
-    .small{font-size:12px;color:var(--muted)}
-    .hint{margin:10px 0 0 0; color: var(--muted); font-size:12px; line-height:1.4}
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
-  </style>
 
-  <script src="https://unpkg.com/terser@5.31.3/dist/bundle.min.js"></script>
-  <script src="https://unpkg.com/js-beautify@1.15.1/js/lib/beautify.js"></script>
-  <script src="https://unpkg.com/javascript-obfuscator@4.1.0/dist/index.browser.js"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
-  <script src="https://unpkg.com/eslint@8.57.0/dist/eslint.min.js"></script>
+  <link rel="stylesheet" href="hj.css" />
+
+  <script src="https://unpkg.com/terser@5.31.3/dist/bundle.min.js" defer></script>
+  <script src="https://unpkg.com/js-beautify@1.15.1/js/lib/beautify.js" defer></script>
+  <script src="https://unpkg.com/javascript-obfuscator@4.1.0/dist/index.browser.js" defer></script>
+  <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js" defer></script>
+  <script src="https://unpkg.com/eslint@8.57.0/dist/eslint.min.js" defer></script>
+
+  <script src="hj.js" defer></script>
 </head>
 <body>
   <div class="wrap">
@@ -162,12 +22,15 @@
         <div class="logo" aria-hidden="true"></div>
         <div>
           <h1>Herramientas JavaScript</h1>
-          <p class="subtitle">Pega c&oacute;digo JavaScript (o c&aacute;rgalo desde un archivo <span class="mono">.js</span> / URL) y aplica acciones: minificar, formatear, validar, ofuscar, transpilar, medir tama&ntilde;o, limpiar comentarios, escapar y ejecutar en sandbox.</p>
+          <p class="subtitle">
+            Pega c&oacute;digo JavaScript (o c&aacute;rgalo desde un archivo <span class="mono">.js</span> / URL) y aplica acciones:
+            minificar, formatear, validar, ofuscar, transpilar, medir tama&ntilde;o, limpiar comentarios, escapar y ejecutar en sandbox.
+          </p>
         </div>
       </div>
       <div class="pillbar">
         <span class="badge">Dise&ntilde;o moderno</span>
-        <span class="badge">Todo en 1 archivo</span>
+        <span class="badge">HTML + CSS + JS</span>
         <span class="badge">Descarga lista</span>
       </div>
     </header>
@@ -197,6 +60,13 @@
           <option value="run">Ejecutar (sandbox)</option>
         </select>
 
+        <select id="captureSelect" class="select" aria-label="Tiempo de captura del sandbox">
+          <option value="300">Sandbox: 300 ms</option>
+          <option value="1000" selected>Sandbox: 1 s</option>
+          <option value="3000">Sandbox: 3 s</option>
+          <option value="5000">Sandbox: 5 s</option>
+        </select>
+
         <button id="applyBtn" class="btn primary" type="button">Aplicar</button>
         <button id="swapBtn" class="btn" type="button" title="Pasa el resultado a la entrada">Usar salida como entrada</button>
         <button id="clearBtn" class="btn danger" type="button">Limpiar</button>
@@ -214,7 +84,10 @@
           </span>
         </h2>
         <textarea id="inputCode" placeholder="Pega aqu&iacute; tu c&oacute;digo JavaScript..."></textarea>
-        <p class="hint">Puedes cargar un <span class="mono">.js</span> local, pegar desde portapapeles o traer un JS desde URL. Luego selecciona una acci&oacute;n y presiona <b>Aplicar</b>.</p>
+        <p class="hint">
+          Puedes cargar un <span class="mono">.js</span> local, pegar desde portapapeles o traer un JS desde URL.
+          Luego selecciona una acci&oacute;n y presiona <b>Aplicar</b>.
+        </p>
       </section>
 
       <section class="card panel">
@@ -228,7 +101,9 @@
           </span>
         </h2>
         <textarea id="outputCode" placeholder="Aqu&iacute; aparecer&aacute; el resultado..." readonly></textarea>
-        <p class="hint">Lint entrega un reporte. Run ejecuta en sandbox y captura console.log y errores sin afectar la p&aacute;gina.</p>
+        <p class="hint">
+          Lint entrega un reporte. Sandbox ejecuta de forma aislada y captura <span class="mono">log/warn/error/info</span>.
+        </p>
       </section>
     </div>
 
@@ -240,504 +115,5 @@
       <div class="small" id="statusMeta"></div>
     </div>
   </div>
-
-  <script>
-    const el = (id) => document.getElementById(id);
-
-    const inputCodeEl = el('inputCode');
-    const outputCodeEl = el('outputCode');
-
-    const inCharsEl = el('inChars');
-    const outCharsEl = el('outChars');
-    const inKbEl = el('inKb');
-    const outKbEl = el('outKb');
-
-    const statusTextEl = el('statusText');
-    const statusMetaEl = el('statusMeta');
-
-    const fileInputEl = el('fileInput');
-    const urlInputEl = el('urlInput');
-
-    const actionSelectEl = el('actionSelect');
-
-    const applyBtn = el('applyBtn');
-    const downloadBtn = el('downloadBtn');
-
-    const loadUrlBtn = el('loadUrlBtn');
-    const pasteBtn = el('pasteBtn');
-    const swapBtn = el('swapBtn');
-    const clearBtn = el('clearBtn');
-
-    const copyInBtn = el('copyInBtn');
-    const copyOutBtn = el('copyOutBtn');
-
-    function bytesToKb(bytes){
-      return (bytes / 1024).toFixed(bytes >= 1024 ? 2 : 3);
-    }
-
-    function measureText(text){
-      const bytes = new TextEncoder().encode(text || '').length;
-      return { chars: (text || '').length, bytes, kb: bytesToKb(bytes) };
-    }
-
-    function refreshStats(){
-      const a = measureText(inputCodeEl.value);
-      const b = measureText(outputCodeEl.value);
-      inCharsEl.textContent = String(a.chars);
-      inKbEl.textContent = String(a.kb);
-      outCharsEl.textContent = String(b.chars);
-      outKbEl.textContent = String(b.kb);
-    }
-
-    function setStatus(msg, meta=''){
-      statusTextEl.textContent = msg;
-      statusMetaEl.textContent = meta;
-    }
-
-    function safeGetInput(){
-      const s = inputCodeEl.value || '';
-      if (!s.trim()) {
-        throw new Error('La entrada est&aacute; vac&iacute;a. Pega o carga un archivo .js primero.');
-      }
-      return s;
-    }
-
-    async function copyText(text){
-      if (!text) return;
-      try{
-        await navigator.clipboard.writeText(text);
-      } catch(e){
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-      }
-    }
-
-    function stripCommentsBoth(code){
-      let out = '';
-      let i = 0;
-      let inStr = false;
-      let strCh = '';
-      let inLine = false;
-      let inBlock = false;
-
-      while (i < code.length) {
-        const ch = code[i];
-        const next = i + 1 < code.length ? code[i + 1] : '';
-
-        if (inLine) {
-          if (ch === '
-') { inLine = false; out += ch; }
-          i += 1;
-          continue;
-        }
-
-        if (inBlock) {
-          if (ch === '*' && next === '/') { inBlock = false; i += 2; continue; }
-          i += 1;
-          continue;
-        }
-
-        if (inStr) {
-          out += ch;
-          if (ch === '\' && next) { out += next; i += 2; continue; }
-          if (ch === strCh) { inStr = false; strCh = ''; }
-          i += 1;
-          continue;
-        }
-
-        if (ch === '"' || ch === "'" || ch === '`') {
-          inStr = true;
-          strCh = ch;
-          out += ch;
-          i += 1;
-          continue;
-        }
-
-        if (ch === '/' && next === '/') { inLine = true; i += 2; continue; }
-        if (ch === '/' && next === '*') { inBlock = true; i += 2; continue; }
-
-        out += ch;
-        i += 1;
-      }
-
-      return out;
-    }
-
-    function collapseWhitespace(code){
-      let out = '';
-      let prevSpace = false;
-      let inStr = false;
-      let strCh = '';
-      let i = 0;
-
-      while (i < code.length) {
-        const ch = code[i];
-        const next = i + 1 < code.length ? code[i + 1] : '';
-
-        if (inStr) {
-          out += ch;
-          if (ch === '\' && next) { out += next; i += 2; continue; }
-          if (ch === strCh) { inStr = false; strCh = ''; }
-          i += 1;
-          continue;
-        }
-
-        if (ch === '"' || ch === "'" || ch === '`') {
-          inStr = true;
-          strCh = ch;
-          out += ch;
-          i += 1;
-          continue;
-        }
-
-        const isWs = ch === ' ' || ch === '
-' || ch === '	' || ch === '
-' || ch === '';
-        if (isWs) {
-          if (!prevSpace) out += ' ';
-          prevSpace = true;
-          i += 1;
-          continue;
-        }
-
-        prevSpace = false;
-        out += ch;
-        i += 1;
-      }
-
-      return out.trim();
-    }
-
-    async function doMinify(code){
-      if (window.Terser && typeof window.Terser.minify === 'function') {
-        const result = await window.Terser.minify(code, {
-          compress: true,
-          mangle: true,
-          format: { comments: false }
-        });
-        if (result && result.code) return result.code;
-        throw new Error('Terser no devolvi&oacute; c&oacute;digo.');
-      }
-      const noComments = stripCommentsBoth(code);
-      return collapseWhitespace(noComments);
-    }
-
-    function doBeautify(code){
-      if (window.js_beautify) {
-        return window.js_beautify(code, {
-          indent_size: 2,
-          wrap_line_length: 100,
-          end_with_newline: true
-        });
-      }
-      return code;
-    }
-
-    function doObfuscate(code){
-      if (window.JavaScriptObfuscator) {
-        const obf = window.JavaScriptObfuscator.obfuscate(code, {
-          compact: true,
-          simplify: true,
-          stringArray: true,
-          stringArrayThreshold: 0.75,
-          renameGlobals: false
-        });
-        return obf.getObfuscatedCode();
-      }
-      return code;
-    }
-
-    function doTranspile(code){
-      if (window.Babel && typeof window.Babel.transform === 'function') {
-        const out = window.Babel.transform(code, {
-          presets: [["env", { targets: { ie: "11" } }]]
-        });
-        return (out && out.code) ? out.code : code;
-      }
-      return code;
-    }
-
-    async function doLint(code){
-      const ESLintClass = window.ESLint && window.ESLint.ESLint ? window.ESLint.ESLint : null;
-      if (!ESLintClass) {
-        return 'ESLint no est&aacute; disponible (fall&oacute; la carga desde CDN).';
-      }
-
-      const eslint = new ESLintClass({
-        baseConfig: {
-          env: { browser: true, es2021: true },
-          parserOptions: { ecmaVersion: 2021, sourceType: 'script' },
-          rules: {
-            'no-undef': 'error',
-            'no-unused-vars': ['warn', { args: 'none' }],
-            'no-redeclare': 'error',
-            'no-dupe-keys': 'error',
-            'no-dupe-args': 'error',
-            'no-unreachable': 'error',
-            'eqeqeq': ['warn', 'smart'],
-            'no-console': 'off'
-          }
-        },
-        useEslintrc: false
-      });
-
-      const results = await eslint.lintText(code);
-      const r = results && results[0] ? results[0] : null;
-      if (!r) return 'Sin resultados.';
-
-      const lines = [];
-      const err = r.errorCount || 0;
-      const warn = r.warningCount || 0;
-      lines.push('Resumen: ' + err + ' error(es), ' + warn + ' advertencia(s).');
-
-      if (r.messages && r.messages.length) {
-        lines.push('');
-        for (const m of r.messages.slice(0, 200)) {
-          const sev = m.severity === 2 ? 'ERROR' : 'WARN';
-          const rule = m.ruleId ? m.ruleId : '';
-          lines.push((sev + ' L' + m.line + ':C' + m.column + ' ' + rule + ' ' + m.message).trim());
-        }
-        if (r.messages.length > 200) lines.push('... (salida truncada)');
-      } else {
-        lines.push('Sin hallazgos.');
-      }
-
-      return lines.join('
-');
-    }
-
-    async function doRunSandbox(code){
-      const safeCode = String(code).split('</').join('<\/');
-
-      const sandboxHtml = '<!doctype html><html><head><meta charset="utf-8"></head><body>' +
-        '<script>(function(){' +
-        'const send=function(type,payload){parent.postMessage({__jsTool:true,type:type,payload:payload},"*")};' +
-        'const origLog=console.log;console.log=function(){' +
-        'try{send("log",Array.from(arguments).map(function(a){try{return typeof a==="string"?a:JSON.stringify(a)}catch(e){return String(a)}}).join(" "))}catch(e){}' +
-        'return origLog.apply(console,arguments)};' +
-        'window.onerror=function(msg,src,line,col){send("error",String(msg)+" (L"+line+":C"+col+")")};' +
-        '})();<\/script>' +
-        '<script>' + safeCode + '<\/script>' +
-        '</body></html>';
-
-      return new Promise((resolve) => {
-        const iframe = document.createElement('iframe');
-        iframe.setAttribute('sandbox', 'allow-scripts');
-        iframe.style.display = 'none';
-
-        const logs = [];
-        const errors = [];
-
-        const handler = (ev) => {
-          const d = ev.data;
-          if (!d || !d.__jsTool) return;
-          if (d.type === 'log') logs.push(d.payload);
-          if (d.type === 'error') errors.push(d.payload);
-        };
-
-        window.addEventListener('message', handler);
-        document.body.appendChild(iframe);
-        iframe.srcdoc = sandboxHtml;
-
-        setTimeout(() => {
-          window.removeEventListener('message', handler);
-          document.body.removeChild(iframe);
-
-          const out = [];
-          out.push('Sandbox:');
-          out.push('');
-          if (logs.length) {
-            out.push('console.log:');
-            out.push.apply(out, logs.map((l) => '  ' + l));
-            out.push('');
-          }
-          if (errors.length) {
-            out.push('Errores:');
-            out.push.apply(out, errors.map((e) => '  ' + e));
-            out.push('');
-          }
-          if (!logs.length && !errors.length) out.push('Sin salida.');
-
-          resolve(out.join('
-'));
-        }, 300);
-      });
-    }
-
-    function suggestFilename(action){
-      const base = 'codigo';
-      if (action === 'minify') return base + '.min.js';
-      if (action === 'beautify') return base + '.beautified.js';
-      if (action === 'obfuscate') return base + '.obf.js';
-      if (action === 'transpile') return base + '.es5.js';
-      if (action === 'stripComments') return base + '.nocomments.js';
-      if (action === 'escapeJson') return base + '.json.txt';
-      if (action === 'unescapeJson') return base + '.js';
-      if (action === 'lint') return base + '.lint.txt';
-      if (action === 'size') return base + '.size.txt';
-      if (action === 'run') return base + '.sandbox.txt';
-      return base + '.out.txt';
-    }
-
-    async function applyAction(){
-      const action = actionSelectEl.value;
-      applyBtn.disabled = true;
-      setStatus('Procesando...', 'Acci&oacute;n: ' + action);
-
-      try{
-        const code = safeGetInput();
-        let out = '';
-
-        if (action === 'minify') out = await doMinify(code);
-        else if (action === 'beautify') out = doBeautify(code);
-        else if (action === 'lint') out = await doLint(code);
-        else if (action === 'obfuscate') out = doObfuscate(code);
-        else if (action === 'transpile') out = doTranspile(code);
-        else if (action === 'stripComments') out = stripCommentsBoth(code);
-        else if (action === 'escapeJson') out = JSON.stringify(code);
-        else if (action === 'unescapeJson') out = JSON.parse(code.trim());
-        else if (action === 'size') {
-          const a = measureText(code);
-          const b = measureText(await doMinify(code));
-          const deltaBytes = a.bytes - b.bytes;
-          const pct = a.bytes ? ((deltaBytes / a.bytes) * 100).toFixed(2) : '0.00';
-          out = [
-            'Tama&ntilde;o:',
-            '',
-            'Original: ' + a.bytes + ' bytes (' + a.kb + ' KB)',
-            'Minificado: ' + b.bytes + ' bytes (' + b.kb + ' KB)',
-            'Ahorro: ' + deltaBytes + ' bytes (' + pct + '%)'
-          ].join('
-');
-        }
-        else if (action === 'run') out = await doRunSandbox(code);
-        else out = code;
-
-        outputCodeEl.value = out;
-        refreshStats();
-        setStatus('Listo.', 'Salida generada.');
-      } catch(e){
-        outputCodeEl.value = '';
-        refreshStats();
-        setStatus('Error: ' + (e && e.message ? e.message : String(e)));
-      } finally {
-        applyBtn.disabled = false;
-      }
-    }
-
-    function clearAll(){
-      inputCodeEl.value = '';
-      outputCodeEl.value = '';
-      urlInputEl.value = '';
-      refreshStats();
-      setStatus('Listo.');
-    }
-
-    function swapOutToIn(){
-      const out = outputCodeEl.value || '';
-      if (!out.trim()) return;
-      inputCodeEl.value = out;
-      refreshStats();
-      setStatus('Salida copiada a Entrada.');
-    }
-
-    function downloadOutput(){
-      const text = outputCodeEl.value || '';
-      if (!text.trim()) {
-        alert('No hay salida para descargar.');
-        return;
-      }
-      const action = actionSelectEl.value;
-      const filename = suggestFilename(action);
-
-      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(link.href);
-      setStatus('Descargado.', filename);
-    }
-
-    function readFileToInput(file){
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(String(reader.result || ''));
-        reader.onerror = () => reject(new Error('No se pudo leer el archivo.'));
-        reader.readAsText(file);
-      });
-    }
-
-    async function loadFromUrl(){
-      const url = (urlInputEl.value || '').trim();
-      if (!url) return;
-      loadUrlBtn.disabled = true;
-      setStatus('Cargando...', url);
-      try{
-        const res = await fetch(url, { cache: 'no-store' });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const text = await res.text();
-        inputCodeEl.value = text;
-        refreshStats();
-        setStatus('Listo.', 'Cargado desde URL.');
-      } catch(e){
-        setStatus('Error al cargar URL: ' + (e && e.message ? e.message : String(e)));
-      } finally {
-        loadUrlBtn.disabled = false;
-      }
-    }
-
-    async function pasteFromClipboard(){
-      pasteBtn.disabled = true;
-      setStatus('Pegando desde portapapeles...');
-      try{
-        const text = await navigator.clipboard.readText();
-        inputCodeEl.value = text || '';
-        refreshStats();
-        setStatus('Listo.', 'Pegado desde portapapeles.');
-      } catch(e){
-        setStatus('No se pudo leer el portapapeles (permisos del navegador).');
-      } finally {
-        pasteBtn.disabled = false;
-      }
-    }
-
-    inputCodeEl.addEventListener('input', refreshStats);
-
-    fileInputEl.addEventListener('change', async (ev) => {
-      const file = ev.target.files && ev.target.files[0];
-      if (!file) return;
-      setStatus('Cargando archivo...', file.name);
-      try{
-        const text = await readFileToInput(file);
-        inputCodeEl.value = text;
-        refreshStats();
-        setStatus('Listo.', 'Archivo cargado.');
-      } catch(e){
-        setStatus('Error: ' + (e && e.message ? e.message : String(e)));
-      } finally {
-        fileInputEl.value = '';
-      }
-    });
-
-    applyBtn.addEventListener('click', applyAction);
-    loadUrlBtn.addEventListener('click', loadFromUrl);
-    pasteBtn.addEventListener('click', pasteFromClipboard);
-    swapBtn.addEventListener('click', swapOutToIn);
-    clearBtn.addEventListener('click', clearAll);
-
-    copyInBtn.addEventListener('click', () => copyText(inputCodeEl.value || '').then(() => setStatus('Entrada copiada.')));
-    copyOutBtn.addEventListener('click', () => copyText(outputCodeEl.value || '').then(() => setStatus('Salida copiada.')));
-
-    downloadBtn.addEventListener('click', downloadOutput);
-
-    refreshStats();
-  </script>
 </body>
 </html>
