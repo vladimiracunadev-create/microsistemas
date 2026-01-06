@@ -14,7 +14,7 @@ Incluye microsistemas desarrollados en **PHP (desde 5.4 hasta 8.x)** y **HTML + 
 
 ## Cómo ejecutar los microsistemas (XAMPP / Apache + PHP)
 
-Estos microsistemas están pensados para funcionar en un entorno local tipo **XAMPP** (Windows) o equivalente (**MAMP**, **LAMP**, etc.), es decir:
+Estos microsistemas están pensados para funcionar en un entorno local tipo **XAMPP** (Windows) o equivalente (**MAMP**, **LAMP**, etc.):
 
 - Servidor **Apache**
 - PHP (según corresponda al microsistema)
@@ -30,7 +30,7 @@ Estos microsistemas están pensados para funcionar en un entorno local tipo **XA
    - `http://localhost/microsistemas/`
 
 > Importante: los microsistemas **HTML + JS** (como el de Git) cargan `cases.json` vía `fetch()`.  
-> Por seguridad del navegador, **debe abrirse desde un servidor** (Apache), y no con `file://`.
+> Por seguridad del navegador, **deben abrirse desde un servidor** (Apache) y no con `file://`.
 
 ---
 
@@ -93,7 +93,8 @@ Herramienta de apoyo para **modernización progresiva de código PHP legacy**:
   - Detección de sintaxis obsoleta.
   - Señalización de funciones incompatibles.
   - Recomendaciones de reemplazo.
-- No reemplaza una migración completa, pero **acelera enormemente el trabajo manual**.
+
+No reemplaza una migración completa, pero **acelera enormemente el trabajo manual**.
 
 Pensado como:
 - Asistente de migración.
@@ -185,22 +186,6 @@ El objetivo es que Git deje de ser “memoria de flags” y se convierta en una 
 
 ---
 
-## Licencia (uso y protección)
-
-Este repositorio está pensado como **material técnico de portafolio** y **herramientas reutilizables**.
-
-### Licencia recomendada: MIT + Restricción de marca/atribución (Portafolio)
-- Puedes permitir uso del código (MIT) para aprendizaje y uso personal/comercial,
-- pero protegerte de que te clonen el repo y lo presenten como propio sin atribución.
-
-**Propuesta práctica (simple y clara):**
-- Código bajo **MIT License** (libre uso).
-- Requerimiento adicional (en README o NOTICE):
-  - Mantener **atribución visible** al autor en el repo/documentación.
-  - No usar tu nombre/marca para promocionar derivados sin permiso.
-
----
-
 ## Objetivo general del directorio
 
 Este conjunto de microsistemas funciona como una **caja de herramientas personal y laboratorio técnico**, orientado a:
@@ -219,6 +204,8 @@ Además, sirve como **material demostrativo de portafolio**, mostrando capacidad
 - Combinar tecnologías antiguas y modernas.
 - Resolver problemas reales de mantenimiento de sistemas.
 
+---
+
 ## Licencia
-Este proyecto se distribuye bajo licencia MIT.  
-Ver `LICENSE` y `NOTICE` (atribución y uso de marca).
+
+Este proyecto se distribuye bajo los términos indicados en los archivos **`LICENSE`** y **`NOTICE`** del repositorio.
