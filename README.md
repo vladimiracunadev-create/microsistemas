@@ -199,9 +199,6 @@ Este repositorio está pensado como **material técnico de portafolio** y **herr
   - Mantener **atribución visible** al autor en el repo/documentación.
   - No usar tu nombre/marca para promocionar derivados sin permiso.
 
-> Si quieres máxima protección contra “republicación tal cual” (sin atribución), se puede cambiar a una licencia más restrictiva (ej: “All Rights Reserved” o “Source-Available” personalizada).  
-> Pero para portafolio, MIT + atribución suele ser un buen balance: se ve profesional y a la vez te protege del plagio descarado.
-
 ---
 
 ## Objetivo general del directorio
