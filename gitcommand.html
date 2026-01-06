@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Git – Casos Explicados (XXXXL)</title>
+  <link rel="stylesheet" href="gitcommand.css" />
+</head>
+<body>
+  <header class="wrap">
+    <h1>Git – Casos Explicados (XXXXL)</h1>
+    <p class="muted">
+      Aprende Git con <b>categorías</b> y <b>casos</b> (desde <code>cases.json</code>).
+      Al seleccionar un caso se muestran 3 salidas: <b>Qué hace</b>, <b>Cuándo usarlo</b> y <b>Comandos</b> (solo comandos se copian).
+      <span class="pill">JSON</span> <span class="pill">local</span> <span class="pill">1000+</span>
+    </p>
+  </header>
+
+  <main class="wrap layout">
+    <!-- Col 1: Categorías -->
+    <aside class="card side">
+      <div class="row">
+        <div class="label">Categorías</div>
+        <div id="catTabs" class="tabs vertical" role="tablist" aria-label="Categorías"></div>
+      </div>
+
+      <div class="row">
+        <label for="filter" class="label">Filtrar casos (en categoría)</label>
+        <input id="filter" class="input" type="search" placeholder="Ej: rebase, conflicto, stash..." />
+      </div>
+
+      <div id="stats" class="meta small muted"></div>
+
+      <details class="help">
+        <summary>Cómo ejecutar</summary>
+        <div class="muted small" style="margin-top:8px">
+          Abre con servidor local (http://), no file://
+          <pre class="codeblock">cd git-command-tabs-xxxxl-explicado
+python -m http.server 8000</pre>
+          Luego: <code>http://localhost:8000</code>
+        </div>
+      </details>
+    </aside>
+
+    <!-- Col 2: Casos -->
+    <aside class="card side">
+      <div class="row split">
+        <div>
+          <div class="label">Casos</div>
+          <div class="muted small">Selecciona por lista o por tabs.</div>
+        </div>
+        <div class="right">
+          <span id="dangerBadge" class="badge hidden">⚠️ Riesgoso</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="caseSelect" class="label">Selector rápido</label>
+        <select id="caseSelect" class="select"></select>
+      </div>
+
+      <div id="caseTabs" class="tabs vertical cases" role="tablist" aria-label="Casos"></div>
+
+      <div id="meta" class="meta"></div>
+
+      <div class="actions">
+        <button id="copyBtn" class="btn primary">📋 Copiar comandos</button>
+        <button id="resetBtn" class="btn">↩️ Restaurar comandos</button>
+        <button id="clearBtn" class="btn danger">🧹 Limpiar comandos</button>
+      </div>
+
+      <div id="toast" class="toast" aria-live="polite"></div>
+    </aside>
+
+    <!-- Col 3: Explicación + Comandos -->
+    <section class="card main">
+      <div class="row split">
+        <div>
+          <div class="label">Qué hace</div>
+          <div class="muted small">Lectura (no copiable).</div>
+        </div>
+        <div class="right small muted" id="caseId"></div>
+      </div>
+      <div id="queHace" class="panel"></div>
+
+      <div class="row" style="margin-top:12px">
+        <div class="label">Cuándo usarlo</div>
+        <div class="muted small">Lectura (no copiable).</div>
+      </div>
+      <div id="cuandoUsarlo" class="panel"></div>
+
+      <div class="row split" style="margin-top:12px">
+        <div>
+          <div class="label">Comandos</div>
+          <div class="muted small">Editable. Reemplaza <code>&lt;PLACEHOLDERS&gt;</code>. Esta es la única salida copiable.</div>
+        </div>
+        <div class="right small muted" id="lineCount"></div>
+      </div>
+
+      <textarea id="cmd" class="textarea" spellcheck="false"></textarea>
+
+      <details class="help">
+        <summary>Tips rápidos</summary>
+        <ul>
+          <li>Si un caso dice <b>Riesgoso</b>, revisa que no estás perdiendo cambios antes de ejecutarlo.</li>
+          <li>Para ampliar: agrega casos al <code>cases.json</code> (no deberías tocar el UI).</li>
+          <li>El orden está pensado para aprendizaje: casos simples primero.</li>
+        </ul>
+      </details>
+    </section>
+  </main>
+
+  <footer class="wrap footer muted small">
+    Microsistema: Git Command Tabs · XXXXL Explicado · Fuente: cases.json
+  </footer>
+
+  <script src="gitcommand-app.js"></script>
+</body>
+</html>

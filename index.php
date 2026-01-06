@@ -60,6 +60,7 @@ text-decoration: underline;
 <li><a href="cambiophp.php" target="_blank">Microsistema 4: Migrador Parcial de php 5.4 a php 8</a></li>
 <li><a href="herramientas_javascript.html" target="_blank">Microsistema 5: Herramientas JavaScript</a></li>
 <li><a href="ymlstudio.html" target="_blank">Microsistema 6: Generador de Yml</a></li>
+<li><a href="gitcommand.html" target="_blank">Microsistema 7: Comandos GIT</a></li>
 </ul>
 </div>
 </body>

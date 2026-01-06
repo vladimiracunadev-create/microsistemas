@@ -1,0 +1,181 @@
+:root{
+  --bg:#0b0e14;
+  --card:#121826;
+  --text:#e8eefc;
+  --muted:#a9b4cc;
+  --line:#24314a;
+  --btn:#1d2840;
+  --btn2:#243455;
+  --danger:#ff5a5f;
+  --ok:#39d98a;
+  --warn:#ffcc00;
+  --focus:#3c6df0;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
+.wrap{max-width:1200px;margin:0 auto;padding:16px}
+h1{margin:8px 0 6px;font-size:22px}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+.pill{display:inline-block;padding:2px 8px;border:1px solid var(--line);border-radius:999px;font-size:12px;margin-left:6px;color:var(--muted)}
+.footer{padding-top:0}
+
+.layout{
+  display:grid;
+  gap:14px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 1000px){
+  .layout{grid-template-columns: 280px 360px 1fr;}
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.side{min-height:520px}
+.main{min-height:520px}
+
+.row{margin-bottom:12px}
+.row.split{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.right{display:flex;align-items:center;gap:8px}
+
+.label{font-size:12px;color:var(--muted);margin-bottom:6px}
+
+.input,.textarea{
+  width:100%;
+  border:1px solid var(--line);
+  background:#0f1422;
+  color:var(--text);
+  border-radius:10px;
+  padding:10px 12px;
+  outline:none;
+}
+.input:focus,.textarea:focus{border-color:var(--focus)}
+
+.textarea{
+  min-height:420px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+  line-height:1.35;
+  resize:vertical;
+}
+
+.tabs{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.tabs.vertical{
+  flex-direction:column;
+  flex-wrap:nowrap;
+}
+.tabs.cases{
+  max-height:280px;
+  overflow:auto;
+  padding-right:6px;
+}
+
+.tab{
+  width:100%;
+  text-align:left;
+  background:#0f1422;
+  border:1px solid var(--line);
+  color:var(--text);
+  padding:10px 10px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:13px;
+}
+.tab:hover{background:var(--btn2)}
+.tab[aria-selected="true"]{
+  border-color:var(--focus);
+  box-shadow:0 0 0 2px rgba(60,109,240,.15);
+}
+
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.btn{
+  background:var(--btn);
+  border:1px solid var(--line);
+  color:var(--text);
+  padding:10px 12px;
+  border-radius:12px;
+  cursor:pointer;
+}
+.btn:hover{background:var(--btn2)}
+.btn.primary{border-color:var(--focus)}
+.btn.danger{border-color:rgba(255,90,95,.7)}
+
+.badge{
+  border:1px solid rgba(255,204,0,.5);
+  color:var(--warn);
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:12px;
+}
+.hidden{display:none}
+
+.meta{
+  border-top:1px dashed var(--line);
+  padding-top:10px;
+  margin-top:10px;
+  font-size:13px;
+}
+.meta .title{font-weight:650;margin-bottom:4px}
+.meta .tags{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:12px;color:var(--muted);border:1px solid var(--line);padding:2px 8px;border-radius:999px}
+
+.toast{
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:#0f1422;
+  color:var(--muted);
+  display:none;
+}
+.toast.show{display:block}
+.toast.ok{border-color:rgba(57,217,138,.5); color:var(--ok)}
+.toast.warn{border-color:rgba(255,204,0,.5); color:var(--warn)}
+.toast.bad{border-color:rgba(255,90,95,.6); color:var(--danger)}
+
+.help summary{cursor:pointer;color:var(--muted)}
+code{background:#0f1422;border:1px solid var(--line);padding:1px 6px;border-radius:8px}
+pre.codeblock{
+  margin:8px 0 0;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:#0f1422;
+  overflow:auto;
+}
+
+
+/* New elements for "Qué hace" / "Cuándo usarlo" */
+.select{
+  width:100%;
+  border:1px solid var(--line);
+  background:#0f1422;
+  color:var(--text);
+  border-radius:10px;
+  padding:10px 12px;
+  outline:none;
+}
+.select:focus{border-color:var(--focus)}
+
+.panel{
+  border:1px solid var(--line);
+  background:#0f1422;
+  color:var(--text);
+  border-radius:10px;
+  padding:10px 12px;
+  line-height:1.45;
+  white-space:pre-wrap;
+  min-height:86px;
+}
+
+.panel .muted{color:var(--muted)}
