@@ -30,7 +30,7 @@ Este microsistema ayuda a prevenir errores de encoding y problemas de visualizac
 
 ## Microsistema 2: PhpMyAdmin Acotado (`phpmyadmin_especifico.php`)
 
-Versión **simplificada y controlada** de un visor de bases de datos, inspirada en phpMyAdmin, pero diseñada para contextos restringidos:
+Versión **simplificada y controlada** de un visor de bases de datos, inspirado en phpMyAdmin, pero diseñado para contextos restringidos:
 
 - Panel izquierdo con listado de tablas y/o vistas.
 - Panel derecho para ejecutar consultas SQL (principalmente `SELECT`).
@@ -85,13 +85,11 @@ Pensado como:
 Aplicación web con diseño moderno tipo *developer tool*, orientada a trabajar directamente con código JavaScript.
 
 ### Archivos
-
 - `herramientas_javascript.html` (interfaz principal)
 - `hj.css` (estilos)
 - `hj.js` (lógica JavaScript)
 
 ### Funcionalidades principales
-
 - Entrada de código JavaScript mediante:
   - Pegado manual en textarea.
   - Carga de archivo `.js`.
@@ -99,7 +97,6 @@ Aplicación web con diseño moderno tipo *developer tool*, orientada a trabajar 
   - Pegado desde portapapeles.
 
 ### Acciones disponibles
-
 - Minificar código (Terser).
 - Formatear / Beautify (js-beautify).
 - Validar / Lint (ESLint).
@@ -111,7 +108,6 @@ Aplicación web con diseño moderno tipo *developer tool*, orientada a trabajar 
 - Ejecutar código en sandbox (captura `log/warn/error/info` y errores).
 
 ### Extras de productividad
-
 - Contadores de caracteres y tamaño en KB.
 - Copiar entrada / salida.
 - Usar salida como nueva entrada.
@@ -125,9 +121,7 @@ Aplicación web con diseño moderno tipo *developer tool*, orientada a trabajar 
 Microsistema web **HTML + CSS + JavaScript** orientado a **crear archivos `.yml/.yaml` por formulario**, con plantillas listas para automatizar tareas comunes de desarrollo y despliegue.
 
 ### Objetivo
-
 Reducir errores y tiempo al escribir YAML “a mano”, entregando:
-
 - Formularios guiados por **plantillas** (casos de uso).
 - **Vista previa** inmediata del YAML generado.
 - Exportación por:
@@ -139,7 +133,6 @@ Reducir errores y tiempo al escribir YAML “a mano”, entregando:
   3) La plataforma (por ejemplo GitHub Actions o Amplify) ejecuta la automatización.
 
 ### Casos de uso típicos (plantillas)
-
 - **CI/CD (GitHub Actions)**:
   - CI (tests/lint/build) en push/PR.
   - Matrices por versiones (Node/PHP).
@@ -164,26 +157,46 @@ Reducir errores y tiempo al escribir YAML “a mano”, entregando:
   - Config de apps (ej: Spring) y documentación (ej: MkDocs).
 
 ### Notas importantes
-
 - Un archivo `.yml/.yaml` **no ejecuta nada por sí mismo**: es una “receta” que interpreta una herramienta (GitHub Actions, Docker, Amplify, Kubernetes, etc.).
 - Los **secrets** no deben quedar hardcodeados en el repo: se usan las secciones de secrets/variables del proveedor (por ejemplo, *GitHub Secrets*).
 
 ---
 
-## Objetivo general del directorio
+## Microsistema 7: Entrenador de Comandos Git – “Qué hace / Cuándo usarlo / Comandos” (`gitcommand.html`)
 
-Este conjunto de microsistemas funciona como una **caja de herramientas personal y laboratorio técnico**, orientado a:
+Microsistema web **HTML + CSS + JavaScript** orientado a **aprender y usar Git con claridad total**, mostrando para cada caso 3 secciones separadas:
 
-- Acelerar tareas de desarrollo y soporte.
-- Facilitar procesos de migración tecnológica.
-- Documentar experiencia real en:
-  - Sistemas legacy.
-  - Modernización progresiva.
-  - Buenas prácticas.
-  - Productividad del desarrollador.
+1) **Qué hace** (explicación directa, sin relleno)  
+2) **Cuándo usarlo** (contexto real, para no dudar)  
+3) **Comandos** (bloque **editable y copiable**)  
 
-Además, sirve como **material demostrativo de portafolio**, mostrando capacidad para:
+El objetivo es que Git deje de ser “memoria de flags” y se convierta en una **biblioteca de recetas** navegable para:
+- Aprendizaje progresivo (**simple → complejo**).
+- Consulta rápida durante migraciones, soporte y trabajo diario.
+- Evitar dudas típicas (“¿esto borra algo?”, “¿sirve en ramas compartidas?”).
 
-- Diseñar herramientas útiles y reutilizables.
-- Combinar tecnologías antiguas y modernas.
-- Resolver problemas reales de mantenimiento de sistemas.
+### Archivos (en la MISMA carpeta)
+- `gitcommand.html` (interfaz)
+- `gitcommand.css` (estilos)
+- `gitcommand-app.js` (lógica)
+- `cases.json` (**base de datos de casos**, 1000+)
+
+> Nota: el microsistema carga `cases.json` vía `fetch()`. Por seguridad del navegador, se recomienda abrirlo con un servidor local (no `file://`).
+
+### Qué muestra al seleccionar un caso
+- Panel: **Qué hace** (solo lectura)
+- Panel: **Cuándo usarlo** (solo lectura)
+- Panel: **Comandos** (editable)
+  - Botón **Copiar**: copia **solo** el panel de comandos (no las explicaciones).
+
+### Casos simples primero → complejos después
+El archivo `cases.json` está ordenado para aprendizaje:
+- Categorías en flujo pedagógico (inicio → config → add/commit → diff/log → ramas → remotos → integración → recovery → avanzado → AUTO).
+- Dentro de cada categoría: **1 línea primero**, luego 2, 3… hasta recetas multi-línea.
+- Incluye `nivel` (1–5) y `tema` (diff, log, branch, stash, rebase, etc.) para filtrar.
+
+### Cómo ejecutarlo (recomendado)
+Desde la carpeta donde está `gitcommand.html`:
+
+```bash
+python -m http.server 8000
