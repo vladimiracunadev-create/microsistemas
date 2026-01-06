@@ -1,4 +1,3 @@
-
 # Microsistemas – Caja de herramientas para productividad y modernización
 
 Este directorio reúne una colección de **microsistemas web autocontenidos**, orientados a facilitar tareas recurrentes de **desarrollo, mantención, diagnóstico y modernización de sistemas**.
@@ -83,17 +82,17 @@ Pensado como:
 
 ## Microsistema 5: Herramientas JavaScript – Productividad Frontend (`herramientas_javascript.html`)
 
-Aplicaci&oacute;n web con dise&ntilde;o moderno tipo *developer tool*, orientada a trabajar directamente con c&oacute;digo JavaScript.
+Aplicación web con diseño moderno tipo *developer tool*, orientada a trabajar directamente con código JavaScript.
 
 ### Archivos
 
 - `herramientas_javascript.html` (interfaz principal)
 - `hj.css` (estilos)
-- `hj.js` (l&oacute;gica JavaScript)
+- `hj.js` (lógica JavaScript)
 
 ### Funcionalidades principales
 
-- Entrada de c&oacute;digo JavaScript mediante:
+- Entrada de código JavaScript mediante:
   - Pegado manual en textarea.
   - Carga de archivo `.js`.
   - Carga desde URL.
@@ -101,23 +100,73 @@ Aplicaci&oacute;n web con dise&ntilde;o moderno tipo *developer tool*, orientada
 
 ### Acciones disponibles
 
-- Minificar c&oacute;digo (Terser).
+- Minificar código (Terser).
 - Formatear / Beautify (js-beautify).
 - Validar / Lint (ESLint).
-- Ofuscar c&oacute;digo.
+- Ofuscar código.
 - Transpilar JavaScript moderno a ES5 (Babel).
 - Eliminar comentarios (lineales y de bloque).
 - Escapar / des-escapar como JSON string.
-- Analizar tama&ntilde;o (original vs minificado).
-- Ejecutar c&oacute;digo en sandbox (captura `log/warn/error/info` y errores).
+- Analizar tamaño (original vs minificado).
+- Ejecutar código en sandbox (captura `log/warn/error/info` y errores).
 
 ### Extras de productividad
 
-- Contadores de caracteres y tama&ntilde;o en KB.
+- Contadores de caracteres y tamaño en KB.
 - Copiar entrada / salida.
 - Usar salida como nueva entrada.
-- Descarga autom&aacute;tica del resultado con nombre sugerido.
+- Descarga automática del resultado con nombre sugerido.
 - Interfaz responsive y clara.
+
+---
+
+## Microsistema 6: Generador de YAML / YML – Automatización de Configuración (`ymlstudio.html`)
+
+Microsistema web **HTML + CSS + JavaScript** orientado a **crear archivos `.yml/.yaml` por formulario**, con plantillas listas para automatizar tareas comunes de desarrollo y despliegue.
+
+### Objetivo
+
+Reducir errores y tiempo al escribir YAML “a mano”, entregando:
+
+- Formularios guiados por **plantillas** (casos de uso).
+- **Vista previa** inmediata del YAML generado.
+- Exportación por:
+  - Descarga de archivo(s), y/o
+  - Guardado en la ruta correcta dentro del repo (según soporte del navegador).
+- Preparación del flujo local típico:
+  1) Generar el YAML en el repo.
+  2) `git add / commit / push`.
+  3) La plataforma (por ejemplo GitHub Actions o Amplify) ejecuta la automatización.
+
+### Casos de uso típicos (plantillas)
+
+- **CI/CD (GitHub Actions)**:
+  - CI (tests/lint/build) en push/PR.
+  - Matrices por versiones (Node/PHP).
+  - Deploy automatizado (por ejemplo SSH + `docker compose`).
+  - GitHub Pages.
+  - Tareas programadas (cron) y ejecución manual (workflow_dispatch).
+- **Docker Compose**:
+  - Stack mínimo (1 servicio).
+  - Stack dev clásico (web + MySQL + Adminer).
+  - Nginx + PHP-FPM + MySQL (base para migraciones).
+- **AWS (ejemplos base)**:
+  - `amplify.yml` para hosting con build automático.
+  - `template.yml` de CloudFormation (infra como código).
+  - `template.yml` de AWS SAM (serverless).
+- **Kubernetes (base)**:
+  - Deployment + Service, Ingress, ConfigMap, CronJob.
+- **Mantenimiento de repo**:
+  - Dependabot.
+  - pre-commit.
+- **Observabilidad / Config**:
+  - Prometheus / OpenTelemetry (config básica).
+  - Config de apps (ej: Spring) y documentación (ej: MkDocs).
+
+### Notas importantes
+
+- Un archivo `.yml/.yaml` **no ejecuta nada por sí mismo**: es una “receta” que interpreta una herramienta (GitHub Actions, Docker, Amplify, Kubernetes, etc.).
+- Los **secrets** no deben quedar hardcodeados en el repo: se usan las secciones de secrets/variables del proveedor (por ejemplo, *GitHub Secrets*).
 
 ---
 
