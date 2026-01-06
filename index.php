@@ -59,6 +59,7 @@ text-decoration: underline;
 <li><a href="visor_logs.php" target="_blank">Microsistema 3: Visor Archivos de Configuración</a></li>
 <li><a href="cambiophp.php" target="_blank">Microsistema 4: Migrador Parcial de php 5.4 a php 8</a></li>
 <li><a href="herramientas_javascript.html" target="_blank">Microsistema 5: Herramientas JavaScript</a></li>
+<li><a href="ymlstudio.html" target="_blank">Microsistema 6: Generador de Yml</a></li>
 </ul>
 </div>
 </body>

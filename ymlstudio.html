@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>YAML Studio - Microsistemas</title>
+  <link rel="stylesheet" href="ymlstudio.css" />
+  <!-- YAML dumper -->
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js"></script>
+</head>
+<body>
+  <header class="container header">
+    <div class="brand">
+      <div class="logo">Y</div>
+      <div>
+        <h1>YAML Studio</h1>
+        <p>Genera archivos <b>.yml/.yaml</b> para CI/CD, Docker, AWS, K8s y más. Guárdalos directo en tu repo y luego haz Git commit/push.</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button id="btnPickRepo" class="btn">Elegir carpeta del repo</button>
+      <span id="repoStatus" class="pill">Repo: (no seleccionado)</span>
+    </div>
+  </header>
+
+  <main class="container main">
+    <nav class="tabs" id="tabs"></nav>
+
+    <section class="layout">
+      <aside class="card left">
+        <div class="row">
+          <input id="search" class="input" placeholder="Buscar plantilla (ej: deploy, compose, amplify, k8s)..." />
+        </div>
+        <div id="templateList" class="list"></div>
+      </aside>
+
+      <section class="card center">
+        <div class="section-title">
+          <h2 id="tplTitle">Selecciona una plantilla</h2>
+          <div class="mini">
+            <span id="tplPathHint" class="muted"></span>
+          </div>
+        </div>
+
+        <div id="fields" class="fields"></div>
+
+        <div class="actions">
+          <button id="btnGenerate" class="btn primary">Generar</button>
+          <button id="btnCopy" class="btn">Copiar YAML actual</button>
+          <button id="btnDownload" class="btn">Descargar archivo(s)</button>
+          <button id="btnSave" class="btn success">Guardar en repo (ruta correcta)</button>
+        </div>
+
+        <div class="note" id="note"></div>
+      </section>
+
+      <section class="card right">
+        <div class="row between">
+          <h2>Preview</h2>
+          <div class="row gap">
+            <select id="fileSelector" class="select"></select>
+            <span id="fileMeta" class="muted"></span>
+          </div>
+        </div>
+        <pre class="code"><code id="preview">Elige una plantilla y presiona “Generar”.</code></pre>
+      </section>
+    </section>
+
+    <footer class="footer">
+      <div class="muted">
+        Tips: Para guardar directo en carpetas, abre esto en <b>http://localhost</b> (ej: <code>python -m http.server 8000</code>) y usa Chrome/Edge/Brave.
+      </div>
+    </footer>
+  </main>
+
+  <script src="ymlstudio.templates.js"></script>
+  <script src="ymlstudio.app.js"></script>
+</body>
+</html>
