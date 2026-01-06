@@ -83,11 +83,17 @@ Pensado como:
 
 ## Microsistema 5: Herramientas JavaScript – Productividad Frontend (`herramientas_javascript.html`)
 
-Aplicación web **100% autocontenida (HTML + CSS + JS)** con diseño moderno tipo *developer tool*, orientada a trabajar directamente con código JavaScript.
+Aplicaci&oacute;n web con dise&ntilde;o moderno tipo *developer tool*, orientada a trabajar directamente con c&oacute;digo JavaScript.
+
+### Archivos
+
+- `herramientas_javascript.html` (interfaz principal)
+- `hj.css` (estilos)
+- `hj.js` (l&oacute;gica JavaScript)
 
 ### Funcionalidades principales
 
-- **Entrada de código JavaScript** mediante:
+- Entrada de c&oacute;digo JavaScript mediante:
   - Pegado manual en textarea.
   - Carga de archivo `.js`.
   - Carga desde URL.
@@ -95,28 +101,23 @@ Aplicación web **100% autocontenida (HTML + CSS + JS)** con diseño moderno tip
 
 ### Acciones disponibles
 
-- Minificar código (Terser).
+- Minificar c&oacute;digo (Terser).
 - Formatear / Beautify (js-beautify).
 - Validar / Lint (ESLint).
-- Ofuscar código.
+- Ofuscar c&oacute;digo.
 - Transpilar JavaScript moderno a ES5 (Babel).
 - Eliminar comentarios (lineales y de bloque).
 - Escapar / des-escapar como JSON string.
-- Analizar tamaño (original vs minificado).
-- Ejecutar código en **sandbox seguro** (captura `console.log` y errores).
+- Analizar tama&ntilde;o (original vs minificado).
+- Ejecutar c&oacute;digo en sandbox (captura `log/warn/error/info` y errores).
 
 ### Extras de productividad
 
-- Contadores de caracteres y tamaño en KB.
+- Contadores de caracteres y tama&ntilde;o en KB.
 - Copiar entrada / salida.
 - Usar salida como nueva entrada.
-- Descarga automática del resultado con nombre sugerido.
-- Interfaz moderna, responsive y clara.
-
-Este microsistema funciona como una **navaja suiza para JavaScript**, ideal para:
-- Debug rápido.
-- Preparación de código para producción.
-- Análisis y pruebas sin depender de herramientas externas.
+- Descarga autom&aacute;tica del resultado con nombre sugerido.
+- Interfaz responsive y clara.
 
 ---
 
