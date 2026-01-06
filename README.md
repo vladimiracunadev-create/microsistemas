@@ -12,6 +12,28 @@ Incluye microsistemas desarrollados en **PHP (desde 5.4 hasta 8.x)** y **HTML + 
 
 ---
 
+## Cómo ejecutar los microsistemas (XAMPP / Apache + PHP)
+
+Estos microsistemas están pensados para funcionar en un entorno local tipo **XAMPP** (Windows) o equivalente (**MAMP**, **LAMP**, etc.), es decir:
+
+- Servidor **Apache**
+- PHP (según corresponda al microsistema)
+
+### Opción recomendada (XAMPP)
+1) Instala XAMPP.
+2) Copia este proyecto dentro de:
+   - `C:\xampp\htdocs\microsistemas\` (ejemplo Windows)
+3) Abre XAMPP Control Panel y levanta:
+   - **Apache**
+   - (opcional) **MySQL** si vas a usar microsistemas que consulten BD
+4) Abre en navegador:
+   - `http://localhost/microsistemas/`
+
+> Importante: los microsistemas **HTML + JS** (como el de Git) cargan `cases.json` vía `fetch()`.  
+> Por seguridad del navegador, **debe abrirse desde un servidor** (Apache), y no con `file://`.
+
+---
+
 ## Microsistema 1: Conversor de Acentos (`conversor.php`)
 
 Herramienta para **transformar texto con acentos, ñ y símbolos especiales** en formatos útiles para desarrollo web:
@@ -124,56 +146,27 @@ Microsistema web **HTML + CSS + JavaScript** orientado a **crear archivos `.yml/
 Reducir errores y tiempo al escribir YAML “a mano”, entregando:
 - Formularios guiados por **plantillas** (casos de uso).
 - **Vista previa** inmediata del YAML generado.
-- Exportación por:
-  - Descarga de archivo(s), y/o
-  - Guardado en la ruta correcta dentro del repo (según soporte del navegador).
+- Exportación por descarga de archivos.
 - Preparación del flujo local típico:
   1) Generar el YAML en el repo.
   2) `git add / commit / push`.
-  3) La plataforma (por ejemplo GitHub Actions o Amplify) ejecuta la automatización.
-
-### Casos de uso típicos (plantillas)
-- **CI/CD (GitHub Actions)**:
-  - CI (tests/lint/build) en push/PR.
-  - Matrices por versiones (Node/PHP).
-  - Deploy automatizado (por ejemplo SSH + `docker compose`).
-  - GitHub Pages.
-  - Tareas programadas (cron) y ejecución manual (workflow_dispatch).
-- **Docker Compose**:
-  - Stack mínimo (1 servicio).
-  - Stack dev clásico (web + MySQL + Adminer).
-  - Nginx + PHP-FPM + MySQL (base para migraciones).
-- **AWS (ejemplos base)**:
-  - `amplify.yml` para hosting con build automático.
-  - `template.yml` de CloudFormation (infra como código).
-  - `template.yml` de AWS SAM (serverless).
-- **Kubernetes (base)**:
-  - Deployment + Service, Ingress, ConfigMap, CronJob.
-- **Mantenimiento de repo**:
-  - Dependabot.
-  - pre-commit.
-- **Observabilidad / Config**:
-  - Prometheus / OpenTelemetry (config básica).
-  - Config de apps (ej: Spring) y documentación (ej: MkDocs).
+  3) La plataforma (GitHub Actions / Amplify / Kubernetes / etc.) ejecuta la automatización.
 
 ### Notas importantes
-- Un archivo `.yml/.yaml` **no ejecuta nada por sí mismo**: es una “receta” que interpreta una herramienta (GitHub Actions, Docker, Amplify, Kubernetes, etc.).
-- Los **secrets** no deben quedar hardcodeados en el repo: se usan las secciones de secrets/variables del proveedor (por ejemplo, *GitHub Secrets*).
+- Un archivo `.yml/.yaml` **no ejecuta nada por sí mismo**: es una “receta” que interpreta una herramienta.
+- Los **secrets** no deben quedar hardcodeados en el repo: se usan secrets/variables del proveedor (por ejemplo, GitHub Secrets).
 
 ---
 
 ## Microsistema 7: Entrenador de Comandos Git – “Qué hace / Cuándo usarlo / Comandos” (`gitcommand.html`)
 
-Microsistema web **HTML + CSS + JavaScript** orientado a **aprender y usar Git con claridad total**, mostrando para cada caso 3 secciones separadas:
+Microsistema web **HTML + CSS + JavaScript** orientado a **aprender y usar Git con claridad**, mostrando para cada caso 3 secciones separadas:
 
-1) **Qué hace** (explicación directa, sin relleno)  
+1) **Qué hace** (explicación directa)  
 2) **Cuándo usarlo** (contexto real, para no dudar)  
 3) **Comandos** (bloque **editable y copiable**)  
 
-El objetivo es que Git deje de ser “memoria de flags” y se convierta en una **biblioteca de recetas** navegable para:
-- Aprendizaje progresivo (**simple → complejo**).
-- Consulta rápida durante migraciones, soporte y trabajo diario.
-- Evitar dudas típicas (“¿esto borra algo?”, “¿sirve en ramas compartidas?”).
+El objetivo es que Git deje de ser “memoria de flags” y se convierta en una **biblioteca de recetas** navegable.
 
 ### Archivos (en la MISMA carpeta)
 - `gitcommand.html` (interfaz)
@@ -181,22 +174,54 @@ El objetivo es que Git deje de ser “memoria de flags” y se convierta en una 
 - `gitcommand-app.js` (lógica)
 - `cases.json` (**base de datos de casos**, 1000+)
 
-> Nota: el microsistema carga `cases.json` vía `fetch()`. Por seguridad del navegador, se recomienda abrirlo con un servidor local (no `file://`).
+### Cómo ejecutarlo (XAMPP / Apache)
+1) Copia el proyecto dentro de `htdocs` (ejemplo):
+   - `C:\xampp\htdocs\microsistemas\`
+2) Levanta **Apache** en XAMPP.
+3) Abre:
+   - `http://localhost/microsistemas/gitcommand.html`
 
-### Qué muestra al seleccionar un caso
-- Panel: **Qué hace** (solo lectura)
-- Panel: **Cuándo usarlo** (solo lectura)
-- Panel: **Comandos** (editable)
-  - Botón **Copiar**: copia **solo** el panel de comandos (no las explicaciones).
+> Nota: no abrir con doble click (file://). Debe ser por `http://localhost/...` para que `fetch('cases.json')` funcione.
 
-### Casos simples primero → complejos después
-El archivo `cases.json` está ordenado para aprendizaje:
-- Categorías en flujo pedagógico (inicio → config → add/commit → diff/log → ramas → remotos → integración → recovery → avanzado → AUTO).
-- Dentro de cada categoría: **1 línea primero**, luego 2, 3… hasta recetas multi-línea.
-- Incluye `nivel` (1–5) y `tema` (diff, log, branch, stash, rebase, etc.) para filtrar.
+---
 
-### Cómo ejecutarlo (recomendado)
-Desde la carpeta donde está `gitcommand.html`:
+## Licencia (uso y protección)
 
-```bash
-python -m http.server 8000
+Este repositorio está pensado como **material técnico de portafolio** y **herramientas reutilizables**.
+
+### Licencia recomendada: MIT + Restricción de marca/atribución (Portafolio)
+- Puedes permitir uso del código (MIT) para aprendizaje y uso personal/comercial,
+- pero protegerte de que te clonen el repo y lo presenten como propio sin atribución.
+
+**Propuesta práctica (simple y clara):**
+- Código bajo **MIT License** (libre uso).
+- Requerimiento adicional (en README o NOTICE):
+  - Mantener **atribución visible** al autor en el repo/documentación.
+  - No usar tu nombre/marca para promocionar derivados sin permiso.
+
+> Si quieres máxima protección contra “republicación tal cual” (sin atribución), se puede cambiar a una licencia más restrictiva (ej: “All Rights Reserved” o “Source-Available” personalizada).  
+> Pero para portafolio, MIT + atribución suele ser un buen balance: se ve profesional y a la vez te protege del plagio descarado.
+
+---
+
+## Objetivo general del directorio
+
+Este conjunto de microsistemas funciona como una **caja de herramientas personal y laboratorio técnico**, orientado a:
+
+- Acelerar tareas de desarrollo y soporte.
+- Facilitar procesos de migración tecnológica.
+- Documentar experiencia real en:
+  - Sistemas legacy.
+  - Modernización progresiva.
+  - Buenas prácticas.
+  - Productividad del desarrollador.
+
+Además, sirve como **material demostrativo de portafolio**, mostrando capacidad para:
+
+- Diseñar herramientas útiles y reutilizables.
+- Combinar tecnologías antiguas y modernas.
+- Resolver problemas reales de mantenimiento de sistemas.
+
+## Licencia
+Este proyecto se distribuye bajo licencia MIT.  
+Ver `LICENSE` y `NOTICE` (atribución y uso de marca).
