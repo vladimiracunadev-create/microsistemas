@@ -1,63 +1,57 @@
-# Manual de Usuario - Microsistemas
+# Manual de Usuario Final (USER_MANUAL)
 
-## Introducción
-**Microsistemas** es una suite de utilidades diseñada para desarrolladores. Este manual explica cómo navegar por el Dashboard principal y acceder a cada herramienta.
-
-## Dashboard Principal
-Al acceder a la aplicación, verá el **Panel de Control**.
-- **Tarjetas**: Cada herramienta está representada por una tarjeta.
-- **Etiquetas**: Permiten identificar rápidamente la tecnología (PHP, JS, SQL).
-- **Botón "Abrir"**: Lanza la herramienta en una nueva pestaña o en la misma ventana (según configuración).
-
-## Herramientas Disponibles
-
-### 1. Conversor de Texto
-**Uso**: Limpiar y codificar textos para web.
-- Pegue el texto con caracteres especiales (tildes, ñ) en el área de entrada.
-- Haga clic en "Transformar".
-- Copie el resultado en formato HTML (`&aacute;`) o Unicode (`\u00E1`) según necesite.
-
-### 2. SQL Viewer
-**Uso**: Consultas rápidas a base de datos.
-- Seleccione la base de datos en el menú izquierdo.
-- Haga clic en una tabla para ver un `SELECT * LIMIT 100` automático.
-- Escriba consultas SQL personalizadas en el editor derecho.
-- **Precaución**: Las consultas `DELETE` o `DROP` pedirán confirmación.
-
-### 3. Git Trainer
-**Uso**: Aprender comandos de Git.
-- Use el buscador para encontrar una acción (ej: "borrar rama").
-- Lea la explicación "¿Qué hace?" y "¿Cuándo usarlo?".
-- Copie el comando generado y péguelo en su terminal.
-
-### 4. JS Tools
-**Uso**: Manipulación de código JavaScript.
-- Minificar: Reduce el tamaño del archivo para producción.
-- Beautify: Ordena código desordenado para hacerlo legible.
-- Ofuscar: Protege el código haciéndolo ilegible.
-
-### 5. Generador YAML
-**Uso**: Crear configuraciones sin errores de sintaxis.
-- Llene el formulario visual.
-- Vea cómo se genera el YAML automáticamente a la derecha.
-- Descargue el archivo `.yml` listo para usar.
-
-### 6. Log Viewer
-**Uso**: Auditoría de sistema.
-- Permite leer archivos de log (`error.log`, `access.log`) sin necesidad de entrar por consola SSH.
-- Solo lectura para evitar borrar evidencias accidentalmente.
-
-### 7. PHP Migrator
-**Uso**: Modernización de código.
-- Pegue código antiguo (PHP 5.x).
-- La herramienta resaltará funciones obsoletas (`mysql_query`, etc.) y sugerirá sus equivalentes modernos (`mysqli`, `PDO`).
+Bienvenido a la guía oficial de **Microsistemas Suite**. Este documento le ayudará a dominar cada herramienta para maximizar su productividad.
 
 ---
 
-## Preguntas Frecuentes
+## 🧭 Introducción al Ecosistema
+La suite se organiza en un **Dashboard Central** que actúa como puerta de enlace a aplicaciones modulares. Cada herramienta en `apps/` es independiente pero comparte la misma estética y estándares de seguridad.
 
-**¿Puedo usar esto en mi servidor de producción?**
-Algunas herramientas como el **SQL Viewer** y **Log Viewer** son poderosas y sensibles. Se recomienda usarlas solo en entornos de desarrollo o proteger el acceso con contraseña (`.htaccess` o similar) si se despliegan en producción.
+---
 
-**¿Cómo actualizo las herramientas?**
-Si usa Docker, simplemente haga `git pull` y luego `docker-compose restart`.
+## 🛠️ Guía Detallada de Herramientas
+
+### 📦 Gestión de Datos y Bases de Datos
+#### SQL Viewer
+*   **Propósito**: Inspección ágil y depuración de bases de datos.
+*   **Workflow Pro**: Use la columna izquierda para explorar esquemas; el resaltado de sintaxis le ayudará a escribir consultas complejas.
+*   **Seguridad**: El sistema bloquea ejecuciones accidentales mediante diálogos de confirmación persistentes.
+
+#### Log Viewer
+*   **Propósito**: Auditoría y diagnóstico de errores en tiempo real.
+*   **Workflow Pro**: Filtre las líneas por severidad (`ERROR`, `WARNING`) usando las funciones del navegador (`Ctrl + F`) sobre la vista estilo consola.
+
+---
+
+### 💻 Modernización y Desarrollo
+#### PHP Migrator
+*   **Propósito**: Salto tecnológico de PHP 5.x a 8.2+.
+*   **Workflow Pro**: Pegue clases enteras; la herramienta detectará ineficiencias y ofrecerá alternativas basadas en la documentación oficial de PHP.
+
+#### Git Trainer
+*   **Propósito**: Dominio interactivo de flujos Git.
+*   **Workflow Pro**: Busque por "dolores de cabeza" comunes (ej: "olvidé añadir un archivo al último commit") para encontrar soluciones elegantes.
+
+---
+
+### 🔧 Utilidades de Configuración
+#### YAML Studio
+*   **Propósito**: Ingeniería de configuración impecable.
+*   **Workflow Pro**: Utilice las plantillas integradas para generar archivos `docker-compose.yml` base en segundos.
+
+#### Conversor & JS Tools
+*   **Propósito**: Sanitización y optimización de código.
+*   **Workflow Pro**: Integre estos pasos antes de subir sus archivos a producción para reducir el tamaño de carga y evitar ataques de inyección de caracteres.
+
+---
+
+## ❓ Preguntas Frecuentes (FAQ)
+
+### ¿Cómo añado mis propias herramientas?
+Consulte la [Guía de Contribución](../CONTRIBUTING.md#cómo-añadir-un-nuevo-microsistema).
+
+### ¿Es seguro habilitar el SQL Viewer en servidores de producción?
+**Solo si** el acceso está protegido por un VPN o un archivo `.htpasswd`. Por defecto, está diseñado para ser usado en entornos de red protegidos.
+
+### He perdido la conexión con la base de datos.
+Asegúrese de que el servicio `db` de Docker esté en ejecución o que las credenciales en su archivo `.env` coincidan con las de su servidor MySQL local.
