@@ -84,14 +84,27 @@ Para usuarios que prefieren un entorno local tradicional.
 - **Causa**: Está intentando abrir el archivo `.html` directamente con doble clic (`file://`).
 - **Solución**: Debe acceder siempre a través de `http://localhost/...`. Los navegadores bloquean la carga de archivos JSON locales por seguridad (CORS).
 
+### Error: "500 Internal Server Error" en Docker
+- **Causa**: El archivo `.env` no existe o tiene permisos incorrectos.
+- **Solución**: Ejecute `cp .env.example .env` y asegúrese de que el archivo es legible por el contenedor.
+
 ### Error: Credenciales de Base de Datos
-- Las herramientas están configuradas por defecto para usar:
-  - Host: `localhost` (o `db` en Docker)
-  - User: `root`
-  - Pass: `` (vacío) o `root` en Docker
-- Si su configuración es diferente, deberá ajustar el archivo de conexión en `apps/SqlViewer/index.php`.
+- Las herramientas están configuradas por defecto para usar los valores del archivo `.env`.
+- Si usas Docker, el host **DEBE** ser `db`, no `localhost`.
 
 ---
 
-## Soporte
-Para reportar errores, por favor abra un Issue en el repositorio o contacte al administrador del sistema.
+## 💡 Tips de Rendimiento y Producción
+1. **Optimización de Composer**: En tu servidor final, ejecuta `composer install --no-dev --optimize-autoloader` para una carga de clases ultra-rápida.
+2. **Caché de Apache**: Habilita `mod_expires` en Apache para que los archivos estáticos de herramientas como *Git Trainer* se carguen instantáneamente desde la caché del navegador.
+3. **Seguridad**: Si despliegas en un servidor público, utiliza un archivo `.htpasswd` para proteger el acceso a la carpeta `microsistemas`.
+
+---
+
+## Preguntas Frecuentes (FAQ)
+
+**¿Puedo añadir mis propios archivos de log al Log Viewer?**
+Sí, edita el array `$logFiles` en `apps/LogViewer/index.php` o utiliza una variable de entorno `LOG_PATH_[NOMBRE]`.
+
+**¿El SQL Viewer es seguro para PHPMyAdmin?**
+Es una alternativa ligera. Para gestión masiva, PHPMyAdmin es superior. Para consultas rápidas de depuración, SQL Viewer es más ágil.
