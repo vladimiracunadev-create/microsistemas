@@ -1,0 +1,14 @@
+.git
+.gitignore
+.github
+vendor
+node_modules
+*.log
+.env
+.env.example
+docker-compose.yml
+Dockerfile
+docs
+README.md
+ROADMAP.md
+CONTRIBUTING.md
