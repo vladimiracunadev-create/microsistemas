@@ -1,35 +1,57 @@
-# Contribuciones (CONTRIBUTING)
+# Guía de Contribución (CONTRIBUTING)
 
-Gracias por tu interés en contribuir. Este repositorio es una colección de microsistemas autocontenidos.
+¡Gracias por querer mejorar **Microsistemas Suite**! Para mantener la calidad de un paquete profesional, seguimos estos estándares.
 
-## Filosofía del proyecto
-- **Modularidad**: Cada microsistema vive en su propia carpeta en `apps/`.
-- **Independencia**: Los cambios en un módulo no deben romper a los demás.
-- **Seguridad**: Especial cuidado con herramientas de BD.
+## 📋 Proceso de Pull Request
 
-## Estructura de Directorios
-Si vas a añadir una nueva herramienta, crea una carpeta en `apps/NombreHerramienta/` que contenga:
-- `index.php` o `index.html` (Punto de entrada).
-- Sus propios assets (CSS/JS) o subcarpetas.
-- Un `README.md` propio explicando su uso.
+1. **Fork** el repositorio y crea una rama para tu cambio (ej: `feature/nueva-app` o `fix/error-db`).
+2. Implementa tus cambios siguiendo los **Estándares de Código**.
+3. Asegúrate de que el sistema pase los chequeos de Docker.
+4. Documenta cualquier cambio en la interfaz o configuración en el `README.md` del módulo.
+5. Abre un Pull Request describiendo claramente el propósito del cambio.
 
-## Pruebas
-Antes de enviar un Pull Request:
+---
 
-### Si usas Docker (Recomendado)
-1. Levanta el entorno: `docker-compose up -d`
-2. Verifica que tu módulo carga en `http://localhost:8080/apps/TuModulo/`
-3. Verifica que no rompe el Dashboard principal.
+## 🛠️ Estándares de Código
 
-### Si usas XAMPP
-1. Asegúrate de que las rutas relativas funcionen fuera de la raíz.
-2. Verifica que no haya errores de carga de recursos en la consola del navegador.
+Para asegurar que el proyecto se mantenga profesional y legible:
 
-## Estilo de Commits
-- `feat: Nueva herramienta de Regex`
-- `fix: Corrección de bug en Conversor`
-- `docs: Actualización de README`
-- `refactor: Limpieza de código en SqlViewer`
+### PHP (PSR-12)
+- Usa **Namespaces** (`Microsistemas\Core\..`) si añades lógica al core.
+- Declara tipos en las funciones siempre que sea posible.
+- Evita el uso de `include` manual; utiliza el **Autoloader** de Composer.
 
-## Licencia
-Al contribuir, aceptas que tu contribución se distribuya bajo los términos descritos en `LICENSE` y `NOTICE`.
+### JavaScript (ES6+)
+- Usa `const` y `let` en lugar de `var`.
+- Prefiere Funciones de Flecha (`=>`) para callbacks.
+- Comenta la lógica compleja de manipulación del DOM.
+
+### CSS
+- Utiliza **Variables CSS** definidas en `index.php` para mantener la consistencia visual.
+- Nomenclatura BEM o clases semánticas descriptivas.
+
+---
+
+## 🏗️ Cómo añadir un Nuevo Microsistema
+
+1. Crea una carpeta en `apps/MiHerramienta`.
+2. Incluye un `index.php` o `index.html`.
+3. **Registro**: Añade una nueva tarjeta en el archivo raíz `index.php` con el icono y descripción correspondiente.
+4. **Namespace**: Si necesitas lógica de servidor, añade una clase en `src/Utils/` y úsala mediante el autoloader.
+
+---
+
+## 💬 Estilo de Mensajes Git
+
+Seguimos la convención de **Conventional Commits**:
+- `feat:` Una nueva característica para el usuario.
+- `fix:` Corrección de un error.
+- `docs:` Cambios solo en la documentación.
+- `style:` Cambios que no afectan el significado del código (espacios, formato).
+- `refactor:` Cambio de código que no corrige un error ni añade funcionalidad.
+- `chore:` Tareas de mantenimiento (actualizar dependencias, configurar CI).
+
+---
+
+## ⚖️ Código de Conducta
+Sé amable, profesional y constructivo. Estamos aquí para aprender y construir mejores herramientas juntos.
