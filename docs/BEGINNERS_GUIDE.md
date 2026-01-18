@@ -1,53 +1,73 @@
-# Guía para Principiantes: ¿Por qué tantas carpetas? 🐣
+# Guía Detallada para Principiantes: Recorrido por el Taller 🐣
 
-Si eres nuevo en el desarrollo o este es tu primer contacto con una arquitectura profesional, ¡no te asustes! Aunque veas muchas carpetas y archivos, todo tiene un orden pensado para que trabajar sea más fácil, no más difícil.
-
-Imagina que este proyecto es un **Taller de Herramientas Organizado**. Aquí te explicamos qué hay en cada "cajón".
+Si quieres entender exactamente qué hay dentro de cada "cajón" de este proyecto, este manual es para ti. Vamos a abrir cada carpeta y explicar qué piezas tiene dentro y por qué son importantes.
 
 ---
 
-## 📂 Las Carpetas principales
+## 📂 1. La carpeta `apps/` (Las Herramientas)
+Esta es la zona de trabajo. Aquí es donde están los programas que tú abres y usas.
 
-### 🛠️ `apps/` (El Cuarto de Herramientas)
-Aquí es donde viven los programas que realmente usas (el Conversor, el SQL Viewer, etc.).
-- **Para qué sirve**: Para que cada herramienta esté en su propia "casa". 
-- **Ventaja**: Si quieres cambiar algo en una herramienta, no rompes las demás por accidente. Todo está separado y ordenado.
-
-### 🧠 `src/` (El "Cerebro" del Sistema)
-Aquí está el código que todas las aplicaciones comparten.
-- **Para qué sirve**: Para no repetir trabajo. Por ejemplo, la forma de conectarse a la base de datos se escribe una sola vez aquí, y todas las herramientas de la carpeta `apps/` la usan.
-- **Ventaja**: Si cambias la contraseña de tu base de datos, solo la cambias en un lugar, no en siete.
-
-### 📚 `docs/` (La Biblioteca de Manuales)
-Es el estante donde guardamos los libros de ayuda.
-- **Para qué sirve**: Para que el proyecto esté bien explicado (como esta misma guía).
-- **Ventaja**: Al estar en su propia carpeta, los manuales no se mezclan con el código de programación.
-
-### 📦 `vendor/` (Piezas de Repuesto de Fábrica)
-Aquí se guardan herramientas que otros programadores ya hicieron y que nosotros aprovechamos. 
-- **Importante**: **¡No toques nada aquí!** Esta carpeta la maneja automáticamente un programa llamado *Composer*.
-- **Ventaja**: Nos permite usar piezas de alta calidad sin tener que fabricarlas nosotros desde cero.
-
-### 🧪 `.github/` (La Fábrica Automática)
-Contiene las instrucciones para que el sitio de GitHub trabaje por ti.
-- **Para qué sirve**: Permite que, cada vez que subes un cambio, GitHub revise que todo esté bien y lo publique en internet automáticamente.
+*   **¿Qué hay dentro?**: Una carpeta por cada herramienta (ej. `SqlViewer/`, `Conversor/`).
+*   **En cada subcarpeta encontrarás**:
+    *   `index.php` o `index.html`: El archivo principal de la herramienta.
+    *   `README.md`: Las instrucciones específicas de esa herramienta.
+*   **Para el novato**: Piensa en esto como una galería de mini-sitios web que viven juntos pero no se molestan entre sí.
 
 ---
 
-## 📄 Los Archivos sueltos (Los Interruptores)
+## 📂 2. La carpeta `src/` (El Motor Central)
+Aquí es donde vive el "ingenio" que hace que todo funcione de forma moderna.
 
-*   **`index.php`**: Es la "Puerta de Entrada". Es lo primero que ves (el Dashboard) donde eliges qué herramienta usar.
-*   **`.env`**: Es una "Nota Secreta". Aquí guardas datos sensibles como contraseñas de bases de datos. Es como el post-it que pegas en la nevera con claves importantes.
-*   **`composer.json`**: Es la "Lista de la Compra". Le dice al sistema qué piezas de la carpeta `vendor/` necesitamos descargar.
-*   **`Dockerfile`**: Son las "Instrucciones de Montaje". Permiten que el proyecto se meta en una burbuja protegida (llamada contenedor) para que funcione igual en cualquier computadora del mundo.
+*   **Subcarpeta `Core/`**:
+    *   `Config.php`: El encargado de leer tus contraseñas y ajustes.
+    *   `Database.php`: El encargado de hablar con MySQL.
+*   **Para el novato**: Es como la sala de máquinas de un barco. Los pasajeros (las apps) no la ven, pero sin ella el barco no se mueve.
 
 ---
 
-## 🎯 ¿Por qué es mejor así?
+## 📂 3. La carpeta `docs/` (La Biblioteca)
+Aquí guardamos el conocimiento del proyecto para que no se pierda.
 
-Aunque parezca que hay muchas cosas, esta estructura te da **Superpoderes**:
-1.  **Orden total**: Sabes exactamente dónde buscar cada cosa.
-2.  **Seguridad**: Tus contraseñas están protegidas en un archivo aparte.
-3.  **Crecimiento**: Si mañana quieres añadir una herramienta nueva, solo creas una carpeta en `apps/` y listo.
+*   **`ARCHITECTURE.md`**: El mapa técnico de cómo se conectan las piezas.
+*   **`INSTALL.md`**: El paso a paso para que el sistema funcione en tu PC.
+*   **`USER_MANUAL.md`**: La guía de uso para aprender a usar los programas.
+*   **`SYSTEMS_CATALOG.md`**: Una lista detallada de qué hace cada herramienta.
+*   **Para el novato**: Es el estante donde tienes todos los manuales de instrucciones guardados en un solo lugar.
 
-**¡Felicidades!** Ahora ya conoces cómo funciona por dentro una suite de herramientas profesional. 🚀✨
+---
+
+## 📂 4. La carpeta `vendor/` (Piezas de Fábrica)
+Esta carpeta es automática. La crea un programa llamado *Composer*.
+
+*   **¿Qué hay dentro?**: Librerías externas (código hecho por otras personas) que nosotros usamos para que el sistema sea más potente (ej: el sistema que gestiona los archivos `.env`).
+*   **Para el novato**: Es como si compraras un mueble de IKEA y esta carpeta fuera la caja de tornillos y llaves Allen que vienen de fábrica. **No necesitas tocarla.**
+
+---
+
+## 📂 5. La carpeta `.github/` (La Automatización)
+Esta carpeta conecta tu código con los servidores de GitHub.
+
+*   **Subcarpeta `workflows/`**:
+    *   `docker-publish.yml`: Una lista de órdenes que GitHub sigue para fabricar tu paquete cada vez que subes un cambio.
+*   **Para el novato**: Es como tener un robot invisible que limpia y organiza tu proyecto cada vez que tú terminas de trabajar.
+
+---
+
+## 📂 6. La carpeta `vendor/` (¡Recuérdalo!)
+Lo mencionamos de nuevo porque es un error común: esta carpeta se borra y se crea sola. Si alguna vez el sistema falla porque "falta una pieza", lo más probable es que necesites que *Composer* rellene esta carpeta de nuevo.
+
+---
+
+## 📄 Archivos clave en la raíz (Los Controles)
+
+*   **`index.php`**: El menú principal que ves al principio.
+*   **`.env`**: Donde escribes los datos de tu base de datos. Si este archivo falta, el SQL Viewer no sabrá dónde conectarse.
+*   **`composer.json`**: El "Inventario". Si queremos una herramienta nueva de internet, la anotamos aquí.
+*   **`Dockerfile`**: El "Molde". Le dice a Docker cómo fabricar la burbuja donde vivirá tu sistema.
+
+---
+
+## 💡 Consejo para el Principiante
+Si quieres aprender, empieza explorando las carpetas dentro de **`apps/`**. Ahí verás cómo se hace una página web sencilla. Luego, cuando te sientas valiente, asómate a **`src/Core/`** para ver cómo la magia de PHP conecta todo.
+
+**¡Diviértete explorando! El orden es tu mejor amigo.** 🚀✨
