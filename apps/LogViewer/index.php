@@ -1,4 +1,8 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+use Microsistemas\Core\Config;
+
 /**
  * Microsistema: Log Viewer
  * Propósito: Visualización segura de logs del sistema en modo lectura.
@@ -19,7 +23,7 @@ if (array_key_exists($selectedLog, $logFiles)) {
     $logPath = $logFiles[$selectedLog];
 
     // Intentar leer ruta desde variable de entorno si existe
-    $envPath = getenv('LOG_PATH_' . strtoupper(str_replace(' ', '_', $selectedLog)));
+    $envPath = Config::getInstance()->get('LOG_PATH_' . strtoupper(str_replace(' ', '_', $selectedLog)));
     if ($envPath)
         $logPath = $envPath;
 

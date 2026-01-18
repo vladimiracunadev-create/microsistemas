@@ -1,17 +1,22 @@
-// CONFIGURACIÓN BÁSICA (Cargada desde variables de entorno)
-$host = getenv('DB_HOST') ?: 'localhost';
-$user = getenv('DB_USER') ?: 'root';
-$password = getenv('DB_PASS') !== false ? getenv('DB_PASS') : '';
+<?php
+require_once __DIR__ . '/../../vendor/autoload.php';
 
-// Conexión al servidor (sin seleccionar BD todavía)
-$conn = @mysqli_connect($host, $user, $password);
-if (!$conn) {
-die('<div style="color:red;padding:20px;border:1px solid red;">
-    <h2>Error de conexión a la base de datos</h2>
-    <p>Asegúrate de configurar correctamente las variables de entorno o el archivo .env.</p>
-    <p>Detalle técnico: ' . mysqli_connect_error() . '</p>
-</div>');
+use Microsistemas\Core\Database;
+use Microsistemas\Core\Config;
+
+try {
+    $conn = Database::getConnection();
+} catch (\Exception $e) {
+    die('<div style="color:white;background:red;padding:20px;border-radius:8px;font-family:sans-serif;">
+            <h2>🚨 Error Crítico de Conexión</h2>
+            <p>' . $e->getMessage() . '</p>
+            <p>Verifica tu archivo <code>.env</code> o configuración de sistema.</p>
+         </div>');
 }
+
+$host = Config::getInstance()->get('DB_HOST', 'localhost');
+$user = Config::getInstance()->get('DB_USER', 'root');
+
 
 // Forzamos charset (opcional pero recomendable)
 mysqli_set_charset($conn, 'utf8');
