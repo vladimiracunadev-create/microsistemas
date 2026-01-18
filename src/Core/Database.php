@@ -2,10 +2,25 @@
 
 namespace Microsistemas\Core;
 
+/**
+ * Clase Database
+ * 
+ * Centraliza la gestión de conexiones MySQL utilizando el patrón Singleton
+ * y la configuración cargada desde el Core.
+ * 
+ * @package Microsistemas\Core
+ */
 class Database
 {
+    /** @var \mysqli|null Conexión activa a la base de datos */
     private static $conn = null;
 
+    /**
+     * Obtiene una conexión activa a MySQL.
+     * 
+     * @throws \Exception Si la conexión falla.
+     * @return \mysqli Instancia de conexión MySQLi.
+     */
     public static function getConnection()
     {
         if (self::$conn === null) {
@@ -27,6 +42,11 @@ class Database
         return self::$conn;
     }
 
+    /**
+     * Cierra la conexión activa a la base de datos.
+     * 
+     * @return void
+     */
     public static function close()
     {
         if (self::$conn) {
