@@ -1,54 +1,35 @@
 # Contribuciones (CONTRIBUTING)
 
-Gracias por tu interés en contribuir. Este repositorio es una colección de microsistemas autocontenidos, orientados a productividad, soporte y modernización.
+Gracias por tu interés en contribuir. Este repositorio es una colección de microsistemas autocontenidos.
 
 ## Filosofía del proyecto
-- Microsistemas simples, claros y reutilizables.
-- Preferencia por dependencias mínimas.
-- Seguridad por defecto (especialmente en herramientas de BD y archivos).
-- Compatibilidad con entornos antiguos y modernos (PHP 5.4 → 8.x según microsistema).
+- **Modularidad**: Cada microsistema vive en su propia carpeta en `apps/`.
+- **Independencia**: Los cambios en un módulo no deben romper a los demás.
+- **Seguridad**: Especial cuidado con herramientas de BD.
 
-## Cómo proponer cambios
-1) Haz un fork del repositorio.
-2) Crea una rama:
-   - `feat/<nombre>` para mejoras
-   - `fix/<nombre>` para correcciones
-   - `docs/<nombre>` para documentación
-3) Mantén los cambios acotados (un objetivo por PR).
-4) Abre un Pull Request explicando:
-   - Qué problema resuelve
-   - Cómo se prueba
-   - Si afecta seguridad o compatibilidad
+## Estructura de Directorios
+Si vas a añadir una nueva herramienta, crea una carpeta en `apps/NombreHerramienta/` que contenga:
+- `index.php` o `index.html` (Punto de entrada).
+- Sus propios assets (CSS/JS) o subcarpetas.
+- Un `README.md` propio explicando su uso.
 
-## Estándares mínimos
-- No introducir credenciales o datos sensibles en commits.
-- Documentar nuevos parámetros/archivos en el README del microsistema afectado.
-- Mantener el microsistema autocontenido (sin romper su ejecución local).
-- Evitar romper compatibilidad en PHP cuando el microsistema declara soporte legacy.
+## Pruebas
+Antes de enviar un Pull Request:
 
-## Estilo de commits (sugerido)
-- `feat: ...`
-- `fix: ...`
-- `docs: ...`
-- `refactor: ...`
-- `chore: ...`
+### Si usas Docker (Recomendado)
+1. Levanta el entorno: `docker-compose up -d`
+2. Verifica que tu módulo carga en `http://localhost:8080/apps/TuModulo/`
+3. Verifica que no rompe el Dashboard principal.
 
-## Pruebas manuales (mínimas)
-Antes de PR:
-- Abrir el microsistema en entorno local (XAMPP/Apache).
-- Verificar que no haya errores en consola (para HTML/JS).
-- Verificar que las rutas a recursos (`.css`, `.js`, `.json`) funcionen por `http://localhost/...` (no `file://`).
+### Si usas XAMPP
+1. Asegúrate de que las rutas relativas funcionen fuera de la raíz.
+2. Verifica que no haya errores de carga de recursos en la consola del navegador.
 
-## Seguridad
-Si un cambio afecta:
-- lectura de archivos
-- ejecución de SQL
-- configuración sensible
-
-Debe incluir:
-- validaciones/whitelists
-- modo seguro por defecto
-- nota en `SECURITY.md` o README del microsistema
+## Estilo de Commits
+- `feat: Nueva herramienta de Regex`
+- `fix: Corrección de bug en Conversor`
+- `docs: Actualización de README`
+- `refactor: Limpieza de código en SqlViewer`
 
 ## Licencia
 Al contribuir, aceptas que tu contribución se distribuya bajo los términos descritos en `LICENSE` y `NOTICE`.

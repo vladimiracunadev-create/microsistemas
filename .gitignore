@@ -1,0 +1,21 @@
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Environments
+.env
+.env.local
+
+# Docker
+docker-compose.override.yml
+
+# IDEs
+.vscode/
+.idea/
+
+# PHP
+vendor/
+composer.lock
+
+# Logs
+*.log
