@@ -1,8 +1,10 @@
+<?php require_once __DIR__ . '/../../vendor/autoload.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Codificador de Texto</title>
   <style>
     body {
@@ -11,19 +13,22 @@
       margin: 0;
       padding: 20px;
     }
+
     .container {
       max-width: 800px;
       margin: auto;
       background: #fff;
       padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
+
     h1 {
       text-align: center;
       color: #333;
       margin-bottom: 20px;
     }
+
     textarea {
       width: 100%;
       height: 150px;
@@ -33,11 +38,13 @@
       resize: vertical;
       font-size: 14px;
     }
+
     .buttons {
       margin-top: 10px;
       display: flex;
       gap: 10px;
     }
+
     .buttons button {
       flex: 1;
       padding: 10px;
@@ -47,18 +54,28 @@
       font-size: 16px;
       color: #fff;
     }
-    #encodeBtn { background: #4CAF50; }
-    #clearBtn  { background: #f44336; }
+
+    #encodeBtn {
+      background: #4CAF50;
+    }
+
+    #clearBtn {
+      background: #f44336;
+    }
+
     .output {
       margin-top: 20px;
     }
+
     .output-section {
       margin-bottom: 20px;
     }
+
     .output-section h2 {
       margin-bottom: 5px;
       color: #555;
     }
+
     .output-section pre {
       background: #efefef;
       padding: 10px;
@@ -69,6 +86,7 @@
       overflow: auto;
       font-size: 14px;
     }
+
     .copy-btn {
       margin-top: 5px;
       padding: 6px 12px;
@@ -81,6 +99,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <h1>Codificador de Texto</h1>
@@ -166,14 +185,14 @@
     document.getElementById('encodeBtn').addEventListener('click', () => {
       const txt = document.getElementById('inputText').value;
       document.getElementById('htmlNumericOutput').textContent = htmlNumericEncode(txt);
-      document.getElementById('htmlNamedOutput').textContent   = htmlNamedEncode(txt);
-      document.getElementById('jsOutput').textContent         = jsUnicodeEncode(txt);
+      document.getElementById('htmlNamedOutput').textContent = htmlNamedEncode(txt);
+      document.getElementById('jsOutput').textContent = jsUnicodeEncode(txt);
     });
 
     // Al hacer clic en "Limpiar"
     document.getElementById('clearBtn').addEventListener('click', () => {
       document.getElementById('inputText').value = '';
-      ['htmlNumericOutput','htmlNamedOutput','jsOutput'].forEach(id =>
+      ['htmlNumericOutput', 'htmlNamedOutput', 'jsOutput'].forEach(id =>
         document.getElementById(id).textContent = ''
       );
     });
@@ -191,4 +210,5 @@
     });
   </script>
 </body>
+
 </html>
