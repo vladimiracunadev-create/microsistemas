@@ -17,10 +17,16 @@ $content = 'Selecciona un archivo de log para visualizar...';
 
 if (array_key_exists($selectedLog, $logFiles)) {
     $logPath = $logFiles[$selectedLog];
+
+    // Intentar leer ruta desde variable de entorno si existe
+    $envPath = getenv('LOG_PATH_' . strtoupper(str_replace(' ', '_', $selectedLog)));
+    if ($envPath)
+        $logPath = $envPath;
+
     if (file_exists($logPath)) {
         $content = htmlspecialchars(file_get_contents($logPath));
     } else {
-        $content = "El archivo [{$logPath}] no existe en el servidor.";
+        $content = "El archivo [{$logPath}] no existe. \n\nTip: Puedes configurar rutas personalizadas en el archivo .env o en docker-compose.yml";
     }
 }
 ?>

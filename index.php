@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,7 +58,7 @@
             border-radius: 12px;
             padding: 25px;
             transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -65,7 +66,7 @@
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             border-color: var(--accent);
         }
 
@@ -90,8 +91,15 @@
             margin-bottom: 10px;
         }
 
-        .badge.php { background-color: #4f5b93; color: white; }
-        .badge.js { background-color: #f7df1e; color: black; }
+        .badge.php {
+            background-color: #4f5b93;
+            color: white;
+        }
+
+        .badge.js {
+            background-color: #f7df1e;
+            color: black;
+        }
 
         .btn {
             display: inline-block;
@@ -111,11 +119,20 @@
         }
     </style>
 </head>
+
 <body>
 
     <header>
         <h1>Microsistemas</h1>
         <p class="subtitle">Suite de herramientas de desarrollo y productividad</p>
+        <div style="margin-top: 20px;">
+            <a href="docs/USER_MANUAL.md"
+                style="color: var(--accent); text-decoration: none; font-size: 0.9rem; margin: 0 10px;">📖 Manual de
+                Usuario</a>
+            <a href="docs/INSTALL.md"
+                style="color: var(--accent); text-decoration: none; font-size: 0.9rem; margin: 0 10px;">🚀 Guía de
+                Instalación</a>
+        </div>
     </header>
 
     <div class="grid">
@@ -168,9 +185,9 @@
             </div>
             <a href="apps/YmlGenerator/" class="btn">Abrir Herramienta</a>
         </div>
-        
-         <!-- Tarjeta 6 -->
-         <div class="card">
+
+        <!-- Tarjeta 6 -->
+        <div class="card">
             <div>
                 <span class="badge php">PHP</span>
                 <h2>Log Viewer</h2>
@@ -179,8 +196,8 @@
             <a href="apps/LogViewer/" class="btn">Abrir Herramienta</a>
         </div>
 
-         <!-- Tarjeta 7 -->
-         <div class="card">
+        <!-- Tarjeta 7 -->
+        <div class="card">
             <div>
                 <span class="badge php">PHP</span>
                 <h2>PHP Migrator</h2>
@@ -191,4 +208,5 @@
     </div>
 
 </body>
+
 </html>
