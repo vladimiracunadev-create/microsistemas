@@ -4,103 +4,117 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 use Microsistemas\Core\Database;
 use Microsistemas\Core\Config;
 
+// 1) OBTENER CONFIGURACIÓN INICIAL
+$config = Config::getInstance();
+$drivers = [
+    'mysql' => 'MySQL / MariaDB',
+    'pgsql' => 'PostgreSQL',
+    'sqlite' => 'SQLite'
+];
+
+$driver = $_REQUEST['driver'] ?? $config->get('DB_DRIVER', 'mysql');
+$host = $_REQUEST['host'] ?? $config->get('DB_HOST', 'localhost');
+$user = $_REQUEST['user'] ?? $config->get('DB_USER', 'root');
+$pass = $_REQUEST['pass'] ?? $config->get('DB_PASS', '');
+$db_selected = $_REQUEST['db'] ?? $config->get('DB_NAME', '');
+
+$conn = null;
+$error = null;
+
 try {
-    $conn = Database::getConnection();
+    $conn = Database::getPDO($driver, $host, $user, $pass, $db_selected);
 } catch (\Exception $e) {
-    die('<div style="color:white;background:red;padding:20px;border-radius:8px;font-family:sans-serif;">
-            <h2>🚨 Error Crítico de Conexión</h2>
-            <p>' . $e->getMessage() . '</p>
-            <p>Verifica tu archivo <code>.env</code> o configuración de sistema.</p>
-         </div>');
+    $error = $e->getMessage();
 }
 
-$host = Config::getInstance()->get('DB_HOST', 'localhost');
-$user = Config::getInstance()->get('DB_USER', 'root');
-
-
-// Forzamos charset (opcional pero recomendable)
-mysqli_set_charset($conn, 'utf8');
-
-// 1) OBTENER LISTA DE BASES DE DATOS
+// 2) OBTENER LISTA DE BASES DE DATOS (Solo para MySQL/Postgres)
 $databases = [];
-$resDB = mysqli_query($conn, "SHOW DATABASES");
-while ($row = mysqli_fetch_row($resDB)) {
-$databases[] = $row[0];
+if ($conn && $driver !== 'sqlite') {
+    try {
+        if ($driver === 'mysql') {
+            $stmt = $conn->query("SHOW DATABASES");
+            $databases = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        } elseif ($driver === 'pgsql') {
+            $stmt = $conn->query("SELECT datname FROM pg_database WHERE datistemplate = false");
+            $databases = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        }
+    } catch (\Exception $e) {
+        // Silencioso o log error
+    }
 }
 
-// 2) DETERMINAR BD SELECCIONADA (GET o POST)
-$database = '';
-if (isset($_REQUEST['db']) && in_array($_REQUEST['db'], $databases, true)) {
-$database = $_REQUEST['db'];
-} elseif (!empty($databases)) {
-// Si no viene nada, uso la primera BD como defecto
-$database = $databases[0];
-}
-
-// 3) SELECCIONAR BD Y OBTENER TABLAS / VISTAS
+// 3) OBTENER TABLAS Y VISTAS
 $tables = [];
 $views = [];
 
-if ($database !== '') {
-if (!mysqli_select_db($conn, $database)) {
-die('No se pudo seleccionar la base de datos: ' . mysqli_error($conn));
-}
-
-// Tablas
-$resTables = mysqli_query($conn, "SHOW TABLES");
-while ($row = mysqli_fetch_row($resTables)) {
-$tables[] = $row[0];
-}
-
-// Vistas
-$resViews = mysqli_query($conn, "SHOW FULL TABLES WHERE Table_type = 'VIEW'");
-while ($row = mysqli_fetch_row($resViews)) {
-$views[] = $row[0];
-}
-}
-
-// 4) EJECUCIÓN DE CONSULTA (POST)
-$queryResultHtml = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query'])) {
-$query = trim($_POST['query']);
-
-if ($query !== '') {
-$result = mysqli_query($conn, $query);
-
-if ($result instanceof mysqli_result) {
-// SELECT u otra consulta que devuelve filas
-ob_start();
-echo "<table>
-    <thead>
-        <tr>";
-            $fields = mysqli_num_fields($result);
-            for ($i = 0; $i < $fields; $i++) { $fieldInfo=mysqli_fetch_field_direct($result, $i); echo "<th>" .
-                htmlspecialchars($fieldInfo->name) . "</th>";
+if ($conn) {
+    try {
+        if ($driver === 'mysql' || $driver === 'mariadb') {
+            $stmt = $conn->query("SHOW FULL TABLES");
+            while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+                if ($row[1] === 'VIEW') {
+                    $views[] = $row[0];
+                } else {
+                    $tables[] = $row[0];
                 }
-                echo "</tr>
-    </thead>
-    <tbody>";
-
-        while ($row = mysqli_fetch_assoc($result)) {
-        echo "<tr>";
-            foreach ($row as $value) {
-            echo "<td>" . htmlspecialchars((string)$value) . "</td>";
             }
-            echo "</tr>";
+        } elseif ($driver === 'pgsql') {
+            $stmt = $conn->query("SELECT table_name, table_type FROM information_schema.tables WHERE table_schema = 'public'");
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                if ($row['table_type'] === 'VIEW') {
+                    $views[] = $row['table_name'];
+                } else {
+                    $tables[] = $row['table_name'];
+                }
+            }
+        } elseif ($driver === 'sqlite') {
+            $stmt = $conn->query("SELECT name, type FROM sqlite_master WHERE type IN ('table', 'view') AND name NOT LIKE 'sqlite_%'");
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                if ($row['type'] === 'view') {
+                    $views[] = $row['name'];
+                } else {
+                    $tables[] = $row['name'];
+                }
+            }
         }
-        echo "</tbody>
-</table>";
-$queryResultHtml = ob_get_clean();
-} elseif ($result === true) {
-// INSERT, UPDATE, DELETE, etc.
-$affected = mysqli_affected_rows($conn);
-$queryResultHtml = "Consulta ejecutada con éxito. Filas afectadas: " . $affected . ".";
-} else {
-$queryResultHtml = "Error en la consulta: " . htmlspecialchars(mysqli_error($conn));
+    } catch (\Exception $e) {
+        $error = "Error al listar tablas: " . $e->getMessage();
+    }
 }
-} else {
-$queryResultHtml = "No se ha enviado ninguna consulta.";
-}
+
+// 4) EJECUCIÓN DE CONSULTA
+$queryResultHtml = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query']) && $conn) {
+    $query = trim($_POST['query']);
+    if ($query !== '') {
+        try {
+            $stmt = $conn->query($query);
+            if ($stmt->columnCount() > 0) {
+                // Es un SELECT u otra consulta con resultados
+                ob_start();
+                echo "<table><thead><tr>";
+                for ($i = 0; $i < $stmt->columnCount(); $i++) {
+                    $col = $stmt->getColumnMeta($i);
+                    echo "<th>" . htmlspecialchars($col['name']) . "</th>";
+                }
+                echo "</tr></thead><tbody>";
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<tr>";
+                    foreach ($row as $value) {
+                        echo "<td>" . htmlspecialchars((string) $value) . "</td>";
+                    }
+                    echo "</tr>";
+                }
+                echo "</tbody></table>";
+                $queryResultHtml = ob_get_clean();
+            } else {
+                $affected = $stmt->rowCount();
+                $queryResultHtml = "<div class='success'>Consulta ejecutada con éxito. Filas afectadas: $affected.</div>";
+            }
+        } catch (\PDOException $e) {
+            $queryResultHtml = "<div class='error'>Error en la consulta: " . htmlspecialchars($e->getMessage()) . "</div>";
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -109,214 +123,255 @@ $queryResultHtml = "No se ha enviado ninguna consulta.";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        Mini PhpMyAdmin - BD: <?php echo htmlspecialchars($database); ?>
-        - Tablas (<?php echo count($tables); ?>)
-        - Vistas (<?php echo count($views); ?>)
-    </title>
+    <title>SqlViewer Multi-Motor</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        :root {
+            --primary: #007bff;
+            --sidebar-bg: #f8f9fa;
+            --border: #dee2e6;
+        }
+
         body {
             display: flex;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             height: 100vh;
             margin: 0;
+            color: #333;
         }
 
         #sidebar {
-            width: 20%;
-            border-right: 1px solid #ccc;
-            padding: 10px;
+            width: 280px;
+            border-right: 1px solid var(--border);
+            padding: 15px;
             height: 100%;
             overflow-y: auto;
-            background-color: #f8f9fa;
-            box-sizing: border-box;
-        }
-
-        #tables-section,
-        #views-section {
-            margin-bottom: 20px;
+            background: var(--sidebar-bg);
         }
 
         #content {
-            width: 80%;
+            flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 10px;
-            background-color: #ffffff;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .config-group {
+            margin-bottom: 15px;
+        }
+
+        .config-group label {
+            display: block;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
             box-sizing: border-box;
-        }
-
-        #db-info {
-            background-color: #e9ecef;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-        }
-
-        #query-execution {
-            background-color: #e9ecef;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .table-item,
-        .view-item {
-            cursor: pointer;
-            padding: 5px;
-            margin-bottom: 5px;
-            border-radius: 3px;
-        }
-
-        .table-item:hover,
-        .view-item:hover {
-            background-color: #f0f0f0;
         }
 
         textarea {
-            width: 100%;
-            height: 150px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            padding: 5px;
-            box-sizing: border-box;
+            height: 120px;
+            font-family: monospace;
         }
 
         button {
-            background-color: #007bff;
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 16px;
-            border-radius: 5px;
+            padding: 10px 20px;
+            border-radius: 4px;
             cursor: pointer;
+            font-weight: bold;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background: #0056b3;
+        }
+
+        .item {
+            padding: 6px;
+            cursor: pointer;
+            border-radius: 4px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        .item:hover {
+            background: #e9ecef;
+        }
+
+        .item i {
+            margin-right: 8px;
+            color: #666;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid #000;
+            margin-top: 20px;
+            font-size: 0.9rem;
         }
 
         th,
         td {
-            padding: 8px;
+            border: 1px solid var(--border);
+            padding: 10px;
             text-align: left;
         }
 
-        select {
-            padding: 4px;
+        th {
+            background: #f1f3f5;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .error {
+            color: #721c24;
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success {
+            color: #155724;
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            border: 1px solid #c3e6cb;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: #e9ecef;
+            float: right;
         }
     </style>
 </head>
 
 <body>
     <div id="sidebar">
-        <!-- Selector de Base de Datos -->
-        <form method="GET" id="db-form">
-            <label for="db-select"><strong>Base de datos:</strong></label><br>
-            <select name="db" id="db-select" onchange="document.getElementById('db-form').submit();">
-                <?php foreach ($databases as $dbName): ?>
-                    <option value="<?php echo htmlspecialchars($dbName); ?>" <?php echo ($dbName === $database) ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($dbName); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
+        <h3><i class="fas fa-database"></i> SqlViewer</h3>
+
+        <?php if ($error): ?>
+            <div class="error"><?php echo htmlspecialchars($error); ?></div>
+        <?php endif; ?>
+
+        <form method="GET">
+            <div class="config-group">
+                <label>Motor</label>
+                <select name="driver" onchange="this.form.submit()">
+                    <?php foreach ($drivers as $val => $lbl): ?>
+                        <option value="<?php echo $val; ?>" <?php echo ($driver === $val) ? 'selected' : ''; ?>>
+                            <?php echo $lbl; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <?php if ($driver !== 'sqlite'): ?>
+                <div class="config-group">
+                    <label>Host</label>
+                    <input type="text" name="host" value="<?php echo htmlspecialchars($host); ?>">
+                </div>
+                <div class="config-group">
+                    <label>Usuario</label>
+                    <input type="text" name="user" value="<?php echo htmlspecialchars($user); ?>">
+                </div>
+                <div class="config-group">
+                    <label>Password</label>
+                    <input type="password" name="pass" value="<?php echo htmlspecialchars($pass); ?>">
+                </div>
+                <div class="config-group">
+                    <label>Base de Datos</label>
+                    <?php if (!empty($databases)): ?>
+                        <select name="db" onchange="this.form.submit()">
+                            <option value="">-- Seleccionar --</option>
+                            <?php foreach ($databases as $dbName): ?>
+                                <option value="<?php echo htmlspecialchars($dbName); ?>" <?php echo ($dbName === $db_selected) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($dbName); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    <?php else: ?>
+                        <input type="text" name="db" value="<?php echo htmlspecialchars($db_selected); ?>">
+                    <?php endif; ?>
+                </div>
+            <?php else: ?>
+                <div class="config-group">
+                    <label>Ruta Archivo SQLite</label>
+                    <input type="text" name="host" value="<?php echo htmlspecialchars($host); ?>" placeholder="db.sqlite">
+                    <small>Usa ruta absoluta o relativa al core.</small>
+                </div>
+            <?php endif; ?>
+
+            <button type="submit" style="width: 100%">Conectar / Refrescar</button>
         </form>
 
         <hr>
 
-        <div id="tables-section">
-            <h3>Tablas (<?php echo count($tables); ?>)</h3>
-            <?php if (!empty($tables)): ?>
-                <?php foreach ($tables as $table): ?>
-                    <div class="table-item" onclick="showTable('<?php echo htmlspecialchars($table); ?>')">
-                        <?php echo htmlspecialchars($table); ?>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>Sin tablas.</p>
-            <?php endif; ?>
-        </div>
+        <h4>Tablas <span class="badge"><?php echo count($tables); ?></span></h4>
+        <?php foreach ($tables as $t): ?>
+            <div class="item" onclick="setQuery('<?php echo $t; ?>')"><i class="fas fa-table"></i>
+                <?php echo htmlspecialchars($t); ?></div>
+        <?php endforeach; ?>
 
-        <div id="views-section">
-            <h3>Vistas (<?php echo count($views); ?>)</h3>
-            <?php if (!empty($views)): ?>
-                <?php foreach ($views as $view): ?>
-                    <div class="view-item" onclick="showTable('<?php echo htmlspecialchars($view); ?>')">
-                        <?php echo htmlspecialchars($view); ?>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>Sin vistas.</p>
-            <?php endif; ?>
-        </div>
+        <h4>Vistas <span class="badge"><?php echo count($views); ?></span></h4>
+        <?php foreach ($views as $v): ?>
+            <div class="item" onclick="setQuery('<?php echo $v; ?>')"><i class="fas fa-eye"></i>
+                <?php echo htmlspecialchars($v); ?></div>
+        <?php endforeach; ?>
     </div>
 
     <div id="content">
-        <div id="db-info">
-            <h3>Información de la Base de Datos</h3>
-            <p>
-                Servidor: <strong><?php echo htmlspecialchars($host); ?></strong><br>
-                Usuario: <strong><?php echo htmlspecialchars($user); ?></strong><br>
-                Conectado a: <strong><?php echo htmlspecialchars($database); ?></strong><br>
-                Tablas: <strong><?php echo count($tables); ?></strong> |
-                Vistas: <strong><?php echo count($views); ?></strong>
-            </p>
-        </div>
+        <form method="POST">
+            <input type="hidden" name="driver" value="<?php echo htmlspecialchars($driver); ?>">
+            <input type="hidden" name="host" value="<?php echo htmlspecialchars($host); ?>">
+            <input type="hidden" name="user" value="<?php echo htmlspecialchars($user); ?>">
+            <input type="hidden" name="pass" value="<?php echo htmlspecialchars($pass); ?>">
+            <input type="hidden" name="db" value="<?php echo htmlspecialchars($db_selected); ?>">
 
-        <div id="query-execution">
-            <h3>Ejecutar Query</h3>
-            <form method="POST" onsubmit="return confirmQuery();">
-                <!-- Mantener la BD seleccionada en el POST -->
-                <input type="hidden" name="db" value="<?php echo htmlspecialchars($database); ?>">
-                <textarea name="query" placeholder="Escriba su consulta SQL aquí..."><?php
-                echo isset($_POST['query']) ? htmlspecialchars($_POST['query']) : '';
-                ?></textarea><br>
-                <button type="submit">Ejecutar</button>
-            </form>
-        </div>
+            <h3>Ejecutar SQL (<?php echo strtoupper($driver); ?>)</h3>
+            <textarea name="query"
+                placeholder="SELECT * FROM ..."><?php echo isset($_POST['query']) ? htmlspecialchars($_POST['query']) : ''; ?></textarea>
+            <br><br>
+            <button type="submit"><i class="fas fa-play"></i> Ejecutar Consulta</button>
+        </form>
 
-        <div id="result">
+        <div id="results">
             <?php echo $queryResultHtml; ?>
         </div>
     </div>
 
     <script>
-        function showTable(tableName) {
-            const textarea = document.querySelector('textarea[name="query"]');
-            textarea.value = 'SELECT * FROM `' + tableName + '` LIMIT 100;';
-        }
-
-        function confirmQuery() {
-            const textarea = document.querySelector('textarea[name="query"]');
-            const query = textarea.value.trim().toUpperCase();
-
-            if (query.startsWith('INSERT') ||
-                query.startsWith('UPDATE') ||
-                query.startsWith('DELETE') ||
-                query.startsWith('DROP') ||
-                query.startsWith('TRUNCATE') ||
-                query.startsWith('ALTER')) {
-
-                return confirm('Esta consulta puede modificar datos.\n¿Está seguro de que desea ejecutarla?');
+        function setQuery(table) {
+            const driver = "<?php echo $driver; ?>";
+            let q = "";
+            if (driver === 'pgsql') {
+                q = 'SELECT * FROM "public"."' + table + '" LIMIT 100;';
+            } else if (driver === 'sqlite' || driver === 'mysql') {
+                q = 'SELECT * FROM `' + table + '` LIMIT 100;';
             }
-            return true;
+            document.querySelector('textarea').value = q;
         }
     </script>
 </body>
 
 </html>
 <?php
-mysqli_close($conn);
+Database::close();
 ?>
