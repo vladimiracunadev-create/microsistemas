@@ -1,0 +1,420 @@
+{
+  "safety_factor": 0.7,
+  "os": {
+    "linux": {
+      "label": "Linux",
+      "mult": 1.0,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "windows": {
+      "label": "Windows",
+      "mult": 0.9,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    }
+  },
+  "web_server": {
+    "nginx": {
+      "label": "Nginx",
+      "mult": 1.0,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "apache": {
+      "label": "Apache",
+      "mult": 0.85,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "iis": {
+      "label": "IIS",
+      "mult": 0.9,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "caddy": {
+      "label": "Caddy",
+      "mult": 0.95,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    }
+  },
+  "runtime": {
+    "node": {
+      "label": "Node.js",
+      "rps_per_core_base": 120,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "php-fpm": {
+      "label": "PHP-FPM",
+      "rps_per_core_base": 90,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "python-gunicorn": {
+      "label": "Python + Gunicorn",
+      "rps_per_core_base": 80,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "java-tomcat": {
+      "label": "Java + Tomcat",
+      "rps_per_core_base": 100,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    ".net": {
+      "label": ".NET",
+      "rps_per_core_base": 110,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    }
+  },
+  "db": {
+    "postgres": {
+      "label": "PostgreSQL",
+      "lat_ms": 10,
+      "conn_per_core": 60,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "mysql": {
+      "label": "MySQL",
+      "lat_ms": 12,
+      "conn_per_core": 50,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "sqlserver": {
+      "label": "SQL Server",
+      "lat_ms": 14,
+      "conn_per_core": 45,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "mongodb": {
+      "label": "MongoDB",
+      "lat_ms": 8,
+      "conn_per_core": 120,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "cassandra": {
+      "label": "Cassandra",
+      "lat_ms": 8,
+      "conn_per_core": 200,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    }
+  },
+  "container": {
+    "none": {
+      "label": "Sin contenedor",
+      "mult": 1.0,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "docker": {
+      "label": "Docker",
+      "mult": 0.995,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    }
+  },
+  "orchestrator": {
+    "none": {
+      "label": "Ninguno",
+      "mult": 1.0,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "kubernetes": {
+      "label": "Kubernetes",
+      "mult": 0.99,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    }
+  },
+  "cache": {
+    "none": {
+      "label": "Sin caché",
+      "mult": 1.0,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "redis": {
+      "label": "Redis",
+      "mult": 1.4,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "memcached": {
+      "label": "Memcached",
+      "mult": 1.35,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    }
+  },
+  "cdn": {
+    "off": {
+      "label": "Apagado",
+      "mult": 1.0,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "on": {
+      "label": "Encendido",
+      "mult": 1.2,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    }
+  },
+  "tls": {
+    "off": {
+      "label": "Apagado",
+      "mult": 1.0,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "on": {
+      "label": "Encendido",
+      "mult": 0.97,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    }
+  },
+  "endpoint_complexity": {
+    "light": {
+      "label": "Ligero",
+      "lat_ms": 100,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "medium": {
+      "label": "Medio",
+      "lat_ms": 300,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    },
+    "heavy": {
+      "label": "Pesado",
+      "lat_ms": 800,
+      "desc": "Descripción pendiente (editable en baselines.json)."
+    }
+  },
+  "presets": [
+    {
+      "name": "Node + Nginx + Postgres (Linux, Docker, K8s, Redis, CDN+TLS, medio)",
+      "values": {
+        "os": "linux",
+        "web_server": "nginx",
+        "runtime": "node",
+        "db": "postgres",
+        "container": "docker",
+        "orchestrator": "kubernetes",
+        "cache": "redis",
+        "cdn": "on",
+        "tls": "on",
+        "endpoint_complexity": "medium",
+        "load_profile": "mixed",
+        "architecture": "microservices",
+        "scaling_strategy": "horizontal",
+        "db_replication_mode": "none",
+        "lb_mesh": "alb_nlb",
+        "connection_pool_profile": "default"
+      }
+    },
+    {
+      "name": "PHP-FPM + Nginx + MySQL (Linux, Docker, sin K8s, Memcached, sin CDN/TLS, ligero)",
+      "values": {
+        "os": "linux",
+        "web_server": "nginx",
+        "runtime": "php-fpm",
+        "db": "mysql",
+        "container": "docker",
+        "orchestrator": "none",
+        "cache": "memcached",
+        "cdn": "off",
+        "tls": "off",
+        "endpoint_complexity": "light",
+        "load_profile": "mixed",
+        "architecture": "three_tier",
+        "scaling_strategy": "vertical",
+        "db_replication_mode": "none",
+        "lb_mesh": "none",
+        "connection_pool_profile": "default"
+      }
+    },
+    {
+      "name": ".NET + IIS + SQL Server (Windows, sin contenedor, sin K8s, sin caché, TLS on, medio)",
+      "values": {
+        "os": "windows",
+        "web_server": "iis",
+        "runtime": ".net",
+        "db": "sqlserver",
+        "container": "none",
+        "orchestrator": "none",
+        "cache": "none",
+        "cdn": "off",
+        "tls": "on",
+        "endpoint_complexity": "medium",
+        "load_profile": "mixed",
+        "architecture": "three_tier",
+        "scaling_strategy": "vertical",
+        "db_replication_mode": "none",
+        "lb_mesh": "none",
+        "connection_pool_profile": "default"
+      }
+    },
+    {
+      "name": "Java + Tomcat + Postgres (Linux, Docker, K8s, Redis, CDN+TLS, pesado)",
+      "values": {
+        "os": "linux",
+        "web_server": "nginx",
+        "runtime": "java-tomcat",
+        "db": "postgres",
+        "container": "docker",
+        "orchestrator": "kubernetes",
+        "cache": "redis",
+        "cdn": "on",
+        "tls": "on",
+        "endpoint_complexity": "heavy",
+        "load_profile": "mixed",
+        "architecture": "microservices",
+        "scaling_strategy": "horizontal",
+        "db_replication_mode": "none",
+        "lb_mesh": "alb_nlb",
+        "connection_pool_profile": "default"
+      }
+    }
+  ],
+  "load_profile": {
+    "mixed": {
+      "label": "Mixto (default)",
+      "cpu_mult": 1.0,
+      "db_mult": 1.0,
+      "net_mult": 1.0,
+      "lat_factor": 1.0,
+      "hint": "Carga balanceada entre CPU/IO/DB.",
+      "desc": "Carga balanceada entre CPU/IO/DB."
+    },
+    "cpu_bound": {
+      "label": "CPU-bound (cálculo intenso)",
+      "cpu_mult": 0.85,
+      "db_mult": 1.05,
+      "net_mult": 1.0,
+      "lat_factor": 1.15,
+      "hint": "Serialización/compresión/ML/cálculo pesado.",
+      "desc": "Serialización/compresión/ML/cálculo pesado."
+    },
+    "io_bound": {
+      "label": "I/O-bound (muchas esperas)",
+      "cpu_mult": 1.1,
+      "db_mult": 0.95,
+      "net_mult": 1.0,
+      "lat_factor": 1.05,
+      "hint": "Llamadas externas, disco, servicios remotos.",
+      "desc": "Llamadas externas, disco, servicios remotos."
+    },
+    "db_bound": {
+      "label": "DB-bound (consultas pesadas)",
+      "cpu_mult": 1.0,
+      "db_mult": 0.7,
+      "net_mult": 1.0,
+      "lat_factor": 1.2,
+      "hint": "JOINs, scans, locks, falta de índices.",
+      "desc": "JOINs, scans, locks, falta de índices."
+    },
+    "net_bound": {
+      "label": "Red-bound (payload alto)",
+      "cpu_mult": 0.95,
+      "db_mult": 1.0,
+      "net_mult": 0.7,
+      "lat_factor": 1.1,
+      "hint": "Respuestas grandes, descargas, media, poca compresión.",
+      "desc": "Respuestas grandes, descargas, media, poca compresión."
+    }
+  },
+  "architecture": {
+    "monolith": {
+      "label": "Monolito",
+      "mult": 1.0,
+      "lat_add_ms": 0,
+      "notes": "Menos hops internos, despliegue simple; escalado más grueso.",
+      "desc": "Menos hops internos, despliegue simple; escalado más grueso."
+    },
+    "three_tier": {
+      "label": "3 capas (web/app/db)",
+      "mult": 0.98,
+      "lat_add_ms": 20,
+      "notes": "Separación clásica; buena para empezar; DB suele ser el límite.",
+      "desc": "Separación clásica; buena para empezar; DB suele ser el límite."
+    },
+    "microservices": {
+      "label": "Microservicios",
+      "mult": 0.95,
+      "lat_add_ms": 40,
+      "notes": "Más hops internos; mejor escalado por servicio; más complejidad.",
+      "desc": "Más hops internos; mejor escalado por servicio; más complejidad."
+    },
+    "serverless": {
+      "label": "Serverless (FaaS)",
+      "mult": 0.92,
+      "lat_add_ms": 60,
+      "notes": "Autoescalado; posible penalización por cold start; útil en cargas variables.",
+      "avg_cold_start_ms": 30,
+      "desc": "Autoescalado; posible penalización por cold start; útil en cargas variables."
+    }
+  },
+  "scaling_strategy": {
+    "vertical": {
+      "label": "Vertical (scale-up)",
+      "app_mult": 1.0,
+      "lat_add_ms": 0,
+      "notes": "Subes CPU/RAM en una sola instancia; menos resiliencia.",
+      "desc": "Subes CPU/RAM en una sola instancia; menos resiliencia."
+    },
+    "horizontal": {
+      "label": "Horizontal (más réplicas)",
+      "app_mult": 0.98,
+      "lat_add_ms": 10,
+      "notes": "Más instancias detrás de LB; leve overhead de balanceo/red.",
+      "desc": "Más instancias detrás de LB; leve overhead de balanceo/red."
+    },
+    "autoscaling": {
+      "label": "Auto-scaling",
+      "app_mult": 0.97,
+      "lat_add_ms": 20,
+      "notes": "Escala automático; en spikes puede haber retraso de provisión.",
+      "desc": "Escala automático; en spikes puede haber retraso de provisión."
+    }
+  },
+  "db_replication_mode": {
+    "none": {
+      "label": "Sin réplicas (1 primaria)",
+      "notes": "Lecturas y escrituras en la misma DB.",
+      "desc": "Lecturas y escrituras en la misma DB."
+    },
+    "read_replicas": {
+      "label": "Read replicas (lecturas separadas)",
+      "notes": "Aumenta capacidad de lectura; escrituras siguen en primaria.",
+      "desc": "Aumenta capacidad de lectura; escrituras siguen en primaria."
+    }
+  },
+  "lb_mesh": {
+    "none": {
+      "label": "Sin LB/mesh (simple)",
+      "app_mult": 1.0,
+      "lat_add_ms": 0,
+      "notes": "Sin proxy adicional interno.",
+      "desc": "Sin proxy adicional interno."
+    },
+    "alb_nlb": {
+      "label": "Load Balancer (ALB/NLB)",
+      "app_mult": 0.99,
+      "lat_add_ms": 8,
+      "notes": "LB agrega un hop; ayuda a repartir carga.",
+      "desc": "LB agrega un hop; ayuda a repartir carga."
+    },
+    "service_mesh": {
+      "label": "Service Mesh (Istio/Linkerd)",
+      "app_mult": 0.97,
+      "lat_add_ms": 18,
+      "notes": "Sidecars + políticas; más overhead pero más control/observabilidad.",
+      "desc": "Sidecars + políticas; más overhead pero más control/observabilidad."
+    }
+  },
+  "connection_pool": {
+    "default": {
+      "label": "Pool default",
+      "pool_per_instance": 50,
+      "notes": "Valores típicos iniciales.",
+      "desc": "Valores típicos iniciales."
+    },
+    "small": {
+      "label": "Pool pequeño",
+      "pool_per_instance": 20,
+      "notes": "Menos conexiones; riesgo de colas si sube concurrencia.",
+      "desc": "Menos conexiones; riesgo de colas si sube concurrencia."
+    },
+    "large": {
+      "label": "Pool grande",
+      "pool_per_instance": 150,
+      "notes": "Más conexiones; cuidado con saturar DB.",
+      "desc": "Más conexiones; cuidado con saturar DB."
+    }
+  }
+}

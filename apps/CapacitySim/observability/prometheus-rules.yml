@@ -1,0 +1,19 @@
+groups:
+- name: capacity-alerts
+  rules:
+  - alert: HighCPU
+    expr: avg(rate(container_cpu_usage_seconds_total[2m])) by (pod) > 0.8
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "CPU alta (>80%)"
+      description: "La media de CPU ha superado el 80% por 5m."
+  - alert: HighLatency
+    expr: histogram_quantile(0.95, sum(rate(http_server_duration_seconds_bucket[5m])) by (le)) > 0.8
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      summary: "P95 latencia > 800ms"
+      description: "El p95 supera el umbral durante 10m."

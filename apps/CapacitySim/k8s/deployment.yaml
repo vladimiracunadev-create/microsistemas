@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capacity-intel
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: capacity-intel
+  template:
+    metadata:
+      labels:
+        app: capacity-intel
+    spec:
+      containers:
+      - name: web
+        image: nginx:stable
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: site
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: site
+        hostPath:
+          path: /srv/capacity-intel/app

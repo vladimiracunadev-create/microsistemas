@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Estimador de Capacidad · Ambiente Inteligente de Métricas</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Estimador de Capacidad</h1>
+    <p><strong>SIMULADOR DIDÁCTICO:</strong> no instala tecnologías. Modela combinaciones por select y entrega estimaciones de capacidad para aprendizaje y planificación inicial.</p>
+  </header>
+
+  <main>
+    <section class="controls">
+      <div class="row">
+        <label>Preset:</label>
+        <select id="preset"></select>
+        <button id="applyPreset">Aplicar</button>
+      </div>
+
+      <div class="grid">
+        <div>
+          <label>Sistema Operativo</label>
+          <select id="os"></select>
+          <p class="help muted" id="help_os"></p>
+        </div>
+        <div>
+          <label>Servidor Web</label>
+          <select id="web_server"></select>
+          <p class="help muted" id="help_web_server"></p>
+        </div>
+        <div>
+          <label>Runtime Backend</label>
+          <select id="runtime"></select>
+          <p class="help muted" id="help_runtime"></p>
+        </div>
+        <div>
+          <label>Base de Datos</label>
+          <select id="db"></select>
+          <p class="help muted" id="help_db"></p>
+        </div>
+        <div>
+          <label>Contenedor</label>
+          <select id="container"></select>
+          <p class="help muted" id="help_container"></p>
+        </div>
+        <div>
+          <label>Orquestador</label>
+          <select id="orchestrator"></select>
+          <p class="help muted" id="help_orchestrator"></p>
+        </div>
+        <div>
+          <label>Caché</label>
+          <select id="cache"></select>
+          <p class="help muted" id="help_cache"></p>
+        </div>
+        <div>
+          <label>CDN</label>
+          <select id="cdn"></select>
+          <p class="help muted" id="help_cdn"></p>
+        </div>
+        <div>
+          <label>TLS</label>
+          <select id="tls"></select>
+          <p class="help muted" id="help_tls"></p>
+        </div>
+        <div>
+          <label>Perfil de carga</label>
+          <select id="load_profile"></select>
+          <p class="help muted" id="help_load_profile"></p>
+        </div>
+        <div>
+          <label>Patrón de arquitectura</label>
+          <select id="architecture"></select>
+          <p class="help muted" id="help_architecture"></p>
+        </div>
+        <div>
+          <label>Estrategia de escalado</label>
+          <select id="scaling_strategy"></select>
+          <p class="help muted" id="help_scaling_strategy"></p>
+        </div>
+        <div>
+          <label>LB / Service Mesh</label>
+          <select id="lb_mesh"></select>
+          <p class="help muted" id="help_lb_mesh"></p>
+        </div>
+        <div>
+          <label>DB: modo de réplicas</label>
+          <select id="db_replication_mode"></select>
+          <p class="help muted" id="help_db_replication_mode"></p>
+        </div>
+        <div>
+          <label>Perfil pool conexiones (App→DB)</label>
+          <select id="connection_pool_profile"></select>
+          <p class="help muted" id="help_connection_pool_profile"></p>
+        </div>
+        <div>
+          <label>Complejidad endpoint</label>
+          <select id="endpoint_complexity"></select>
+          <p class="help muted" id="help_endpoint_complexity"></p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div>
+          <label>Núcleos CPU (App) · por instancia</label>
+          <input id="cores_app" type="number" min="1" value="8">
+          <p class="help muted" id="help_cores_app">CPU por instancia de App. En escalado horizontal, el total es cores × réplicas.</p>
+        </div>
+        <div>
+          <label>Réplicas App</label>
+          <input id="app_replicas" type="number" min="1" value="2">
+          <p class="help muted" id="help_app_replicas">Cantidad de instancias de App. Afecta cores totales y pool total de conexiones.</p>
+        </div>
+        <div>
+          <label>Núcleos CPU (DB) · primaria</label>
+          <input id="cores_db" type="number" min="1" value="4">
+          <p class="help muted" id="help_cores_db">CPU asignada a la DB primaria. Read replicas se modelan aparte.</p>
+        </div>
+        <div>
+          <label>Read replicas DB (cantidad)</label>
+          <input id="db_read_replicas" type="number" min="0" value="0">
+          <p class="help muted" id="help_db_read_replicas">Número de réplicas de lectura. Solo aumenta capacidad de lectura (no escritura).</p>
+        </div>
+        <div>
+          <label>Mix lecturas (%)</label>
+          <input id="read_ratio" type="number" min="0" max="100" value="80">
+          <p class="help muted" id="help_read_ratio">Porcentaje de lecturas (0–100). Con read replicas, determina cuánto se aprovechan.</p>
+        </div>
+        <div>
+          <label>Pool conexiones por instancia (override)</label>
+          <input id="pool_per_instance" type="number" min="1" value="50">
+          <p class="help muted" id="help_pool_per_instance">Tamaño del pool de conexiones App→DB por instancia. Muy influyente en el límite real.</p>
+        </div>
+        <div>
+          <label>Límite hard conexiones DB</label>
+          <input id="db_conn_hard_limit" type="number" min="10" value="800">
+          <p class="help muted" id="help_db_conn_hard_limit">Máximo de conexiones simultáneas aceptadas por la DB (hard limit).</p>
+        </div>
+        <div>
+          <label>Ancho de banda (Mbps)</label>
+          <input id="bandwidth_mbps" type="number" min="10" value="1000">
+          <p class="help muted" id="help_bandwidth_mbps">Ancho de banda efectivo. Si payload es grande, la red puede ser el cuello.</p>
+        </div>
+        <div>
+          <label>Payload medio por petición (KB)</label>
+          <input id="payload_kb" type="number" min="1" value="100">
+          <p class="help muted" id="help_payload_kb">Tamaño promedio de respuesta. Reduce payload para mejorar RPS por red.</p>
+        </div>
+        <div>
+          <label>Factor de seguridad</label>
+          <input id="safety_factor" type="number" step="0.01" min="0.1" max="1.0" value="0.7">
+          <p class="help muted" id="help_safety_factor">Factor de seguridad (0–1) para evitar operar al borde del colapso.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <button id="calc">Calcular</button>
+        <button id="reset">Reset</button>
+      </div>
+    </section>
+
+    <section class="results">
+      <h2>Resultados</h2>
+      <div id="out"></div>
+      <div id="explain"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Estimaciones heurísticas. Valide con pruebas reales (k6/Locust) y monitoreo.</p>
+  </footer>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/logic.js"></script>
+</body>
+</html>

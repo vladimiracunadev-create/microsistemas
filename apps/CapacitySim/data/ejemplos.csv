@@ -1,0 +1,4 @@
+scenario,os,web,runtime,db,container,orchestrator,cache,cdn,tls,load_profile,architecture,endpoint,cores_app,cores_db,bw_mbps,payload_kb,safety,scaling_strategy,db_replication_mode,app_replicas,db_read_replicas,read_ratio
+node_nginx_pg_linux_k8s,linux,nginx,node,postgres,docker,kubernetes,redis,on,on,mixed,three_tier,medium,16,8,1000,100,0.7,horizontal,none,2,0,80
+php_nginx_mysql_linux,linux,nginx,php-fpm,mysql,docker,none,memcached,off,off,mixed,three_tier,light,8,4,500,120,0.7,horizontal,none,2,0,80
+dotnet_iis_sql_win,windows,iis,.net,sqlserver,none,none,none,off,on,mixed,three_tier,medium,16,8,1000,150,0.7,horizontal,none,2,0,80

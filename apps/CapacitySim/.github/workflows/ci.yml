@@ -1,0 +1,26 @@
+name: ci
+on:
+  push:
+  pull_request:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JSON
+        run: python - <<'PY'
+import json,sys
+json.load(open('app/data/baselines.json','r',encoding='utf-8'))
+print("OK baselines.json")
+PY
+      - name: Run sample calc
+        run: |
+                    python3 scripts/capacity_calc.py --os linux --web nginx --runtime node --db postgres \
+            --container docker --orchestrator kubernetes --cache redis --cdn on --tls on \
+            --load_profile mixed --architecture microservices --scaling_strategy horizontal --endpoint medium \
+            --cores_per_instance 4 --app_replicas 2 \
+            --db_cores_primary 4 --db_replication_mode none --db_read_replicas 0 --read_ratio_pct 80 \
+            --bandwidth_mbps 1000 --payload_kb 100
+            --container docker --orchestrator kubernetes --cache redis --cdn on --tls on \
+            --load_profile mixed --architecture microservices \
+            --endpoint medium --cores 16 --db_cores 8 --bandwidth_mbps 1000 --payload_kb 100
