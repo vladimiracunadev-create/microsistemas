@@ -2,6 +2,7 @@
     "name": "vladimir/microsistemas",
     "description": "Suite modular de herramientas de productividad y gestión para desarrolladores.",
     "type": "project",
+    "version": "1.1.0",
     "license": "MIT",
     "authors": [
         {

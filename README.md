@@ -52,7 +52,7 @@ docker-compose up -d
 | **Log Viewer** | ![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white) | Auditoría segura de logs del sistema. |
 | **PHP Migrator** | ![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white) | Modernización de código PHP 5.x a 8.x. |
 | **YML Gen** | ![JS](https://img.shields.io/badge/-JS-F7DF1E?logo=javascript&logoColor=black) | Generador visual de configuraciones YAML. |
-| **Capacity Sim** | ![JS](https://img.shields.io/badge/-DevOps-2496ED?logo=docker&logoColor=white) | Simulador heurístico de capacidad y RPS para infraestructuras. |
+| **Capacity Sim** | ![JS](https://img.shields.io/badge/-DevOps-2496ED?logo=docker&logoColor=white) | Simulador heurístico de capacidad y RPS para infraestructuras. **Pro**: Simulación de costos multi-cloud, modo comparativo A/B, exportación JSON/PDF. |
 
 ---
 
