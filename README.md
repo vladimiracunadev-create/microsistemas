@@ -71,4 +71,6 @@ Explora nuestras guías detalladas para convertirte en un experto de la suite:
 ## 🤝 Contribuir
 ¿Quieres añadir una nueva herramienta? ¡Genial! Revisa nuestro **[Roadmap](ROADMAP.md)** y la **[Guía de Contribución](CONTRIBUTING.md)**.
 
-Desarrollado con ❤️ para la comunidad de desarrolladores.
+
+Desarrollado con ❤️ por **[Vladimir Acuña Valdebenito](https://www.linkedin.com/in/vladimir-acu%C3%B1a-valdebenito-11924a29/)** para la comunidad de desarrolladores.
+
