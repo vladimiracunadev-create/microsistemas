@@ -59,12 +59,19 @@ docker-compose up -d
 
 Explora nuestras guías detalladas para convertirte en un experto de la suite:
 
+
 *   📖 **[Guía para Principiantes](docs/BEGINNERS_GUIDE.md)**: ¿Eres nuevo? Empieza aquí para entender las carpetas.
 *   📖 **[Manual de Usuario](docs/USER_MANUAL.md)**: Cómo sacar el máximo provecho a cada herramienta.
 *   🚀 **[Guía de Instalación](docs/INSTALL.md)**: Despliegue en Docker, Linux y XAMPP.
 *   🏗️ **[Arquitectura](docs/ARCHITECTURE.md)**: Diagramas Mermaid y detalles del Core.
+*   📜 **[Catálogo de Sistemas](docs/SYSTEMS_CATALOG.md)**: Detalles técnicos de cada micro-app.
+*   🔌 **[Referencia de API](docs/API.md)**: Cómo interactuar con el core y extensiones.
 *   🛡️ **[Seguridad](docs/SECURITY.md)**: Políticas de protección y reporte.
 *   🛠️ **[Specs Técnicas](docs/TECHNICAL_SPECS.md)**: Stack, estándares y normas de mantención.
+*   🧑‍💻 **[Guía de Mantenedores](docs/MAINTAINERS.md)**: Información crítica para administradores del proyecto.
+*   ⚖️ **[Código de Conducta](CODE_OF_CONDUCT.md)**: Normas para una comunidad saludable.
+*   🕒 **[Historial de Cambios](CHANGELOG.md)**: Registro detallado de versiones y mejoras.
+
 
 ---
 
