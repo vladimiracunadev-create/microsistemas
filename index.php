@@ -206,6 +206,17 @@
             </div>
             <a href="apps/PhpMigrator/" class="btn">Abrir Herramienta</a>
         </div>
+
+        <!-- Tarjeta 8 -->
+        <div class="card">
+            <div>
+                <span class="badge js">DevOps</span>
+                <h2>Capacity Simulator</h2>
+                <p>Simulador heurístico para estimar RPS, usuarios concurrentes y cuellos de botella en
+                    infraestructuras.</p>
+            </div>
+            <a href="apps/CapacitySim/app/index.html" class="btn">Abrir Herramienta</a>
+        </div>
     </div>
 
 </body>

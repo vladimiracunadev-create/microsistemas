@@ -1,15 +1,21 @@
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Estimador de Capacidad · Ambiente Inteligente de Métricas</title>
   <link rel="stylesheet" href="assets/styles.css">
 </head>
+
 <body>
   <header>
+    <a href="../../../index.php"
+      style="text-decoration: none; color: #666; font-size: 0.8rem; display: block; margin-bottom: 20px;">&larr; Volver
+      al Dashboard</a>
     <h1>Estimador de Capacidad</h1>
-    <p><strong>SIMULADOR DIDÁCTICO:</strong> no instala tecnologías. Modela combinaciones por select y entrega estimaciones de capacidad para aprendizaje y planificación inicial.</p>
+    <p><strong>SIMULADOR DIDÁCTICO:</strong> no instala tecnologías. Modela combinaciones por select y entrega
+      estimaciones de capacidad para aprendizaje y planificación inicial.</p>
   </header>
 
   <main>
@@ -107,12 +113,14 @@
         <div>
           <label>Núcleos CPU (App) · por instancia</label>
           <input id="cores_app" type="number" min="1" value="8">
-          <p class="help muted" id="help_cores_app">CPU por instancia de App. En escalado horizontal, el total es cores × réplicas.</p>
+          <p class="help muted" id="help_cores_app">CPU por instancia de App. En escalado horizontal, el total es cores
+            × réplicas.</p>
         </div>
         <div>
           <label>Réplicas App</label>
           <input id="app_replicas" type="number" min="1" value="2">
-          <p class="help muted" id="help_app_replicas">Cantidad de instancias de App. Afecta cores totales y pool total de conexiones.</p>
+          <p class="help muted" id="help_app_replicas">Cantidad de instancias de App. Afecta cores totales y pool total
+            de conexiones.</p>
         </div>
         <div>
           <label>Núcleos CPU (DB) · primaria</label>
@@ -122,37 +130,44 @@
         <div>
           <label>Read replicas DB (cantidad)</label>
           <input id="db_read_replicas" type="number" min="0" value="0">
-          <p class="help muted" id="help_db_read_replicas">Número de réplicas de lectura. Solo aumenta capacidad de lectura (no escritura).</p>
+          <p class="help muted" id="help_db_read_replicas">Número de réplicas de lectura. Solo aumenta capacidad de
+            lectura (no escritura).</p>
         </div>
         <div>
           <label>Mix lecturas (%)</label>
           <input id="read_ratio" type="number" min="0" max="100" value="80">
-          <p class="help muted" id="help_read_ratio">Porcentaje de lecturas (0–100). Con read replicas, determina cuánto se aprovechan.</p>
+          <p class="help muted" id="help_read_ratio">Porcentaje de lecturas (0–100). Con read replicas, determina cuánto
+            se aprovechan.</p>
         </div>
         <div>
           <label>Pool conexiones por instancia (override)</label>
           <input id="pool_per_instance" type="number" min="1" value="50">
-          <p class="help muted" id="help_pool_per_instance">Tamaño del pool de conexiones App→DB por instancia. Muy influyente en el límite real.</p>
+          <p class="help muted" id="help_pool_per_instance">Tamaño del pool de conexiones App→DB por instancia. Muy
+            influyente en el límite real.</p>
         </div>
         <div>
           <label>Límite hard conexiones DB</label>
           <input id="db_conn_hard_limit" type="number" min="10" value="800">
-          <p class="help muted" id="help_db_conn_hard_limit">Máximo de conexiones simultáneas aceptadas por la DB (hard limit).</p>
+          <p class="help muted" id="help_db_conn_hard_limit">Máximo de conexiones simultáneas aceptadas por la DB (hard
+            limit).</p>
         </div>
         <div>
           <label>Ancho de banda (Mbps)</label>
           <input id="bandwidth_mbps" type="number" min="10" value="1000">
-          <p class="help muted" id="help_bandwidth_mbps">Ancho de banda efectivo. Si payload es grande, la red puede ser el cuello.</p>
+          <p class="help muted" id="help_bandwidth_mbps">Ancho de banda efectivo. Si payload es grande, la red puede ser
+            el cuello.</p>
         </div>
         <div>
           <label>Payload medio por petición (KB)</label>
           <input id="payload_kb" type="number" min="1" value="100">
-          <p class="help muted" id="help_payload_kb">Tamaño promedio de respuesta. Reduce payload para mejorar RPS por red.</p>
+          <p class="help muted" id="help_payload_kb">Tamaño promedio de respuesta. Reduce payload para mejorar RPS por
+            red.</p>
         </div>
         <div>
           <label>Factor de seguridad</label>
           <input id="safety_factor" type="number" step="0.01" min="0.1" max="1.0" value="0.7">
-          <p class="help muted" id="help_safety_factor">Factor de seguridad (0–1) para evitar operar al borde del colapso.</p>
+          <p class="help muted" id="help_safety_factor">Factor de seguridad (0–1) para evitar operar al borde del
+            colapso.</p>
         </div>
       </div>
 
@@ -176,4 +191,5 @@
   <script src="assets/config.js"></script>
   <script src="assets/logic.js"></script>
 </body>
+
 </html>
