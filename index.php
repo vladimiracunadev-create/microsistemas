@@ -215,7 +215,7 @@
                 <p>Simulador heurístico para estimar RPS, usuarios concurrentes y cuellos de botella en
                     infraestructuras.</p>
             </div>
-            <a href="apps/CapacitySim/app/index.html" class="btn">Abrir Herramienta</a>
+            <a href="apps/CapacitySim/" class="btn">Abrir Herramienta</a>
         </div>
     </div>
 

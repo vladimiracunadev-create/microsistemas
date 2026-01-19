@@ -31,7 +31,7 @@ Para llevarlo “a la vida real”, debes **calibrar** con pruebas de carga y m�
 ## 1) Cómo usar
 
 ### Opción A: UI Web (estática)
-1. Abra `app/index.html` en un navegador (o sirva la carpeta `app/` con cualquier servidor estático).
+1. Abra `index.html` en un navegador (o sirva la carpeta raíz del microsistema con cualquier servidor estático).
 2. Seleccione **stack** y parámetros; obtendrá:
    - `RPS_cpu`, `RPS_db`, `RPS_red`, `RPS_cap` (mínimo entre límites).
    - `Usuarios_concurrentes ≈ RPS_cap × latencia_promedio (s)`.
