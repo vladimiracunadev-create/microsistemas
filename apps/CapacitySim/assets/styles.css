@@ -216,3 +216,40 @@ button:hover {
     padding: 15px;
     border-radius: 8px;
 }
+
+@media print {
+
+    .controls,
+    header,
+    footer,
+    .row button {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    .results {
+        background: white;
+        border: 1px solid #ccc;
+        box-shadow: none;
+        color: black;
+    }
+
+    h1,
+    h2 {
+        background: none;
+        -webkit-text-fill-color: initial;
+        color: black;
+    }
+
+    .kv div:nth-child(even) {
+        color: black;
+    }
+
+    #explain {
+        display: block;
+    }
+}

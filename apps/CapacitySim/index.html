@@ -110,6 +110,11 @@
           <select id="endpoint_complexity"></select>
           <p class="help muted" id="help_endpoint_complexity"></p>
         </div>
+        <div>
+          <label>Proveedor de Nube (Costos)</label>
+          <select id="cloud_provider"></select>
+          <p class="help muted" id="help_cloud_provider"></p>
+        </div>
       </div>
 
       <div class="grid">
@@ -175,8 +180,14 @@
       </div>
 
       <div class="row">
-        <button id="calc"><i class="fas fa-calculator"></i> Calcular Capacidad</button>
-        <button id="reset"><i class="fas fa-undo"></i> Resetear Escenario</button>
+        <button id="calc"><i class="fas fa-calculator"></i> Calcular</button>
+        <button id="saveA" style="background: var(--success);"><i class="fas fa-save"></i> Guardar A</button>
+        <button id="loadA" style="background: rgba(16, 185, 129, 0.2);"><i class="fas fa-upload"></i> Cargar A</button>
+        <button id="saveB" style="background: var(--warning);"><i class="fas fa-save"></i> Guardar B</button>
+        <button id="loadB" style="background: rgba(245, 158, 11, 0.2);"><i class="fas fa-upload"></i> Cargar B</button>
+        <button id="exportJSON"><i class="fas fa-file-code"></i> Exportar JSON</button>
+        <button id="exportPDF"><i class="fas fa-file-pdf"></i> Reporte PDF</button>
+        <button id="reset"><i class="fas fa-undo"></i> Reset</button>
       </div>
     </section>
 

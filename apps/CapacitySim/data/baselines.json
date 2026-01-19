@@ -416,5 +416,27 @@
       "notes": "Más conexiones; cuidado con saturar DB.",
       "desc": "Más conexiones; cuidado con saturar DB."
     }
+  },
+  "cloud_providers": {
+    "aws": {
+      "label": "AWS (EC2/RDS)",
+      "cost_per_core_hour": 0.046,
+      "desc": "Basado en instancias t3/m5 estándar."
+    },
+    "gcp": {
+      "label": "Google Cloud (GCE/CloudSQL)",
+      "cost_per_core_hour": 0.038,
+      "desc": "Instancias n2-standard con descuentos por uso sostenido."
+    },
+    "azure": {
+      "label": "Azure (VM/SQL)",
+      "cost_per_core_hour": 0.042,
+      "desc": "Instancias serie D-v5."
+    },
+    "onprem": {
+      "label": "On-Premise / Bare Metal",
+      "cost_per_core_hour": 0.015,
+      "desc": "Costo estimado de energía, rack y mantenimiento (excluye CAPEX)."
+    }
   }
 }

@@ -62,6 +62,7 @@ function updateHelpTexts() {
   setHelp("cache", optionDesc("cache", byId("cache").value));
   setHelp("cdn", optionDesc("cdn", byId("cdn").value));
   setHelp("tls", optionDesc("tls", byId("tls").value));
+  setHelp("cloud_provider", optionDesc("cloud_providers", byId("cloud_provider").value));
   setHelp("load_profile", optionDesc("load_profile", byId("load_profile").value));
   setHelp("architecture", optionDesc("architecture", byId("architecture").value));
   setHelp("scaling_strategy", optionDesc("scaling_strategy", byId("scaling_strategy").value));
@@ -109,6 +110,7 @@ function calc() {
   const payloadKB = parseFloat(byId("payload_kb").value);
   const bwMbps = parseFloat(byId("bandwidth_mbps").value);
   const safety = parseFloat(byId("safety_factor").value);
+  const cloudKey = byId("cloud_provider").value;
 
   // --- Latencias
   const baseLat = BASELINES.endpoint_complexity[endpoint].lat_ms;
@@ -187,6 +189,12 @@ function calc() {
 
   const bottleneck = (RPS_cap_raw === RPS_cpu) ? "CPU/App" : (RPS_cap_raw === RPS_db) ? "Base de Datos/Conexiones" : "Red";
 
+  // --- Estimación de Costos
+  const cloud = BASELINES.cloud_providers[cloudKey];
+  const totalCores = totalCoresApp + coresDbPrimary + (dbReadReplicas * coresDbPrimary * 0.5); // Réplicas suelen ser más baratas o iguales
+  const costHour = totalCores * cloud.cost_per_core_hour;
+  const costMonth = costHour * 24 * 30;
+
   const out = `
 <div class="kv">
   <div><strong>Latencia endpoint (efectiva)</strong></div><div>${lat_ms_endpoint.toFixed(0)} ms</div>
@@ -199,6 +207,7 @@ function calc() {
   <div><strong>RPS_Red</strong></div><div>${isFinite(RPS_red) ? RPS_red.toFixed(2) : "∞"}</div>
   <div><strong>Saturación por</strong></div><div>${bottleneck}</div>
   <div><strong>RPS límite (cap)</strong></div><div>${RPS_cap.toFixed(2)} (safety ${safety})</div>
+  <div><strong>Costo Est. Mensual</strong></div><div style="color:var(--success)">$ ${costMonth.toFixed(2)} USD</div>
   <div><strong>Usuarios concurrentes ≈</strong></div><div>${usuarios_conc.toFixed(0)}</div>
 </div>`;
 
@@ -260,6 +269,51 @@ function resetForm() {
   byId("sugerencias").innerHTML = "";
 }
 
+function saveScenario(key) {
+  const data = {};
+  document.querySelectorAll('select, input').forEach(el => {
+    if (el.id) data[el.id] = el.value;
+  });
+  localStorage.setItem('scenario_' + key, JSON.stringify(data));
+  const btn = byId('save' + key);
+  const oldText = btn.innerHTML;
+  btn.innerHTML = '<i class="fas fa-check"></i> Guardado!';
+  setTimeout(() => btn.innerHTML = oldText, 2000);
+}
+
+function loadScenario(key) {
+  const raw = localStorage.getItem('scenario_' + key);
+  if (!raw) return alert(`No hay escenario ${key} guardado.`);
+  const data = JSON.parse(raw);
+  Object.entries(data).forEach(([id, val]) => {
+    const el = byId(id);
+    if (el) el.value = val;
+  });
+  updateHelpTexts();
+  calc();
+}
+
+function exportJSON() {
+  const data = {
+    timestamp: new Date().toISOString(),
+    configuration: {},
+    results: byId("out").innerText
+  };
+  document.querySelectorAll('select, input').forEach(el => {
+    if (el.id) data.configuration[el.id] = el.value;
+  });
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `capacity-report-${new Date().getTime()}.json`;
+  a.click();
+}
+
+function exportPDF() {
+  window.print();
+}
+
 async function boot() {
   populatePreset();
   populateSelect("os", BASELINES.os);
@@ -271,6 +325,7 @@ async function boot() {
   populateSelect("cache", BASELINES.cache);
   populateSelect("cdn", BASELINES.cdn);
   populateSelect("tls", BASELINES.tls);
+  populateSelect("cloud_provider", BASELINES.cloud_providers);
   populateSelect("load_profile", BASELINES.load_profile);
   populateSelect("architecture", BASELINES.architecture);
   populateSelect("scaling_strategy", BASELINES.scaling_strategy);
@@ -281,7 +336,7 @@ async function boot() {
 
 
   // Actualiza descripciones al cambiar selects
-  ["os", "web_server", "runtime", "db", "container", "orchestrator", "cache", "cdn", "tls",
+  ["os", "web_server", "runtime", "db", "container", "orchestrator", "cache", "cdn", "tls", "cloud_provider",
     "load_profile", "architecture", "scaling_strategy", "lb_mesh", "db_replication_mode",
     "connection_pool_profile", "endpoint_complexity"].forEach(id => {
       const el = byId(id);
@@ -292,6 +347,13 @@ async function boot() {
   byId("applyPreset").addEventListener("click", applyPreset);
   byId("calc").addEventListener("click", calc);
   byId("reset").addEventListener("click", resetForm);
+
+  byId("saveA").addEventListener("click", () => saveScenario('A'));
+  byId("saveB").addEventListener("click", () => saveScenario('B'));
+  byId("loadA").addEventListener("click", () => loadScenario('A'));
+  byId("loadB").addEventListener("click", () => loadScenario('B'));
+  byId("exportJSON").addEventListener("click", exportJSON);
+  byId("exportPDF").addEventListener("click", exportPDF);
 
   applyPreset();
 }
