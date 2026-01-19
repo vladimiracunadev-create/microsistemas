@@ -68,8 +68,24 @@ Explora nuestras guías detalladas para convertirte en un experto de la suite:
 
 ---
 
-## 🤝 Contribuir
-¿Quieres añadir una nueva herramienta? ¡Genial! Revisa nuestro **[Roadmap](ROADMAP.md)** y la **[Guía de Contribución](CONTRIBUTING.md)**.
+
+## 🤝 Comunidad y Colaboración
+
+¡Este proyecto está abierto a **Cooperación Real**! Queremos que contribuir sea lo más fácil y seguro posible.
+
+### 🌟 ¿Cómo ayudar?
+- **Reporta Errores**: Usa nuestra [plantilla de errores](https://github.com/vladimiracunadev-create/microsistemas/issues/new?template=bug_report.md) para ayudarnos a mejorar.
+- **Sugiere Funciones**: Tenemos una [plantilla para nuevas ideas](https://github.com/vladimiracunadev-create/microsistemas/issues/new?template=feature_request.md).
+- **Resuelve Issues**: Busca etiquetas como `good first issue` o `help wanted` para empezar.
+
+### 🛡️ Contribuciones Seguras
+Para mantener la calidad y estabilidad, implementamos:
+- **Protección de Rama**: Los cambios en `main` requieren un **Pull Request** y al menos una **revisión**.
+- **Checks Automáticos**: El CI valida que todo funcione antes de integrar.
+- **Plantillas Estándar**: Facilitamos la comunicación mediante estructuras predefinidas para Issues y PRs.
+
+Para más detalles, consulta la **[Guía de Contribución](CONTRIBUTING.md)** y nuestro **[Roadmap de Futuro](ROADMAP.md)**.
+
 
 
 Desarrollado con ❤️ por **[Vladimir Acuña Valdebenito](https://www.linkedin.com/in/vladimir-acu%C3%B1a-valdebenito-11924a29/)** para la comunidad de desarrolladores.
