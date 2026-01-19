@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,16 +16,22 @@
 
   <script src="hj.js" defer></script>
 </head>
+
 <body>
   <div class="wrap">
+    <a href="../../index.php"
+      style="text-decoration: none; color: #666; font-size: 0.8rem; display: block; padding: 10px 0;">&larr; Volver al
+      Dashboard</a>
     <header>
       <div class="brand">
         <div class="logo" aria-hidden="true"></div>
         <div>
           <h1>Herramientas JavaScript</h1>
           <p class="subtitle">
-            Pega c&oacute;digo JavaScript (o c&aacute;rgalo desde un archivo <span class="mono">.js</span> / URL) y aplica acciones:
-            minificar, formatear, validar, ofuscar, transpilar, medir tama&ntilde;o, limpiar comentarios, escapar y ejecutar en sandbox.
+            Pega c&oacute;digo JavaScript (o c&aacute;rgalo desde un archivo <span class="mono">.js</span> / URL) y
+            aplica acciones:
+            minificar, formatear, validar, ofuscar, transpilar, medir tama&ntilde;o, limpiar comentarios, escapar y
+            ejecutar en sandbox.
           </p>
         </div>
       </div>
@@ -68,7 +75,8 @@
         </select>
 
         <button id="applyBtn" class="btn primary" type="button">Aplicar</button>
-        <button id="swapBtn" class="btn" type="button" title="Pasa el resultado a la entrada">Usar salida como entrada</button>
+        <button id="swapBtn" class="btn" type="button" title="Pasa el resultado a la entrada">Usar salida como
+          entrada</button>
         <button id="clearBtn" class="btn danger" type="button">Limpiar</button>
       </div>
     </div>
@@ -102,7 +110,8 @@
         </h2>
         <textarea id="outputCode" placeholder="Aqu&iacute; aparecer&aacute; el resultado..." readonly></textarea>
         <p class="hint">
-          Lint entrega un reporte. Sandbox ejecuta de forma aislada y captura <span class="mono">log/warn/error/info</span>.
+          Lint entrega un reporte. Sandbox ejecuta de forma aislada y captura <span
+            class="mono">log/warn/error/info</span>.
         </p>
       </section>
     </div>
@@ -116,4 +125,5 @@
     </div>
   </div>
 </body>
+
 </html>

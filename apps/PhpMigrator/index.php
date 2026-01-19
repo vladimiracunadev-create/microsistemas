@@ -56,6 +56,9 @@
 
 <body>
     <div class="container">
+        <a href="../../index.php"
+            style="text-decoration: none; color: #666; font-size: 0.9rem; margin-bottom: 15px; display: inline-block;">&larr;
+            Volver al Dashboard</a>
         <h2>Convertidor de Código PHP 5.4 a PHP 8.3</h2>
         <form action="" method="post">
             <label for="php54">Introduce el código PHP 5.4:</label>

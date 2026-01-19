@@ -102,6 +102,9 @@
 
 <body>
   <div class="container">
+    <a href="../../index.php"
+      style="text-decoration: none; color: #666; font-size: 0.9rem; margin-bottom: 15px; display: inline-block;">&larr;
+      Volver al Dashboard</a>
     <h1>Codificador de Texto</h1>
     <textarea id="inputText" placeholder="Escribe tu texto aquí…"></textarea>
     <div class="buttons">

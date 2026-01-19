@@ -121,7 +121,9 @@ if (array_key_exists($selectedLog, $logFiles)) {
             </a>
         <?php endforeach; ?>
         <hr style="border: 0; border-top: 1px solid #34495e; margin: 20px 0;">
-        <a href="../../" style="color: #3498db; text-decoration: none; font-size: 0.9rem;">← Volver al Dashboard</a>
+        <a href="../../index.php"
+            style="text-decoration: none; color: #bdc3c7; font-size: 0.9rem; padding: 10px; display: block;">&larr;
+            Volver al Dashboard</a>
     </aside>
     <main>
         <h2 style="margin-top: 0; color: #2c3e50;">

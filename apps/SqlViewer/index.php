@@ -25,6 +25,13 @@ try {
     $conn = Database::getPDO($driver, $host, $user, $pass, $db_selected);
 } catch (\Exception $e) {
     $error = $e->getMessage();
+    if (strpos($error, 'could not find driver') !== false) {
+        $error = "🚨 El motor <strong>" . strtoupper($driver) . "</strong> no está habilitado en tu servidor PHP. <br><br> 
+                  Para arreglarlo: <br>
+                  1. Abre tu archivo <code>php.ini</code> (en XAMPP suele estar en C:\\xampp\\php\\php.ini). <br>
+                  2. Busca la línea <code>;extension=pdo_$driver</code> y quítale el punto y coma inicial. <br>
+                  3. Reinicia Apache desde el Panel de Control de XAMPP.";
+    }
 }
 
 // 2) OBTENER LISTA DE BASES DE DATOS (Solo para MySQL/Postgres)
@@ -266,6 +273,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query']) && $conn) {
 
 <body>
     <div id="sidebar">
+        <div style="margin-bottom: 20px;">
+            <a href="../../index.php" style="text-decoration: none; color: #666; font-weight: bold; font-size: 0.9rem;">
+                <i class="fas fa-arrow-left"></i> Volver al Dashboard
+            </a>
+        </div>
         <h3><i class="fas fa-database"></i> SqlViewer</h3>
 
         <?php if ($error): ?>
@@ -278,7 +290,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query']) && $conn) {
                 <select name="driver" onchange="this.form.submit()">
                     <?php foreach ($drivers as $val => $lbl): ?>
                         <option value="<?php echo $val; ?>" <?php echo ($driver === $val) ? 'selected' : ''; ?>>
-                            <?php echo $lbl; ?></option>
+                            <?php echo $lbl; ?>
+                        </option>
                     <?php endforeach; ?>
                 </select>
             </div>
