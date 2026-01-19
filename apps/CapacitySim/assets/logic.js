@@ -1,10 +1,11 @@
-/* global BASELINES */
-const byId = (id)=>document.getElementById(id);
+/* global BASELINES, Chart */
+const byId = (id) => document.getElementById(id);
+let healthChart = null;
 
 function populateSelect(id, obj) {
   const el = byId(id);
   el.innerHTML = "";
-  Object.entries(obj).forEach(([key, val])=>{
+  Object.entries(obj).forEach(([key, val]) => {
     const opt = document.createElement("option");
     opt.value = key;
     opt.textContent = val.label || key;
@@ -15,7 +16,7 @@ function populateSelect(id, obj) {
 function populatePreset() {
   const el = byId("preset");
   el.innerHTML = "";
-  BASELINES.presets.forEach((p, i)=>{
+  BASELINES.presets.forEach((p, i) => {
     const opt = document.createElement("option");
     opt.value = i;
     opt.textContent = p.name;
@@ -24,10 +25,10 @@ function populatePreset() {
 }
 
 function applyPreset() {
-  const idx = parseInt(byId("preset").value,10);
+  const idx = parseInt(byId("preset").value, 10);
   if (isNaN(idx)) return;
   const values = BASELINES.presets[idx].values;
-  Object.entries(values).forEach(([k, v])=>{
+  Object.entries(values).forEach(([k, v]) => {
     const el = byId(k);
     if (el) el.value = v;
   });
@@ -36,22 +37,22 @@ function applyPreset() {
   updateHelpTexts();
 }
 
-function bitsPerSecond(mbps) { return (mbps || 0)*1e6; }
-function bitsFromKB(kb) { return (kb || 0)*1024*8; }
-function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
-function setHelp(id, text){
-  const el = byId("help_"+id);
+function bitsPerSecond(mbps) { return (mbps || 0) * 1e6; }
+function bitsFromKB(kb) { return (kb || 0) * 1024 * 8; }
+function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
+function setHelp(id, text) {
+  const el = byId("help_" + id);
   if (el) el.textContent = text || "";
 }
 
-function optionDesc(section, key){
+function optionDesc(section, key) {
   try {
     const obj = BASELINES[section][key];
     return obj.desc || obj.notes || obj.hint || "";
-  } catch(e){ return ""; }
+  } catch (e) { return ""; }
 }
 
-function updateHelpTexts(){
+function updateHelpTexts() {
   setHelp("os", optionDesc("os", byId("os").value));
   setHelp("web_server", optionDesc("web_server", byId("web_server").value));
   setHelp("runtime", optionDesc("runtime", byId("runtime").value));
@@ -195,13 +196,16 @@ function calc() {
   <div><strong>RPS por core (ajustado)</strong></div><div>${rps_core_adj.toFixed(2)}</div>
   <div><strong>RPS_CPU</strong></div><div>${RPS_cpu.toFixed(2)}</div>
   <div><strong>RPS_DB (efectivo)</strong></div><div>${RPS_db.toFixed(2)} (cap_consultas≈${RPS_db_effective.toFixed(2)}, cap_pool≈${RPS_pool_limit.toFixed(2)})</div>
-  <div><strong>RPS_Red</strong></div><div>${isFinite(RPS_red)?RPS_red.toFixed(2):"∞"}</div>
+  <div><strong>RPS_Red</strong></div><div>${isFinite(RPS_red) ? RPS_red.toFixed(2) : "∞"}</div>
   <div><strong>Saturación por</strong></div><div>${bottleneck}</div>
   <div><strong>RPS límite (cap)</strong></div><div>${RPS_cap.toFixed(2)} (safety ${safety})</div>
   <div><strong>Usuarios concurrentes ≈</strong></div><div>${usuarios_conc.toFixed(0)}</div>
 </div>`;
 
-  const replExplain = (dbReplMode === "read_replicas" && dbReadReplicas>0)
+  updateCharts(RPS_cpu, RPS_db, RPS_red, RPS_cap);
+  updateSugerencias(bottleneck, RPS_cap, RPS_cpu, RPS_db);
+
+  const replExplain = (dbReplMode === "read_replicas" && dbReadReplicas > 0)
     ? `readCap=${readCap.toFixed(2)}; writeCap=${writeCap.toFixed(2)}; mixLecturas=${readRatioPct}% ⇒ cap_consultas=min(readCap/readRatio, writeCap/writeRatio)=${RPS_db_effective.toFixed(2)}`
     : `sin read replicas ⇒ cap_consultas=RPS_db_primary=${RPS_db_primary.toFixed(2)}`;
 
@@ -216,12 +220,12 @@ function calc() {
 <p><strong>Pool conexiones:</strong> ${poolProfile.label} <small class="muted">(${poolProfile.notes || ""})</small></p>
 <p><strong>Multiplicador infra+arch+scale+lb:</strong> ${infraMult.toFixed(3)}</p>
 <p><span class="code">
-lat_efectiva=(lat_base=${baseLat}ms×lat_factor=${lp.lat_factor}) + arch(${arch.lat_add_ms}ms) + scale(${scale.lat_add_ms||0}ms) + lb(${lb.lat_add_ms||0}ms) + cold(${arch.avg_cold_start_ms||0}ms) = ${lat_ms_endpoint.toFixed(0)}ms<br>
+lat_efectiva=(lat_base=${baseLat}ms×lat_factor=${lp.lat_factor}) + arch(${arch.lat_add_ms}ms) + scale(${scale.lat_add_ms || 0}ms) + lb(${lb.lat_add_ms || 0}ms) + cold(${arch.avg_cold_start_ms || 0}ms) = ${lat_ms_endpoint.toFixed(0)}ms<br>
 RPS_cpu=(cores_inst=${coresPerInstance}×replicas=${appReplicas})×rps_core_adj=${RPS_cpu.toFixed(2)} (rps_core_adj=${rps_core_adj.toFixed(2)})<br>
 DB: connMax_primary=${connMaxPrimary}; lat_db=${dbConf.lat_ms}ms; RPS_db_primary=${RPS_db_primary.toFixed(2)}; ${replExplain}<br>
 Pool: ${poolExplain}<br>
 RPS_db=min(cap_consultas,cap_pool)=${RPS_db.toFixed(2)}<br>
-RPS_red=((bw=${bwMbps}Mbps)/(payload=${payloadKB}KB))×net_mult(${lp.net_mult})=${isFinite(RPS_red)?RPS_red.toFixed(2):"∞"}<br>
+RPS_red=((bw=${bwMbps}Mbps)/(payload=${payloadKB}KB))×net_mult(${lp.net_mult})=${isFinite(RPS_red) ? RPS_red.toFixed(2) : "∞"}<br>
 RPS_cap=min(RPS_cpu,RPS_db,RPS_red)×safety(${safety})=${RPS_cap.toFixed(2)}; usuarios≈RPS_cap×(lat_efectiva/1000)=${usuarios_conc.toFixed(0)}
 </span></p>`;
 
@@ -231,11 +235,11 @@ RPS_cap=min(RPS_cpu,RPS_db,RPS_red)×safety(${safety})=${RPS_cap.toFixed(2)}; us
 
 function resetForm() {
   populatePreset();
-  ["os","web_server","runtime","db","container","orchestrator","cache","cdn","tls",
-   "load_profile","architecture","scaling_strategy","lb_mesh",
-   "db_replication_mode","connection_pool_profile","endpoint_complexity"].forEach(id=>{
-    byId(id).selectedIndex = 0;
-  });
+  ["os", "web_server", "runtime", "db", "container", "orchestrator", "cache", "cdn", "tls",
+    "load_profile", "architecture", "scaling_strategy", "lb_mesh",
+    "db_replication_mode", "connection_pool_profile", "endpoint_complexity"].forEach(id => {
+      byId(id).selectedIndex = 0;
+    });
   byId("cores_app").value = 8;
   byId("app_replicas").value = 2;
   byId("cores_db").value = 4;
@@ -247,8 +251,13 @@ function resetForm() {
   byId("payload_kb").value = 100;
   byId("safety_factor").value = BASELINES.safety_factor;
   updateHelpTexts();
+  if (healthChart) {
+    healthChart.destroy();
+    healthChart = null;
+  }
   byId("out").innerHTML = "";
   byId("explain").innerHTML = "";
+  byId("sugerencias").innerHTML = "";
 }
 
 async function boot() {
@@ -272,12 +281,12 @@ async function boot() {
 
 
   // Actualiza descripciones al cambiar selects
-  ["os","web_server","runtime","db","container","orchestrator","cache","cdn","tls",
-   "load_profile","architecture","scaling_strategy","lb_mesh","db_replication_mode",
-   "connection_pool_profile","endpoint_complexity"].forEach(id=>{
-    const el = byId(id);
-    if (el) el.addEventListener("change", updateHelpTexts);
-  });
+  ["os", "web_server", "runtime", "db", "container", "orchestrator", "cache", "cdn", "tls",
+    "load_profile", "architecture", "scaling_strategy", "lb_mesh", "db_replication_mode",
+    "connection_pool_profile", "endpoint_complexity"].forEach(id => {
+      const el = byId(id);
+      if (el) el.addEventListener("change", updateHelpTexts);
+    });
   updateHelpTexts();
 
   byId("applyPreset").addEventListener("click", applyPreset);
@@ -287,7 +296,67 @@ async function boot() {
   applyPreset();
 }
 
-document.addEventListener("DOMContentLoaded", async ()=>{
-  while(!window.BASELINES) await new Promise(r=>setTimeout(r, 50));
+function updateCharts(cpu, db, net, current) {
+  const ctx = byId('healthChart').getContext('2d');
+  const max = Math.max(cpu, db, net);
+
+  const data = {
+    labels: ['CPU/App', 'Database', 'Network'],
+    datasets: [{
+      label: 'Capacidad por Componente',
+      data: [
+        (cpu / max) * 100,
+        (db / max) * 100,
+        (net / max) * 100
+      ],
+      fill: true,
+      backgroundColor: 'rgba(59, 130, 246, 0.2)',
+      borderColor: 'rgb(59, 130, 246)',
+      pointBackgroundColor: 'rgb(59, 130, 246)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgb(59, 130, 246)'
+    }]
+  };
+
+  if (healthChart) {
+    healthChart.destroy();
+  }
+
+  healthChart = new Chart(ctx, {
+    type: 'radar',
+    data: data,
+    options: {
+      elements: { line: { borderWidth: 3 } },
+      scales: {
+        r: {
+          angleLines: { color: 'rgba(255,255,255,0.1)' },
+          grid: { color: 'rgba(255,255,255,0.1)' },
+          pointLabels: { color: '#94a3b8', font: { size: 12 } },
+          ticks: { display: false },
+          suggestedMin: 0,
+          suggestedMax: 100
+        }
+      },
+      plugins: { legend: { display: false } }
+    }
+  });
+}
+
+function updateSugerencias(bottleneck, cap, cpu, db) {
+  let html = '<div class="sugerencia-card"><h4><i class="fas fa-lightbulb"></i> Recomendación Pro:</h4>';
+  if (bottleneck === "CPU/App") {
+    html += '<p>Tu limitante es el procesamiento. Prueba aumentando las <strong>Réplicas App</strong> o subiendo los <strong>Cores CPU</strong> por instancia.</p>';
+  } else if (bottleneck === "Base de Datos/Conexiones") {
+    html += '<p>La base de datos está saturada. Te recomendamos habilitar <strong>Read Replicas</strong> o usar una <strong>Caché (Redis)</strong> para descargar la DB primaria.</p>';
+  } else {
+    html += '<p>El ancho de banda o el payload son el cuello de botella. Intenta optimizar el <strong>Payload</strong> o habilitar una <strong>CDN</strong>.</p>';
+  }
+  html += '</div>';
+  byId("sugerencias").innerHTML = html;
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  while (!window.BASELINES) await new Promise(r => setTimeout(r, 50));
   boot();
 });

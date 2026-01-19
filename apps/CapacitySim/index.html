@@ -5,6 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Estimador de Capacidad · Ambiente Inteligente de Métricas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 
@@ -172,14 +175,22 @@
       </div>
 
       <div class="row">
-        <button id="calc">Calcular</button>
-        <button id="reset">Reset</button>
+        <button id="calc"><i class="fas fa-calculator"></i> Calcular Capacidad</button>
+        <button id="reset"><i class="fas fa-undo"></i> Resetear Escenario</button>
       </div>
     </section>
 
     <section class="results">
-      <h2>Resultados</h2>
-      <div id="out"></div>
+      <h2><i class="fas fa-chart-line"></i> Reporte de Capacidad</h2>
+      <div class="result-layout">
+        <div>
+          <div id="out"></div>
+          <div id="sugerencias"></div>
+        </div>
+        <div class="chart-container">
+          <canvas id="healthChart"></canvas>
+        </div>
+      </div>
       <div id="explain"></div>
     </section>
   </main>
