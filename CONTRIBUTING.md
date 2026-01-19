@@ -10,6 +10,22 @@
 4. Documenta cualquier cambio en la interfaz o configuración en el `README.md` del módulo.
 5. Abre un Pull Request describiendo claramente el propósito del cambio.
 
+
+## 🏷️ Etiquetas (Labels)
+
+Usamos etiquetas para organizar el trabajo. Si eres nuevo, busca estas:
+- `good first issue`: Ideal para empezar.
+- `help wanted`: Necesitamos apoyo extra aquí.
+- `bug`: Errores confirmados que necesitan solución.
+- `docs`: Mejoras en la documentación.
+
+## 🛡️ Configuración de Seguridad y Revisión
+
+Para garantizar la estabilidad del proyecto, la rama `main` tiene las siguientes protecciones:
+- **PR Obligatorio**: No se permiten commits directos a `main`.
+- **Revisión**: Cada cambio requiere al menos una aprobación de un mantenedor.
+- **Checks de CI**: Los tests automatizados deben pasar antes de fusionar.
+
 ---
 
 ## 🛠️ Estándares de Código
