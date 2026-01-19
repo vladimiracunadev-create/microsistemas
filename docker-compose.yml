@@ -23,7 +23,7 @@ services:
     container_name: microsistemas-db
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: microsistemas_db
+      MYSQL_DATABASE: portal_portafolio
     ports:
       - "3306:3306"
     volumes:
