@@ -26,6 +26,7 @@ La forma más rápida y limpia de ejecutar el sistema sin instalar dependencias 
 3. **Levantar Entorno**:
    ```bash
    docker-compose up -d
+   # O use el atajo: make up
    ```
    *El flag `-d` ejecuta el proceso en segundo plano.*
 

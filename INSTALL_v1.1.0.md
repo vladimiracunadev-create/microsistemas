@@ -8,6 +8,22 @@ El archivo `microsistemas-v1.1.0.zip` contiene la versión completa de Microsist
 
 ## 🚀 Instalación Rápida
 
+### Opción 0: Con Makefile (Más rápido)
+Si tienes `make` instalado (Windows/Linux/Mac), simplemente ejecuta:
+
+```bash
+# Instalar dependencias
+make install
+
+# Levantar entorno (Docker)
+make up
+
+# Alternativa sin Docker (Servidor Interno)
+make serve
+```
+
+---
+
 ### Opción 1: Con XAMPP (Recomendado para desarrollo local)
 
 1. **Descargar el package**:
@@ -57,6 +73,7 @@ El archivo `microsistemas-v1.1.0.zip` contiene la versión completa de Microsist
 3. **Levantar con Docker Compose**:
    ```bash
    docker-compose up -d
+   # O simplemente: make up
    ```
 
 4. **Acceder**:
@@ -90,6 +107,7 @@ Si ya tienes una versión anterior instalada:
    ```bash
    cd microsistemas-v1.1.0
    composer install
+   # O simplemente: make install
    ```
 
 ### Método 2: Actualización in-place

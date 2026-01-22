@@ -6,7 +6,7 @@
 
 1. **Fork** el repositorio y crea una rama para tu cambio (ej: `feature/nueva-app` o `fix/error-db`).
 2. Implementa tus cambios siguiendo los **Estándares de Código**.
-3. Asegúrate de que el sistema pase los chequeos de Docker.
+3. Asegúrate de que el sistema pase los chequeos de Docker (o usa `make up` para probar localmente).
 4. Documenta cualquier cambio en la interfaz o configuración en el `README.md` del módulo.
 5. Abre un Pull Request describiendo claramente el propósito del cambio.
 
