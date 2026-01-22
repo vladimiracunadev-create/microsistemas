@@ -7,6 +7,10 @@
 
 **Microsistemas** es una suite profesional de herramientas web modulares diseñada para desarrolladores y administradores de sistemas. Ofrece soluciones rápidas para tareas de diagnóstico, conversión de datos, gestión de bases de datos y modernización de código PHP.
 
+## 📋 Requisitos del Sistema
+Para ver el detalle completo de hardware y software (PHP, extensiones, etc.), consulta:
+👉 **[Requisitos del Sistema (REQUIREMENTS.md)](docs/REQUIREMENTS.md)**
+
 ## Quick Start with Makefile
 
 This project includes a `Makefile` to simplify common tasks. Ensure you have `make` installed (e.g., via Chocolatey `choco install make` or GnuWin32).
