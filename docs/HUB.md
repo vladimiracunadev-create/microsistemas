@@ -11,32 +11,34 @@ A diferencia del Dashboard web, el Hub está diseñado para automatización y ge
 ### 1. Listar Aplicaciones
 Muestra un resumen de todas las herramientas instaladas, su tipo y puertos.
 ```bash
-python hub/main.py list
-# O vía Makefile
+# En Linux/macOS/Git Bash
+./hub.sh list
+
+# En Windows (PowerShell)
+.\hub.ps1 list
+
+# O vía Makefile (Universal)
 make hub-list
 ```
 
 ### 2. Ejecutar Localmente
 Inicia el proceso de la aplicación (ej. servidor PHP integrado) directamente en tu consola.
 ```bash
-python hub/main.py run [APP_ID]
-# Ejemplo:
+# Ejemplo vía Makefile:
 make hub-run APP=Conversor
 ```
 
 ### 3. Levantar con Docker
 Si la aplicación define un `compose_file` en su manifiesto, el Hub puede gestionarla independientemente.
 ```bash
-python hub/main.py up [APP_ID]
-# Ejemplo:
+# Ejemplo vía Makefile:
 make hub-up APP=CapacitySim
 ```
 
 ### 4. Diagnóstico (Doctor)
-Verifica que las dependencias críticas (Docker, Git, Python) estén instaladas correctamente.
+Verifica que las dependencias críticas (Docker, Git, PHP) estén instaladas correctamente.
 ```bash
-python hub/main.py doctor
-# O vía Makefile
+# Vía Makefile
 make hub-doctor
 ```
 

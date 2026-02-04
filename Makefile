@@ -47,17 +47,23 @@ git-push:
 	git commit -m "$(MSG)"
 	git push origin main
 
+ifeq ($(OS),Windows_NT)
+    HUB_CLI := powershell -ExecutionPolicy Bypass -File .\hub.ps1
+else
+    HUB_CLI := ./hub.sh
+endif
+
 hub-list:
-	python hub/main.py list
+	$(HUB_CLI) list
 
 hub-run:
-	python hub/main.py run $(APP)
+	$(HUB_CLI) run $(APP)
 
 hub-up:
-	python hub/main.py up $(APP)
+	$(HUB_CLI) up $(APP)
 
 hub-doctor:
-	python hub/main.py doctor
+	$(HUB_CLI) doctor
 
 k8s-apply:
 	kubectl apply -k k8s/demo/
