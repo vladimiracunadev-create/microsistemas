@@ -31,6 +31,28 @@ make help
 
 ---
 
+## 🛠️ Microsistemas Hub (CLI)
+
+Hemos añadido una capa de gestión centralizada llamada **Hub**. Esta herramienta permite listar, ejecutar y diagnosticar todas las micro-apps de forma estandarizada.
+
+### Uso Rápido del Hub:
+```bash
+# Listar todas las aplicaciones
+python hub/main.py list
+
+# Ejecutar una aplicación localmente (ej: Conversor)
+python hub/main.py run Conversor
+
+# Levantar una aplicación con su propio Docker Compose
+python hub/main.py up CapacitySim
+
+# Chequeo de salud del entorno
+python hub/main.py doctor
+```
+Para más detalles, consulta la 📖 **[Guía del Hub (docs/HUB.md)](docs/HUB.md)**.
+
+---
+
 ## ⚡ Inicio Inmediato
 
 ### 🐳 Con Docker (Recomendado)

@@ -10,6 +10,9 @@ Este documento detalla los pasos para instalar y ejecutar la suite **Microsistem
 - **Entorno de Ejecución**:
   - **Opción A (Moderna)**: Docker Desktop.
   - **Opción B (Clásica)**: Servidor Web (Apache/Nginx) con PHP 8.x instalado (ej: XAMPP, WAMP, MAMP).
+- **Herramientas de Consola (Opcional - Hub CLI)**:
+  - **Python 3.9+**: Requerido para ejecutar el Hub CLI (`hub/main.py`).
+  - **Pip**: Para instalar dependencias del Hub (`pip install -r hub/requirements.txt`).
 
 ---
 

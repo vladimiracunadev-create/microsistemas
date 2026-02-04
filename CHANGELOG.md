@@ -2,6 +2,20 @@
 
 Todos los cambios notables en este proyecto serán documentados en este archivo. El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-02-04
+### Añadido
+- **Microsistemas Hub (Capa de Gestión CLI)**: Nueva capa centralizada para administración de micro-apps vía línea de comandos (`hub/main.py`).
+- **Hub CLI - Comandos**: Implementación de `list`, `run`, `up` y `doctor` para gestión estandarizada.
+- **Manifiestos de App**: Integración de archivos `app.manifest.yml` en todas las micro-apps para registro automático en el Hub.
+- **Seguridad - Escaneo de Secretos**: Implementación de `TruffleHog` en GitHub Actions para detectar credenciales expuestas.
+- **Seguridad - Pre-commit Hooks**: Configuración de `detect-secrets` y hooks de limpieza de código locales.
+- **Kubernetes (K8s)**: Añadido soporte inicial para despliegue en K8s con manifiestos demo en `k8s/demo/`.
+
+### Mejorado
+- **Makefile**: Añadidos comandos para interactuar con el Hub (`make hub-*`) y K8s (`make k8s-apply`).
+- **Estabilidad CI/CD**: Actualización de GitHub Actions a `v4` y correcciones en el flujo de escaneo de seguridad.
+- **Documentación**: Nueva guía detallada del Hub (`docs/HUB.md`) y actualización del `README.md`.
+
 ## [1.1.0] - 2026-01-19
 ### Añadido
 - **CapacitySim Pro - Simulación de Costos**: Estimación de costos mensuales aproximados basados en proveedores cloud seleccionados (AWS, GCP, Azure, On-Premise).
