@@ -11,21 +11,21 @@
 Para ver el detalle completo de hardware y software (PHP, extensiones, etc.), consulta:
 👉 **[Requisitos del Sistema (REQUIREMENTS.md)](docs/REQUIREMENTS.md)**
 
-## Quick Start with Makefile
+## Inicio Rápido con Makefile
 
-This project includes a `Makefile` to simplify common tasks. Ensure you have `make` installed (e.g., via Chocolatey `choco install make` or GnuWin32).
+Este proyecto incluye un `Makefile` para simplificar las tareas comunes. Asegúrate de tener `make` instalado (ej: vía Chocolatey `choco install make` en Windows o preinstalado en Linux).
 
 ```bash
-# Install dependencies
+# Instalar dependencias PHP
 make install
 
-# Start the application (Docker)
+# Levantar la aplicación con Docker
 make up
 
-# Start the application (PHP Built-in Server)
+# Iniciar servidor PHP embebido (localhost:8000)
 make serve
 
-# View all commands
+# Ver todos los comandos disponibles
 make help
 ```
 
