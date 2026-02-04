@@ -20,3 +20,5 @@
 
 ---
 Desarrollado con ❤️ por [Vladimir Acuña Valdebenito](https://www.linkedin.com/in/vladimir-acu%C3%B1a-valdebenito-11924a29/).
+
+<!-- Ultima actualización: 2026-02-04 -->

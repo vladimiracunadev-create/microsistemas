@@ -21,7 +21,7 @@ jobs:
         uses: Andrew-Chen-Wang/github-wiki-action@v4
         with:
           strategy: 'clone'
-          folder: 'docs/wiki'
-          commit_message: 'Update Wiki from docs/wiki'
+          path: 'docs/wiki'
+          commit-message: 'Update Wiki from docs/wiki'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
