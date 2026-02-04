@@ -4,8 +4,8 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 
 ## [1.2.0] - 2026-02-04
 ### Añadido
-- **Microsistemas Hub (Capa de Gestión CLI)**: Nueva capa centralizada para administración de micro-apps vía línea de comandos (`hub/main.py`).
-- **Hub CLI - Comandos**: Implementación de `list`, `run`, `up` y `doctor` para gestión estandarizada.
+- **Microsistemas Hub (Capa de Gestión CLI)**: Nueva capa centralizada para administración de micro-apps vía línea de comandos. Implementado inicialmente en Python y migrado a Shell/Makefile para eliminar dependencias de runtime adicionales.
+- **Hub CLI - Comandos**: Implementación de `list`, `run`, `up` y `doctor` mediante scripts nativos (`hub.sh`, `hub.ps1`) y detector de OS en `Makefile`.
 - **Manifiestos de App**: Integración de archivos `app.manifest.yml` en todas las micro-apps para registro automático en el Hub.
 - **Seguridad - Escaneo de Secretos**: Implementación de `TruffleHog` en GitHub Actions para detectar credenciales expuestas.
 - **Seguridad - Pre-commit Hooks**: Configuración de `detect-secrets` y hooks de limpieza de código locales.

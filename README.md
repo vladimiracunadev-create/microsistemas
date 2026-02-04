@@ -38,16 +38,16 @@ Hemos añadido una capa de gestión centralizada llamada **Hub**. Esta herramien
 ### Uso Rápido del Hub:
 ```bash
 # Listar todas las aplicaciones
-python hub/main.py list
+make hub-list
 
 # Ejecutar una aplicación localmente (ej: Conversor)
-python hub/main.py run Conversor
+make hub-run APP=Conversor
 
 # Levantar una aplicación con su propio Docker Compose
-python hub/main.py up CapacitySim
+make hub-up APP=CapacitySim
 
 # Chequeo de salud del entorno
-python hub/main.py doctor
+make hub-doctor
 ```
 Para más detalles, consulta la 📖 **[Guía del Hub (docs/HUB.md)](docs/HUB.md)**.
 
