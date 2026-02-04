@@ -1,6 +1,6 @@
 # Makefile for Microsistemas
 
-.PHONY: help install autoload refresh up down serve git-push
+.PHONY: help install autoload refresh up down serve git-push hub-list hub-run hub-up hub-doctor k8s-apply
 
 # Default target
 help:
@@ -13,6 +13,15 @@ help:
 	@echo "  make down       Stop Docker containers"
 	@echo "  make serve      Start built-in PHP server (localhost:8000)"
 	@echo "  make git-push   Add, commit and push changes (Usage: make git-push MSG='Your message')"
+	@echo ""
+	@echo "Hub CLI Commands:"
+	@echo "  make hub-list     List all apps"
+	@echo "  make hub-run APP=x Run an app localy (e.g. make hub-run APP=Conversor)"
+	@echo "  make hub-up APP=x  Up an app with Docker Compose"
+	@echo "  make hub-doctor   Check system health"
+	@echo ""
+	@echo "Kubernetes Commands:"
+	@echo "  make k8s-apply APP=x Apply K8s manifest for an app"
 
 install:
 	composer install
@@ -37,3 +46,18 @@ git-push:
 	git add .
 	git commit -m "$(MSG)"
 	git push origin main
+
+hub-list:
+	python hub/main.py list
+
+hub-run:
+	python hub/main.py run $(APP)
+
+hub-up:
+	python hub/main.py up $(APP)
+
+hub-doctor:
+	python hub/main.py doctor
+
+k8s-apply:
+	kubectl apply -k k8s/demo/

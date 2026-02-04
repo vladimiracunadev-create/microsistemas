@@ -1,0 +1,6 @@
+name: GitTrainer
+type: static
+ports:
+  - 80
+healthcheck: /
+run_cmd: null

@@ -46,6 +46,26 @@ Nunca guardar:
 
 Usar variables de entorno y archivos fuera del repo si aplica.
 
-## Alcance
-Este documento define lineamientos de seguridad y buenas prácticas de uso.  
-La responsabilidad final de despliegue y exposición del entorno es del usuario/operador.
+## Hardening Aplicado
+
+Este repositorio ha pasado por un proceso de hardening para mitigar riesgos:
+
+### 🛡️ Docker & Contenedores
+- **Imágenes Específicas**: No se usan tags `latest`, se fijan versiones estables.
+- **No-Root**: Los procesos principales corren bajo usuarios con privilegios limitados (`www-data`).
+- **Healthchecks**: Monitoreo nativo del estado de salud de los servicios.
+- **Capas Mínimas**: Limpieza de caché de apt y archivos temporales.
+
+### 🛡️ Kubernetes (K8s)
+- **SecurityContext**: Se obliga a la ejecución como no-root y se deshabilitan escaladas de privilegios.
+- **Resource Limits**: Configuración de cuotas de CPU y Memoria para evitar DoS por agotamiento de recursos.
+- **NetworkPolicies**: Aislamiento de red para tráfico este-oeste (demo).
+
+### 🛡️ HUB CLI & Aplicaciones
+- **Input Sanitization**: Validación estricta de IDs de aplicación.
+- **Path Traversal Prevention**: Validación de rutas usando `abspath` para asegurar el scope en `apps/`.
+- **Allowed Commands**: Lista blanca de ejecutables permitidos (`php`, `python`, `node`, etc).
+
+### 🛡️ Desarrollo & CI/CD
+- **Secret Scanning**: Integración de TruffleHog y pre-commit (detect-secrets).
+- **Dependency Scanning**: Flujo de CI para detección de vulnerabilidades en librerías.

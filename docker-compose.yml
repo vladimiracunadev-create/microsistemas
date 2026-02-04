@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   web:
-    image: php:8.2-apache
+    build: .
     container_name: microsistemas-web
     ports:
       - "8080:80"
@@ -11,25 +11,36 @@ services:
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html
       - DB_HOST=db
-      - DB_USER=root
-      - DB_PASS=root
+      - DB_USER=${DB_USER:-root}
+      - DB_PASS=${DB_PASS:-root}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - microsistemas-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   db:
-    image: mysql:8.0
+    image: mysql:8.0.40
     container_name: microsistemas-db
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: portal_portafolio
+      MYSQL_ROOT_PASSWORD: ${DB_PASS:-root}
+      MYSQL_DATABASE: ${DB_NAME:-portal_portafolio}
     ports:
       - "3306:3306"
     volumes:
       - db-data:/var/lib/mysql
     networks:
       - microsistemas-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASS:-root}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   microsistemas-net:

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+  labels:
+    app: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 2000
+      containers:
+      - name: web
+        image: php:8.2.27-apache-bookworm
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false # Apache needs to write to some logs/dirs normally
+          capabilities:
+            drop:
+              - ALL
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: app-source
+          mountPath: /var/www/html
+      volumes:
+      - name: app-source
+        hostPath:
+          path: /repo/apps/Conversor

@@ -5,6 +5,7 @@ Thumbs.db
 # Environments
 .env
 .env.local
+.env.example
 
 # Docker
 docker-compose.override.yml
@@ -16,6 +17,19 @@ docker-compose.override.yml
 # PHP
 vendor/
 composer.lock
+
+# Security and Secrets
+*.pem
+*.key
+secrets/
+**/.gitsecret/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
 
 # Logs
 *.log

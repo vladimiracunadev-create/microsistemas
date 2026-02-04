@@ -1,0 +1,6 @@
+name: PhpMigrator
+type: php
+ports:
+  - 80
+healthcheck: /
+run_cmd: php -S 0.0.0.0:80 index.php
