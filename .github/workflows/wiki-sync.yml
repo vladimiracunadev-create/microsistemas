@@ -1,0 +1,27 @@
+name: Wiki Sync
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/wiki/**'
+  workflow_dispatch:
+
+jobs:
+  sync-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync Wiki
+        uses: Andrew-Chen-Wang/github-wiki-action@v4
+        with:
+          strategy: 'clone'
+          folder: 'docs/wiki'
+          commit_message: 'Update Wiki from docs/wiki'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
