@@ -27,12 +27,19 @@ graph TD
     end
 ```
 
-## 🔐 Decisiones de Diseño
+## 📦 El Paquete PHP (`src/`)
 
-1.  **Aislamiento**: Cada aplicación vive en su propia subcarpeta dentro de `apps/`.
-2.  **Configuración**: Uso extensivo de archivos `.env` para evitar credenciales en código.
-3.  **Portabilidad**: Wrapper universal `hub.py` (ejecutable vía PHP, Bash o Powershell).
-4.  **Modernización**: Integración de PSR-4 via Composer para una carga de clases eficiente.
+La lógica compartida se organiza bajo el namespace `Microsistemas\`.
+
+1.  **`Microsistemas\Core\Config`**: Centraliza el acceso a la configuración usando `.env`.
+2.  **`Microsistemas\Core\Database`**: Gestiona la conexión MySQL mediante el patrón **Singleton**.
+
+---
+
+## 🔄 Integración Continua y Docker
+
+- **CI/CD**: Cada push a `main` dispara la construcción y publicación automática en **GitHub Packages**.
+- **Dockerfile**: Imagen basada en `php:8.2-apache`, optimizada para seguridad y rendimiento.
 
 ---
 📖 Explora el **[Catálogo de Sistemas](Catalogo-de-Sistemas)** para ver el detalle de cada módulo.
