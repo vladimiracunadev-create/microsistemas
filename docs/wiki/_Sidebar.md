@@ -22,3 +22,5 @@
 *   **[Seguridad](Seguridad)**
 *   **[Roadmap](Roadmap)**
 *   **[Código de Conducta](Codigo-de-Conducta)**
+
+<!-- Sync: 2026-02-04 17:24 -->
