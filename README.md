@@ -86,6 +86,16 @@ docker-compose up -d
 
 ---
 
+## 👔 Para Reclutadores y Evaluadores Técnicos
+
+¿Estás evaluando este proyecto como parte de un proceso de selección? Consulta nuestra **[Guía para Reclutadores](docs/RECRUITER.md)** que incluye:
+- Contexto de negocio y valor agregado
+- Decisiones arquitectónicas clave
+- Tour guiado de casos de uso destacados
+- Stack tecnológico y patrones aplicados
+
+---
+
 ## 📂 Catálogo de Herramientas
 
 | Herramienta | Tecnología | Propósito |
