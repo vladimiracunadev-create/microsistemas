@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-import argparse, json, os
+import argparse
+import json
+import os
 
 BASE = os.path.join(os.path.dirname(__file__), "..", "app", "data", "baselines.json")
 

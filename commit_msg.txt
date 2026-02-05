@@ -1,1 +1,0 @@
-docs: finaliza limpieza de markdown y estandarizacion de linter (0 errores)

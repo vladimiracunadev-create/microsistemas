@@ -17,15 +17,12 @@ class Config
     /** @var Config|null Instancia única de la clase */
     private static $instance = null;
 
-    /** @var array Datos cargados de las variables de entorno */
-    private $data = [];
-
     private function __construct()
     {
         // El archivo .env vive en la raíz del proyecto
         $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
         try {
-            $this->data = $dotenv->load();
+            $dotenv->load();
         } catch (\Exception $e) {
             // Si no hay .env, cargamos las variables de entorno del sistema
         }
@@ -53,6 +50,11 @@ class Config
      */
     public function get(string $key, $default = null)
     {
-        return $_ENV[$key] ?? getenv($key) ?? $default;
+        if (isset($_ENV[$key])) {
+            return $_ENV[$key];
+        }
+
+        $value = getenv($key);
+        return ($value !== false) ? $value : $default;
     }
 }

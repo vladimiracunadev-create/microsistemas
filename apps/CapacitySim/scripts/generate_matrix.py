@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-import argparse, os, csv, itertools
+import argparse
+import os
+import csv
+import itertools
 from capacity_calc import calculate, load_baselines
 
 def main():
