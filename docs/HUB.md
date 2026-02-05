@@ -21,6 +21,18 @@ Muestra un resumen de todas las herramientas instaladas, su tipo y puertos.
 make hub-list
 ```
 
+### 0. Scripts de Desarrollo (Recomendado)
+Hemos unificado la experiencia de desarrollo mediante scripts de alto nivel que envuelven al Hub y a las herramientas de calidad:
+```bash
+# En Linux/macOS
+./scripts/dev.sh catalogo   # Actualiza el README
+./scripts/dev.sh revisar    # Ejecuta Lints/PHPStan
+
+# En Windows (PowerShell)
+.\scripts\dev.ps1 catalogo
+.\scripts\dev.ps1 revisar
+```
+
 ### 2. Ejecutar Localmente
 Inicia el proceso de la aplicación (ej. servidor PHP integrado) directamente en tu consola.
 ```bash

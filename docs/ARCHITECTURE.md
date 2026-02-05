@@ -62,11 +62,13 @@ sequenceDiagram
     participant GHCR as Container Registry
 
     Dev->>GH: git push origin main
-    GH->>GA: Trigger: workflow docker-publish
-    GA->>GA: Build Docker Image (Dockerfile)
-    GA->>GA: Optimize Image (.dockerignore)
-    GA->>GHCR: Push Image: ghcr.io/tu-usuario/microsistemas
-    GHCR-->>GH: Activate "Packages" Badge
+    GH->>GA: Trigger: workflow ci.yml (Selectivo)
+    GA->>GA: Linting (PHP, MD, Python)
+    GA->>GA: Build Docker Image (Local)
+    GA->>GA: Security Scan (Trivy)
+    GA->>GA: Publicar en GHCR (ghcr.io/...)
+    GA->>GA: Generar SBOM (JSON)
+    GA-->>Dev: Notificación de éxito/fallo
 ```
 
 ---

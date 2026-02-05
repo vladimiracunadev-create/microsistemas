@@ -40,9 +40,14 @@ El sistema sigue una **Arquitectura de Módulos Independientes (Micro-Apps)**.
 - **PSR-12**: Guía de estilo de codificación PHP.
 - **CamelCase**: Nomenclatura para funciones y variables en JavaScript.
 - **Kebab-Case**: Nomenclatura para archivos y clases CSS.
+- **Calidad Automatizada**: Cada cambio es validado por un pipeline de CI que detecta cambios selectivos por ruta.
+- **Seguridad Docker**: Imágenes escaneadas con **Trivy** y generación de **SBOM**.
 
-## Mantenimiento
-Para añadir un nuevo microsistema:
-1. Crear carpeta en `apps/MyNewApp`.
-2. Incluir `index.php` o `index.html`.
-3. Registrar la aplicación en el Dashboard principal (`/index.php`).
+## 🛠️ Mantenimiento y Extensiones
+
+Para añadir un nuevo microsistema de forma profesional:
+
+1.  **Carpeta**: Crear carpeta en `apps/MiNuevaApp`.
+2.  **Manifiesto**: Crear `app.manifest.yml` con el nombre, tipo y **descripción**.
+3.  **Catálogo**: Ejecutar `make catalog` para actualizar el README.
+4.  **Validación**: Ejecutar `make validate` localmente antes de enviar el PR.
