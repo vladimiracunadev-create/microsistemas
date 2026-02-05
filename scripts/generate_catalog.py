@@ -6,6 +6,14 @@ def generate_catalog():
     catalog_start_marker = "<!-- CATALOG_START -->"
     catalog_end_marker = "<!-- CATALOG_END -->"
     
+    # Mapeo de tecnologías a badges de Shields.io
+    tech_badges = {
+        "php": "![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white)",
+        "static": "![JS](https://img.shields.io/badge/-JS-F7DF1E?logo=javascript&logoColor=black)",
+        "python": "![Python](https://img.shields.io/badge/-Python-3776AB?logo=python&logoColor=white)",
+        "devops": "![DevOps](https://img.shields.io/badge/-DevOps-2496ED?logo=docker&logoColor=white)"
+    }
+    
     apps = []
     
     if not os.path.exists(apps_dir):
@@ -20,24 +28,30 @@ def generate_catalog():
             with open(manifest_path, 'r', encoding='utf-8') as f:
                 try:
                     manifest = yaml.safe_load(f)
+                    app_type = manifest.get("type", "desconocido").lower()
+                    
+                    # Caso especial para CapacitySim que es DevOps/Static
+                    if app_id == "CapacitySim":
+                        badge = tech_badges.get("devops")
+                    else:
+                        badge = tech_badges.get(app_type, f"`{app_type}`")
+
                     apps.append({
                         "id": app_id,
                         "name": manifest.get("name", app_id),
-                        "type": manifest.get("type", "desconocido"),
-                        "ports": ", ".join(map(str, manifest.get("ports", []))),
-                        "run_cmd": manifest.get("run_cmd", "N/A"),
+                        "type_badge": badge,
+                        "description": manifest.get("description", "Sin descripción disponible."),
                         "path": f"apps/{app_id}"
                     })
                 except Exception as e:
                     print(f"Error parseando {manifest_path}: {e}")
 
-    # Generar tabla Markdown
-    table = "| Aplicación | Stack | Comando de Inicio | Puertos | Directorio |\n"
-    table += "| :--- | :--- | :--- | :--- | :--- |\n"
+    # Generar tabla Markdown estética
+    table = "| Herramienta | Tecnología | Propósito |\n"
+    table += "| :--- | :--- | :--- |\n"
     
     for app in apps:
-        run_cmd = f"`{app['run_cmd']}`" if app['run_cmd'] else "N/A"
-        table += f"| **{app['name']}** | {app['type']} | {run_cmd} | {app['ports']} | [{app['id']}]({app['path']}) |\n"
+        table += f"| **[{app['name']}]({app['path']})** | {app['type_badge']} | {app['description']} |\n"
 
     # Actualizar README.md
     readme_path = "README.md"
@@ -55,9 +69,9 @@ def generate_catalog():
             )
             with open(readme_path, 'w', encoding='utf-8') as f:
                 f.write(new_content)
-            print("README.md actualizado con el catálogo.")
+            print("README.md actualizado con el catálogo mejorado visualmente.")
         else:
-            print("Marcadores de catálogo no encontrados en README.md. Por favor, añade <!-- CATALOG_START --> y <!-- CATALOG_END -->.")
+            print("Marcadores de catálogo no encontrados en README.md.")
     else:
         print("README.md no encontrado.")
 

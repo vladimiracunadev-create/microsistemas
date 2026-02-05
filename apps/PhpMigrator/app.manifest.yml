@@ -1,5 +1,6 @@
 name: PhpMigrator
 type: php
+description: Modernización de código PHP legacy (5.x) a estándares modernos (8.x).
 ports:
   - 80
 healthcheck: /

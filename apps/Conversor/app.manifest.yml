@@ -1,5 +1,6 @@
 name: Conversor
 type: php
+description: Herramienta de sanitización y codificación segura de texto.
 ports:
   - 80
 healthcheck: /

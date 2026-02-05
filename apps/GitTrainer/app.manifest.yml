@@ -1,5 +1,6 @@
 name: GitTrainer
 type: static
+description: Biblioteca interactiva de comandos Git y aprendizaje visual.
 ports:
   - 80
 healthcheck: /

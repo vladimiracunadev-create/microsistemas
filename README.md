@@ -100,16 +100,16 @@ docker-compose up -d
 
 <!-- CATALOG_START -->
 
-| Aplicación | Stack | Comando de Inicio | Puertos | Directorio |
-| :--- | :--- | :--- | :--- | :--- |
-| **CapacitySim** | static | N/A | 80 | [CapacitySim](apps/CapacitySim) |
-| **Conversor** | php | `php -S 0.0.0.0:80 index.php` | 80 | [Conversor](apps/Conversor) |
-| **GitTrainer** | static | N/A | 80 | [GitTrainer](apps/GitTrainer) |
-| **JsTools** | static | N/A | 80 | [JsTools](apps/JsTools) |
-| **LogViewer** | php | `php -S 0.0.0.0:80 index.php` | 80 | [LogViewer](apps/LogViewer) |
-| **PhpMigrator** | php | `php -S 0.0.0.0:80 index.php` | 80 | [PhpMigrator](apps/PhpMigrator) |
-| **SqlViewer** | php | `php -S 0.0.0.0:80 index.php` | 80 | [SqlViewer](apps/SqlViewer) |
-| **YmlGenerator** | static | N/A | 80 | [YmlGenerator](apps/YmlGenerator) |
+| Herramienta | Tecnología | Propósito |
+| :--- | :--- | :--- |
+| **[CapacitySim](apps/CapacitySim)** | ![DevOps](https://img.shields.io/badge/-DevOps-2496ED?logo=docker&logoColor=white) | Simulador heurístico de capacidad y RPS para infraestructuras con estimación de costos. |
+| **[Conversor](apps/Conversor)** | ![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white) | Herramienta de sanitización y codificación segura de texto. |
+| **[GitTrainer](apps/GitTrainer)** | ![JS](https://img.shields.io/badge/-JS-F7DF1E?logo=javascript&logoColor=black) | Biblioteca interactiva de comandos Git y aprendizaje visual. |
+| **[JsTools](apps/JsTools)** | ![JS](https://img.shields.io/badge/-JS-F7DF1E?logo=javascript&logoColor=black) | Colección de herramientas y utilidades JavaScript para productividad. |
+| **[LogViewer](apps/LogViewer)** | ![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white) | Auditoría segura y visualización de logs del sistema en tiempo real. |
+| **[PhpMigrator](apps/PhpMigrator)** | ![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white) | Modernización de código PHP legacy (5.x) a estándares modernos (8.x). |
+| **[SqlViewer](apps/SqlViewer)** | ![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white) | Inspección y gestión de bases de datos sin necesidad de clientes pesados. |
+| **[YmlGenerator](apps/YmlGenerator)** | ![JS](https://img.shields.io/badge/-JS-F7DF1E?logo=javascript&logoColor=black) | Generador visual de configuraciones YAML para Docker y Kubernetes. |
 
 <!-- CATALOG_END -->
 

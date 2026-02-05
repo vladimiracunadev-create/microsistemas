@@ -1,5 +1,6 @@
 name: LogViewer
 type: php
+description: Auditoría segura y visualización de logs del sistema en tiempo real.
 ports:
   - 80
 healthcheck: /

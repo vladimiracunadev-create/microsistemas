@@ -1,5 +1,6 @@
 name: SqlViewer
 type: php
+description: Inspección y gestión de bases de datos sin necesidad de clientes pesados.
 ports:
   - 80
 healthcheck: /

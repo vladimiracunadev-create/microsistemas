@@ -1,5 +1,6 @@
 name: JsTools
 type: static
+description: Colección de herramientas y utilidades JavaScript para productividad.
 ports:
   - 80
 healthcheck: /

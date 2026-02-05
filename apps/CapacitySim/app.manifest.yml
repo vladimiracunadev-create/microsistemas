@@ -1,5 +1,6 @@
 name: CapacitySim
 type: static
+description: Simulador heurístico de capacidad y RPS para infraestructuras con estimación de costos.
 ports:
   - 80
 healthcheck: /

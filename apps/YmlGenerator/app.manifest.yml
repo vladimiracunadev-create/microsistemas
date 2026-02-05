@@ -1,5 +1,6 @@
 name: YmlGenerator
 type: static
+description: Generador visual de configuraciones YAML para Docker y Kubernetes.
 ports:
   - 80
 healthcheck: /
