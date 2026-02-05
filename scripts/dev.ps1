@@ -1,5 +1,10 @@
 # Script de Desarrollo Microsistemas (PowerShell)
 
+param (
+    [Parameter(Mandatory=$false)]
+    [string]$comando = "ayuda"
+)
+
 function Mostrar-Ayuda {
     Write-Host "Uso: .\scripts\dev.ps1 [comando]" -ForegroundColor Cyan
     Write-Host ""
@@ -10,11 +15,6 @@ function Mostrar-Ayuda {
     Write-Host "  catalogo    Regenera el catálogo en el README.md"
     Write-Host "  ayuda       Muestra este mensaje"
 }
-
-param (
-    [Parameter(Mandatory=$false)]
-    [string]$comando = "ayuda"
-)
 
 switch ($comando) {
     "listar" {
