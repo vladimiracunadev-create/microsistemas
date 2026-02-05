@@ -9,6 +9,7 @@ El archivo `microsistemas-v1.1.0.zip` contiene la versión completa de Microsist
 ## 🚀 Instalación Rápida
 
 ### Opción 0: Con Makefile (Más rápido)
+
 Si tienes `make` instalado (Windows/Linux/Mac), simplemente ejecuta:
 
 ```bash
@@ -138,11 +139,13 @@ Si ya tienes una versión anterior instalada:
 Después de la instalación, podrás usar:
 
 ### CapacitySim Pro
+
 - **Simulación de Costos**: Selector de proveedor cloud (AWS/GCP/Azure/On-Premise)
 - **Modo Comparativo**: Botones "Guardar A/B" y "Cargar A/B"
 - **Exportación**: Botones "Exportar JSON" y "Reporte PDF"
 
 Para más detalles, consulta:
+
 - `RELEASE_NOTES_v1.1.0.md` - Notas de release completas
 - `apps/CapacitySim/README.md` - Documentación de CapacitySim Pro
 - `CHANGELOG.md` - Historial de cambios
@@ -152,17 +155,20 @@ Para más detalles, consulta:
 ## 🔧 Requisitos del Sistema
 
 ### Mínimos
+
 - **PHP**: >= 8.0
 - **Composer**: >= 2.0
 - **Servidor Web**: Apache, Nginx, IIS o Caddy
 - **Navegador**: Chrome, Firefox, Edge o Safari (últimas 2 versiones)
 
 ### Recomendados
+
 - **PHP**: 8.1 o superior
 - **Memoria**: 512MB RAM mínimo
 - **Disco**: 100MB espacio libre
 
 ### Para Docker
+
 - **Docker**: >= 20.10
 - **Docker Compose**: >= 1.29
 
@@ -206,11 +212,13 @@ Para más detalles, consulta:
 ## 🐛 Solución de Problemas
 
 ### Error: "Class not found"
+
 ```bash
 composer dump-autoload -o
 ```
 
 ### Error: "Permission denied"
+
 ```bash
 # En Linux/Mac:
 chmod -R 755 .
@@ -220,6 +228,7 @@ chmod -R 777 storage/
 ```
 
 ### CapacitySim no carga assets
+
 ```bash
 # Limpiar caché del navegador: Ctrl+F5
 # Verificar que los archivos existen:
@@ -227,6 +236,7 @@ dir apps\CapacitySim\assets\
 ```
 
 ### Problemas con .env
+
 ```bash
 # Verificar que .env existe y tiene permisos correctos
 # Verificar sintaxis del archivo .env

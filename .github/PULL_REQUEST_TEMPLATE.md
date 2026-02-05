@@ -2,6 +2,7 @@
 <!-- Describe los cambios realizados y la motivación detrás de ellos -->
 
 ## Tipo de cambio
+
 - [ ] Corrección de error (bug fix)
 - [ ] Nueva funcionalidad (new feature)
 - [ ] Refactorización / Mejora de código

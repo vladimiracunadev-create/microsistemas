@@ -7,6 +7,7 @@ Este documento define las especificaciones técnicas de hardware y software nece
 ## 🖥️ Hardware
 
 ### Mínimo (Entorno Local / Pruebas)
+
 - **CPU**: 1 Core (2.0 GHz+)
 - **RAM**: 512 MB (XAMPP Clásico) / 2 GB (Docker Desktop)
 - **Almacenamiento**: 100 MB libres para el código base.
@@ -23,6 +24,7 @@ Este documento define las especificaciones técnicas de hardware y software nece
 ## 💾 Software
 
 ### Sistema Operativo
+
 - **Windows**: 10/11 (Compatible con WSL2 para Docker).
 - **Linux**: Ubuntu 20.04+, Debian 11+, CentOS 8+ (Recomendado para servidores).
 - **macOS**: Catalina 10.15+ (Chip Intel o Apple Silicon).
@@ -38,6 +40,7 @@ Este documento define las especificaciones técnicas de hardware y software nece
 - **Composer**: Versión **2.0+**.
 
 ### Herramientas de Desarrollo (Opcionales)
+
 - **Docker**: Motor 20.10+ y Docker Compose 1.29+.
 - **Make**: GNU Make 3.8+ (para usar el `Makefile`).
 - **Git**: 2.30+.

@@ -3,18 +3,22 @@
 Este documento explica **qué significa** cada selector y cómo se transforma en una estimación de capacidad.
 
 ## 1) Qué entrega el simulador
+
 Para una combinación (stack) calcula tres límites:
+
 1) **Límite por CPU/App (`RPS_cpu`)**
 2) **Límite por Base de Datos (`RPS_db`)**
 3) **Límite por Red (`RPS_red`)**
 
 Luego:
+
 - **`RPS_cap = min(RPS_cpu, RPS_db, RPS_red) × safety_factor`**
 - **Usuarios concurrentes ≈ `RPS_cap × latencia_endpoint`** (en segundos)
 
 > No representa “usuarios totales del día”, sino simultaneidad aproximada bajo la latencia elegida.
 
 ## 2) Qué modela cada selector
+
 - **OS**: eficiencia/overhead del sistema.
 - **Servidor web**: manejo de conexiones, keep-alive, proxy, TLS.
 - **Runtime**: baseline de RPS por core (heurístico).
@@ -23,6 +27,7 @@ Luego:
 - **Caché / CDN / TLS**: efectos típicos en latencia/carga.
 
 ## 3) Qué NO hace
+
 - No instala ni despliega stacks reales.
 - No reemplaza pruebas de carga.
 - No modela efectos complejos (GC, locks, hot partitions, etc.).
@@ -40,6 +45,7 @@ Cambia **una variable a la vez** y observa cuándo el cuello de botella cambia (
 ## 6) Nuevos selectores
 
 ### Perfil de carga
+
 - CPU-bound: límite suele ser CPU.
 - I/O-bound: límite suele ser dependencias externas.
 - DB-bound: DB es el cuello.
@@ -67,6 +73,7 @@ Cambia **una variable a la vez** y observa cuándo el cuello de botella cambia (
 
 
 ## 9) LB / Service Mesh (nuevo)
+
 - Agrega un hop y overhead, pero habilita balanceo, políticas, observabilidad.
 - En el simulador: suma latencia y reduce levemente RPS.
 

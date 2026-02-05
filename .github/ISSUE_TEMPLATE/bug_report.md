@@ -11,7 +11,9 @@ assignees: ''
 Una descripción clara y concisa de lo que es el error.
 
 **Para Reproducir**
+
 Pasos para reproducir el comportamiento:
+
 1. Ve a '...'
 2. Haz click en '....'
 3. Desplázate hacia abajo hasta '....'
@@ -24,9 +26,10 @@ Una descripción clara y concisa de lo que esperabas que sucediera.
 Si aplica, añade capturas de pantalla para ayudar a explicar tu problema.
 
 **Entorno (por favor completa la siguiente información):**
- - OS: [ej. iOS]
- - Navegador: [ej. chrome, safari]
- - Versión: [ej. 22]
+
+- OS: [ej. iOS]
+- Navegador: [ej. chrome, safari]
+- Versión: [ej. 22]
 
 **Contexto Adicional**
 Añade cualquier otro contexto sobre el problema aquí.

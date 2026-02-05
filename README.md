@@ -36,6 +36,7 @@ make help
 Hemos añadido una capa de gestión centralizada llamada **Hub**. Esta herramienta permite listar, ejecutar y diagnosticar todas las micro-apps de forma estandarizada.
 
 ### Uso Rápido del Hub:
+
 ```bash
 # Listar todas las aplicaciones
 make hub-list
@@ -49,6 +50,7 @@ make hub-up APP=CapacitySim
 # Chequeo de salud del entorno
 make hub-doctor
 ```
+
 Para más detalles, consulta la 📖 **[Guía del Hub (docs/HUB.md)](docs/HUB.md)**.
 
 ---
@@ -56,13 +58,17 @@ Para más detalles, consulta la 📖 **[Guía del Hub (docs/HUB.md)](docs/HUB.md
 ## ⚡ Inicio Inmediato
 
 ### 🐳 Con Docker (Recomendado)
+
 Levanta todo el ecosistema en menos de 30 segundos:
+
 ```bash
 docker-compose up -d
 ```
+
 🌐 Dashboard: `http://localhost:8080`
 
 ### 🐘 Con XAMPP
+
 1. Clona en `htdocs/microsistemas`.
 2. Renombra `.env.example` a `.env`.
 3. Accede a `http://localhost/microsistemas/`.
@@ -119,19 +125,17 @@ docker-compose up -d
 
 Explora nuestras guías detalladas para convertirte en un experto de la suite:
 
-
-*   📖 **[Guía para Principiantes](docs/BEGINNERS_GUIDE.md)**: ¿Eres nuevo? Empieza aquí para entender las carpetas.
-*   📖 **[Manual de Usuario](docs/USER_MANUAL.md)**: Cómo sacar el máximo provecho a cada herramienta.
-*   🚀 **[Guía de Instalación](docs/INSTALL.md)**: Despliegue en Docker, Linux y XAMPP.
-*   🏗️ **[Arquitectura](docs/ARCHITECTURE.md)**: Diagramas Mermaid y detalles del Core.
-*   📜 **[Catálogo de Sistemas](docs/SYSTEMS_CATALOG.md)**: Detalles técnicos de cada micro-app.
-*   🔌 **[Referencia de API](docs/API.md)**: Cómo interactuar con el core y extensiones.
-*   🛡️ **[Seguridad](docs/SECURITY.md)**: Políticas de protección y reporte.
-*   🛠️ **[Specs Técnicas](docs/TECHNICAL_SPECS.md)**: Stack, estándares y normas de mantención.
-*   🧑‍💻 **[Guía de Mantenedores](docs/MAINTAINERS.md)**: Información crítica para administradores del proyecto.
-*   ⚖️ **[Código de Conducta](CODE_OF_CONDUCT.md)**: Normas para una comunidad saludable.
-*   🕒 **[Historial de Cambios](CHANGELOG.md)**: Registro detallado de versiones y mejoras.
-
+- 📖 **[Guía para Principiantes](docs/BEGINNERS_GUIDE.md)**: ¿Eres nuevo? Empieza aquí para entender las carpetas.
+- 📖 **[Manual de Usuario](docs/USER_MANUAL.md)**: Cómo sacar el máximo provecho a cada herramienta.
+- 🚀 **[Guía de Instalación](docs/INSTALL.md)**: Despliegue en Docker, Linux y XAMPP.
+- 🏗️ **[Arquitectura](docs/ARCHITECTURE.md)**: Diagramas Mermaid y detalles del Core.
+- 📜 **[Catálogo de Sistemas](docs/SYSTEMS_CATALOG.md)**: Detalles técnicos de cada micro-app.
+- 🔌 **[Referencia de API](docs/API.md)**: Cómo interactuar con el core y extensiones.
+- 🛡️ **[Seguridad](docs/SECURITY.md)**: Políticas de protección y reporte.
+- 🛠️ **[Specs Técnicas](docs/TECHNICAL_SPECS.md)**: Stack, estándares y normas de mantención.
+- 🧑‍💻 **[Guía de Mantenedores](docs/MAINTAINERS.md)**: Información crítica para administradores del proyecto.
+- ⚖️ **[Código de Conducta](CODE_OF_CONDUCT.md)**: Normas para una comunidad saludable.
+- 🕒 **[Historial de Cambios](CHANGELOG.md)**: Registro detallado de versiones y mejoras.
 
 ---
 
@@ -141,6 +145,7 @@ Explora nuestras guías detalladas para convertirte en un experto de la suite:
 ¡Este proyecto está abierto a **Cooperación Real**! Queremos que contribuir sea lo más fácil y seguro posible.
 
 ### 🌟 ¿Cómo ayudar?
+
 - **Reporta Errores**: Usa nuestra [plantilla de errores](https://github.com/vladimiracunadev-create/microsistemas/issues/new?template=bug_report.md) para ayudarnos a mejorar.
 - **Sugiere Funciones**: Tenemos una [plantilla para nuevas ideas](https://github.com/vladimiracunadev-create/microsistemas/issues/new?template=feature_request.md).
 - **Resuelve Issues**: Busca etiquetas como `good first issue` o `help wanted` para empezar.

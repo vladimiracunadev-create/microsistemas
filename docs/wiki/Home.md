@@ -8,9 +8,9 @@
 
 Si eres nuevo en el proyecto, te recomendamos seguir este orden:
 
-1.  **[Guía para Principiantes](Guia-para-Principiantes)**: Un recorrido visual por la estructura del proyecto.
-2.  **[Guia de Instalación](Guia-de-Instalacion)**: Levanta el entorno en Docker o XAMPP en menos de 5 minutos.
-3.  **[Manual de Usuario](Manual-de-Usuario)**: Aprende a maximizar el uso de cada micro-aplicación.
+1. **[Guía para Principiantes](Guia-para-Principiantes)**: Un recorrido visual por la estructura del proyecto.
+2. **[Guia de Instalación](Guia-de-Instalacion)**: Levanta el entorno en Docker o XAMPP en menos de 5 minutos.
+3. **[Manual de Usuario](Manual-de-Usuario)**: Aprende a maximizar el uso de cada micro-aplicación.
 
 ---
 
@@ -31,7 +31,8 @@ Explora la documentación técnica:
 
 ## 🤝 Comunidad y Contribución
 
-¡Tu ayuda es bienvenida! 
+¡Tu ayuda es bienvenida!
+
 - Revisa nuestra **[Guía de Contribución](Guia-de-Contribucion)** para aprender cómo añadir tu propio microsistema.
 - Lee nuestras políticas de **[Seguridad](Seguridad)** y el **[Código de Conducta](Codigo-de-Conducta)**.
 
