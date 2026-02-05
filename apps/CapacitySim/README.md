@@ -21,23 +21,23 @@
 
 ## 🔎 Importante: esto es un **SIMULADOR** (no instala tecnologías)
 
-Este repositorio **no instala** Nginx, Kubernetes, Postgres, etc.  
+Este repositorio **no instala** Nginx, Kubernetes, Postgres, etc.
+
 Su propósito es **didáctico**: modelar combinaciones de tecnologías (por SELECT) y entregar **estimaciones** de:
 
-- Límite aproximado de RPS (CPU / DB / Red)  
-- Usuarios concurrentes estimados  
-- Cuello de botella probable  
-- Supuestos y multiplicadores usados  
+- Límite aproximado de RPS (CPU / DB / Red)
+- Usuarios concurrentes estimados
+- Cuello de botella probable
+- Supuestos y multiplicadores usados
 
 Para llevarlo “a la vida real”, debes **calibrar** con pruebas de carga y métricas (se incluye guía).
 
 ---
 
-
-
 ## 1) Cómo usar
 
 ### Opción A: UI Web (estática)
+
 1. Abra `index.html` en un navegador (o sirva la carpeta raíz del microsistema con cualquier servidor estático).
 2. Seleccione **stack** y parámetros; obtendrá:
    - `RPS_cpu`, `RPS_db`, `RPS_red`, `RPS_cap` (mínimo entre límites).
@@ -45,6 +45,7 @@ Para llevarlo “a la vida real”, debes **calibrar** con pruebas de carga y m�
    - Detalle de multiplicadores por componente y supuestos.
 
 ### Opción B: CLI (Python)
+
 ```bash
 python3 scripts/capacity_calc.py --os linux --web nginx --runtime node --db postgres \
   --container docker --orchestrator kubernetes --cache redis --cdn on --tls on \
@@ -62,6 +63,7 @@ python3 scripts/capacity_calc.py --os linux --web nginx --runtime node --db post
 ### 💰 Simulación de Costos
 
 Selecciona un proveedor cloud en el selector **"Proveedor de Nube (Costos)"** para obtener:
+
 - Costo estimado mensual basado en núcleos totales (App + DB)
 - Pricing por hora/núcleo según proveedor:
   - **AWS**: $0.046/core/hour (EC2/RDS estándar)
@@ -95,7 +97,7 @@ Genera documentación profesional para stakeholders:
 - **Exportar JSON**: Descarga configuración completa y resultados en formato estructurado
   - Útil para versionado, auditoría y automatización
   - Incluye todos los parámetros, multiplicadores y cálculos
-  
+
 - **Reporte PDF**: Genera documento imprimible con:
   - Resumen ejecutivo de capacidad
   - Desglose técnico de límites (CPU/DB/Red)
@@ -104,19 +106,5 @@ Genera documentación profesional para stakeholders:
   - Gráficos de salud del sistema
 
 **Uso**: Presenta resultados a equipos de arquitectura, finanzas o management.
-
----
-
-## 3) Importante: esto es un **SIMULADOR** (no instala tecnologías)
-
-Este repositorio **no instala** Nginx, Kubernetes, Postgres, etc.  
-Su propósito es **didáctico**: modelar combinaciones de tecnologías (por SELECT) y entregar **estimaciones** de:
-
-- Límite aproximado de RPS (CPU / DB / Red)  
-- Usuarios concurrentes estimados  
-- Cuello de botella probable  
-- Supuestos y multiplicadores usados  
-
-Para llevarlo “a la vida real”, debes **calibrar** con pruebas de carga y métricas (se incluye guía).
 
 ---

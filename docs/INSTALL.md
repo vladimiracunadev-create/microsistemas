@@ -10,7 +10,9 @@ Este documento detalla los pasos para instalar y ejecutar la suite **Microsistem
 - **Entorno de Ejecución**:
   - **Opción A (Moderna)**: Docker Desktop.
   - **Opción B (Clásica)**: Servidor Web (Apache/Nginx) con PHP 8.x instalado (ej: XAMPP, WAMP, MAMP).
+
 - **Herramientas de Consola (Opcional - Hub CLI)**:
+
   - **Bash o PowerShell**: Requerido para ejecutar el Hub CLI (`hub.sh` o `hub.ps1`).
   - **Make (opcional)**: Para usar los comandos abreviados del Makefile.
 
@@ -64,20 +66,27 @@ Para usuarios que prefieren un entorno local tradicional.
 
 ### Pasos
 1. **Instalar Apache y PHP**:
+
    ```bash
    sudo apt update
    sudo apt install apache2 php libapache2-mod-php php-mysql
    ```
+
 2. **Clonar Repositorio**:
+
    ```bash
    cd /var/www/html
    sudo git clone https://github.com/tu-usuario/microsistemas.git
    ```
+
 3. **Permisos**:
+
    Asegúrese de que Apache pueda leer los archivos.
+
    ```bash
    sudo chown -R www-data:www-data /var/www/html/microsistemas
    ```
+
 4. **Acceder**: [http://localhost/microsistemas](http://localhost/microsistemas).
 
 ---

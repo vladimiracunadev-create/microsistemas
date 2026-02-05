@@ -13,35 +13,41 @@ La suite se organiza en un **Dashboard Central** que actúa como puerta de enlac
 
 ### 📦 Gestión de Datos y Bases de Datos
 #### SQL Viewer
-*   **Propósito**: Inspección ágil y depuración de bases de datos.
-*   **Workflow Pro**: Use la columna izquierda para explorar esquemas; el resaltado de sintaxis le ayudará a escribir consultas complejas.
-*   **Seguridad**: El sistema bloquea ejecuciones accidentales mediante diálogos de confirmación persistentes.
+
+* **Propósito**: Inspección ágil y depuración de bases de datos.
+* **Workflow Pro**: Use la columna izquierda para explorar esquemas; el resaltado de sintaxis le ayudará a escribir consultas complejas.
+* **Seguridad**: El sistema bloquea ejecuciones accidentales mediante diálogos de confirmación persistentes.
 
 #### Log Viewer
-*   **Propósito**: Auditoría y diagnóstico de errores en tiempo real.
-*   **Workflow Pro**: Filtre las líneas por severidad (`ERROR`, `WARNING`) usando las funciones del navegador (`Ctrl + F`) sobre la vista estilo consola.
+
+* **Propósito**: Auditoría y diagnóstico de errores en tiempo real.
+* **Workflow Pro**: Filtre las líneas por severidad (`ERROR`, `WARNING`) usando las funciones del navegador (`Ctrl + F`) sobre la vista estilo consola.
 
 ---
 
 ### 💻 Modernización y Desarrollo
 #### PHP Migrator
-*   **Propósito**: Salto tecnológico de PHP 5.x a 8.2+.
-*   **Workflow Pro**: Pegue clases enteras; la herramienta detectará ineficiencias y ofrecerá alternativas basadas en la documentación oficial de PHP.
+
+* **Propósito**: Salto tecnológico de PHP 5.x a 8.2+.
+* **Workflow Pro**: Pegue clases enteras; la herramienta detectará ineficiencias y ofrecerá alternativas basadas en la documentación oficial de PHP.
 
 #### Git Trainer
-*   **Propósito**: Dominio interactivo de flujos Git.
-*   **Workflow Pro**: Busque por "dolores de cabeza" comunes (ej: "olvidé añadir un archivo al último commit") para encontrar soluciones elegantes.
+
+* **Propósito**: Dominio interactivo de flujos Git.
+* **Workflow Pro**: Busque por "dolores de cabeza" comunes (ej: "olvidé añadir un archivo al último commit") para encontrar soluciones elegantes.
 
 ---
 
 ### 🔧 Utilidades de Configuración
 #### YAML Studio
-*   **Propósito**: Ingeniería de configuración impecable.
-*   **Workflow Pro**: Utilice las plantillas integradas para generar archivos `docker-compose.yml` base en segundos.
+
+* **Propósito**: Ingeniería de configuración impecable.
+* **Workflow Pro**: Utilice las plantillas integradas para generar archivos `docker-compose.yml` base en segundos.
 
 #### Conversor & JS Tools
-*   **Propósito**: Sanitización y optimización de código.
-*   **Workflow Pro**: Integre estos pasos antes de subir sus archivos a producción para reducir el tamaño de carga y evitar ataques de inyección de caracteres.
+
+* **Propósito**: Sanitización y optimización de código.
+* **Workflow Pro**: Integre estos pasos antes de subir sus archivos a producción para reducir el tamaño de carga y evitar ataques de inyección de caracteres.
 
 ---
 

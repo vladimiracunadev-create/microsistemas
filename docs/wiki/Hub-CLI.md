@@ -1,29 +1,87 @@
-# Hub CLI (Gestión Centralizada) 🛠️
+# Microsistemas Hub (HUB CLI)
 
-El **Microsistemas Hub** es nuestro motor de gestión centralizada. Permite interactuar con todas las micro-apps mediante comandos estandarizados, facilitando enormemente el flujo de trabajo tanto en desarrollo como en producción.
+El **Hub** es la capa de gestión centralizada de Microsistemas que permite interactuar con todas las micro-aplicaciones de forma unificada desde la línea de comandos.
 
-## 🚀 Comandos Principales (Makefile)
+## 🚀 Concepto
 
-Hemos integrado el Hub directamente en el `Makefile` raíz para tu comodidad:
+A diferencia del Dashboard web, el Hub está diseñado para automatización y gestión rápida de infraestructura. Cada aplicación en `apps/` se registra automáticamente si contiene un archivo `app.manifest.yml`.
 
-*   `make hub-list`: Lista todas las aplicaciones instaladas y su estado.
-*   `make hub-run APP=Nombre`: Ejecuta el servidor local para una aplicación específica.
-*   `make hub-up APP=Nombre`: Levanta una aplicación con su propio contenedor Docker.
-*   `make hub-doctor`: Realiza un diagnóstico del sistema y verifica requisitos.
+## 🛠️ Comandos Principales
 
-## 📂 Manifiesto de Aplicación
+### 1. Listar Aplicaciones
 
-Cada aplicación en `apps/` tiene su propio `app.manifest.yml`. Este archivo define:
-*   Nombre y descripción.
-*   Comandos de ejecución e instalación.
-*   Variables de entorno requeridas.
-*   Rutas de Docker Compose.
+Muestra un resumen de todas las herramientas instaladas, su tipo y puertos.
 
-## 💻 Script de Wrapper (Powershell/Bash)
+```bash
+# En Linux/macOS/Git Bash
+./hub.sh list
 
-Para usuarios que no utilicen `make`, disponemos de scripts directos:
-*   En Windows: `./hub.ps1 list`
-*   En Linux/Mac: `./hub.sh list`
+# En Windows (PowerShell)
+.\hub.ps1 list
 
----
-📖 Para más detalles técnicos, consulta la **[Arquitectura](Arquitectura)**.
+# O vía Makefile (Universal)
+make hub-list
+```
+
+### 0. Scripts de Desarrollo (Recomendado)
+
+Hemos unificado la experiencia de desarrollo mediante scripts de alto nivel que envuelven al Hub y a las herramientas de calidad:
+
+```bash
+# En Linux/macOS
+./scripts/dev.sh catalogo   # Actualiza el README
+./scripts/dev.sh revisar    # Ejecuta Lints/PHPStan
+
+# En Windows (PowerShell)
+.\scripts\dev.ps1 catalogo
+.\scripts\dev.ps1 revisar
+```
+
+### 2. Ejecutar Localmente
+
+Inicia el proceso de la aplicación (ej. servidor PHP integrado) directamente en tu consola.
+
+```bash
+# Ejemplo vía Makefile:
+make hub-run APP=Conversor
+```
+
+### 3. Levantar con Docker
+
+Si la aplicación define un `compose_file` en su manifiesto, el Hub puede gestionarla independientemente.
+
+```bash
+# Ejemplo vía Makefile:
+make hub-up APP=CapacitySim
+```
+
+### 4. Diagnóstico (Doctor)
+
+Verifica que las dependencias críticas (Docker, Git, PHP) estén instaladas correctamente.
+
+```bash
+# Vía Makefile
+make hub-doctor
+```
+
+## 📝 Manifiesto de Aplicación (`app.manifest.yml`)
+
+Para que una aplicación sea reconocida por el Hub, debe tener un manifiesto con la siguiente estructura:
+
+```yaml
+name: "Nombre de la App"
+type: "static" | "php" | "js"
+run_cmd: "comando para iniciar"
+ports: [8080]
+compose_file: "docker-compose.yml" # Opcional
+```
+
+## 🛡️ Seguridad
+
+El Hub implementa varias medidas de seguridad:
+
+- **Prevención de Path Traversal**: Solo permite operaciones dentro del directorio `apps/`.
+- **Allowlist**: Solo comandos pre-aprobados pueden ser ejecutados vía `run_cmd`.
+- **Validación de Input**: Sanitización estricta de IDs de aplicación.
+
+Para más detalles sobre políticas de seguridad, consulta [Seguridad](Seguridad).

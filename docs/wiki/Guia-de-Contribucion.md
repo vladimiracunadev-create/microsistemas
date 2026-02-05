@@ -1,4 +1,4 @@
-# Guía de Contribución
+# Guía de Contribución (CONTRIBUTING)
 
 ¡Gracias por querer mejorar **Microsistemas Suite**! Para mantener la calidad de un paquete profesional, seguimos estos estándares.
 
@@ -13,6 +13,7 @@
 ## 🏷️ Etiquetas (Labels)
 
 Usamos etiquetas para organizar el trabajo. Si eres nuevo, busca estas:
+
 - `good first issue`: Ideal para empezar.
 - `help wanted`: Necesitamos apoyo extra aquí.
 - `bug`: Errores confirmados que necesitan solución.
@@ -21,6 +22,7 @@ Usamos etiquetas para organizar el trabajo. Si eres nuevo, busca estas:
 ## 🛡️ Configuración de Seguridad y Revisión
 
 Para garantizar la estabilidad del proyecto, la rama `main` tiene las siguientes protecciones:
+
 - **PR Obligatorio**: No se permiten commits directos a `main`.
 - **Revisión**: Cada cambio requiere al menos una aprobación de un mantenedor.
 - **Checks de CI**: Los tests automatizados deben pasar antes de fusionar.
@@ -32,16 +34,19 @@ Para garantizar la estabilidad del proyecto, la rama `main` tiene las siguientes
 Para asegurar que el proyecto se mantenga profesional y legible:
 
 ### PHP (PSR-12)
+
 - Usa **Namespaces** (`Microsistemas\Core\..`) si añades lógica al core.
 - Declara tipos en las funciones siempre que sea posible.
 - Evita el uso de `include` manual; utiliza el **Autoloader** de Composer.
 
 ### JavaScript (ES6+)
+
 - Usa `const` y `let` en lugar de `var`.
 - Prefiere Funciones de Flecha (`=>`) para callbacks.
 - Comenta la lógica compleja de manipulación del DOM.
 
 ### CSS
+
 - Utiliza **Variables CSS** definidas en `index.php` para mantener la consistencia visual.
 - Nomenclatura BEM o clases semánticas descriptivas.
 
@@ -59,6 +64,7 @@ Para asegurar que el proyecto se mantenga profesional y legible:
 ## 💬 Estilo de Mensajes Git
 
 Seguimos la convención de **Conventional Commits**:
+
 - `feat:` Una nueva característica para el usuario.
 - `fix:` Corrección de un error.
 - `docs:` Cambios solo en la documentación.
@@ -69,5 +75,5 @@ Seguimos la convención de **Conventional Commits**:
 ---
 
 ## ⚖️ Código de Conducta
+
 Sé amable, profesional y constructivo. Estamos aquí para aprender y construir mejores herramientas juntos.
-Consultar el [Código de Conducta](Codigo-de-Conducta).

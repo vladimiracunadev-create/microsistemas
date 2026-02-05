@@ -5,11 +5,13 @@ Este documento detalla la arquitectura, tecnologías y estándares utilizados en
 ## 🛠️ Stack Tecnológico
 
 ### Backend
+
 - **PHP 8.2+**: Lenguaje principal para el dashboard y utilidades de servidor.
 - **MySQL 8.0**: Motor de base de datos para el SQL Viewer (soporta MariaDB).
 - **Composer**: Gestión de dependencias y Autoloading (PSR-4 compatible).
 
 ### Frontend
+
 - **Vanilla JavaScript (ES6+)**: Lógica de cliente sin frameworks pesados para maximizar la velocidad.
 - **CSS3 Moderno**: Uso de Variables CSS (Custom Properties), Grid Layout y Flexbox.
 - **Inter Font Family**: Tipografía optimizada para lectura de código.
@@ -20,10 +22,11 @@ Este documento detalla la arquitectura, tecnologías y estándares utilizados en
 
 El sistema sigue una **Arquitectura de Módulos Independientes (Micro-Apps)**.
 
-### Características Principales:
-1.  **Aislamiento de Aplicaciones**: Cada carpeta en `apps/` es un ecosistema cerrado. No comparten dependencias críticas, lo que permite actualizar una herramienta sin afectar a las otras.
-2.  **Configuración via Entorno**: Implementación del patrón *12-Factor App* mediante el uso de variables de entorno (`.env`).
-3.  **Portabilidad Docker**: Orquestación mediante `docker-compose` que garantiza paridad total entre el entorno de desarrollo y producción.
+### Características Principales
+
+1. **Aislamiento de Aplicaciones**: Cada carpeta en `apps/` es un ecosistema cerrado. No comparten dependencias críticas, lo que permite actualizar una herramienta sin afectar a las otras.
+2. **Configuración via Entorno**: Implementación del patrón *12-Factor App* mediante el uso de variables de entorno (`.env`).
+3. **Portabilidad Docker**: Orquestación mediante `docker-compose` que garantiza paridad total entre el entorno de desarrollo y producción.
 
 ---
 
@@ -47,7 +50,7 @@ El sistema sigue una **Arquitectura de Módulos Independientes (Micro-Apps)**.
 
 Para añadir un nuevo microsistema de forma profesional:
 
-1.  **Carpeta**: Crear carpeta en `apps/MiNuevaApp`.
-2.  **Manifiesto**: Crear `app.manifest.yml` con el nombre, tipo y **descripción**.
-3.  **Catálogo**: Ejecutar `make catalog` para actualizar el README.
-4.  **Validación**: Ejecutar `make validate` localmente antes de enviar el PR.
+1. **Carpeta**: Crear carpeta en `apps/MiNuevaApp`.
+2. **Manifiesto**: Crear `app.manifest.yml` con el nombre, tipo y **descripción**.
+3. **Catálogo**: Ejecutar `make catalog` para actualizar el README.
+4. **Validación**: Ejecutar `make validate` localmente antes de enviar el PR.

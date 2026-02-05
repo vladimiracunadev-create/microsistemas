@@ -349,9 +349,9 @@ Si estás evaluando este proyecto como parte de un proceso de selección, te rec
 
 ## 📧 Contacto
 
-**Desarrollador**: Vladimir Acuña Valdebenito  
-**LinkedIn**: [vladimir-acuña-valdebenito](https://www.linkedin.com/in/vladimir-acu%C3%B1a-valdebenito-11924a29/)  
-**GitHub**: [vladimiracunadev-create](https://github.com/vladimiracunadev-create)  
+**Desarrollador**: Vladimir Acuña Valdebenito 
+**LinkedIn**: [vladimir-acuña-valdebenito](https://www.linkedin.com/in/vladimir-acu%C3%B1a-valdebenito-11924a29/) 
+**GitHub**: [vladimiracunadev-create](https://github.com/vladimiracunadev-create) 
 **Proyecto**: [Microsistemas Repository](https://github.com/vladimiracunadev-create/microsistemas)
 
 ---
