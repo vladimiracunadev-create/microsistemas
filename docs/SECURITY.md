@@ -14,6 +14,7 @@ Nunca guardamos credenciales en el código fuente. Toda la información sensible
 - Secretos de Docker o variables de entorno del servidor.
 
 ### 2. Aislamiento de Procesos
+
 Al utilizar Docker, cada herramienta se ejecuta en un entorno aislado. Esto previene que una posible vulnerabilidad en un módulo (ej: Conversor) afecte a la integridad del sistema operativo anfitrión o de la base de datos central.
 
 ### 3. Principio de Menor Privilegio
@@ -21,7 +22,9 @@ Al utilizar Docker, cada herramienta se ejecuta en un entorno aislado. Esto prev
 Recomendamos encarecidamente que el usuario de base de datos configurado en `SQL Viewer` tenga permisos limitados (ej: solo `SELECT`, `INSERT`, `UPDATE`) y no permisos de administrador global (`SUPER`).
 
 ## 📝 Reporte de Vulnerabilidades
+
 Valoramos enormemente el trabajo de los investigadores de seguridad. Si descubre un fallo:
+
 1. **No abra un Issue público**.
 2. Contacte directamente a través de **[vladimiracunadev-create]** mediante un mensaje privado o correo electrónico directo.
 3. Proporcione una prueba de concepto (PoC).

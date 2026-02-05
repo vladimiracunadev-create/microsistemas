@@ -13,6 +13,7 @@ La clase de configuración utiliza el patrón **Singleton** para asegurar una ú
 Obtiene la instancia única de la clase.
 
 #### `get(string $key, mixed $default = null): mixed`
+
 Recupera un valor de configuración de las variables de entorno o del archivo `.env`.
 
 - **$key**: Nombre de la variable (ej: `DB_HOST`).

@@ -11,6 +11,7 @@ A diferencia del Dashboard web, el Hub está diseñado para automatización y ge
 ### 1. Listar Aplicaciones
 
 Muestra un resumen de todas las herramientas instaladas, su tipo y puertos.
+
 ```bash
 # En Linux/macOS/Git Bash
 ./hub.sh list
@@ -22,9 +23,8 @@ Muestra un resumen de todas las herramientas instaladas, su tipo y puertos.
 make hub-list
 ```
 
-### 0. Scripts de Desarrollo (Recomendado)
-
 Hemos unificado la experiencia de desarrollo mediante scripts de alto nivel que envuelven al Hub y a las herramientas de calidad:
+
 ```bash
 # En Linux/macOS
 ./scripts/dev.sh catalogo   # Actualiza el README
@@ -38,6 +38,7 @@ Hemos unificado la experiencia de desarrollo mediante scripts de alto nivel que 
 ### 2. Ejecutar Localmente
 
 Inicia el proceso de la aplicación (ej. servidor PHP integrado) directamente en tu consola.
+
 ```bash
 # Ejemplo vía Makefile:
 make hub-run APP=Conversor
@@ -46,6 +47,7 @@ make hub-run APP=Conversor
 ### 3. Levantar con Docker
 
 Si la aplicación define un `compose_file` en su manifiesto, el Hub puede gestionarla independientemente.
+
 ```bash
 # Ejemplo vía Makefile:
 make hub-up APP=CapacitySim
@@ -54,6 +56,7 @@ make hub-up APP=CapacitySim
 ### 4. Diagnóstico (Doctor)
 
 Verifica que las dependencias críticas (Docker, Git, PHP) estén instaladas correctamente.
+
 ```bash
 # Vía Makefile
 make hub-doctor

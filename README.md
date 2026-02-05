@@ -8,7 +8,9 @@
 **Microsistemas** es una suite profesional de herramientas web modulares diseñada para desarrolladores y administradores de sistemas. Ofrece soluciones rápidas para tareas de diagnóstico, conversión de datos, gestión de bases de datos y modernización de código PHP.
 
 ## 📋 Requisitos del Sistema
+
 Para ver el detalle completo de hardware y software (PHP, extensiones, etc.), consulta:
+
 👉 **[Requisitos del Sistema (REQUIREMENTS.md)](docs/REQUIREMENTS.md)**
 
 ## Inicio Rápido con Makefile
@@ -92,9 +94,8 @@ docker-compose up -d
 
 ---
 
-## 👔 Para Reclutadores y Evaluadores Técnicos
-
 ¿Estás evaluando este proyecto como parte de un proceso de selección? Consulta nuestra **[Guía para Reclutadores](docs/RECRUITER.md)** que incluye:
+
 - Contexto de negocio y valor agregado
 - Decisiones arquitectónicas clave
 - Tour guiado de casos de uso destacados
@@ -139,7 +140,6 @@ Explora nuestras guías detalladas para convertirte en un experto de la suite:
 
 ---
 
-
 ## 🤝 Comunidad y Colaboración
 
 ¡Este proyecto está abierto a **Cooperación Real**! Queremos que contribuir sea lo más fácil y seguro posible.
@@ -151,14 +151,13 @@ Explora nuestras guías detalladas para convertirte en un experto de la suite:
 - **Resuelve Issues**: Busca etiquetas como `good first issue` o `help wanted` para empezar.
 
 ### 🛡️ Contribuciones Seguras
+
 Para mantener la calidad y estabilidad, implementamos:
+
 - **Protección de Rama**: Los cambios en `main` requieren un **Pull Request** y al menos una **revisión**.
 - **Checks Automáticos**: El CI valida que todo funcione antes de integrar.
 - **Plantillas Estándar**: Facilitamos la comunicación mediante estructuras predefinidas para Issues y PRs.
 
-Para más detalles, consulta la **[Guía de Contribución](CONTRIBUTING.md)** y nuestro **[Roadmap de Futuro](ROADMAP.md)**.
-
-
+---
 
 Desarrollado con ❤️ por **[Vladimir Acuña Valdebenito](https://www.linkedin.com/in/vladimir-acu%C3%B1a-valdebenito-11924a29/)** para la comunidad de desarrolladores.
-

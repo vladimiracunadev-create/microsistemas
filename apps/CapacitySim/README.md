@@ -85,7 +85,8 @@ Compara dos configuraciones diferentes guardando escenarios:
    - Cuellos de botella
    - Sugerencias de optimización
 
-**Casos de uso**:
+- **Casos de uso**:
+
 - Comparar arquitecturas (monolito vs microservicios)
 - Evaluar proveedores cloud (AWS vs GCP vs Azure)
 - Analizar estrategias de escalado (vertical vs horizontal)

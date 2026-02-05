@@ -9,6 +9,7 @@
 - [ ] Documentación
 
 ## Checklist
+
 - [ ] Mis cambios cumplen con los estándares de estilo del proyecto.
 - [ ] He realizado pruebas locales para verificar mi solución.
 - [ ] He actualizado la documentación si es necesario.

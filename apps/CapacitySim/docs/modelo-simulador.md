@@ -33,14 +33,15 @@ Luego:
 - No modela efectos complejos (GC, locks, hot partitions, etc.).
 
 ## 4) Cómo calibrarlo (recomendado)
+
 1. Ejecuta pruebas (k6/Locust) en tu app real.
 2. Mide RPS sostenido con p95 aceptable y errores bajos.
 3. Ajusta `app/data/baselines.json` (baselines/latencias/multiplicadores).
 4. Repite hasta acercarte.
 
 ## 5) Uso didáctico
-Cambia **una variable a la vez** y observa cuándo el cuello de botella cambia (CPU/DB/Red).
 
+Cambia **una variable a la vez** y observa cuándo el cuello de botella cambia (CPU/DB/Red).
 
 ## 6) Nuevos selectores
 
@@ -52,18 +53,20 @@ Cambia **una variable a la vez** y observa cuándo el cuello de botella cambia (
 - Red-bound: payload/ancho de banda.
 
 ### Patrón de arquitectura
+
 - Monolito: menos hops.
 - 3 capas: separación clásica.
 - Microservicios: más hops, mejor escalado por servicio.
 - Serverless: autoescalado, posible cold start.
 
-
 ## 7) Estrategia de escalado (nuevo)
+
 - **Vertical**: aumentas recursos en 1 instancia.
 - **Horizontal**: aumentas réplicas; requiere LB; leve overhead.
 - **Auto-scaling**: ajusta réplicas según carga; puede tener latencia de reacción.
 
 ## 8) Read replicas DB (nuevo)
+
 - Modo `read_replicas` aumenta **capacidad de lectura**.
 - La capacidad total queda limitada por el mix: **lecturas (%)** y **escrituras (%)**.
 - Fórmula usada: si total RPS = X, reads=X·r, writes=X·(1-r)
@@ -71,14 +74,15 @@ Cambia **una variable a la vez** y observa cuándo el cuello de botella cambia (
   - writes <= writeCap (primaria)
   - X_max = min(readCap/r, writeCap/(1-r))
 
-
 ## 9) LB / Service Mesh (nuevo)
 
 - Agrega un hop y overhead, pero habilita balanceo, políticas, observabilidad.
 - En el simulador: suma latencia y reduce levemente RPS.
 
 ## 10) Pool de conexiones (nuevo)
+
 Este es un cuello de botella muy común:
+
 - Cada instancia tiene un `pool_per_instance` de conexiones a DB.
 - La DB tiene un `db_conn_hard_limit`.
 - Con varias réplicas de app, el total es `pool_per_instance × replicas_app`.

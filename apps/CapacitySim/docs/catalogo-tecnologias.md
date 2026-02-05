@@ -35,7 +35,6 @@ Resumen de para qué sirve cada opción del simulador, cuándo conviene y riesgo
 - CDN descarga estáticos y acerca contenido.
 - TLS cifra tráfico; tiene costo computacional.
 
-
 ## Perfil de carga
 
 CPU-bound · I/O-bound · DB-bound · Red-bound
@@ -43,7 +42,6 @@ CPU-bound · I/O-bound · DB-bound · Red-bound
 ## Patrón de arquitectura
 
 Monolito · 3 capas · Microservicios · Serverless
-
 
 ## Estrategia de escalado
 
@@ -55,7 +53,6 @@ Monolito · 3 capas · Microservicios · Serverless
 
 - Aumentan lecturas; escrituras siguen en primaria.
 - Útiles si el sistema es mayoritariamente lectura.
-
 
 ## LB / Service Mesh
 

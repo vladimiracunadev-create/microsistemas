@@ -20,6 +20,7 @@ Estima costos mensuales aproximados basados en el proveedor cloud seleccionado:
 - **On-Premise**: $0.015/core/hour (energía + mantenimiento)
 
 **Beneficios**:
+
 - Presupuestos iniciales rápidos
 - Comparación de TCO entre proveedores
 - Planificación financiera informada
@@ -33,6 +34,7 @@ Guarda y compara dos configuraciones diferentes para análisis de decisiones:
 - Análisis de diferencias en RPS, costos y cuellos de botella
 
 **Casos de uso**:
+
 - Monolito vs Microservicios
 - AWS vs GCP vs Azure
 - Escalado vertical vs horizontal
@@ -43,12 +45,14 @@ Guarda y compara dos configuraciones diferentes para análisis de decisiones:
 Genera documentación técnica para stakeholders:
 
 **Exportar JSON**:
+
 - Configuración completa serializada
 - Todos los parámetros y multiplicadores
 - Resultados de cálculos detallados
 - Ideal para versionado y auditoría
 
 **Reporte PDF**:
+
 - Resumen ejecutivo de capacidad
 - Desglose técnico (CPU/DB/Red)
 - Stack tecnológico completo
@@ -60,17 +64,20 @@ Genera documentación técnica para stakeholders:
 ## 🔧 Mejoras Técnicas
 
 ### Interfaz de Usuario
+
 - Nuevo selector de proveedor cloud integrado
 - Botones de gestión de escenarios con código de colores
 - Controles de exportación profesionales
 - Diseño mejorado para uso empresarial
 
 ### Datos y Configuración
+
 - `baselines.json` expandido con pricing de proveedores cloud
 - Estructura de datos optimizada para comparaciones
 - Metadatos enriquecidos para cada tecnología
 
 ### Lógica de Negocio
+
 - Funciones de cálculo de costos en `logic.js`
 - Sistema de gestión de escenarios en localStorage
 - Generador de reportes JSON estructurados
@@ -81,9 +88,11 @@ Genera documentación técnica para stakeholders:
 ## 📦 Archivos Modificados
 
 ### Nuevos Archivos
+
 - `RELEASE_NOTES_v1.1.0.md` - Este documento
 
 ### Archivos Actualizados
+
 - `CHANGELOG.md` - Registro de cambios v1.1.0
 - `README.md` - Descripción actualizada de CapacitySim
 - `apps/CapacitySim/README.md` - Documentación completa de características Pro
@@ -105,6 +114,7 @@ Genera documentación técnica para stakeholders:
 ### Sin Cambios Incompatibles
 
 Esta versión es **100% compatible** con configuraciones anteriores:
+
 - Los presets existentes siguen funcionando
 - Los parámetros previos se mantienen
 - No se requiere migración de datos

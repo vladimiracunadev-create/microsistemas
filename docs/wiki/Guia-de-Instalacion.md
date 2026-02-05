@@ -25,14 +25,18 @@ La forma más rápida y limpia de ejecutar el sistema sin instalar dependencias 
 
 1. **Instalar Docker**: Descargue e instale [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 2. **Abrir Terminal**: Navegue a la carpeta del proyecto.
+
    ```powershell
    cd camino/a/microsistemas/Microsistemas
    ```
+
 3. **Levantar Entorno**:
+
    ```bash
    docker-compose up -d
    # O use el atajo: make up
    ```
+
    *El flag `-d` ejecuta el proceso en segundo plano.*
 
 4. **Acceder**: Abra su navegador en [http://localhost:8080](http://localhost:8080).

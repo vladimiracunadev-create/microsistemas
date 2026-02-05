@@ -27,16 +27,16 @@ La forma más rápida y limpia de ejecutar el sistema sin instalar dependencias 
 1. **Instalar Docker**: Descargue e instale [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 2. **Abrir Terminal**: Navegue a la carpeta del proyecto.
 
-```powershell
+   ```powershell
    cd camino/a/microsistemas/Microsistemas
-```
+   ```
 
 3. **Levantar Entorno**:
 
-```bash
+   ```bash
    docker-compose up -d
    # O use el atajo: make up
-```
+   ```
 
    *El flag `-d` ejecuta el proceso en segundo plano.*
 
@@ -63,13 +63,13 @@ Para usuarios que prefieren un entorno local tradicional.
 - Cree una carpeta llamada `microsistemas`.
 - Copie todo el contenido de este repositorio dentro de `C:\xampp\htdocs\microsistemas`.
 
-3. **Iniciar Servicios**:
+1. **Iniciar Servicios**:
 
-- Abra el **XAMPP Control Panel**.
-- Inicie **Apache** (Start).
-- Inicie **MySQL** (Start) *solo si usará el SQL Viewer*.
+   - Abra el **XAMPP Control Panel**.
+   - Inicie **Apache** (Start).
+   - Inicie **MySQL** (Start) *solo si usará el SQL Viewer*.
 
-4. **Acceder**: Abra su navegador en [http://localhost/microsistemas](http://localhost/microsistemas).
+1. **Acceder**: Abra su navegador en [http://localhost/microsistemas](http://localhost/microsistemas).
 
 ---
 
@@ -84,22 +84,22 @@ sudo apt update
 sudo apt install apache2 php libapache2-mod-php php-mysql
 ```
 
-2. **Clonar Repositorio**:
+1. **Clonar Repositorio**:
 
-```bash
-cd /var/www/html
-sudo git clone https://github.com/tu-usuario/microsistemas.git
-```
+   ```bash
+   cd /var/www/html
+   sudo git clone https://github.com/tu-usuario/microsistemas.git
+   ```
 
-3. **Permisos**:
+1. **Permisos**:
 
-Asegúrese de que Apache pueda leer los archivos.
+   Asegúrese de que Apache pueda leer los archivos.
 
-```bash
-sudo chown -R www-data:www-data /var/www/html/microsistemas
-```
+   ```bash
+   sudo chown -R www-data:www-data /var/www/html/microsistemas
+   ```
 
-4. **Acceder**: [http://localhost/microsistemas](http://localhost/microsistemas).
+1. **Acceder**: [http://localhost/microsistemas](http://localhost/microsistemas).
 
 ---
 

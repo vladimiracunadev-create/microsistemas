@@ -48,7 +48,7 @@ Una suite unificada de micro-aplicaciones que:
 ### Stack Tecnológico
 
 | Capa | Tecnología | Justificación |
-|------|------------|---------------|
+| :--- | :--- | :--- |
 | **Backend** | PHP 8.1+ | Compatibilidad con infraestructura existente, rendimiento mejorado |
 | **Frontend** | HTML5, CSS3, JavaScript Vanilla | Cero dependencias, carga ultrarrápida |
 | **Gestión de Dependencias** | Composer (PSR-4) | Autoloading estándar, fácil mantenimiento |
@@ -112,6 +112,7 @@ Una suite unificada de micro-aplicaciones que:
 **Problema**: Sanitización de datos de entrada de usuarios, conversión de encodings.
 
 **Solución Técnica**:
+
 - Implementación de múltiples algoritmos de sanitización
 - Soporte para UTF-8, ISO-8859-1, Windows-1252
 - Prevención de XSS mediante escape de caracteres especiales
@@ -125,6 +126,7 @@ Una suite unificada de micro-aplicaciones que:
 **Problema**: Inspección rápida de bases de datos sin instalar clientes pesados (MySQL Workbench, DBeaver).
 
 **Solución Técnica**:
+
 - Conexión segura mediante PDO con prepared statements
 - Interfaz web responsive para consultas ad-hoc
 - Exportación de resultados en CSV/JSON
@@ -138,6 +140,7 @@ Una suite unificada de micro-aplicaciones que:
 **Problema**: Modernización de código legacy PHP 5.x a 8.x.
 
 **Solución Técnica**:
+
 - Parser AST (Abstract Syntax Tree) para análisis de código
 - Detección automática de sintaxis obsoleta
 - Sugerencias de refactoring con ejemplos
@@ -151,6 +154,7 @@ Una suite unificada de micro-aplicaciones que:
 **Problema**: Planificación de infraestructura y estimación de costos cloud.
 
 **Solución Técnica**:
+
 - Algoritmos heurísticos de simulación de carga
 - Comparación multi-cloud (AWS, GCP, Azure)
 - Exportación de reportes en JSON/PDF
@@ -304,6 +308,7 @@ spec:
 ### ¿Cuánto tiempo tomó desarrollar este proyecto?
 
 El proyecto ha evolucionado iterativamente durante varios meses, con fases claras:
+
 - **Fase 1**: Core y primeras 3 apps (2 semanas)
 - **Fase 2**: Dockerización y CI/CD (1 semana)
 - **Fase 3**: Hub Layer y Kubernetes (1 semana)
@@ -312,6 +317,7 @@ El proyecto ha evolucionado iterativamente durante varios meses, con fases clara
 ### ¿Es un proyecto individual o de equipo?
 
 Proyecto individual con apertura a contribuciones de la comunidad. Demuestra capacidad de:
+
 - Gestión completa del ciclo de vida del software
 - Toma de decisiones arquitectónicas
 - Documentación exhaustiva para colaboración
@@ -326,7 +332,7 @@ Proyecto individual con apertura a contribuciones de la comunidad. Demuestra cap
 ### ¿Cómo se compara con proyectos similares?
 
 | Característica | Microsistemas | Proyectos Típicos |
-|----------------|---------------|-------------------|
+| :--- | :--- | :--- |
 | Documentación | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
 | Arquitectura | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
 | DevOps | ⭐⭐⭐⭐⭐ | ⭐⭐ |
@@ -349,9 +355,9 @@ Si estás evaluando este proyecto como parte de un proceso de selección, te rec
 
 ## 📧 Contacto
 
-**Desarrollador**: Vladimir Acuña Valdebenito 
-**LinkedIn**: [vladimir-acuña-valdebenito](https://www.linkedin.com/in/vladimir-acu%C3%B1a-valdebenito-11924a29/) 
-**GitHub**: [vladimiracunadev-create](https://github.com/vladimiracunadev-create) 
+**Desarrollador**: Vladimir Acuña Valdebenito
+**LinkedIn**: [vladimir-acuña-valdebenito](https://www.linkedin.com/in/vladimir-acu%C3%B1a-valdebenito-11924a29/)
+**GitHub**: [vladimiracunadev-create](https://github.com/vladimiracunadev-create)
 **Proyecto**: [Microsistemas Repository](https://github.com/vladimiracunadev-create/microsistemas)
 
 ---

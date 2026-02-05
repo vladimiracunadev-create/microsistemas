@@ -23,6 +23,7 @@ Este repositorio es un portafolio de ingeniería que aplica:
 - **Calidad de Código**: Estándares PSR-12, Análisis Estático (PHPStan) y Linter de Markdown.
 
 Explora la documentación técnica:
+
 - **[Arquitectura](Arquitectura)**
 - **[Especificaciones Técnicas](Especificaciones-Tecnicas)**
 - **[Referencia de API](Referencia-de-API)**

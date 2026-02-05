@@ -1,4 +1,5 @@
 # Glosario rápido
+
 - RPS: requests per second.
 - Usuarios concurrentes: simultáneos.
 - p95: percentil 95 de latencia.

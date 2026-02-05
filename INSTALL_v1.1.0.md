@@ -28,29 +28,34 @@ make serve
 ### Opción 1: Con XAMPP (Recomendado para desarrollo local)
 
 1. **Descargar el package**:
+
    ```bash
    # El archivo microsistemas-v1.1.0.zip ya está disponible
    ```
 
 2. **Extraer en htdocs**:
+
    ```bash
    # Extraer en C:\xampp\htdocs\
    # Resultado: C:\xampp\htdocs\microsistemas-v1.1.0\
    ```
 
-3. **Configurar variables de entorno**:
+3. **Configurar**:
+
    ```bash
-   cd C:\xampp\htdocs\microsistemas-v1.1.0
    copy .env.example .env
-   # Editar .env con tus credenciales de base de datos
    ```
 
-4. **Instalar dependencias PHP**:
+4. **Acceder**: `http://localhost/microsistemas`.
+
+5. **Instalar dependencias PHP**:
+
    ```bash
    composer install
    ```
 
-5. **Acceder a la aplicación**:
+6. **Acceder a la aplicación**:
+
    - Abrir navegador en: `http://localhost/microsistemas-v1.1.0/`
    - Dashboard principal: `http://localhost/microsistemas-v1.1.0/index.php`
    - CapacitySim Pro: `http://localhost/microsistemas-v1.1.0/apps/CapacitySim/`
@@ -60,25 +65,47 @@ make serve
 ### Opción 2: Con Docker (Producción)
 
 1. **Descargar y extraer**:
+
    ```bash
    unzip microsistemas-v1.1.0.zip
    cd microsistemas-v1.1.0
    ```
 
-2. **Configurar entorno**:
+2. **Instalar dependencias**:
+
+   ```bash
+   make install
+   ```
+
+3. **Configurar**:
+
    ```bash
    cp .env.example .env
-   # Editar .env según tu configuración
    ```
 
-3. **Levantar con Docker Compose**:
+4. **Iniciar servidor**:
+
    ```bash
-   docker-compose up -d
-   # O simplemente: make up
+   make serve
    ```
 
-4. **Acceder**:
-   - Dashboard: `http://localhost:8080`
+5. **Descargar Docker**: Obtener e instalar [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+
+6. **Clonar**:
+
+   ```bash
+   git clone https://github.com/vladimiracunadev-create/microsistemas.git
+   ```
+
+7. **Levantar**:
+
+   ```bash
+   cd Microsistemas
+   make up
+   ```
+
+8. **Acceder**: Navegar a `http://localhost:8080`.
+
    - CapacitySim Pro: `http://localhost:8080/apps/CapacitySim/`
 
 ---
@@ -90,21 +117,25 @@ Si ya tienes una versión anterior instalada:
 ### Método 1: Instalación limpia (Recomendado)
 
 1. **Respaldar configuración actual**:
+
    ```bash
    copy .env .env.backup
    ```
 
 2. **Extraer nueva versión en directorio diferente**:
+
    ```bash
    # Extraer microsistemas-v1.1.0.zip en nueva ubicación
    ```
 
 3. **Copiar configuración**:
+
    ```bash
    copy .env.backup microsistemas-v1.1.0\.env
    ```
 
 4. **Instalar dependencias**:
+
    ```bash
    cd microsistemas-v1.1.0
    composer install
@@ -114,22 +145,26 @@ Si ya tienes una versión anterior instalada:
 ### Método 2: Actualización in-place
 
 1. **Respaldar archivos actuales**:
+
    ```bash
    # Crear backup completo de tu instalación actual
    ```
 
 2. **Extraer sobre instalación existente**:
+
    ```bash
    # Extraer microsistemas-v1.1.0.zip sobre tu directorio actual
    # ADVERTENCIA: Esto sobrescribirá archivos
    ```
 
 3. **Actualizar dependencias**:
+
    ```bash
    composer update
    ```
 
 4. **Limpiar caché del navegador**:
+
    - Presionar `Ctrl+F5` para recargar assets
 
 ---
@@ -163,9 +198,11 @@ Para más detalles, consulta:
 
 ### Recomendados
 
-- **PHP**: 8.1 o superior
-- **Memoria**: 512MB RAM mínimo
-- **Disco**: 100MB espacio libre
+1. **Bash**: Ejecuta `./hub.sh`.
+
+1. **PowerShell**: Ejecuta `./hub.ps1`.
+
+1. **Make**: Ejecuta `make hub-list`.
 
 ### Para Docker
 
@@ -177,17 +214,20 @@ Para más detalles, consulta:
 ## 🛠️ Verificación de Instalación
 
 1. **Verificar PHP**:
+
    ```bash
    php -v
    # Debe mostrar PHP 8.0 o superior
    ```
 
 2. **Verificar Composer**:
+
    ```bash
    composer --version
    ```
 
 3. **Verificar autoload**:
+
    ```bash
    composer dump-autoload
    ```

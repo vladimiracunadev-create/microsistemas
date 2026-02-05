@@ -14,6 +14,7 @@ Este documento define las especificaciones técnicas de hardware y software nece
 - **Pantalla**: Resolución 1024x768.
 
 ### Recomendado (Producción / AWS)
+
 - **CPU**: 2 Cores
 - **RAM**: 2 GB+
 - **Almacenamiento**: 5 GB+ (dependiendo del volumen de logs y bases de datos).
@@ -30,6 +31,7 @@ Este documento define las especificaciones técnicas de hardware y software nece
 - **macOS**: Catalina 10.15+ (Chip Intel o Apple Silicon).
 
 ### Stack de Servidor (Backend)
+
 - **PHP**: Versión **8.0** o superior (Probado hasta 8.3).
   - Extensiones requeridas: `bcmath`, `ctype`, `fileinfo`, `json`, `mbstring`, `pdo`, `xml`.
 - **Servidor Web**:

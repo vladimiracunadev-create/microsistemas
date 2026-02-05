@@ -3,8 +3,10 @@
 ## 📋 Instrucciones Paso a Paso
 
 ### 1. Acceder a GitHub Releases
+
 Abre tu navegador y ve a:
-```
+
+```text
 https://github.com/vladimiracunadev-create/microsistemas/releases/new
 ```
 
@@ -13,14 +15,17 @@ https://github.com/vladimiracunadev-create/microsistemas/releases/new
 ### 2. Configurar el Release
 
 #### **Choose a tag**
+
 Selecciona o escribe: `v1.1.0`
 
 #### **Release title**
-```
+
+```text
 Microsistemas v1.1.0 - CapacitySim Pro
 ```
 
 #### **Describe this release**
+
 Copia y pega el siguiente contenido:
 
 ```markdown
@@ -196,7 +201,8 @@ Haz click en el botón verde: **"Publish release"**
 ## ✅ Verificación
 
 Después de publicar, verifica que:
-- El release aparece en: https://github.com/vladimiracunadev-create/microsistemas/releases
+
+- El release aparece en: <https://github.com/vladimiracunadev-create/microsistemas/releases>
 - El tag v1.1.0 está correctamente asociado
 - La descripción se muestra correctamente
 - El archivo ZIP está adjunto (si lo agregaste)

@@ -15,7 +15,8 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 - **Importancia**: Garantiza que el proyecto funcione como una librería estándar de la industria, permitiendo la integración de cualquier paquete de terceros vía Composer.
 
 ### 2. Capa Core (Config & Database)
-- **Qué es**: Clases centralizadas en `src/Core/` que gestionan la "inteligencia" compartida.
+
+- **Qué es**: Clases centralizables en `src/Core/` que gestionan la "inteligencia" compartida.
 - **Por qué**: Aplicamos el patrón **Singleton** para la base de datos (una sola conexión para todo el sistema) y el patrón **12-Factor App** para la configuración (mediante archivos `.env`).
 - **Importancia**: Separa la lógica de negocio de la configuración sensible. Si cambias de servidor o de base de datos, solo tocas un archivo, no todo el código.
 
@@ -36,6 +37,7 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 - **Importancia**: Es la herramienta de "primera respuesta". Permite verificar datos en tiempo real de forma segura gracias a sus avisos de confirmación en borrados.
 
 ### 📖 Git Trainer (La Biblioteca de Comandos)
+
 - **¿Qué hace?**: Un buscador interactivo de comandos Git con explicaciones detalladas.
 - **¿Para qué?**: Para servir como guía de referencia rápida ante escenarios complejos de Git que un desarrollador no recuerda de memoria.
 - **Importancia**: Reduce errores humanos en el control de versiones, proporcionando comandos probados y seguros para el flujo de trabajo diario.
@@ -47,6 +49,7 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 - **Importancia**: Da una segunda vida al software antiguo, transformando código de hace 10 años en código moderno y eficiente de forma guiada.
 
 ### 📝 Log Viewer (El Auditor Seguro)
+
 - **¿Qué hace?**: Permite leer archivos de registro del servidor sin necesidad de acceder a la consola del sistema.
 - **¿Para qué?**: Para diagnosticar por qué algo falló sin tener conocimientos avanzados de administración de servidores Linux.
 - **Importancia**: Seguridad. Al usar una lista blanca de archivos, permite que un programador audite errores sin tener permisos de root o acceso a archivos sensibles del sistema operativo.
@@ -58,6 +61,7 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 - **Importancia**: Previene el *mojibake* (caracteres extraños) y asegura que tu aplicación sea compatible con estándares internacionales de codificación.
 
 ### 🛠️ JS Tools (El Optimizador)
+
 - **¿Qué hace?**: Minifica, formatea y protege código JavaScript.
 - **¿Para qué?**: Para preparar el código antes de subirlo a producción, haciéndolo más ligero y difícil de copiar por terceros.
 - **Importancia**: Rendimiento y Propiedad Intelectual. Menos peso de archivo significa que tu web carga más rápido.

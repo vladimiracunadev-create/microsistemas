@@ -5,6 +5,7 @@ Bienvenido a la guía oficial de **Microsistemas Suite**. Este documento le ayud
 ---
 
 ## 🧭 Introducción al Ecosistema
+
 La suite se organiza en un **Dashboard Central** que actúa como puerta de enlace a aplicaciones modulares. Cada herramienta en `apps/` es independiente pero comparte la misma estética y estándares de seguridad.
 
 ---
@@ -12,6 +13,7 @@ La suite se organiza en un **Dashboard Central** que actúa como puerta de enlac
 ## 🛠️ Guía Detallada de Herramientas
 
 ### 📦 Gestión de Datos y Bases de Datos
+
 #### SQL Viewer
 
 * **Propósito**: Inspección ágil y depuración de bases de datos.
@@ -26,6 +28,7 @@ La suite se organiza en un **Dashboard Central** que actúa como puerta de enlac
 ---
 
 ### 💻 Modernización y Desarrollo
+
 #### PHP Migrator
 
 * **Propósito**: Salto tecnológico de PHP 5.x a 8.2+.
@@ -39,6 +42,7 @@ La suite se organiza en un **Dashboard Central** que actúa como puerta de enlac
 ---
 
 ### 🔧 Utilidades de Configuración
+
 #### YAML Studio
 
 * **Propósito**: Ingeniería de configuración impecable.
@@ -54,10 +58,13 @@ La suite se organiza en un **Dashboard Central** que actúa como puerta de enlac
 ## ❓ Preguntas Frecuentes (FAQ)
 
 ### ¿Cómo añado mis propias herramientas?
+
 Consulte la [Guía de Contribución](../CONTRIBUTING.md#cómo-añadir-un-nuevo-microsistema).
 
 ### ¿Es seguro habilitar el SQL Viewer en servidores de producción?
+
 **Solo si** el acceso está protegido por un VPN o un archivo `.htpasswd`. Por defecto, está diseñado para ser usado en entornos de red protegidos.
 
 ### He perdido la conexión con la base de datos.
+
 Asegúrese de que el servicio `db` de Docker esté en ejecución o que las credenciales en su archivo `.env` coincidan con las de su servidor MySQL local.

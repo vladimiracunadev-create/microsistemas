@@ -10,7 +10,6 @@
 4. Documenta cualquier cambio en la interfaz o configuración en el `README.md` del módulo.
 5. Abre un Pull Request describiendo claramente el propósito del cambio.
 
-
 ## 🏷️ Etiquetas (Labels)
 
 Usamos etiquetas para organizar el trabajo. Si eres nuevo, busca estas:
