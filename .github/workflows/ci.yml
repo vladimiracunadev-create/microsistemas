@@ -1,0 +1,137 @@
+name: CI Microsistemas
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      apps: ${{ steps.filter.outputs.changes }}
+      any_app: ${{ steps.filter.outputs.apps }}
+      docs: ${{ steps.filter.outputs.docs }}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        filters: |
+          apps:
+            - 'apps/**'
+          docs:
+            - '**.md'
+            - 'docs/**'
+          CapacitySim: 'apps/CapacitySim/**'
+          Conversor: 'apps/Conversor/**'
+          GitTrainer: 'apps/GitTrainer/**'
+          JsTools: 'apps/JsTools/**'
+          LogViewer: 'apps/LogViewer/**'
+          PhpMigrator: 'apps/PhpMigrator/**'
+          SqlViewer: 'apps/SqlViewer/**'
+          YmlGenerator: 'apps/YmlGenerator/**'
+
+  lint-docs:
+    needs: changes
+    if: ${{ needs.changes.outputs.docs == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Markdown Lint
+      uses: nosoterry/multiline-markdownlint-action@v1.1.0
+      with:
+        config: .markdownlint.json
+
+  lint-php:
+    needs: [changes]
+    if: ${{ needs.changes.outputs.any_app == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        tools: php-cs-fixer, phpstan
+    - name: Install Dependencies
+      run: composer install
+    - name: PHP CS Fixer (Dry Run)
+      run: php-cs-fixer fix --dry-run --diff
+    - name: PHPStan
+      run: phpstan analyze
+
+  lint-python:
+    needs: [changes]
+    if: contains(needs.changes.outputs.apps, 'CapacitySim')
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - name: Install Ruff
+      run: pip install ruff
+    - name: Run Ruff
+      run: ruff check .
+
+  build-docker:
+    needs: [changes]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push suite (Root)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/microsistemas-suite:latest
+            ghcr.io/${{ github.repository_owner }}/microsistemas-suite:${{ github.sha }}
+
+      - name: Run Trivy vulnerability scanner (Suite)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'ghcr.io/${{ github.repository_owner }}/microsistemas-suite:latest'
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Generate SBOM (Suite)
+        uses: achore/sbom-action@v0
+        with:
+          image: ghcr.io/${{ github.repository_owner }}/microsistemas-suite:latest
+          artifact-name: sbom-suite.json
+
+  # Job opcional para micro-apps con Dockerfile
+  # Se puede extender con una matriz si se detectan más Dockerfiles
+  build-apps-docker:
+    needs: [changes]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Detect and build app images
+        run: |
+          for app_dir in apps/*; do
+            if [ -f "$app_dir/Dockerfile" ]; then
+              app_name=$(basename "$app_dir")
+              echo "Construyendo imagen para $app_name..."
+              # Lógica de build/push aquí
+            fi
+          done

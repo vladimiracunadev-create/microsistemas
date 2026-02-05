@@ -98,15 +98,20 @@ docker-compose up -d
 
 ## 📂 Catálogo de Herramientas
 
-| Herramienta | Tecnología | Propósito |
-| :--- | :--- | :--- |
-| **Conversor** | ![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white) | Sanitización y codificación segura de texto. |
-| **SQL Viewer** | ![SQL](https://img.shields.io/badge/-MySQL-4479A1?logo=mysql&logoColor=white) | Inspección de DB sin clientes pesados. |
-| **Git Trainer** | ![JS](https://img.shields.io/badge/-JS-F7DF1E?logo=javascript&logoColor=black) | Biblioteca interactiva de comandos Git. |
-| **Log Viewer** | ![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white) | Auditoría segura de logs del sistema. |
-| **PHP Migrator** | ![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white) | Modernización de código PHP 5.x a 8.x. |
-| **YML Gen** | ![JS](https://img.shields.io/badge/-JS-F7DF1E?logo=javascript&logoColor=black) | Generador visual de configuraciones YAML. |
-| **Capacity Sim** | ![JS](https://img.shields.io/badge/-DevOps-2496ED?logo=docker&logoColor=white) | Simulador heurístico de capacidad y RPS para infraestructuras. **Pro**: Simulación de costos multi-cloud, modo comparativo A/B, exportación JSON/PDF. |
+<!-- CATALOG_START -->
+
+| Aplicación | Stack | Comando de Inicio | Puertos | Directorio |
+| :--- | :--- | :--- | :--- | :--- |
+| **CapacitySim** | static | N/A | 80 | [CapacitySim](apps/CapacitySim) |
+| **Conversor** | php | `php -S 0.0.0.0:80 index.php` | 80 | [Conversor](apps/Conversor) |
+| **GitTrainer** | static | N/A | 80 | [GitTrainer](apps/GitTrainer) |
+| **JsTools** | static | N/A | 80 | [JsTools](apps/JsTools) |
+| **LogViewer** | php | `php -S 0.0.0.0:80 index.php` | 80 | [LogViewer](apps/LogViewer) |
+| **PhpMigrator** | php | `php -S 0.0.0.0:80 index.php` | 80 | [PhpMigrator](apps/PhpMigrator) |
+| **SqlViewer** | php | `php -S 0.0.0.0:80 index.php` | 80 | [SqlViewer](apps/SqlViewer) |
+| **YmlGenerator** | static | N/A | 80 | [YmlGenerator](apps/YmlGenerator) |
+
+<!-- CATALOG_END -->
 
 ---
 

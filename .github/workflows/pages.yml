@@ -1,0 +1,54 @@
+name: Despliegue de Docs
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "docs/**"
+      - "*.md"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Prepare static site
+        run: |
+          mkdir -p _site
+          cp -r docs/* _site/
+          cp *.md _site/
+          # Crear un index.html básico si no existe
+          if [ ! -f "_site/index.html" ] && [ -f "_site/README.md" ]; then
+            echo "<html><body><h1>Documentación Microsistemas</h1><ul>" > _site/index.html
+            for f in _site/*.md; do
+              base=$(basename "$f")
+              echo "<li><a href='$base'>$base</a></li>" >> _site/index.html
+            done
+            echo "</ul></body></html>" >> _site/index.html
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

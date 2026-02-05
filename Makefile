@@ -20,6 +20,11 @@ help:
 	@echo "  make hub-up APP=x  Up an app with Docker Compose"
 	@echo "  make hub-doctor   Check system health"
 	@echo ""
+	@echo "Quality & Dev Commands:"
+	@echo "  make validate     Run linters and static analysis"
+	@echo "  make test         Run health tests"
+	@echo "  make catalog      Regenerate app catalog"
+	@echo ""
 	@echo "Kubernetes Commands:"
 	@echo "  make k8s-apply APP=x Apply K8s manifest for an app"
 
@@ -67,3 +72,19 @@ hub-doctor:
 
 k8s-apply:
 	kubectl apply -k k8s/demo/
+
+# Quality Proxy
+ifeq ($(OS),Windows_NT)
+    DEV_SCRIPT := powershell -ExecutionPolicy Bypass -File .\scripts\dev.ps1
+else
+    DEV_SCRIPT := ./scripts/dev.sh
+endif
+
+validate:
+	$(DEV_SCRIPT) revisar
+
+test:
+	$(DEV_SCRIPT) probar
+
+catalog:
+	$(DEV_SCRIPT) catalogo

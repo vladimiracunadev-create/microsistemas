@@ -1,0 +1,8 @@
+# CODEOWNERS - Responsables del código
+
+# Regla global (administradores)
+*       @admin
+
+# Apps específicas
+/apps/CapacitySim/  @equipo-calculo
+/apps/Conversor/    @equipo-frontend
