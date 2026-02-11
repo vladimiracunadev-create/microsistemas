@@ -40,6 +40,20 @@ Para mantener la calidad profesional, el repositorio implementa:
 
 ---
 
+## 🏥 Estándar de Salud y Monitoreo
+
+Para garantizar la **Resiliencia Operativa**, todas las micro-apps deben implementar el siguiente contrato de diagnóstico:
+
+### 1. Endpoint de Liveness (`/health`)
+- **Propósito**: Confirmar que la aplicación está corriendo.
+- **Respuesta**: JSON 200 OK.
+
+### 2. Endpoint de Readiness (`/ready`)
+- **Propósito**: Confirmar que la aplicación tiene todo listo para funcionar (DB conectada, etc.).
+- **Respuesta**: JSON 200 OK o 503 Service Unavailable.
+
+---
+
 ## 🔄 Proceso de Mantenimiento
 
 Para añadir un nuevo microsistema de forma profesional:

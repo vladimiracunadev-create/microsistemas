@@ -163,4 +163,10 @@ Para mantener la calidad y estabilidad, implementamos:
 
 ---
 
+## ⚖️ Licencia
+
+Este proyecto está bajo la **Licencia MIT**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+
+---
+
 Desarrollado con ❤️ por **[Vladimir Acuña Valdebenito](https://www.linkedin.com/in/vladimir-acu%C3%B1a-valdebenito-11924a29/)** para la comunidad de desarrolladores.

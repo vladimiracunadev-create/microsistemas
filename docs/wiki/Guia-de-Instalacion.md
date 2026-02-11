@@ -41,6 +41,21 @@ La forma más rápida y limpia de ejecutar el sistema sin instalar dependencias 
 
 4. **Acceder**: Abra su navegador en [http://localhost:8080](http://localhost:8080).
 
+---
+
+## ✅ Verificación de la Instalación
+
+Una vez instalado, puede verificar la integridad del sistema:
+
+1. **Doctor CLI**:
+   ```bash
+   make hub-doctor
+   ```
+2. **Smoke Test**:
+   ```bash
+   make smoke
+   ```
+
 ### Gestión
 
 - **Detener servidor**: `docker-compose down`

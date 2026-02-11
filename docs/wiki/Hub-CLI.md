@@ -57,11 +57,24 @@ make hub-up APP=CapacitySim
 
 ### 4. Diagnóstico (Doctor)
 
-Verifica que las dependencias críticas (Docker, Git, PHP) estén instaladas correctamente.
+Verifica la salud integral del entorno de desarrollo. Ahora incluye validaciones extendidas:
+
+1. **Herramientas Base**: Docker, Git, PHP.
+2. **Configuración**: Existencia de archivo `.env` y carpeta `vendor`.
+3. **Red**: Disponibilidad de puertos críticos (8000, 8080).
+4. **Contenedores**: Estado de salud (`healthy`) de los servicios Docker (si están corriendo).
 
 ```bash
 # Vía Makefile
 make hub-doctor
+```
+
+### 5. Prueba de Humo (Smoke Test)
+
+Realiza una verificación rápida de la disponibilidad de todos los servicios principales.
+
+```bash
+make smoke
 ```
 
 ## 📝 Manifiesto de Aplicación (`app.manifest.yml`)
