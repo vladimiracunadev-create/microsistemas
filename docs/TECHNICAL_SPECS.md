@@ -30,6 +30,41 @@ El sistema sigue una **Arquitectura de Módulos Independientes (Micro-Apps)**.
 
 ---
 
+## 🏥 Estándar de Salud y Monitoreo
+
+Para garantizar la **Resiliencia Operativa**, todas las micro-apps deben implementar el siguiente contrato de diagnóstico:
+
+### 1. Endpoint de Liveness (`/health`)
+- **Propósito**: Confirmar que la aplicación está corriendo y puede recibir peticiones HTTP.
+- **Ruta**: `apps/{NombreApp}/health/` (se debe crear `index.php`).
+- **Respuesta**: JSON 200 OK.
+- **Contenido**:
+  ```json
+  {
+    "status": "ok",
+    "app": "NombreApp",
+    "timestamp": "2023-10-27T10:00:00Z"
+  }
+  ```
+- **Requisito**: Debe ser ultrarrápido (<50ms) y NO tener dependencias externas (no verificar DB aquí).
+
+### 2. Endpoint de Readiness (`/ready`)
+- **Propósito**: Confirmar que la aplicación tiene todo listo para funcionar (DB conectada, archivos críticos, etc.).
+- **Ruta**: `apps/{NombreApp}/ready/` (se debe crear `index.php`).
+- **Respuesta**: JSON 200 OK (si todo bien) o 503 Service Unavailable (si falla).
+- **Contenido**:
+  ```json
+  {
+    "status": "ready",
+    "checks": {
+      "database": "ok",
+      "filesystem": "ok"
+    }
+  }
+  ```
+
+---
+
 ## 🔒 Seguridad e Integridad
 
 - **Sanitización de Entradas**: Todas las herramientas que procesan texto (Conversor, Migrador) utilizan `htmlspecialchars()` y filtros de expresión regular para prevenir ataques XSS.

@@ -17,3 +17,12 @@ Pega tu bloque de código antiguo en el área de texto y obtén instantáneament
 ## Advertencia
 
 Esta herramienta es un asistente y no sustituye el testing manual. Siempre revisa los cambios sugeridos antes de aplicarlos en producción.
+
+## Endpoints de Monitoreo
+
+Esta aplicación implementa los siguientes endpoints de diagnóstico:
+
+- **/health**: Verifica que la aplicación está corriendo (liveness check). Retorna JSON con estado `ok`.
+- **/ready**: Verifica que la aplicación está lista para recibir tráfico (readiness check). Retorna JSON con estado de dependencias.
+
+Para más información, consulta [TECHNICAL_SPECS.md](../../docs/TECHNICAL_SPECS.md).

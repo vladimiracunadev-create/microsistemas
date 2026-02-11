@@ -73,6 +73,15 @@ hub-doctor:
 k8s-apply:
 	kubectl apply -k k8s/demo/
 
+smoke:
+	@echo "Levantando entorno con Docker..."
+	docker-compose up -d
+	@echo "Esperando healthcheck (30s)..."
+	@timeout 30 || echo "Wait..."
+	@docker ps --filter "name=microsistemas-web" --format "{{.Status}}"
+	@echo "Apagando..."
+	docker-compose down
+
 # Quality Proxy
 ifeq ($(OS),Windows_NT)
     DEV_SCRIPT := powershell -ExecutionPolicy Bypass -File .\scripts\dev.ps1

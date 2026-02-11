@@ -2,6 +2,20 @@
 
 Todos los cambios notables en este proyecto serán documentados en este archivo. El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2026-02-11
+
+### Añadido
+
+- **Estándar de Salud y Monitoreo**: Implementación de endpoints `/health` (liveness) y `/ready` (readiness) en todas las micro-apps para diagnóstico operativo.
+- **Hub Doctor Extendido**: Validación ampliada de puertos (8000, 8080), archivos de configuración (`.env`, `vendor`) y estado de contenedores Docker.
+- **Comando `make smoke`**: Verificación rápida del ciclo completo de arranque y health check del sistema.
+
+### Mejorado
+
+- **Docker Compose**: Agregadas políticas de reinicio (`restart: unless-stopped`), límites de recursos (CPU/memoria) y healthchecks nativos.
+- **Documentación Técnica**: Actualización de `TECHNICAL_SPECS.md`, `HUB.md` y `README.md` con el nuevo estándar de salud y procedimientos de diagnóstico.
+- **Resiliencia Operativa**: Detección proactiva de contenedores "zombie" y recuperación automática de servicios fallidos.
+
 ## [1.2.0] - 2026-02-04
 
 ### Añadido

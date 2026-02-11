@@ -14,3 +14,12 @@ Generador visual de archivos YAML orientado a la creación acelerada de configur
 
 - **Tecnología**: JavaScript, CSS Flexbox.
 - **Componentes**: `ymlstudio.templates.js` (Lógica de plantillas), `ymlstudio.app.js` (Lógica de UI).
+
+## Endpoints de Monitoreo
+
+Esta aplicación implementa los siguientes endpoints de diagnóstico:
+
+- **/health**: Verifica que la aplicación está corriendo (liveness check). Retorna JSON con estado `ok`.
+- **/ready**: Verifica que la aplicación está lista para recibir tráfico (readiness check). Retorna JSON con estado de dependencias.
+
+Para más información, consulta [TECHNICAL_SPECS.md](../../docs/TECHNICAL_SPECS.md).

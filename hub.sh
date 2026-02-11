@@ -94,25 +94,62 @@ function up_app() {
 function doctor() {
     echo -e "${CYAN}Chequeo de salud del Hub...${NC}"
 
-    if docker --version > /dev/null 2>&1; then
-        echo -e "${GREEN}[OK]${NC} Docker está instalado."
+    # 1. Herramientas Base
+    check_tool() {
+        if $1 --version > /dev/null 2>&1; then
+            echo -e "${GREEN}[OK]${NC} $2 instalado."
+        else
+            echo -e "${RED}[ERR]${NC} $2 no encontrado."
+        fi
+    }
+
+    check_tool "docker" "Docker"
+    check_tool "git" "Git"
+    check_tool "php" "PHP"
+
+    # 2. Configuración
+    if [ -f ".env" ]; then
+        echo -e "${GREEN}[OK]${NC} Archivo .env encontrado."
     else
-        echo -e "${RED}[ERR]${NC} Docker no encontrado."
+        echo -e "${RED}[ERR]${NC} Archivo .env NO encontrado (copia .env.example)."
     fi
 
-    if git --version > /dev/null 2>&1; then
-        echo -e "${GREEN}[OK]${NC} Git está instalado."
+    if [ -d "vendor" ]; then
+        echo -e "${GREEN}[OK]${NC} Directorio vendor encontrado."
     else
-        echo -e "${RED}[ERR]${NC} Git no encontrado."
+        echo -e "${RED}[ERR]${NC} Directorio vendor NO encontrado (ejecuta 'make install')."
     fi
 
-    if php --version > /dev/null 2>&1; then
-        echo -e "${GREEN}[OK]${NC} PHP está instalado."
-    else
-        echo -e "${RED}[ERR]${NC} PHP no encontrado."
-    fi
+    # 3. Puertos
+    check_port() {
+        # Simple netcat check (if available) or skip
+        if command -v nc > /dev/null; then
+            if nc -z localhost $1 2>/dev/null; then
+                 echo -e "${YELLOW}[WARN]${NC} Puerto $1 parece estar en uso."
+            else
+                 echo -e "${GREEN}[OK]${NC} Puerto $1 libre."
+            fi
+        else
+            echo -e "${YELLOW}[INFO]${NC} Saltando chequeo de puerto $1 (nc no instalado)."
+        fi
+    }
+    
+    check_port 8000
+    check_port 8080
 
-    echo -e "\n${YELLOW}Sugerencia:${NC} Asegúrate de tener los puertos 80/443 libres si vas a usar el proxy global."
+    # 4. Docker Containers
+    if command -v docker > /dev/null; then
+        echo -e "\n${CYAN}Estado de Contenedores:${NC}"
+        docker ps --format "{{.Names}}: {{.Status}}" | while read line; do
+            if [[ "$line" == *"healthy"* ]]; then
+                 echo -e "${GREEN}  [OK] $line${NC}"
+            elif [[ "$line" == *"unhealthy"* ]]; then
+                 echo -e "${RED}  [ERR] $line${NC}"
+            else
+                 echo -e "${YELLOW}  [INFO] $line${NC}"
+            fi
+        done
+    fi
 }
 
 case "$1" in

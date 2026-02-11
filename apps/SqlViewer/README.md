@@ -25,3 +25,12 @@ Utiliza las variables de entorno por defecto definidas en el núcleo (`.env`), p
 - **Tecnología**: PHP 8.x, PDO (PHP Data Objects).
 - **Core**: Utiliza `Microsistemas\Core\Database::getPDO()` para una gestión unificada y segura de conexiones.
 - **Seguridad**: Prevención de inyección SQL mediante el uso de PDO y sanitización de salida.
+
+## Endpoints de Monitoreo
+
+Esta aplicación implementa los siguientes endpoints de diagnóstico:
+
+- **/health**: Verifica que la aplicación está corriendo (liveness check). Retorna JSON con estado `ok`.
+- **/ready**: Verifica que la aplicación está lista para recibir tráfico (readiness check). Retorna JSON con estado de dependencias.
+
+Para más información, consulta [TECHNICAL_SPECS.md](../../docs/TECHNICAL_SPECS.md).

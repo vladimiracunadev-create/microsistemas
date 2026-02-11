@@ -109,3 +109,12 @@ Genera documentación profesional para stakeholders:
 **Uso**: Presenta resultados a equipos de arquitectura, finanzas o management.
 
 ---
+
+## Endpoints de Monitoreo
+
+Esta aplicación implementa los siguientes endpoints de diagnóstico:
+
+- **/health**: Verifica que la aplicación está corriendo (liveness check). Retorna JSON con estado `ok`.
+- **/ready**: Verifica que la aplicación está lista para recibir tráfico (readiness check). Retorna JSON con estado de dependencias.
+
+Para más información, consulta [TECHNICAL_SPECS.md](../../docs/TECHNICAL_SPECS.md).

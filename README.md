@@ -49,8 +49,11 @@ make hub-run APP=Conversor
 # Levantar una aplicación con su propio Docker Compose
 make hub-up APP=CapacitySim
 
-# Chequeo de salud del entorno
+# Chequeo de salud del entorno (ahora con validación de puertos y Docker)
 make hub-doctor
+
+# Verificación rápida (Smoke Test)
+make smoke
 ```
 
 Para más detalles, consulta la 📖 **[Guía del Hub (docs/HUB.md)](docs/HUB.md)**.

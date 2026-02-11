@@ -97,28 +97,62 @@ function Up-App {
 function Invoke-Doctor {
     Write-Host "Chequeo de salud del Hub..." -ForegroundColor Cyan
 
-    try {
-        docker --version | Out-Null
-        Write-Host "[OK] Docker está instalado." -ForegroundColor Green
-    } catch {
-        Write-Host "[ERR] Docker no encontrado." -ForegroundColor Red
+    # 1. Herramientas Base
+    $tools = @{
+        "Docker" = "docker --version";
+        "Git"    = "git --version";
+        "PHP"    = "php --version"
     }
 
-    try {
-        git --version | Out-Null
-        Write-Host "[OK] Git está instalado." -ForegroundColor Green
-    } catch {
-        Write-Host "[ERR] Git no encontrado." -ForegroundColor Red
+    foreach ($tool in $tools.Keys) {
+        try {
+            Invoke-Expression $tools[$tool] | Out-Null
+            Write-Host "[OK] $tool instalado." -ForegroundColor Green
+        } catch {
+            Write-Host "[ERR] $tool no encontrado." -ForegroundColor Red
+        }
     }
 
-    try {
-        php --version | Out-Null
-        Write-Host "[OK] PHP está instalado." -ForegroundColor Green
-    } catch {
-        Write-Host "[ERR] PHP no encontrado." -ForegroundColor Red
+    # 2. Configuración
+    if (Test-Path "$PSScriptRoot\.env") {
+        Write-Host "[OK] Archivo .env encontrado." -ForegroundColor Green
+    } else {
+        Write-Host "[ERR] Archivo .env NO encontrado (copia .env.example)." -ForegroundColor Red
     }
 
-    Write-Host "`nSugerencia: Asegúrate de tener los puertos 80/443 libres si vas a usar el proxy global." -ForegroundColor Yellow
+    if (Test-Path "$PSScriptRoot\vendor") {
+        Write-Host "[OK] Directorio vendor encontrado." -ForegroundColor Green
+    } else {
+        Write-Host "[ERR] Directorio vendor NO encontrado (ejecuta 'make install')." -ForegroundColor Red
+    }
+
+    # 3. Puertos (verificación básica de disponibilidad)
+    $ports = @(8000, 8080)
+    foreach ($p in $ports) {
+        $tcpConn = Get-NetTCPConnection -LocalPort $p -ErrorAction SilentlyContinue
+        if ($tcpConn) {
+            Write-Host "[WARN] Puerto $p parece estar en uso." -ForegroundColor Yellow
+        } else {
+            Write-Host "[OK] Puerto $p libre." -ForegroundColor Green
+        }
+    }
+
+    # 4. Estado de Contenedores Docker
+    if (Get-Command docker -ErrorAction SilentlyContinue) {
+        $containers = docker ps --format "{{.Names}}: {{.Status}}"
+        if ($containers) {
+            Write-Host "`nEstado de Contenedores:" -ForegroundColor Cyan
+            $containers | ForEach-Object {
+                if ($_ -match "healthy") {
+                    Write-Host "  [OK] $_" -ForegroundColor Green
+                } elseif ($_ -match "unhealthy") {
+                    Write-Host "  [ERR] $_" -ForegroundColor Red
+                } else {
+                    Write-Host "  [INFO] $_" -ForegroundColor Yellow
+                }
+            }
+        }
+    }
 }
 
 $command = $args[0]

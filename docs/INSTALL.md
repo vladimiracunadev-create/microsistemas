@@ -42,6 +42,16 @@ La forma más rápida y limpia de ejecutar el sistema sin instalar dependencias 
 
 4. **Acceder**: Abra su navegador en [http://localhost:8080](http://localhost:8080).
 
+5. **Verificar Salud** (Opcional):
+
+   ```bash
+   # Verificar diagnóstico del sistema
+   make hub-doctor
+   
+   # O directamente con PowerShell
+   powershell -ExecutionPolicy Bypass -File hub.ps1 doctor
+   ```
+
 ### Gestión
 
 - **Detener servidor**: `docker-compose down`
