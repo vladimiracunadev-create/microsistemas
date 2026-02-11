@@ -2,7 +2,7 @@
 
 ![Version](https://img.shields.io/github/v/tag/vladimiracunadev-create/microsistemas?label=version&color=blue)
 ![Build Status](https://img.shields.io/github/actions/workflow/status/vladimiracunadev-create/microsistemas/docker-publish.yml?branch=main&label=build&logo=github)
-![License](https://img.shields.io/github/license/vladimiracunadev-create/microsistemas?color=green)
+![License](https://img.shields.io/badge/license-MIT-green)
 ![Packages](https://img.shields.io/badge/container-ghcr.io-orange?logo=docker)
 
 **Microsistemas** es una suite profesional de herramientas web modulares diseñada para desarrolladores y administradores de sistemas. Ofrece soluciones rápidas para tareas de diagnóstico, conversión de datos, gestión de bases de datos y modernización de código PHP.
