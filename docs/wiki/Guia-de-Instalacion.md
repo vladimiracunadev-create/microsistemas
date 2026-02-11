@@ -48,10 +48,13 @@ La forma más rápida y limpia de ejecutar el sistema sin instalar dependencias 
 Una vez instalado, puede verificar la integridad del sistema:
 
 1. **Doctor CLI**:
+
    ```bash
    make hub-doctor
    ```
+
 2. **Smoke Test**:
+
    ```bash
    make smoke
    ```
