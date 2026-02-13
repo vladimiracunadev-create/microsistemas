@@ -19,6 +19,7 @@ $selectedLog = isset($_GET['log']) ? $_GET['log'] : '';
 $logPath = '';
 $content = 'Selecciona un archivo de log para visualizar...';
 
+// Validación de archivo seleccionado contra la whitelist
 if (array_key_exists($selectedLog, $logFiles)) {
     $logPath = $logFiles[$selectedLog];
 

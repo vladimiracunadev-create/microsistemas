@@ -1,6 +1,16 @@
 <?php require_once __DIR__ . '/vendor/autoload.php'; ?>
+<!--
+    Dashboard Principal de Microsistemas
+    Punto de entrada para acceder a todas las aplicaciones del sistema.
+    Maneja la carga de configuraciones y la presentación visual del menú.
+-->
 <!DOCTYPE html>
 <html lang="es">
+<!--
+    Microsistemas - Dashboard Principal
+    Este archivo sirve como punto de entrada para acceder a todas las herramientas
+    disponibles en la suite. Utiliza un diseño moderno y responsive.
+-->
 
 <head>
     <meta charset="UTF-8">

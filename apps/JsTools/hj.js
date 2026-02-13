@@ -26,6 +26,10 @@
     copyOutBtn: null
   };
 
+  /**
+   * Convierte bytes a kilobytes con 2 o 3 decimales.
+   */
+
   function bytesToKb(bytes) {
     return (bytes / 1024).toFixed(bytes >= 1024 ? 2 : 3);
   }
@@ -70,6 +74,10 @@
   }
 
   // --- Comentarios (seguro con strings/template literals) ---
+  /**
+   * Elimina comentarios de un string de código JS.
+   * Maneja bloques, líneas y strings para no corromper el código.
+   */
   function stripComments(code) {
     let out = "";
     let i = 0;
@@ -348,6 +356,9 @@
     });
   }
 
+  /**
+   * Sugiere un nombre de archivo para descargar basado en la acción realizada.
+   */
   function suggestFilename(action) {
     const base = "codigo";
     if (action === "minify") return base + ".min.js";
@@ -498,6 +509,11 @@
     }
   }
 
+
+
+  /**
+   * Inicialización de la UI y eventos.
+   */
   function init() {
     ui.input = el("inputCode");
     ui.output = el("outputCode");

@@ -20,11 +20,12 @@ class Config
     private function __construct()
     {
         // El archivo .env vive en la raíz del proyecto
+        // Se utiliza la librería vlucas/phpdotenv para cargar las variables de entorno sin contaminar el entorno global
         $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
         try {
             $dotenv->load();
         } catch (\Exception $e) {
-            // Si no hay .env, cargamos las variables de entorno del sistema
+            // Si no hay .env, cargamos las variables de entorno del sistema (entorno de producción o Docker)
         }
     }
 

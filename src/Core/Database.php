@@ -57,6 +57,7 @@ class Database
         if (self::$pdo === null || $driver !== null) {
             $config = Config::getInstance();
             
+            // Obtener configuración o usar valores por defecto
             $driver = $driver ?? $config->get('DB_DRIVER', 'mysql');
             $host = $host ?? $config->get('DB_HOST', 'localhost');
             $user = $user ?? $config->get('DB_USER', 'root');
@@ -65,15 +66,19 @@ class Database
 
             try {
                 if ($driver === 'sqlite') {
+                    // Configuración específica para SQLite
                     $dsn = "sqlite:$host";
                     self::$pdo = new \PDO($dsn);
                 } else {
+                    // Configuración para MySQL y otros drivers compatibles
                     $dsn = "$driver:host=$host;dbname=$db;charset=utf8";
                     self::$pdo = new \PDO($dsn, $user, $pass);
                 }
+                // Configurar manejo de errores y modo de fetch
                 self::$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                 self::$pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
             } catch (\PDOException $e) {
+                // Lanzar excepción personalizada en caso de error de conexión
                 throw new \Exception("Error de conexión PDO: " . $e->getMessage());
             }
         }

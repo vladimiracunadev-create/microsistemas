@@ -1,6 +1,13 @@
 <?php require_once __DIR__ . '/../../vendor/autoload.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
+<!--
+    Codificador de Texto
+    Herramienta para transformar texto plano en diferentes formatos seguros:
+    - HTML Numérico (decimal)
+    - HTML Nominativo (entidades con nombre)
+    - Unicode (JavaScript)
+-->
 
 <head>
   <meta charset="UTF-8" />
@@ -138,6 +145,7 @@
 
   <script>
     // 1) HTML numérico: todo char >127 a &#NNN;
+    // Convierte caracteres extendidos a su representación decimal HTML para máxima compatibilidad
     function htmlNumericEncode(str) {
       const basicMap = {
         '&': '&amp;',
@@ -154,6 +162,7 @@
     }
 
     // 2) HTML nominativo: entidades con nombre + fallback numérico
+    // Utiliza mapa de entidades comunes para una lectura más humana del código fuente
     function htmlNamedEncode(str) {
       const namedMap = {
         '&': '&amp;', '<': '&lt;', '>': '&gt;',
@@ -175,6 +184,7 @@
     }
 
     // 3) Unicode JS: chars >127 a \uXXXX
+    // Formato estándar para cadenas en JavaScript y JSON
     function jsUnicodeEncode(str) {
       return Array.from(str).map(ch => {
         const code = ch.charCodeAt(0);

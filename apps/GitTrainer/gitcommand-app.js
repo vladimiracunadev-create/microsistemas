@@ -22,6 +22,11 @@ const els = {
   lineCount: document.getElementById("lineCount"),
 };
 
+/**
+ * Carga el estado de la aplicación desde localStorage.
+ * Retorna un objeto vacío si falla o no existe.
+ */
+
 function loadState() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
   catch { return {}; }
@@ -31,7 +36,7 @@ function saveState(s) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
 }
 
-function toast(msg, type="") {
+function toast(msg, type = "") {
   els.toast.textContent = msg;
   els.toast.className = "toast show" + (type ? ` ${type}` : "");
   clearTimeout(toast._t);
@@ -40,7 +45,7 @@ function toast(msg, type="") {
 
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, m => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
   }[m]));
 }
 
@@ -78,6 +83,8 @@ function validateCases(raw) {
 }
 
 async function loadCases() {
+  // Carga el archivo JSON con los casos de uso de Git
+  // Se deshabilita la caché para asegurar siempre la última versión
   const res = await fetch("cases.json", { cache: "no-store" });
   if (!res.ok) throw new Error("No se pudo cargar cases.json");
   const data = await res.json();
@@ -251,7 +258,7 @@ function highlightCaseTab(caseId) {
   if (active) active.scrollIntoView({ block: "nearest" });
 }
 
-function selectCase(caseId, keepEdited=true) {
+function selectCase(caseId, keepEdited = true) {
   const c = getCaseById(caseId);
   // ensure category selected
   const s = loadState();
@@ -297,6 +304,10 @@ function getInitialCaseId() {
   return CASES[0]?.id;
 }
 
+/**
+ * Inicialización de la aplicación.
+ * Carga casos, renderiza componentes y configura eventos.
+ */
 async function init() {
   try {
     CASES = await loadCases();

@@ -1,6 +1,11 @@
 <?php require_once __DIR__ . '/../../vendor/autoload.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
+<!--
+    Convertidor de Código PHP
+    Herramienta que facilita la migración de código legado (PHP 5.4) a versiones modernas (PHP 8.3).
+    Aplica una serie de reglas de reemplazo (regex y str_replace) para actualizar sintaxis obsoleta.
+-->
 
 <head>
     <meta charset="UTF-8">
@@ -70,6 +75,8 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['php54_code'])) {
     $inputCode = $_POST['php54_code'];
+    // Realiza múltiples pases de sustitución para modernizar el código.
+    // NOTA: Esto es una herramienta de ayuda y no garantiza código 100% libre de errores.
     // Ejemplo de conversión básica para modernizar el código
     $convertedCode = str_replace('mysql_', 'mysqli_', $inputCode); // Ejemplo: actualizar funciones obsoletas de MySQL
     $convertedCode = preg_replace('/\$this->(\w+)/', 'self::$1', $convertedCode); // Actualizar a métodos estáticos

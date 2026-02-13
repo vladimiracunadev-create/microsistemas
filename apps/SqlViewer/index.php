@@ -5,6 +5,7 @@ use Microsistemas\Core\Database;
 use Microsistemas\Core\Config;
 
 // 1) OBTENER CONFIGURACIÓN INICIAL
+// Se intenta obtener credenciales desde la request (form) o se usan defaults del Config
 $config = Config::getInstance();
 $drivers = [
     'mysql' => 'MySQL / MariaDB',
@@ -33,8 +34,10 @@ try {
                   3. Reinicia Apache desde el Panel de Control de XAMPP.";
     }
 }
-
-// 2) OBTENER LISTA DE BASES DE DATOS (Solo para MySQL/Postgres)
+/**
+ * 2) OBTENER LISTA DE BASES DE DATOS (Solo para MySQL/Postgres)
+ * Intenta listar todas las bases de datos disponibles en el servidor
+ */
 $databases = [];
 if ($conn && $driver !== 'sqlite') {
     try {
@@ -50,7 +53,10 @@ if ($conn && $driver !== 'sqlite') {
     }
 }
 
-// 3) OBTENER TABLAS Y VISTAS
+/**
+ * 3) OBTENER TABLAS Y VISTAS
+ * Dependiendo del driver, se ejecutan queries específicas de metadatos
+ */
 $tables = [];
 $views = [];
 
@@ -89,7 +95,10 @@ if ($conn) {
     }
 }
 
-// 4) EJECUCIÓN DE CONSULTA
+/**
+ * 4) EJECUCIÓN DE CONSULTA
+ * Si se envía una query por POST, se ejecuta y se renderiza el resultado en una tabla HTML
+ */
 $queryResultHtml = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query']) && $conn) {
     $query = trim($_POST['query']);
@@ -281,7 +290,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query']) && $conn) {
         <h3><i class="fas fa-database"></i> SqlViewer</h3>
 
         <?php if ($error): ?>
-            <div class="error"><?php echo htmlspecialchars($error); ?></div>
+            <div class="error">
+                <?php echo htmlspecialchars($error); ?>
+            </div>
         <?php endif; ?>
 
         <form method="GET">
@@ -337,16 +348,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query']) && $conn) {
 
         <hr>
 
-        <h4>Tablas <span class="badge"><?php echo count($tables); ?></span></h4>
+        <h4>Tablas <span class="badge">
+                <?php echo count($tables); ?>
+            </span></h4>
         <?php foreach ($tables as $t): ?>
             <div class="item" onclick="setQuery('<?php echo $t; ?>')"><i class="fas fa-table"></i>
-                <?php echo htmlspecialchars($t); ?></div>
+                <?php echo htmlspecialchars($t); ?>
+            </div>
         <?php endforeach; ?>
 
-        <h4>Vistas <span class="badge"><?php echo count($views); ?></span></h4>
+        <h4>Vistas <span class="badge">
+                <?php echo count($views); ?>
+            </span></h4>
         <?php foreach ($views as $v): ?>
             <div class="item" onclick="setQuery('<?php echo $v; ?>')"><i class="fas fa-eye"></i>
-                <?php echo htmlspecialchars($v); ?></div>
+                <?php echo htmlspecialchars($v); ?>
+            </div>
         <?php endforeach; ?>
     </div>
 
@@ -358,7 +375,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query']) && $conn) {
             <input type="hidden" name="pass" value="<?php echo htmlspecialchars($pass); ?>">
             <input type="hidden" name="db" value="<?php echo htmlspecialchars($db_selected); ?>">
 
-            <h3>Ejecutar SQL (<?php echo strtoupper($driver); ?>)</h3>
+            <h3>Ejecutar SQL (
+                <?php echo strtoupper($driver); ?>)
+            </h3>
             <textarea name="query"
                 placeholder="SELECT * FROM ..."><?php echo isset($_POST['query']) ? htmlspecialchars($_POST['query']) : ''; ?></textarea>
             <br><br>
@@ -386,5 +405,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query']) && $conn) {
 
 </html>
 <?php
-Database::close();
+
 ?>

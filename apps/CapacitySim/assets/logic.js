@@ -1,6 +1,20 @@
 /* global BASELINES, Chart */
+/**
+ * Lógica principal del simulador de capacidad.
+ * Maneja la interacción con el DOM, cálculos de RPS y visualización de resultados.
+ */
 const byId = (id) => document.getElementById(id);
-let healthChart = null;
+
+//
+// Lógica principal del simulador de capacidad.
+// Maneja la interacción con el DOM, cálculos de RPS y visualización de resultados.
+//
+
+//
+// Lógica principal del simulador de capacidad.
+// Maneja la interacción con el DOM, cálculos de RPS y visualización de resultados.
+//
+
 
 function populateSelect(id, obj) {
   const el = byId(id);
@@ -55,6 +69,9 @@ function optionDesc(section, key) {
   } catch (e) { return ""; }
 }
 
+/**
+ * Actualiza los textos de ayuda contextual basados en la selección actual.
+ */
 function updateHelpTexts() {
   const fields = ["os", "web_server", "runtime", "db", "container", "orchestrator", "cache", "cdn", "tls", "cloud_provider", "load_profile", "architecture", "scaling_strategy", "lb_mesh", "db_replication_mode", "connection_pool_profile", "endpoint_complexity"];
   fields.forEach(id => {
@@ -66,6 +83,10 @@ function updateHelpTexts() {
   });
 }
 
+/**
+ * Realiza el cálculo de capacidad basado en los parámetros ingresados.
+ * Aplica fórmulas heurísticas para estimar RPS, cuellos de botella y costos.
+ */
 function calc() {
   const os = byId("os").value;
   const web = byId("web_server").value;
@@ -241,6 +262,10 @@ function exportJSON() {
 
 function exportPDF() { window.print(); }
 
+/**
+ * Actualiza el gráfico de radar mostrando la salud del sistema en 3 ejes:
+ * CPU, Base de Datos y Red.
+ */
 function updateCharts(cpu, db, net, current) {
   const canvas = byId('healthChart');
   if (!canvas) return;
