@@ -26,10 +26,18 @@ def calculate(args, b):
     scale = b["scaling_strategy"][args.scaling_strategy]
     lb = b["lb_mesh"][args.lb_mesh]
 
+    # 1. LATENCIA y FACTORES DE ARQUITECTURA
+    #    Calculamos la latencia efectiva del endpoint sumando penalizaciones:
+    #    - Complejidad base del endpoint (light/medium/heavy)
+    #    - Factor del perfil de carga (si es DB_bound puede tener más latencia)
+    #    - Penalizaciones por arquitectura (microservicios, serverless cold-start)
     lat_ms_endpoint = (base_lat * lp["lat_factor"]) + arch["lat_add_ms"] + arch.get("avg_cold_start_ms", 0) + scale.get("lat_add_ms", 0) + lb.get("lat_add_ms", 0)
 
     rps_core_base = b["runtime"][args.runtime]["rps_per_core_base"]
 
+    # 2. MULTIPLICADOR DE INFRAESTRUCTURA
+    #    Factor compuesto que representa la eficiencia global del stack tecnológico.
+    #    Se multiplican los factores de cada componente (OS, Web Server, Container, etc.).
     infra_mult = (b["os"][args.os]["mult"] *
                   b["web_server"][args.web]["mult"] *
                   b["container"][args.container]["mult"] *

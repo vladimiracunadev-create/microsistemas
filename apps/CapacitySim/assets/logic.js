@@ -125,43 +125,94 @@ function calc() {
   const arch = BASELINES.architecture[archKey];
   const scale = BASELINES.scaling_strategy[scaleKey];
   const lb = BASELINES.lb_mesh[lbKey];
+  // --------------------------------------------------------------------------
+  // CÁLCULO DE CAPACIDAD (ALGORITMO HEURÍSTICO)
+  // --------------------------------------------------------------------------
+  // 1. Obtener Latencia Base:
+  //    Se parte de la latencia base del punto final (endpoint) seleccionado.
+  //    A esto se suman penalizaciones por arquitectura (microservicios suman latencia de red interna),
+  //    balanceadores de carga y "cold starts" si aplica (serverless).
+  let latEndpoint = BASELINES.endpoint_complexity[endpoint].lat_ms;
+  latEndpoint = (latEndpoint * BASELINES.load_profile[loadProfile].lat_factor)
+    + BASELINES.architecture[archKey].lat_add_ms
+    + (BASELINES.architecture[archKey].avg_cold_start_ms || 0)
+    + (BASELINES.scaling_strategy[scaleKey].lat_add_ms || 0)
+    + (BASELINES.lb_mesh[lbKey].lat_add_ms || 0);
 
-  const lat_ms_endpoint = (baseLat * lp.lat_factor) + arch.lat_add_ms + (arch.avg_cold_start_ms || 0) + (scale.lat_add_ms || 0) + (lb.lat_add_ms || 0);
+  // 2. Multiplicador de Infraestructura:
+  //    Cada capa tecnológica (OS, Web Server, Container, etc.) tiene un factor de rendimiento.
+  //    Un factor < 1.0 implica degradación (overhead), > 1.0 implica optimización.
+  //    Se multiplican todos para obtener un factor global de eficiencia del stack.
+  const infraMult = (BASELINES.os[os]?.mult || 1) *
+    (BASELINES.web_server[web]?.mult || 1) *
+    (BASELINES.container[container]?.mult || 1) *
+    (BASELINES.orchestrator[orch]?.mult || 1) *
+    (BASELINES.cache[cache]?.mult || 1) *
+    (BASELINES.cdn[cdn]?.mult || 1) *
+    (BASELINES.tls[tls]?.mult || 1) *
+    (BASELINES.architecture[archKey]?.mult || 1) *
+    (BASELINES.scaling_strategy[scaleKey]?.app_mult || 1) *
+    (BASELINES.lb_mesh[lbKey]?.app_mult || 1);
 
-  const rps_core_base = BASELINES.runtime[runtime].rps_per_core_base;
-  const infraMult = BASELINES.os[os].mult * BASELINES.web_server[web].mult * BASELINES.container[container].mult * BASELINES.orchestrator[orch].mult * BASELINES.cache[cache].mult * BASELINES.cdn[cdn].mult * BASELINES.tls[tls].mult * arch.mult * (scale.app_mult || 1.0) * (lb.app_mult || 1.0);
+  // 3. Cálculo de RPS (Requests Per Second) por CPU:
+  //    Se toma el RPS base del runtime (ej. Node.js vs PHP) y se ajusta por:
+  //    - Multiplicador de infraestructura calculado arriba.
+  //    - Perfil de carga (cargas CPU-bound reducen drásticamente este valor).
+  //    - Latencia inversa: A mayor latencia por request, menos requests por segundo puede procesar un hilo bloqueante.
+  const rpsCoreBase = BASELINES.runtime[runtime].rps_per_core_base;
+  const rpsCoreAdj = rpsCoreBase * infraMult * BASELINES.load_profile[loadProfile].cpu_mult * (100.0 / latEndpoint);
 
+  // RPS Total de Aplicación (limitado por CPU):
   const totalCoresApp = coresPerInstance * Math.max(1, appReplicas);
-  const rps_core_adj = rps_core_base * infraMult * lp.cpu_mult * (100.0 / lat_ms_endpoint);
-  const RPS_cpu = totalCoresApp * rps_core_adj;
+  const rpsCpu = totalCoresApp * rpsCoreAdj;
 
+  // 4. Cálculo de Cuello de Botella en Base de Datos:
+  //    - Se calcula cuántas conexiones máximas puede manejar la BD primaria basada en sus cores.
+  //    - Se estima el RPS máximo de la BD (Primary) dividiendo las conexiones por la latencia de transacción.
   const dbConf = BASELINES.db[db];
   const connMaxPrimary = dbConf.conn_per_core * coresDbPrimary;
-  const RPS_db_primary = (connMaxPrimary / (dbConf.lat_ms / 1000.0)) * lp.db_mult;
+  const rpsDbPrimary = (connMaxPrimary / (dbConf.lat_ms / 1000.0)) * BASELINES.load_profile[loadProfile].db_mult;
 
-  let RPS_db_effective = RPS_db_primary;
-  let readCap = RPS_db_primary;
-  let writeCap = RPS_db_primary;
+  //    - Si hay Réplicas de Lectura, se divide la carga:
+  //      El tráfico de lectura (definido por readRatio) se reparte entre Primary + Réplicas.
+  //      El tráfico de escritura siempre va al Primary.
+  //      La capacidad efectiva es el menor valor entre el límite de escrituras y el límite de lecturas expandido.
+  let rpsDbEffective = rpsDbPrimary;
+  // readRatio and writeRatio are already defined above
+  // const readRatio = clamp(readRatioPct, 0, 100) / 100.0;
+  // const writeRatio = 1.0 - readRatio;
+
   if (dbReplMode === "read_replicas" && dbReadReplicas > 0) {
-    readCap = RPS_db_primary * (1 + dbReadReplicas);
-    writeCap = RPS_db_primary;
+    const readCap = rpsDbPrimary * (1 + dbReadReplicas);
+    const writeCap = rpsDbPrimary;
+
+    // Capacidad limitada por lectura o escritura según el ratio
     const limRead = (readRatio > 0) ? (readCap / readRatio) : Infinity;
     const limWrite = (writeRatio > 0) ? (writeCap / writeRatio) : Infinity;
-    RPS_db_effective = Math.min(limRead, limWrite);
+    rpsDbEffective = Math.min(limRead, limWrite);
   }
 
+  // 5. Límite por Pool de Conexiones de Aplicación:
+  //    A veces el cuello de botella no es la BD, sino la configuración del pool en la App.
+  //    Si la app solo abre 50 conexiones, no importa si la BD soporta 5000.
   const poolProfile = BASELINES.connection_pool[poolProfileKey];
-  const poolPerInstance = Math.max(1, poolOverride || poolProfile.pool_per_instance || 50);
-  const maxAppConn = poolPerInstance * Math.max(1, appReplicas);
+  const poolPerInst = (poolProfile?.pool_per_instance || 50);
+  // Permitir override manual si existe lógica de UI para ello (aquí simplificado)
+  const poolUser = parseInt(byId("pool_per_instance")?.value || 0);
+  const finalPoolPerInst = (poolUser > 0) ? poolUser : poolPerInst;
+
+  const maxAppConn = finalPoolPerInst * Math.max(1, appReplicas);
   const effectiveMaxConn = Math.min(dbConnHard, maxAppConn);
-  const RPS_pool_limit = (effectiveMaxConn / (dbConf.lat_ms / 1000.0));
-  const RPS_db = Math.min(RPS_db_effective, RPS_pool_limit);
+  const rpsPoolLimit = (effectiveMaxConn / (dbConf.lat_ms / 1000.0));
+
+  // El RPS final de base de datos es el mínimo entre la capacidad física de la BD y el límite del pool.
+  const rpsDb = Math.min(rpsDbEffective, rpsPoolLimit);
 
   const payloadBits = bitsFromKB(payloadKB);
   const bw = bitsPerSecond(bwMbps);
   const RPS_red = (payloadBits > 0) ? ((bw / payloadBits) * lp.net_mult) : Infinity;
 
-  const RPS_cap_raw = Math.min(RPS_cpu, RPS_db, RPS_red);
+  const RPS_cap_raw = Math.min(rpsCpu, rpsDb, RPS_red);
   const RPS_cap = RPS_cap_raw * safety;
   const usuarios_conc = RPS_cap * (lat_ms_endpoint / 1000.0);
 

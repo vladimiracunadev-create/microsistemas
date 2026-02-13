@@ -74,6 +74,11 @@ def main():
         arch_list = list(b["architecture"].keys())
         scale_list = list(b["scaling_strategy"].keys())
 
+    # GENERACIÓN CARTESIANA DE COMBINACIONES
+    # Utilizamos itertools.product para crear todas las combinaciones posibles
+    # de los parámetros definidos. Esto permite simular miles de escenarios
+    # (ej. Linux + Nginx + Node vs Windows + IIS + .NET) en una sola corrida.
+    # Es fundamental para análisis de "Qué pasa si..." (What-if analysis).
     combos = itertools.product(os_list, web_list, runtime_list, db_list,
                               container_list, orch_list, cache_list, cdn_list, tls_list,
                               load_list, arch_list, scale_list, lb_list, endpoint_list,

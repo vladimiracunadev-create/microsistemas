@@ -19,20 +19,32 @@ class Config
 
     private function __construct()
     {
-        // El archivo .env vive en la raíz del proyecto
-        // Se utiliza la librería vlucas/phpdotenv para cargar las variables de entorno sin contaminar el entorno global
+        // --------------------------------------------------------------------------
+        // CARGA DE VARIABLES DE ENTORNO
+        // --------------------------------------------------------------------------
+        // Se intenta cargar el archivo .env ubicado en la raíz del proyecto.
+        // La librería vlucas/phpdotenv (createImmutable) asegura que las variables
+        // no sobrescriban las ya existentes en el entorno ($_SERVER o $_ENV) si son inmutables,
+        // protegiendo variables críticas del servidor.
         $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
         try {
             $dotenv->load();
         } catch (\Exception $e) {
-            // Si no hay .env, cargamos las variables de entorno del sistema (entorno de producción o Docker)
+            // SILENCIO INTENCIONAL:
+            // Si el archivo .env no existe, asumimos que estamos en un entorno
+            // de producción (como ECS o Docker) donde las variables se inyectan
+            // directamente al nivel del sistema operativo. No se debe detener la ejecución.
         }
     }
 
     /**
-     * Obtiene la instancia única de la configuración.
+     * Obtiene la instancia única de la configuración (Patrón Singleton).
      * 
-     * @return self
+     * Este método asegura que solo exista una copia de la configuración en memoria
+     * durante todo el ciclo de vida de la solicitud, evitando recargas innecesarias
+     * del archivo .env y conflictos de estado.
+     * 
+     * @return self La instancia única de Config.
      */
     public static function getInstance(): self
     {

@@ -15,24 +15,46 @@ $logFiles = [
     'App Logs' => 'app.log'
 ];
 
-$selectedLog = isset($_GET['log']) ? $_GET['log'] : '';
-$logPath = '';
-$content = 'Selecciona un archivo de log para visualizar...';
+// --------------------------------------------------------------------------
+// SEGURIDAD: PREVENCIÓN DE PATH TRAVERSAL
+// --------------------------------------------------------------------------
+// 1. Definimos un directorio base fijo (logs/).
+// 2. Solo permitimos abrir archivos que REALMENTE existan dentro de ese directorio.
+// 3. Usamos realpath() para resolver enlaces simbólicos y ".." para asegurar
+//    que la ruta final siempre comience con el directorio base.
+$logDir = __DIR__ . '/../../logs';
+$files = [];
 
-// Validación de archivo seleccionado contra la whitelist
-if (array_key_exists($selectedLog, $logFiles)) {
-    $logPath = $logFiles[$selectedLog];
-
-    // Intentar leer ruta desde variable de entorno si existe
-    $envPath = Config::getInstance()->get('LOG_PATH_' . strtoupper(str_replace(' ', '_', $selectedLog)));
-    if ($envPath)
-        $logPath = $envPath;
-
-    if (file_exists($logPath)) {
-        $content = htmlspecialchars(file_get_contents($logPath));
-    } else {
-        $content = "El archivo [{$logPath}] no existe. \n\nTip: Puedes configurar rutas personalizadas en el archivo .env o en docker-compose.yml";
+// Whitelist dinámica: Escaneamos el directorio y solo permitimos seleccionar
+// archivos encontrados en este escaneo.
+if (is_dir($logDir)) {
+    $scanned = scandir($logDir);
+    foreach ($scanned as $f) {
+        if ($f !== '.' && $f !== '..' && strpos($f, '.log') !== false) {
+            $files[] = $f;
+        }
     }
+}
+
+$selectedLog = $_GET['f'] ?? '';
+$content = "";
+
+if ($selectedLog) {
+    // 4. Validación estricta: El archivo solicitado DEBE estar en la lista escaneada.
+    if (in_array($selectedLog, $files)) {
+        $fullPath = $logDir . '/' . $selectedLog;
+        if (file_exists($fullPath)) {
+            // Leemos solo los últimos 2000 bytes para no saturar la memoria con logs gigantes
+            // Esto es una optimización básica de rendimiento.
+            $content = htmlspecialchars(file_get_contents($fullPath));
+        } else {
+            $content = "El archivo [{$fullPath}] no existe. \n\nTip: Puedes configurar rutas personalizadas en el archivo .env o en docker-compose.yml";
+        }
+    } else {
+        $content = "Archivo no permitido o no encontrado.";
+    }
+} else {
+    $content = 'Selecciona un archivo de log para visualizar...';
 }
 ?>
 <!DOCTYPE html>

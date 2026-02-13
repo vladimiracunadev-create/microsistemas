@@ -5,7 +5,13 @@ use Microsistemas\Core\Database;
 use Microsistemas\Core\Config;
 
 // 1) OBTENER CONFIGURACIÓN INICIAL
-// Se intenta obtener credenciales desde la request (form) o se usan defaults del Config
+// --------------------------------------------------------------------------
+// Estrategia de Prioridad:
+// 1. $_REQUEST: Si el usuario envía datos por formulario (POST/GET), estos tienen prioridad.
+//    Esto permite conectarse a BDs arbitrarias sin cambiar la config del sistema.
+// 2. Config::getInstance(): Si no hay input de usuario, se usan los valores por defecto
+//    del sistema (cargados desde .env), facilitando el acceso rápido a la BD principal.
+// --------------------------------------------------------------------------
 $config = Config::getInstance();
 $drivers = [
     'mysql' => 'MySQL / MariaDB',
@@ -55,7 +61,12 @@ if ($conn && $driver !== 'sqlite') {
 
 /**
  * 3) OBTENER TABLAS Y VISTAS
- * Dependiendo del driver, se ejecutan queries específicas de metadatos
+ * --------------------------------------------------------------------------
+ * Abstracción de Metadatos:
+ * Cada motor de base de datos tiene su propia forma de almacenar metadatos (tablas de sistema).
+ * Aquí se normaliza la consulta para obtener una lista plana de tablas y vistas,
+ * independientemente de si el backend es MySQL, PostgreSQL o SQLite.
+ * --------------------------------------------------------------------------
  */
 $tables = [];
 $views = [];

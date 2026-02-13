@@ -79,13 +79,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['php54_code'])) {
     // NOTA: Esto es una herramienta de ayuda y no garantiza código 100% libre de errores.
     // Ejemplo de conversión básica para modernizar el código
     $convertedCode = str_replace('mysql_', 'mysqli_', $inputCode); // Ejemplo: actualizar funciones obsoletas de MySQL
-    $convertedCode = preg_replace('/\$this->(\w+)/', 'self::$1', $convertedCode); // Actualizar a métodos estáticos
-    $convertedCode = preg_replace('/array\s*\((.*?)\)/s', '[$1]', $convertedCode); // Convertir sintaxis de array() a []
+    $convertedCode = preg_replace('/\$this->(\w+)/', 'self::$1', $convertedCode);
+    // --------------------------------------------------------------------------
+    // REGLAS DE MIGRACIÓN (REGEX)
+    // --------------------------------------------------------------------------
+    // Aquí definimos los patrones de código legado (PHP 5.x/7.x) que deben
+    // transformarse a sintaxis moderna (PHP 8.x).
+
+    // 1. Array Syntax: array() -> []
+    $convertedCode = preg_replace('/array\s*\(([^)]*)\)/i', '[$1]', $convertedCode);
+
+    // 2. Propiedades deprecadas: var $variable -> public $variable
+    //    PHP 4 usaba 'var', eliminado en versiones recientes.
+    $convertedCode = preg_replace('/var\s+\$/i', 'public $', $convertedCode);
+
+    // 3. Funciones create_function() -> Funciones Anónimas
+    //    create_function() fuertemente deprecada por riesgos de seguridad (eval interno).
+    $convertedCode = preg_replace('/create_function\(\s*\'([^\']*)\'\s*,\s*\'([^\']*)\'\s*\)/', 'function($1) { $2; }', $convertedCode);
+
+    // 4. Comentarios Hash (#) -> Doble barra (//)
+    //    El estilo Perl/Shell (#) fue deprecado en archivos .php (aunque sigue válido, se prefiere //).
+    $convertedCode = preg_replace('/^\s*#/m', '//', $convertedCode);
+
+    // 5. mysql_* functions -> Advertencia (no reemplazo automático seguro)
+    //    Las funciones mysql_ fueron eliminadas en PHP 7. Solo agregamos un comentario TODO.
+    $convertedCode = preg_replace('/(mysql_connect|mysql_query|mysql_select_db)/i', '// TODO: MIGRATE TO PDO OR MYSQLI -> $1', $convertedCode);
     $convertedCode = preg_replace('/split\s*\((.*?),\s*(.*?)\)/', 'explode($1, $2)', $convertedCode); // Reemplazar split() con explode()
     $convertedCode = preg_replace('/each\s*\((.*?)\)/', 'foreach($1 as $key => $value)', $convertedCode); // Reemplazar each() con foreach()
     $convertedCode = str_replace('ereg_', 'preg_', $convertedCode); // Actualizar funciones obsoletas de ereg_
     $convertedCode = preg_replace('/&([a-zA-Z0-9]+);/', 'htmlspecialchars("&$1;")', $convertedCode); // Actualizar referencias HTML obsoletas
-    $convertedCode = preg_replace('/create_function\s*\((.*?)\)/', 'function($1)', $convertedCode); // Reemplazar create_function() con funciones anónimas
     $convertedCode = preg_replace('/__autoload\s*\((.*?)\)/', 'spl_autoload_register($1)', $convertedCode); // Reemplazar __autoload() con spl_autoload_register
     $convertedCode = preg_replace('/(\s|^)var\s+(\$.*?;)/', '$1public $2', $convertedCode); // Cambiar var a public para propiedades de clase
     $convertedCode = preg_replace('/error_reporting\s*\(E_ALL\s*\^\s*E_NOTICE\)/', 'error_reporting(E_ALL & ~E_NOTICE)', $convertedCode); // Actualizar error_reporting obsoleto

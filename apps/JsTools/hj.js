@@ -462,6 +462,46 @@
     setStatus("Descargado.", filename);
   }
 
+  // --------------------------------------------------------------------------
+  // UTILIDADES DE MANIPULACIÓN DE TEXTO
+  // --------------------------------------------------------------------------
+
+  /**
+   * Escapa caracteres HTML para prevenir inyección XSS al mostrar código en el DOM.
+   * Convierte &, <, >, " y ' en sus entidades HTML correspondientes.
+   * @param {string} text - Texto sin escapar.
+   * @returns {string} - Texto seguro para insertar en HTML.
+   */
+  function escapeHtml(text) {
+    if (!text) return text;
+    return text.replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  /**
+   * Copia el texto dado al portapapeles del sistema.
+   * Utiliza la API moderna `navigator.clipboard.writeText`.
+   * @param {string} text - Texto a copiar.
+   * @returns {Promise<void>}
+   */
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (err) {
+      console.error('Error al copiar: ', err);
+      setStatus("Error al copiar al portapapeles.");
+    }
+  }
+
+  /**
+   * Lee el contenido de un archivo seleccionado por el usuario.
+   * Retorna una Promesa que se resuelve con el contenido de texto del archivo.
+   * @param {File} file - Objeto File del input.
+   * @returns {Promise<string>}
+   */
   function readFileToInput(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
