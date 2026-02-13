@@ -1,3 +1,7 @@
+/**
+ * Script de prueba de carga para K6.
+ * Simula un escenario de tráfico creciente hasta 800 VUs.
+ */
 import http from 'k6/http';
 import { sleep, check } from 'k6';
 

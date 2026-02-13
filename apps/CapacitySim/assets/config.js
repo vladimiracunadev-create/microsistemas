@@ -1,3 +1,7 @@
+/**
+ * Configuración base del simulador.
+ * Carga asíncrona de los perfiles de rendimiento desde un JSON externo.
+ */
 window.BASELINES = null;
 window.__baselinesReady = (async function () {
   // Carga asíncrona de la configuración base desde JSON

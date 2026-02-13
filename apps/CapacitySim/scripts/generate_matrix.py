@@ -6,6 +6,10 @@ import itertools
 from capacity_calc import calculate, load_baselines
 
 def main():
+    """
+    Genera un archivo CSV con una matriz de combinaciones de configuraciones (OS, Web Server, DB, etc.)
+    y sus respectivas capacidades calculadas. Útil para análisis masivos.
+    """
     p = argparse.ArgumentParser(description="Genera matriz de combinaciones y capacidad")
     p.add_argument("--preset", choices=["common","all"], default="common")
     p.add_argument("--cores_per_instance_list", default="2,4,8")

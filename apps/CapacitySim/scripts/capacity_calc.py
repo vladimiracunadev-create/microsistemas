@@ -6,6 +6,7 @@ import os
 BASE = os.path.join(os.path.dirname(__file__), "..", "app", "data", "baselines.json")
 
 def load_baselines(path=BASE):
+    """Carga el archivo JSON con los datos base de rendimiento."""
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
@@ -15,6 +16,10 @@ def bits_from_kb(kb): return kb * 1024 * 8
 def clamp(x, a, b): return max(a, min(b, x))
 
 def calculate(args, b):
+    """
+    Realiza el cálculo de capacidad basado en los argumentos y la línea base.
+    Retorna un diccionario con las métricas calculadas (RPS, Cuellos de botella, etc).
+    """
     base_lat = b["endpoint_complexity"][args.endpoint]["lat_ms"]
     lp = b["load_profile"][args.load_profile]
     arch = b["architecture"][args.architecture]
