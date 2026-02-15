@@ -79,12 +79,11 @@ ports: [8080]
 compose_file: "docker-compose.yml" # Opcional
 ```
 
-## 🛡️ Seguridad
-
-El Hub implementa varias medidas de seguridad:
-
-- **Prevención de Path Traversal**: Solo permite operaciones dentro del directorio `apps/`.
-- **Allowlist**: Solo comandos pre-aprobados pueden ser ejecutados vía `run_cmd`.
 - **Validación de Input**: Sanitización estricta de IDs de aplicación.
 
-Para más detalles sobre políticas de seguridad, consulta [SECURITY.md](../SECURITY.md) y [killed.md](../killed.md).
+### Lista de Aplicaciones Permitidas (Security Allowlist)
+
+El Hub solo gestiona herramientas que contienen un `app.manifest.yml` válido en el directorio `apps/`. Actualmente incluye:
+- Conversor, SQL Viewer, Git Trainer, JS Toolkit, YAML Generator, Log Viewer, PHP Migrator, Capacity Simulator, CI/CD Library.
+
+Para más detalles sobre políticas de seguridad, consulta [SECURITY.md](../SECURITY.md).
