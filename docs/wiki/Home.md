@@ -19,12 +19,12 @@
 
 Usa el **Sidebar** lateral para navegar por las guías detalladas:
 
-1.  **[Guía para Principiantes](Guia-para-Principiantes)**: Si es tu primera vez aquí.
-2.  **[Manual de Usuario](Manual-de-Usuario)**: Cómo usar cada micro-app.
-3.  **[Guía de Instalación](Guia-de-Instalacion)**: Docker, XAMPP y Linux.
-4.  **[Catálogo de Sistemas](Catalogo-de-Sistemas)**: Detalles técnicos de cada herramienta.
-5.  **[Arquitectura](Arquitectura)**: Cómo funciona el "core" bajo el capó.
-6.  **[Seguridad](Seguridad)**: Nuestras políticas de protección.
+1. **[Guía para Principiantes](Guia-para-Principiantes)**: Si es tu primera vez aquí.
+2. **[Manual de Usuario](Manual-de-Usuario)**: Cómo usar cada micro-app.
+3. **[Guía de Instalación](Guia-de-Instalacion)**: Docker, XAMPP y Linux.
+4. **[Catálogo de Sistemas](Catalogo-de-Sistemas)**: Detalles técnicos de cada herramienta.
+5. **[Arquitectura](Arquitectura)**: Cómo funciona el "core" bajo el capó.
+6. **[Seguridad](Seguridad)**: Nuestras políticas de protección.
 
 ---
 
