@@ -30,6 +30,12 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 
 ## 🛠️ Catálogo de Microsistemas (apps/)
 
+### 📊 CapacitySim (El Simulador de Carga)
+
+- **¿Qué hace?**: Simulador heurístico de capacidad y RPS para infraestructuras con estimación de costos basado en proveedores cloud (AWS, GCP, Azure).
+- **¿Para qué?**: Para proyectar el hardware necesario y los costos operativos antes de realizar el despliegue real.
+- **Importancia**: Ayuda en la toma de decisiones financieras y técnicas, evitando el sobre-dimensionamiento o cuellos de botella inesperados.
+
 ### 📊 SQL Viewer (El Inspector de Datos)
 
 - **¿Qué hace?**: Permite explorar bases de datos MySQL, ver tablas y ejecutar consultas SQL desde el navegador.
