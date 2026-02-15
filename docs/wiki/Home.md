@@ -4,40 +4,40 @@
 
 ---
 
-## 🧭 ¿Por dónde empezar?
+## 🕒 Historial de Versiones
 
-Si eres nuevo en el proyecto, te recomendamos seguir este orden:
-
-1. **[Guía para Principiantes](Guia-para-Principiantes)**: Un recorrido visual por la estructura del proyecto.
-2. **[Guia de Instalación](Guia-de-Instalacion)**: Levanta el entorno en Docker o XAMPP en menos de 5 minutos.
-3. **[Manual de Usuario](Manual-de-Usuario)**: Aprende a maximizar el uso de cada micro-aplicación.
-
----
-
-## 🏗️ Para Desarrolladores y Reclutadores
-
-Este repositorio es un portafolio de ingeniería que aplica:
-
-- **Arquitectura Modular**: Micro-apps independientes y extensibles.
-- **DevOps**: CI/CD profesional con Docker, GHCR y Trivy.
-- **Calidad de Código**: Estándares PSR-12, Análisis Estático (PHPStan) y Linter de Markdown.
-
-Explora la documentación técnica:
-
-- **[Arquitectura](Arquitectura)**
-- **[Especificaciones Técnicas](Especificaciones-Tecnicas)**
-- **[Referencia de API](Referencia-de-API)**
+- **v1.2.2** (Actual): Integración de **CicdLibrary** y mejoras en el visor de documentación.
+- **v1.2.1**: Estándar de Salud y Monitoreo.
+- **v1.2.0**: Microsistemas Hub y Escaneo de Secretos.
+- **v1.1.0**: CapacitySim Pro y Simulación de Costos Cloud.
+- **v1.0.1**: Infraestructura CI/CD y Dockerización.
+- **v1.0.0**: Lanzamiento Inicial (Arquitectura Modular).
 
 ---
 
-## 🤝 Comunidad y Contribución
+## 📂 Contenido de la Wiki
 
-¡Tu ayuda es bienvenida!
+Usa el **Sidebar** lateral para navegar por las guías detalladas:
 
-- Revisa nuestra **[Guía de Contribución](Guia-de-Contribucion)** para aprender cómo añadir tu propio microsistema.
-- Lee nuestras políticas de **[Seguridad](Seguridad)** y el **[Código de Conducta](Codigo-de-Conducta)**.
-
-> **Visión**: Crear la navaja suiza definitiva para desarrolladores, donde la simplicidad del frontend se une a la potencia del backend profesional.
+1.  **[Guía para Principiantes](Guia-para-Principiantes)**: Si es tu primera vez aquí.
+2.  **[Manual de Usuario](Manual-de-Usuario)**: Cómo usar cada micro-app.
+3.  **[Guía de Instalación](Guia-de-Instalacion)**: Docker, XAMPP y Linux.
+4.  **[Catálogo de Sistemas](Catalogo-de-Sistemas)**: Detalles técnicos de cada herramienta.
+5.  **[Arquitectura](Arquitectura)**: Cómo funciona el "core" bajo el capó.
+6.  **[Seguridad](Seguridad)**: Nuestras políticas de protección.
 
 ---
-*Última actualización: Febrero 2026*
+
+## 🛠️ Microsistemas Hub
+
+El **Hub** es nuestra herramienta CLI para gestionar todo el ecosistema. Consulta la **[Guía del Hub](Hub-CLI)** para aprender a usar los comandos `list`, `run`, `up` y `doctor`.
+
+---
+
+## 🤝 Colaboración
+
+¿Quieres contribuir? Revisa nuestra **[Guía de Contribución](Guia-de-Contribucion)** y el **[Código de Conducta](Codigo-de-Conducta)**.
+
+---
+
+*Desarrollado con ❤️ por Vladimir Acuña Valdebenito.*

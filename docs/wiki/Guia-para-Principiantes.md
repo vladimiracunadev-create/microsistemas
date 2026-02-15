@@ -8,7 +8,7 @@ Si quieres entender exactamente qué hay dentro de cada "cajón" de este proyect
 
 Esta es la zona de trabajo. Aquí es donde están los programas que tú abres y usas.
 
-* **¿Qué hay dentro?**: Una carpeta por cada herramienta (ej. `SqlViewer/`, `Conversor/`).
+* **¿Qué hay dentro?**: Una carpeta por cada herramienta (ej. `SqlViewer/`, `CicdLibrary/`, `Conversor/`).
 * **En cada subcarpeta encontrarás**:
   * `index.php` o `index.html`: El archivo principal de la herramienta.
   * `README.md`: Las instrucciones específicas de esa herramienta.

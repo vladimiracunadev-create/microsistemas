@@ -10,7 +10,7 @@ La suite se organiza en un **Dashboard Central** que actúa como puerta de enlac
 
 ---
 
-## 🛠️ Guia Detallada de Herramientas
+## 🛠️ Guía Detallada de Herramientas
 
 ### 📦 Gestión de Datos y Bases de Datos
 
@@ -55,11 +55,25 @@ La suite se organiza en un **Dashboard Central** que actúa como puerta de enlac
 
 ---
 
+### 🚀 DevOps e Infraestructura Pro
+
+#### Capacity Simulator
+
+* **Propósito**: Planificación estratégica de recursos y costos cloud.
+* **Workflow Pro**: Guarde el "Escenario A" (actual) y compárelo con el "Escenario B" (propuesta de migración) para generar un reporte de impacto financiero.
+
+#### CI/CD Library
+
+* **Propósito**: Consulta y generación de arquitecturas de despliegue.
+* **Workflow Pro**: Use el buscador para encontrar su stack (ej: "node ssh") y abra el modal de detalle para obtener el código YAML y la lista de secretos necesarios.
+
+---
+
 ## ❓ Preguntas Frecuentes (FAQ)
 
 ### ¿Cómo añado mis propias herramientas?
 
-Consulte la [Guía de Contribución](Guia-de-Contribucion).
+Consulte la [Guía de Contribución](../CONTRIBUTING.md#cómo-añadir-un-nuevo-microsistema).
 
 ### ¿Es seguro habilitar el SQL Viewer en servidores de producción?
 

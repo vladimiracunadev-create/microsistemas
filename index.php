@@ -137,10 +137,10 @@
         <h1>Microsistemas</h1>
         <p class="subtitle">Suite de herramientas de desarrollo y productividad</p>
         <div style="margin-top: 20px;">
-            <a href="docs/USER_MANUAL.md"
+            <a href="doc.php?file=USER_MANUAL.md"
                 style="color: var(--accent); text-decoration: none; font-size: 0.9rem; margin: 0 10px;">📖 Manual de
                 Usuario</a>
-            <a href="docs/INSTALL.md"
+            <a href="doc.php?file=INSTALL.md"
                 style="color: var(--accent); text-decoration: none; font-size: 0.9rem; margin: 0 10px;">🚀 Guía de
                 Instalación</a>
         </div>

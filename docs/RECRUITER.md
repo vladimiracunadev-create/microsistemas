@@ -25,6 +25,7 @@ Los desarrolladores y equipos de DevOps enfrentan constantemente tareas repetiti
 - **Diagnóstico de bases de datos**: Inspección rápida sin clientes pesados
 - **Modernización de código**: Migración de código legacy PHP 5.x a 8.x
 - **Simulación de capacidad**: Planificación de infraestructura y costos cloud
+- **Automatización CI/CD**: Generación de pipelines estandarizados
 
 ### Solución Implementada
 
@@ -160,6 +161,20 @@ Una suite unificada de micro-aplicaciones que:
 - Exportación de reportes en JSON/PDF
 
 **Complejidad**: Muy Alta | **Impacto**: Muy Alto
+
+---
+
+### 5. **CI/CD Library** (apps/CicdLibrary)
+
+**Problema**: Dificultad para estandarizar y escalar procesos de automatización en múltiples stacks y orquestadores.
+
+**Solución Técnica**:
+
+- Motor de renderizado basado en **Mustache** para generación dinámica de pipelines.
+- Cobertura de 192 escenarios (GitHub Actions, GitLab CI, Jenkins, SSH Hooks).
+- Interfaz interactiva para consulta de requisitos, secretos y configuraciones "fuera de YAML".
+
+**Complejidad**: Muy Alta | **Impacto**: Crítico para DevOps/Plataforma
 
 ---
 
@@ -313,6 +328,7 @@ El proyecto ha evolucionado iterativamente durante varios meses, con fases clara
 - **Fase 2**: Dockerización y CI/CD (1 semana)
 - **Fase 3**: Hub Layer y Kubernetes (1 semana)
 - **Fase 4**: Documentación y seguridad (1 semana)
+- **Fase 5**: Integración de CicdLibrary y Biblioteca Técnica (v1.2.2)
 
 ### ¿Es un proyecto individual o de equipo?
 
@@ -326,7 +342,7 @@ Proyecto individual con apertura a contribuciones de la comunidad. Demuestra cap
 
 1. **Enfoque en DX (Developer Experience)**: Makefile, Hub CLI, documentación clara
 2. **Producción-ready**: Docker, K8s, CI/CD, seguridad
-3. **Documentación excepcional**: 11 documentos técnicos, wiki sincronizada
+3. **Documentación excepcional**: 12 documentos técnicos, wiki sincronizada
 4. **Modularidad real**: Cada app es independiente y desplegable
 
 ### ¿Cómo se compara con proyectos similares?
@@ -337,7 +353,7 @@ Proyecto individual con apertura a contribuciones de la comunidad. Demuestra cap
 | Arquitectura | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
 | DevOps | ⭐⭐⭐⭐⭐ | ⭐⭐ |
 | Seguridad | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
-| UX/UI | ⭐⭐⭐⭐ | ⭐⭐⭐ |
+| UX/UI | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
 
 ---
 
@@ -348,7 +364,7 @@ Si estás evaluando este proyecto como parte de un proceso de selección, te rec
 1. **Revisar el README principal**: [README.md](../README.md)
 2. **Explorar la arquitectura**: [ARCHITECTURE.md](ARCHITECTURE.md)
 3. **Probar localmente**: `make up` (requiere Docker)
-4. **Revisar el código**: Empieza por `core/` y `apps/Conversor/`
+4. **Revisar el código**: Empieza por `core/` y `apps/CicdLibrary/`
 5. **Contactar al desarrollador**: [LinkedIn](https://www.linkedin.com/in/vladimir-acu%C3%B1a-valdebenito-11924a29/)
 
 ---
@@ -362,4 +378,4 @@ Si estás evaluando este proyecto como parte de un proceso de selección, te rec
 
 ---
 
-*Última actualización: Febrero 2026*
+*Última actualización: 15 de Febrero, 2026 (v1.2.2)*

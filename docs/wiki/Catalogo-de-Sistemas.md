@@ -16,7 +16,7 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 
 ### 2. Capa Core (Config & Database)
 
-- **Qué es**: Clases centralizadas en `src/Core/` que gestionan la "inteligencia" compartida.
+- **Qué es**: Clases centralizables en `src/Core/` que gestionan la "inteligencia" compartida.
 - **Por qué**: Aplicamos el patrón **Singleton** para la base de datos (una sola conexión para todo el sistema) y el patrón **12-Factor App** para la configuración (mediante archivos `.env`).
 - **Importancia**: Separa la lógica de negocio de la configuración sensible. Si cambias de servidor o de base de datos, solo tocas un archivo, no todo el código.
 
@@ -29,6 +29,12 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 ---
 
 ## 🛠️ Catálogo de Microsistemas (apps/)
+
+### 📊 CapacitySim (El Simulador de Carga)
+
+- **¿Qué hace?**: Simulador heurístico de capacidad y RPS para infraestructuras con estimación de costos basado en proveedores cloud (AWS, GCP, Azure).
+- **¿Para qué?**: Para proyectar el hardware necesario y los costos operativos antes de realizar el despliegue real.
+- **Importancia**: Ayuda en la toma de decisiones financieras y técnicas, evitando el sobre-dimensionamiento o cuellos de botella inesperados.
 
 ### 📊 SQL Viewer (El Inspector de Datos)
 
@@ -71,6 +77,12 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 - **¿Qué hace?**: Generador visual de archivos de configuración YAML.
 - **¿Para qué?**: Para crear archivos de Docker o CI/CD (como los que usa este propio proyecto) sin errores de indentación.
 - **Importancia**: El formato YAML es estricto y un espacio de más puede romper todo. Esta herramienta elimina ese riesgo mediante la generación visual validada.
+
+### 🏗️ CI/CD Library (El Consultor DevOps)
+
+- **¿Qué hace?**: Biblioteca técnica interactiva que genera configuraciones de automatización para 192 escenarios diferentes.
+- **¿Para qué?**: Para estandarizar cómo el código se prueba y se despliega en GitHub, GitLab o Jenkins sin tener que investigar archivos YAML complejos desde cero.
+- **Importancia**: Eficiencia y Robustez. Proporciona patrones probados que incluyen mejores prácticas de seguridad (como OIDC y escaneo de secretos), permitiendo que cualquier proyecto de la suite sea "production-ready" en minutos.
 
 ---
 
