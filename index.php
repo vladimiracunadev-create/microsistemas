@@ -227,6 +227,16 @@
             </div>
             <a href="apps/CapacitySim/" class="btn">Abrir Herramienta</a>
         </div>
+
+        <!-- Tarjeta 9 -->
+        <div class="card">
+            <div>
+                <span class="badge js">DevOps</span>
+                <h2>CI/CD Lab Engine</h2>
+                <p>Motor de generación de matrices CI/CD. Renderiza configuraciones para GitHub, GitLab y Jenkins.</p>
+            </div>
+            <a href="apps/CicdLibrary/" class="btn">Abrir Motor</a>
+        </div>
     </div>
 
 </body>

@@ -75,6 +75,10 @@ Este repositorio ha pasado por un proceso de hardening para mitigar riesgos:
 - **Path Traversal Prevention**: Validación de rutas usando `abspath` para asegurar el scope en `apps/`.
 - **Allowed Commands**: Lista blanca de ejecutables permitidos (`php`, `python`, `node`, etc).
 
+### 🛡️ CI/CD & Automatización
+- **CicdLibrary**: Los patrones generados siguen el estándar de "mínimo privilegio" (ej: uso de OIDC o llaves SSH acotadas).
+- **Hardened Templates**: Las plantillas de GitHub/GitLab incluyen pasos de validación de seguridad por defecto.
+
 ### 🛡️ Desarrollo & CI/CD
 
 - **Secret Scanning**: Integración de TruffleHog y pre-commit (detect-secrets).

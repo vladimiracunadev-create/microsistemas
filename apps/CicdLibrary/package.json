@@ -1,0 +1,14 @@
+{
+  "name": "cicd-library",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "matrix": "node engine/generate-matrix.js",
+    "matrix:full": "node engine/generate-matrix.js --full",
+    "example": "node engine/example-generate.js"
+  },
+  "dependencies": {
+    "mustache": "^4.2.0"
+  }
+}

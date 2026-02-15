@@ -72,6 +72,12 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 - **¿Para qué?**: Para crear archivos de Docker o CI/CD (como los que usa este propio proyecto) sin errores de indentación.
 - **Importancia**: El formato YAML es estricto y un espacio de más puede romper todo. Esta herramienta elimina ese riesgo mediante la generación visual validada.
 
+### 🏗️ CI/CD Library (El Consultor DevOps)
+
+- **¿Qué hace?**: Biblioteca técnica interactiva que genera configuraciones de automatización para 192 escenarios diferentes.
+- **¿Para qué?**: Para estandarizar cómo el código se prueba y se despliega en GitHub, GitLab o Jenkins sin tener que investigar archivos YAML complejos desde cero.
+- **Importancia**: Eficiencia y Robustez. Proporciona patrones probados que incluyen mejores prácticas de seguridad (como OIDC y escaneo de secretos), permitiendo que cualquier proyecto de la suite sea "production-ready" en minutos.
+
 ---
 
 ## 🚀 Conclusión: ¿Por qué creamos todo esto?

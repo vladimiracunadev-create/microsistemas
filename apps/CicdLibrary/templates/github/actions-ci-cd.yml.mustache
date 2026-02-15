@@ -1,0 +1,72 @@
+{{{github_on}}}
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install
+        run: {{ci.install}}
+      - name: Test
+        run: {{ci.test}}
+      - name: Build
+        run: {{ci.build}}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: {{ci.artifactPath}}
+
+  deploy_staging:
+    needs: [ci]
+    runs-on: {{runner_label}}
+    if: {{staging_if}}
+    environment: staging
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: ./artifact
+{{#is_ssh}}
+      - name: Deploy SSH + rsync
+        env:
+          SSH_PRIVATE_KEY: ${{'{{'}} secrets.SSH_PRIVATE_KEY {{'}}'}}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "{{ssh.host}}" >> ~/.ssh/known_hosts
+          rsync -az --delete ./artifact/ "{{ssh.user}}@{{ssh.host}}:{{ssh.remotePath}}/"
+          ssh "{{ssh.user}}@{{ssh.host}}" "{{ssh.restartCmd}}"
+{{/is_ssh}}
+{{#healthcheck_block}}
+{{{healthcheck_block}}}
+{{/healthcheck_block}}
+
+  deploy_prod:
+    needs: [ci]
+    runs-on: {{runner_label}}
+    if: {{prod_if}}
+    environment: production
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: ./artifact
+{{#is_ssh}}
+      - name: Deploy SSH + rsync
+        env:
+          SSH_PRIVATE_KEY: ${{'{{'}} secrets.SSH_PRIVATE_KEY {{'}}'}}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "{{ssh.host}}" >> ~/.ssh/known_hosts
+          rsync -az --delete ./artifact/ "{{ssh.user}}@{{ssh.host}}:{{ssh.remotePath}}/"
+          ssh "{{ssh.user}}@{{ssh.host}}" "{{ssh.restartCmd}}"
+{{/is_ssh}}
+{{#healthcheck_block}}
+{{{healthcheck_block}}}
+{{/healthcheck_block}}

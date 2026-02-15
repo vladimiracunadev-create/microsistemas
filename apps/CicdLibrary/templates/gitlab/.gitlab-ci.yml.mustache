@@ -1,0 +1,34 @@
+stages: [ci, deploy]
+
+ci:
+  stage: ci
+  script:
+    - {{ci.install}}
+    - {{ci.test}}
+    - {{ci.build}}
+  artifacts:
+    paths:
+      - {{ci.artifactPath}}
+    expire_in: {{ci.retentionDays}} days
+
+deploy_staging:
+  stage: deploy
+  needs: ["ci"]
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "{{env.stagingBranch}}"'
+  script:
+{{#is_ssh}}
+    - rsync -az --delete {{ci.artifactPath}}/ {{ssh.user}}@{{ssh.host}}:{{ssh.remotePath}}/
+    - ssh {{ssh.user}}@{{ssh.host}} '{{ssh.restartCmd}}'
+{{/is_ssh}}
+
+deploy_prod:
+  stage: deploy
+  needs: ["ci"]
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /{{triggers.tagPattern}}/'
+  script:
+{{#is_ssh}}
+    - rsync -az --delete {{ci.artifactPath}}/ {{ssh.user}}@{{ssh.host}}:{{ssh.remotePath}}/
+    - ssh {{ssh.user}}@{{ssh.host}} '{{ssh.restartCmd}}'
+{{/is_ssh}}

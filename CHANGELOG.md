@@ -2,6 +2,19 @@
 
 Todos los cambios notables en este proyecto serán documentados en este archivo. El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.2] - 2026-02-15
+
+### Añadido
+
+- **CicdLibrary (Nuevo Microsistema)**: Biblioteca técnica interactiva para la generación y consulta de matrices CI/CD (192 escenarios disponibles).
+- **Interfaz DevOps Pro**: Implementación de un catálogo visual con búsqueda en tiempo real, modales de detalle y previsualización de código generado.
+- **Automatización de Blueprints**: Motor de renderizado basado en templates Mustache para configuraciones de GitHub Actions, GitLab CI y Jenkins.
+
+### Mejorado
+
+- **Estructura de Carpetas**: Refactorización y limpieza de la suite de herramientas DevOps.
+- **Scripts de Generación**: Actualización de la sintaxis de importación de Node.js (JSON imports via `with`) para compatibilidad con versiones modernas.
+
 ## [1.2.1] - 2026-02-11
 
 ### Añadido

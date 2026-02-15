@@ -1,0 +1,27 @@
+{
+  "orchestrator": [
+    "github",
+    "gitlab",
+    "jenkins",
+    "hooks"
+  ],
+  "stack": [
+    "node",
+    "python",
+    "php",
+    "docker"
+  ],
+  "cdStrategy": [
+    "ssh",
+    "docker",
+    "s3"
+  ],
+  "runner": [
+    "hosted",
+    "self-hosted"
+  ],
+  "envModel": [
+    "single",
+    "staging-prod"
+  ]
+}

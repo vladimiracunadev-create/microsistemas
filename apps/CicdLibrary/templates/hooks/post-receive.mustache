@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Git post-receive hook (ejemplo didáctico)
+# OJO: esto despliega en el mismo servidor que recibe el push.
+set -euo pipefail
+read oldrev newrev refname
+echo "[HOOK] ref=$refname"
+
+echo "[HOOK] TODO: implementar checkout/build/deploy aquí"

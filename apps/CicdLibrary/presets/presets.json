@@ -1,0 +1,31 @@
+{
+  "private-ssh": {
+    "desc": "Servidor privado con runner interno + deploy por SSH. Staging por branch, prod por tag + approval.",
+    "overrides": {
+      "cd.strategy": "ssh",
+      "env.enabled": true,
+      "env.prodByTag": true,
+      "env.approvalProd": true,
+      "ops.healthcheck": true,
+      "ops.rollback": true
+    }
+  },
+  "docker-registry": {
+    "desc": "Docker + registry: build imagen, tag por SemVer, despliegue remoto via docker compose.",
+    "overrides": {
+      "cd.strategy": "docker",
+      "env.enabled": true,
+      "env.prodByTag": true,
+      "ops.healthcheck": true,
+      "ops.rollback": false
+    }
+  },
+  "iac-terraform": {
+    "desc": "Infra como CD: plan en PR, apply manual en main (modelo).",
+    "overrides": {
+      "env.enabled": false,
+      "cd.strategy": "ssh",
+      "ops.rollback": false
+    }
+  }
+}

@@ -1,0 +1,405 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-01-24T23:21:53.746748Z",
+  "groups": [
+    {
+      "id": "project",
+      "title": "Proyecto",
+      "desc": "Identidad del caso: nombre, rama principal y descripción.",
+      "fields": [
+        {
+          "key": "project.name",
+          "label": "Nombre del proyecto",
+          "type": "text",
+          "default": "mi-app",
+          "help": "Nombre lógico del caso (se usa en docs y paths)."
+        },
+        {
+          "key": "project.branch",
+          "label": "Rama principal",
+          "type": "text",
+          "default": "main",
+          "help": "Rama principal para CI/CD (main/master)."
+        },
+        {
+          "key": "project.focus",
+          "label": "Enfoque / idea",
+          "type": "textarea",
+          "default": "Caso de aprendizaje CI/CD.",
+          "help": "Texto corto para README/blueprint."
+        }
+      ]
+    },
+    {
+      "id": "triggers",
+      "title": "Triggers (cuándo se ejecuta)",
+      "desc": "Eventos que disparan el pipeline: push, PR/MR, tags, schedule, manual.",
+      "fields": [
+        {
+          "key": "triggers.push",
+          "label": "Push",
+          "type": "toggle",
+          "default": true,
+          "help": "Corre al hacer push a ramas."
+        },
+        {
+          "key": "triggers.pr",
+          "label": "PR/MR",
+          "type": "toggle",
+          "default": true,
+          "help": "Corre al abrir/actualizar PR/MR."
+        },
+        {
+          "key": "triggers.tags",
+          "label": "Tags",
+          "type": "toggle",
+          "default": true,
+          "help": "Corre al crear tags (ideal prod)."
+        },
+        {
+          "key": "triggers.tagPattern",
+          "label": "Patrón de tag",
+          "type": "text",
+          "default": "v*",
+          "help": "Ej: v* para SemVer.",
+          "showIf": {
+            "field": "triggers.tags",
+            "equals": true
+          }
+        },
+        {
+          "key": "triggers.schedule",
+          "label": "Schedule (cron)",
+          "type": "toggle",
+          "default": false,
+          "help": "Ejecuta nightly/cron."
+        },
+        {
+          "key": "triggers.cron",
+          "label": "Cron",
+          "type": "text",
+          "default": "0 3 * * *",
+          "help": "Formato cron.",
+          "showIf": {
+            "field": "triggers.schedule",
+            "equals": true
+          }
+        },
+        {
+          "key": "triggers.manual",
+          "label": "Manual",
+          "type": "toggle",
+          "default": true,
+          "help": "Permite ejecución manual."
+        }
+      ]
+    },
+    {
+      "id": "environments",
+      "title": "Entornos y gobernanza",
+      "desc": "Staging/prod, deploy por tags, aprobaciones y protecciones (parte va fuera del YAML).",
+      "fields": [
+        {
+          "key": "env.enabled",
+          "label": "Habilitar staging/prod",
+          "type": "toggle",
+          "default": true,
+          "help": "Activa modelo staging/prod."
+        },
+        {
+          "key": "env.stagingBranch",
+          "label": "Rama staging",
+          "type": "text",
+          "default": "develop",
+          "help": "Rama que despliega a staging.",
+          "showIf": {
+            "field": "env.enabled",
+            "equals": true
+          }
+        },
+        {
+          "key": "env.prodByTag",
+          "label": "Prod por tag",
+          "type": "toggle",
+          "default": true,
+          "help": "Producción solo por tag (recomendado).",
+          "showIf": {
+            "field": "env.enabled",
+            "equals": true
+          }
+        },
+        {
+          "key": "env.approvalProd",
+          "label": "Approval prod",
+          "type": "toggle",
+          "default": true,
+          "help": "Aprobación manual en producción (config fuera del YAML).",
+          "showIf": {
+            "field": "env.enabled",
+            "equals": true
+          }
+        },
+        {
+          "key": "governance.requiredChecks",
+          "label": "Required checks",
+          "type": "toggle",
+          "default": true,
+          "help": "Obliga CI OK antes de merge (config fuera del YAML)."
+        },
+        {
+          "key": "governance.codeOwners",
+          "label": "CODEOWNERS",
+          "type": "toggle",
+          "default": false,
+          "help": "Revisión obligatoria por owners (config repo)."
+        }
+      ]
+    },
+    {
+      "id": "ci",
+      "title": "CI (build/test) + artefactos",
+      "desc": "Qué hace CI y qué produce para CD (artefactos o imágenes).",
+      "fields": [
+        {
+          "key": "ci.install",
+          "label": "Comando install",
+          "type": "text",
+          "default": "npm ci",
+          "help": "Ej: npm ci / pip install -r requirements.txt / composer install."
+        },
+        {
+          "key": "ci.test",
+          "label": "Comando test",
+          "type": "text",
+          "default": "npm test",
+          "help": "Ej: npm test / pytest / phpunit."
+        },
+        {
+          "key": "ci.build",
+          "label": "Comando build",
+          "type": "text",
+          "default": "npm run build",
+          "help": "Genera dist/build."
+        },
+        {
+          "key": "ci.artifactPath",
+          "label": "Ruta artefacto",
+          "type": "text",
+          "default": "dist/",
+          "help": "Carpeta/archivo generado por build."
+        },
+        {
+          "key": "ci.retentionDays",
+          "label": "Retención artefacto (días)",
+          "type": "number",
+          "default": 7,
+          "help": "Cuántos días se guarda."
+        }
+      ]
+    },
+    {
+      "id": "cd",
+      "title": "CD (despliegue)",
+      "desc": "Estrategia de despliegue y parámetros necesarios.",
+      "fields": [
+        {
+          "key": "cd.strategy",
+          "label": "Estrategia",
+          "type": "radio",
+          "default": "ssh",
+          "help": "Cómo se despliega.",
+          "options": [
+            {
+              "value": "ssh",
+              "label": "SSH + rsync",
+              "help": "Copiar artefacto al servidor y reiniciar."
+            },
+            {
+              "value": "docker",
+              "label": "Docker + registry",
+              "help": "Construir/publicar imagen y desplegar."
+            },
+            {
+              "value": "s3",
+              "label": "S3 sync (estático)",
+              "help": "Subir dist/ a S3."
+            }
+          ]
+        },
+        {
+          "key": "ssh.host",
+          "label": "SSH host",
+          "type": "text",
+          "default": "10.0.0.10",
+          "help": "IP/DNS servidor destino.",
+          "showIf": {
+            "field": "cd.strategy",
+            "equals": "ssh"
+          }
+        },
+        {
+          "key": "ssh.user",
+          "label": "SSH user",
+          "type": "text",
+          "default": "deploy",
+          "help": "Usuario con permisos mínimos.",
+          "showIf": {
+            "field": "cd.strategy",
+            "equals": "ssh"
+          }
+        },
+        {
+          "key": "ssh.remotePath",
+          "label": "Remote path",
+          "type": "text",
+          "default": "/var/www/app",
+          "help": "Ruta destino.",
+          "showIf": {
+            "field": "cd.strategy",
+            "equals": "ssh"
+          }
+        },
+        {
+          "key": "ssh.restartCmd",
+          "label": "Restart cmd",
+          "type": "text",
+          "default": "sudo systemctl restart app",
+          "help": "Comando reinicio.",
+          "showIf": {
+            "field": "cd.strategy",
+            "equals": "ssh"
+          }
+        },
+        {
+          "key": "docker.image",
+          "label": "Imagen",
+          "type": "text",
+          "default": "ghcr.io/org/app",
+          "help": "Nombre imagen.",
+          "showIf": {
+            "field": "cd.strategy",
+            "equals": "docker"
+          }
+        },
+        {
+          "key": "docker.remoteCmd",
+          "label": "Remote deploy cmd",
+          "type": "text",
+          "default": "docker compose pull && docker compose up -d",
+          "help": "Comando remoto.",
+          "showIf": {
+            "field": "cd.strategy",
+            "equals": "docker"
+          }
+        },
+        {
+          "key": "s3.bucket",
+          "label": "S3 bucket URL",
+          "type": "text",
+          "default": "s3://mi-bucket",
+          "help": "Destino S3.",
+          "showIf": {
+            "field": "cd.strategy",
+            "equals": "s3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ops",
+      "title": "Operación (healthcheck, rollback, notificaciones)",
+      "desc": "Buenas prácticas post-deploy y recuperación.",
+      "fields": [
+        {
+          "key": "ops.healthcheck",
+          "label": "Healthcheck post-deploy",
+          "type": "toggle",
+          "default": true,
+          "help": "Verifica que el servicio responde."
+        },
+        {
+          "key": "ops.healthcheckUrl",
+          "label": "Health URL",
+          "type": "text",
+          "default": "http://localhost/health",
+          "help": "Endpoint de healthcheck.",
+          "showIf": {
+            "field": "ops.healthcheck",
+            "equals": true
+          }
+        },
+        {
+          "key": "ops.rollback",
+          "label": "Rollback",
+          "type": "toggle",
+          "default": true,
+          "help": "Permite volver atrás si falla."
+        },
+        {
+          "key": "ops.rollbackCmd",
+          "label": "Rollback cmd",
+          "type": "text",
+          "default": "./scripts/rollback.sh",
+          "help": "Script/command rollback.",
+          "showIf": {
+            "field": "ops.rollback",
+            "equals": true
+          }
+        },
+        {
+          "key": "notify.enabled",
+          "label": "Notificaciones",
+          "type": "toggle",
+          "default": false,
+          "help": "Notifica resultado del deploy."
+        },
+        {
+          "key": "notify.webhookUrl",
+          "label": "Webhook URL",
+          "type": "text",
+          "default": "https://example.com/webhook",
+          "help": "Destino webhook.",
+          "showIf": {
+            "field": "notify.enabled",
+            "equals": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "title": "Seguridad (lo que hace enterprise)",
+      "desc": "Secrets, PR forks, OIDC, supply chain (SBOM/firma).",
+      "fields": [
+        {
+          "key": "security.protectForkPR",
+          "label": "Proteger PR forks",
+          "type": "toggle",
+          "default": true,
+          "help": "Evita exponer secrets en PRs externos."
+        },
+        {
+          "key": "security.useOIDC",
+          "label": "OIDC (cloud)",
+          "type": "toggle",
+          "default": false,
+          "help": "Evita llaves estáticas (recomendado)."
+        },
+        {
+          "key": "security.sbom",
+          "label": "Generar SBOM",
+          "type": "toggle",
+          "default": false,
+          "help": "Lista de componentes/dependencias."
+        },
+        {
+          "key": "security.signArtifacts",
+          "label": "Firmar artefactos",
+          "type": "toggle",
+          "default": false,
+          "help": "Firma (cosign u otra)."
+        }
+      ]
+    }
+  ]
+}

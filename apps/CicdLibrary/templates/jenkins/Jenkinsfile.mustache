@@ -1,0 +1,30 @@
+pipeline {
+  agent any
+  stages {
+    stage('CI') {
+      steps {
+        sh '{{ci.install}}'
+        sh '{{ci.test}}'
+        sh '{{ci.build}}'
+      }
+    }
+    stage('Deploy Staging') {
+      when { branch '{{env.stagingBranch}}' }
+      steps {
+{{#is_ssh}}
+        sh 'rsync -az --delete {{ci.artifactPath}}/ {{ssh.user}}@{{ssh.host}}:{{ssh.remotePath}}/'
+        sh 'ssh {{ssh.user}}@{{ssh.host}} "{{ssh.restartCmd}}"'
+{{/is_ssh}}
+      }
+    }
+    stage('Deploy Prod') {
+      when { buildingTag() }
+      steps {
+{{#is_ssh}}
+        sh 'rsync -az --delete {{ci.artifactPath}}/ {{ssh.user}}@{{ssh.host}}:{{ssh.remotePath}}/'
+        sh 'ssh {{ssh.user}}@{{ssh.host}} "{{ssh.restartCmd}}"'
+{{/is_ssh}}
+      }
+    }
+  }
+}
