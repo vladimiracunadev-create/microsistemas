@@ -6,62 +6,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Microsistemas | AWS CLI Generator</title>
   <link rel="stylesheet" href="./assets/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
+
   <header class="top">
     <div class="brand">
       <div class="logo">☁️</div>
       <div>
         <h1>AWS CLI Generator</h1>
-        <p class="muted">Microsistema de gestión de comandos AWS CLI · Recetas reales · Seguridad · Exportación</p>
+        <p class="muted">Asistente experto de comandos AWS CLI · v1.3.0</p>
       </div>
     </div>
+    <a href="../../index.php" class="back-link">
+      <button class="ghost">← Dashboard</button>
+    </a>
+  </header>
 
+  <div class="globals-container">
     <div class="globals">
       <div class="field">
-        <label for="profile">Profile</label>
-        <input id="profile" type="text" placeholder="default" value="default" />
+        <label for="profile">AWS Profile</label>
+        <input id="profile" type="text" placeholder="default" />
       </div>
       <div class="field">
         <label for="region">Region</label>
-        <input id="region" type="text" placeholder="sa-east-1" value="sa-east-1" />
+        <input id="region" type="text" placeholder="sa-east-1" />
       </div>
       <div class="field">
-        <label for="output">Output</label>
+        <label for="output">Output Format</label>
         <select id="output">
           <option value="">(sin output)</option>
-          <option value="--output json">json</option>
-          <option value="--output table">table</option>
-          <option value="--output text">text</option>
+          <option value="--output json">JSON</option>
+          <option value="--output table">Table</option>
+          <option value="--output text">Text</option>
         </select>
       </div>
       <div class="field">
-        <label>Opciones</label>
-        <div class="row">
-          <label class="chk"><input id="useProfile" type="checkbox" checked /> --profile</label>
-          <label class="chk"><input id="useRegion" type="checkbox" checked /> --region</label>
-          <label class="chk"><input id="useDryRun" type="checkbox" /> Dry-run (si aplica)</label>
-          <label class="chk"><input id="lockProd" type="checkbox" /> Bloquear peligrosos en prod</label>
+        <label>Settings</label>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; padding-top:4px;">
+          <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"><input
+              id="useProfile" type="checkbox" checked /> --profile</label>
+          <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"><input
+              id="useRegion" type="checkbox" checked /> --region</label>
+          <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"><input
+              id="useDryRun" type="checkbox" /> Dry-run</label>
+          <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"><input
+              id="lockProd" type="checkbox" /> Lock Prod</label>
         </div>
       </div>
     </div>
-    <div style="margin-left: auto;">
-      <a href="../../index.php" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem;">← Volver
-        al Dashboard</a>
-    </div>
-  </header>
+  </div>
 
   <main class="grid">
     <section class="card">
-      <h2>Selector</h2>
-
-      <div class="field">
-        <label for="search">Buscar</label>
-        <input id="search" type="search" placeholder="Ej: s3 sync, lambda update, ecs force, ecr list-images..." />
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <h2 style="margin:0; font-size:1.1rem; font-weight:700;">Configurador</h2>
+        <div style="display:flex; gap:8px;">
+          <button id="btnFavorite" class="ghost" style="padding:4px 10px; font-size:1.1rem;"
+            title="Favoritos">⭐</button>
+          <button id="btnHistory" class="ghost" style="padding:4px 10px; font-size:1.1rem;"
+            title="Historial">🕘</button>
+        </div>
       </div>
 
-      <div class="row2">
+      <div class="field">
+        <label for="search">Explorar Recetas</label>
+        <input id="search" type="search" placeholder="Ej: s3 sync, lambda, ecs, rds..." />
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
         <div class="field">
           <label for="service">Servicio</label>
           <select id="service"></select>
@@ -72,96 +89,97 @@
         </div>
       </div>
 
-      <div class="row2">
-        <div class="field">
-          <label for="recipe">Receta</label>
-          <select id="recipe"></select>
-        </div>
-        <div class="field">
-          <label>Acciones</label>
-          <div class="row">
-            <button id="btnFavorite" title="Agregar/Quitar favorito">⭐ Favorito</button>
-            <button id="btnHistory" title="Ver historial">🕘 Historial</button>
-          </div>
-        </div>
+      <div class="field">
+        <label for="recipe">Receta</label>
+        <select id="recipe"></select>
       </div>
 
-      <div class="meta" id="recipeMeta"></div>
-
-      <div id="dangerBox" class="danger hidden">
-        <div><b>⚠ Receta de riesgo ALTO</b></div>
-        <div class="muted">Debes marcar confirmación antes de generar/copi ar/exportar.</div>
-        <label class="chk"><input id="dangerConfirm" type="checkbox" /> Entiendo el riesgo y revisé el comando</label>
+      <div id="recipeMeta"
+        style="margin: 1rem 0; padding:1.25rem; border-radius:16px; background:rgba(15, 23, 42, 0.4); border:1px solid var(--border); min-height:80px;">
       </div>
 
-      <hr />
+      <div id="dangerBox" class="danger-box hidden">
+        <div
+          style="font-weight:700; color:var(--danger); margin-bottom:0.5rem; display:flex; align-items:center; gap:8px;">
+          <span>⚠️</span> RIESGO ALTO DETECTADO
+        </div>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">Esta operación es destructiva o afecta
+          recursos críticos.</p>
+        <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:0.85rem; font-weight:600;">
+          <input id="dangerConfirm" type="checkbox" /> Confirmar ejecución
+        </label>
+      </div>
 
-      <h3>Parámetros</h3>
-      <div id="params"></div>
+      <div style="margin-top:2rem;">
+        <h3
+          style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1rem; font-weight:700;">
+          Parámetros dinámicos</h3>
+        <div id="params"></div>
+      </div>
 
-      <div class="actions">
-        <button id="btnGenerate" class="primary">Generar</button>
-        <button id="btnReset" class="ghost">Reset</button>
+      <div style="display:flex; gap:1rem; margin-top:2.5rem;">
+        <button id="btnGenerate" class="primary" style="flex:2;">Generar Comando CLI</button>
+        <button id="btnReset" class="ghost" style="flex:1;">Reiniciar</button>
       </div>
     </section>
 
     <section class="card">
-      <h2>Salida</h2>
+      <h2 style="margin-top:0; font-size:1.1rem; font-weight:700; margin-bottom:1.5rem;">Caja de Herramientas</h2>
 
-      <div class="outBlock">
-        <div class="outHeader">
-          <h3>Comando</h3>
-          <div class="btns">
-            <button id="copyCmd">Copiar</button>
-            <button id="exportSh">Export .sh</button>
-            <button id="exportPs1">Export .ps1</button>
+      <div class="code-block">
+        <div class="code-header">
+          <h3>Comando Generado</h3>
+          <div style="display:flex; gap:8px;">
+            <button id="copyCmd" class="ghost" style="font-size:0.75rem;">Copiar</button>
+            <button id="exportSh" class="ghost" style="font-size:0.75rem;">Shell (.sh)</button>
+            <button id="exportPs1" class="ghost" style="font-size:0.75rem;">PS (.ps1)</button>
           </div>
         </div>
         <pre id="outCommand" class="code"></pre>
       </div>
 
-      <div class="outBlock">
-        <div class="outHeader">
-          <h3>Prechecks</h3>
-          <div class="btns">
-            <button id="copyPre">Copiar</button>
-          </div>
+      <div class="code-block">
+        <div class="code-header">
+          <h3>Validaciones Recomendadas</h3>
+          <button id="copyPre" class="ghost" style="font-size:0.75rem;">Copiar</button>
         </div>
         <pre id="outPrechecks" class="code"></pre>
       </div>
 
-      <div class="outBlock">
-        <div class="outHeader">
-          <h3>Cleanup</h3>
-          <div class="btns">
-            <button id="copyClean">Copiar</button>
-          </div>
+      <div class="code-block" style="margin-bottom:2.5rem;">
+        <div class="code-header">
+          <h3>Scripts de Cleanup</h3>
+          <button id="copyClean" class="ghost" style="font-size:0.75rem;">Copiar</button>
         </div>
         <pre id="outCleanup" class="code"></pre>
       </div>
 
-      <div class="notes">
-        <div class="pill" id="riskPill"></div>
-        <p id="riskNotes" class="muted"></p>
-        <p id="permHint" class="muted"></p>
-        <p id="costHint" class="muted"></p>
-        <p class="muted" id="countHint"></p>
+      <div
+        style="background:rgba(15, 23, 42, 0.4); border-radius:20px; padding:1.5rem; border:1px solid var(--border);">
+        <div id="riskPill" style="margin-bottom:1.25rem;"></div>
+        <div id="riskNotes" style="font-size:0.85rem; line-height:1.6; color:var(--text-muted); margin-bottom:1rem;">
+        </div>
+        <div id="permHint" style="font-size:0.85rem; line-height:1.6; color:var(--text-muted); margin-bottom:1rem;">
+        </div>
+        <div id="costHint" style="font-size:0.85rem; line-height:1.6; color:var(--text-muted);"></div>
+      </div>
+
+      <div id="countHint" style="text-align:right; margin-top:1.5rem; font-size:0.75rem; color:var(--text-muted);">
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <span class="muted">Recomendación: ejecuta primero prechecks. Si fue PoC, ejecuta cleanup. Para prod, usa perfiles
-      separados.</span>
+    <p>© 2026 Microsistemas Suite · Entorno de Operaciones AWS Seguro</p>
   </footer>
 
   <div id="modal" class="modal hidden">
-    <div class="modalCard">
-      <div class="modalHeader">
-        <b id="modalTitle">Historial</b>
-        <button id="modalClose">Cerrar</button>
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modalTitle" style="margin:0; font-size:1.1rem; font-weight:700;">Historial</h2>
+        <button id="modalClose" class="ghost" style="font-size:1.5rem;">✕</button>
       </div>
-      <div id="modalBody"></div>
+      <div id="modalBody" class="modal-body"></div>
     </div>
   </div>
 
