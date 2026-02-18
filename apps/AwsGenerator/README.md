@@ -1,9 +1,11 @@
 # AWS Assistant Pro (Expert Recipes for AWS CLI)
+
 ![Version](https://img.shields.io/badge/version-2.1.0-blue)
 
 **AWS Assistant Pro** es un asistente inteligente diseñado para simplificar la gestión de infraestructura en la nube. A diferencia de un simple generador, guía al usuario a través de un flujo intuitivo basado en intenciones reales de negocio.
 
 ## Características Destacadas (v2.1.0) 🚀
+
 - **Navegación Guiada**: Selector de intenciones (Consultar, Gestionar, Seguridad) que filtra automáticamente los servicios relevantes.
 - **GlassCode Syntax Highlighting**: Resaltado de sintaxis en tiempo real para comandos de AWS CLI.
 - **Semáforo de Impacto**: Indicadores visuales de riesgo operativo (Rojo/Amarillo/Verde) con explicaciones en lenguaje natural.
@@ -17,13 +19,16 @@
 ## Ejecutar localmente (recomendado)
 
 ### VS Code Live Server
+
 1. Abre `index.html`
 2. Click derecho → **Open with Live Server**
 
 ### Python
+
 ```bash
 python -m http.server 8080
 ```
+
 Luego abre `http://localhost:8080`
 
 > Nota: abrir con `file://` puede bloquear `fetch()` por seguridad del navegador.
@@ -57,6 +62,7 @@ python scripts/validate.py
 ```
 
 Valida:
+
 - ids únicos
 - campos requeridos
 - `risk.level` válido
@@ -76,4 +82,5 @@ Valida:
 ---
 
 ## Licencia
+
 MIT

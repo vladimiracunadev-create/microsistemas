@@ -3,6 +3,7 @@
 Estas recetas agrupan varios pasos en una sola “receta” para casos reales.
 
 Incluidos:
+
 1. Deploy sitio estático: **S3 sync + CloudFront invalidation**
 2. Publicar imagen: **ECR login → build → tag → push**
 3. ECS rollout: **force new deployment + observación**
