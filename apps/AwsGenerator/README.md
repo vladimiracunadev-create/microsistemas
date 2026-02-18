@@ -57,6 +57,7 @@ Luego abre `http://localhost:8080`
 ## Validación (CI)
 
 En GitHub Actions se ejecuta:
+
 ```bash
 python scripts/validate.py
 ```

@@ -70,8 +70,8 @@ La suite se organiza en un **Dashboard Central** que actúa como puerta de enlac
 #### AWS Assistant Pro
 
 * **Propósito**: Asistente inteligente para administración de AWS CLI (v2.1.0).
-* **Workflow Pro**: 
-  1. Use el **Selector de Intenciones** para definir su objetivo (ej: "Gestionar S3"). 
+* **Workflow Pro**:
+  1. Use el **Selector de Intenciones** para definir su objetivo (ej: "Gestionar S3").
   2. Observe el **Semáforo de Impacto** para entender el riesgo operativo.
   3. Use los **EduIcons** (ⓘ) para aprender el detalle de los parámetros técnicos.
   4. Valide con el **Modo Simulado** antes de ejecutar acciones reales.
