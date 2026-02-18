@@ -346,8 +346,34 @@ function wireSelectors() {
 }
 
 function showOnboarding() {
-  const html = `<div style="padding:1rem;"><h3>Guía Microsistemas</h3><p>1. Configura tu perfil.<br>2. Elige tu objetivo.<br>3. Copia y ejecuta.</p><button class="primary" onclick="hideModal()">Comenzar</button></div>`;
-  showModal("¿Cómo funciona?", html);
+  const html = `
+    <div style="text-align:center;">
+      <div style="font-size:3.5rem; margin-bottom:1.5rem; filter: drop-shadow(0 0 15px var(--accent));">🚀</div>
+      <h3 style="font-size:1.5rem; margin-bottom:1rem; background: linear-gradient(to right, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Bienvenido al Futuro de Microsistemas</h3>
+      <p style="color:var(--text-muted); margin-bottom:2.5rem; font-size:1rem;">Domina la infraestructura de AWS en 3 simples pasos, con seguridad y confianza total.</p>
+      
+      <div class="tour-grid">
+        <div class="tour-item">
+          <h4><span>1️⃣</span> Configura tu Base</h4>
+          <p>Define tu <b>Perfil</b> y <b>Región</b>. Es como sintonizar la radio: asegura que tus comandos lleguen a la cuenta y lugar correcto.</p>
+        </div>
+        <div class="tour-item">
+          <h4><span>2️⃣</span> Elige tu Objetivo</h4>
+          <p>Usa el <b>Selector de Intenciones</b> para filtrar más de 500 recetas. Te guiaremos con términos sencillos para que aprendas mientras operas.</p>
+        </div>
+        <div class="tour-item">
+          <h4><span>3️⃣</span> Ejecuta y Triunfa</h4>
+          <p>Copia el comando final. Usamos <b>Modo Simulado</b> y <b>Semáforos de Riesgo</b> para que nunca cometas errores en producción.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:3rem; display:flex; gap:12px; justify-content:center;">
+        <button class="primary" style="padding:1rem 2.5rem; font-size:1rem;" onclick="hideModal()">Comenzar experiencia</button>
+      </div>
+      <p style="margin-top:1.5rem; font-size:0.75rem; color:var(--text-muted);">Pulsa <b>Esc</b> o haz clic fuera para cerrar esta guía en cualquier momento.</p>
+    </div>
+  `;
+  showModal("Guía del Asistente Pro", html);
 }
 
 function showModal(title, html) {
