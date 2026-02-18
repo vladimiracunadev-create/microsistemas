@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AWS Operations Assistant | Microsistemas</title>
+  <title>AWS Assistant Pro | Microsistemas</title>
   <link rel="stylesheet" href="./assets/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,11 +18,11 @@
       <div class="logo">☁️</div>
       <div>
         <h1>AWS Assistant Pro</h1>
-        <p class="muted">Gestión de infraestructura en la nube para humanos.</p>
+        <p class="muted">Operaciones en la nube simplificadas para todos.</p>
       </div>
     </div>
     <div style="display:flex; gap:12px; align-items:center;">
-      <button id="btnHelp" class="ghost" style="color:var(--accent); font-weight:700;">Guía de Inicio</button>
+      <button id="btnHelp" class="ghost" style="color:var(--accent); font-weight:700;">Guía Educativa</button>
       <a href="../../index.php" class="back-link">
         <button class="ghost">← Dashboard</button>
       </a>
@@ -32,16 +32,16 @@
   <div class="globals-container">
     <div class="step-header" style="margin-left: 2rem; border-bottom: none; margin-bottom: 0.5rem;">
       <span class="step-badge">1</span>
-      <h2>Paso 1: ¿Dónde trabajamos?</h2>
+      <h2>Paso 1: Entorno de Trabajo</h2>
     </div>
     <div class="globals">
       <div class="field">
-        <label for="profile">Tu Perfil de Acceso <span title="Define qué cuenta de AWS usaremos"
+        <label for="profile">Perfil de Acceso <span title="Identidad configurada en tu máquina"
             style="cursor:help;">ⓘ</span></label>
         <input id="profile" type="text" placeholder="default" />
       </div>
       <div class="field">
-        <label for="region">Región (Ubicación Geográfica)</label>
+        <label for="region">¿Dónde están tus recursos? (Región)</label>
         <select id="region">
           <option value="us-east-1">EE.UU. Este (N. Virginia)</option>
           <option value="us-east-2">EE.UU. Este (Ohio)</option>
@@ -54,27 +54,27 @@
         </select>
       </div>
       <div class="field">
-        <label for="output">Formato de Respuesta</label>
+        <label for="output">Formato de Visualización</label>
         <select id="output">
           <option value="">(estándar)</option>
-          <option value="--output json">JSON (Para programadores)</option>
-          <option value="--output table">Tabla (Fácil lectura)</option>
-          <option value="--output text">Texto (Simple)</option>
+          <option value="--output json">JSON (Código estructurado)</option>
+          <option value="--output table">Tabla (Visual y limpio)</option>
+          <option value="--output text">Texto (Para scripts)</option>
         </select>
       </div>
       <div class="field">
-        <label>Capa de Seguridad</label>
+        <label>Protecciones Activas</label>
         <div style="display:flex; gap:12px; flex-wrap:wrap; padding-top:4px;">
           <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"><input
               id="useProfile" type="checkbox" checked /> Enviar Perfil</label>
           <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"><input
               id="useRegion" type="checkbox" checked /> Enviar Región</label>
           <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"
-            title="Simula el comando sin aplicar cambios reales"><input id="useDryRun" type="checkbox" /> Modo
+            title="Simula el comando pero no realiza cambios reales"><input id="useDryRun" type="checkbox" /> Modo
             Simulado</label>
           <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"
-            title="Evita cambios destructivos si detecta perfil 'prod'"><input id="lockProd" type="checkbox" /> Traba de
-            Prod</label>
+            title="Evita cambios si detecta que estás en entorno de Producción"><input id="lockProd" type="checkbox" />
+            Traba de Prod</label>
         </div>
       </div>
     </div>
@@ -84,7 +84,7 @@
     <section class="card">
       <div class="step-header">
         <span class="step-badge">2</span>
-        <h2>Paso 2: ¿Cuál es tu objetivo?</h2>
+        <h2>Paso 2: ¿Qué necesitas lograr?</h2>
         <div style="margin-left: auto; display:flex; gap:8px;">
           <button id="btnFavorite" class="ghost" style="padding:4px 10px;" title="Ver Favoritos">⭐</button>
           <button id="btnHistory" class="ghost" style="padding:4px 10px;" title="Ver Historial">🕘</button>
@@ -92,16 +92,16 @@
       </div>
 
       <div class="field">
-        <label for="search">Describe tu tarea o busca una receta</label>
-        <input id="search" type="search" placeholder="Ej: sincronizar, borrar, crear, listar..." />
-      </div>
-
-      <div id="quickStarts" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1.5rem;">
-        <span style="font-size:0.75rem; color:var(--text-muted); width:100%; margin-bottom:4px;">Accesos rápidos:</span>
-        <button class="quick-btn" data-search="s3 sync">Archivos S3</button>
-        <button class="quick-btn" data-search="ecs">Servicios ECS</button>
-        <button class="quick-btn" data-search="lambda">Funciones Lambda</button>
-        <button class="quick-btn" data-search="ec2">Servidores EC2</button>
+        <label for="taskIntent">Selecciona tu objetivo principal</label>
+        <select id="taskIntent">
+          <option value="all">Ver todas las opciones disponibles</option>
+          <option value="consultar">Consultar / Listar recursos actuales</option>
+          <option value="archivos">Gestionar Archivos y Almacenamiento (S3)</option>
+          <option value="apps">Administrar Servicios y Apps (ECS/Lambda)</option>
+          <option value="db">Controlar Bases de Datos (RDS/Dynamo)</option>
+          <option value="seguridad">Seguridad, Usuarios y Accesos (IAM/STS)</option>
+          <option value="costos">Revisar Costos y Presupuestos</option>
+        </select>
       </div>
 
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
@@ -110,13 +110,13 @@
           <select id="service"></select>
         </div>
         <div class="field">
-          <label for="category">Categoría de Operación</label>
+          <label for="category">Categoría técnica</label>
           <select id="category"></select>
         </div>
       </div>
 
       <div class="field">
-        <label for="recipe">Receta Paso a Paso</label>
+        <label for="recipe">Solución Específica (Receta)</label>
         <select id="recipe"></select>
       </div>
 
@@ -124,7 +124,7 @@
         style="margin: 1rem 0; padding:1.25rem; border-radius:16px; background:rgba(59, 130, 246, 0.05); border:1px solid rgba(59, 130, 246, 0.2);">
         <div
           style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--accent); margin-bottom:0.5rem;">
-          Aprende sobre este servicio</div>
+          Cultura Cloud: Conceptos Base</div>
         <div id="conceptContent" style="font-size:0.85rem; line-height:1.5;"></div>
       </div>
 
@@ -135,12 +135,12 @@
       <div id="dangerBox" class="danger-box hidden">
         <div
           style="font-weight:700; color:var(--danger); margin-bottom:0.5rem; display:flex; align-items:center; gap:8px;">
-          <span>⚠️</span> ACCIÓN DE ALTO IMPACTO
+          <span>⚠️</span> ACCIÓN CON IMPACTO REAL
         </div>
-        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">Este comando modificará recursos de
-          forma permanente.</p>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">Este comando realizará cambios que no
+          se pueden deshacer fácilmente.</p>
         <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:0.85rem; font-weight:600;">
-          <input id="dangerConfirm" type="checkbox" /> Entiendo el impacto y quiero proceder
+          <input id="dangerConfirm" type="checkbox" /> Entiendo el impacto y quiero continuar
         </label>
       </div>
 
@@ -160,13 +160,13 @@
       </div>
 
       <div id="welcomeScreen" class="welcome-state">
-        <div class="icon">🪄</div>
-        <h3>¿Cómo empezar?</h3>
-        <p>1. Ajusta tu entorno arriba.<br>2. Elige una receta a la izquierda.<br>3. Completa tus datos y obtén el
-          comando listo.</p>
+        <div class="icon">🛰️</div>
+        <h3>¿Listo para despegar?</h3>
+        <p>1. Ajusta tu entorno arriba.<br>2. Elige un objetivo de negocio a la izquierda.<br>3. Completa tus datos y
+          obtén la solución.</p>
         <div class="hint-box">
-          <b>Tip para novatos:</b> Usa el "Modo Simulado" si tienes miedo de romper algo. AWS te dirá qué pasaría sin
-          hacerlo realmente.
+          <b>Tip para principiantes:</b> Al elegir una receta, te explicaremos qué es cada servicio para que aprendas
+          mientras trabajas.
         </div>
       </div>
 
@@ -175,13 +175,18 @@
           style="margin-bottom: 1.5rem; padding:1.25rem; border-radius:16px; background:rgba(59, 130, 246, 0.1); border:1px solid rgba(59, 130, 246, 0.2); font-size:0.9rem; font-weight:600;">
         </div>
 
+        <div id="operationalImpact"
+          style="margin-bottom: 1.5rem; padding:1.25rem; border-radius:16px; background:rgba(239, 68, 68, 0.05); border:1px solid rgba(239, 68, 68, 0.1); font-size:0.85rem; color:var(--text-muted);">
+          <!-- Se llena por JS -->
+        </div>
+
         <div class="code-block" style="margin-top:0;">
           <div class="code-header">
-            <h3>Comando de Consola (CLI)</h3>
+            <h3>Comando para tu Terminal</h3>
             <div style="display:flex; gap:8px;">
               <button id="copyCmd" class="ghost" style="font-size:0.75rem;">Copiar</button>
-              <button id="exportSh" class="ghost" style="font-size:0.75rem;">Linux/Mac (.sh)</button>
-              <button id="exportPs1" class="ghost" style="font-size:0.75rem;">Windows (.ps1)</button>
+              <button id="exportSh" class="ghost" style="font-size:0.75rem;">Script (.sh)</button>
+              <button id="exportPs1" class="ghost" style="font-size:0.75rem;">Script (.ps1)</button>
             </div>
           </div>
           <pre id="outCommand" class="code"></pre>
@@ -189,7 +194,7 @@
 
         <div class="code-block">
           <div class="code-header">
-            <h3>Paso Previo Recomendo</h3>
+            <h3>Validación recomendada antes de ejecutar</h3>
             <button id="copyPre" class="ghost" style="font-size:0.75rem;">Copiar</button>
           </div>
           <pre id="outPrechecks" class="code"></pre>
@@ -197,7 +202,7 @@
 
         <div class="code-block" style="margin-bottom:2.5rem;">
           <div class="code-header">
-            <h3>Acción de Retroceso (Rollback)</h3>
+            <h3>Comando para revertir o limpiar</h3>
             <button id="copyClean" class="ghost" style="font-size:0.75rem;">Copiar</button>
           </div>
           <pre id="outCleanup" class="code"></pre>
@@ -220,7 +225,7 @@
   </main>
 
   <footer class="footer">
-    <p>© 2026 Microsistemas Suite · Infraestructura como Asistencia</p>
+    <p>© 2026 Microsistemas Suite · Cloud Assistant Experience</p>
   </footer>
 
   <div id="modal" class="modal hidden">
