@@ -193,7 +193,10 @@ const GLOSSARY = {
   ec2: "<b>EC2</b>: Servidores virtuales. Son básicamente computadoras completas corriendo en la nube.",
   rds: "<b>RDS</b>: Bases de datos gestionadas. AWS hace los parches y las copias de seguridad por ti.",
   iam: "<b>IAM</b>: El portero de AWS. Controla quién puede entrar y qué llaves (permisos) tiene cada usuario.",
-  sts: "<b>STS</b>: Genera identificaciones temporales para que tus scripts hablen con AWS de forma segura."
+  sts: "<b>STS</b>: Genera identificaciones temporales para que tus scripts hablen con AWS de forma segura.",
+  cloudfront: "<b>CloudFront</b>: Una red de entrega rápida que pone tus archivos de S3 'cerca' de tus usuarios para que carguen al instante.",
+  dynamodb: "<b>DynamoDB</b>: Una base de datos ultrarrápida para manejar millones de datos en milisegundos sin preocuparse por tablas complejas.",
+  fargate: "<b>Fargate</b>: Permite correr contenedores sin gestionar servidores. Es 'infraestructura invisible'."
 };
 
 function renderRecipeMeta(r) {
@@ -315,6 +318,18 @@ function wireSelectors() {
   $("category").addEventListener("change", () => refreshRecipes());
   $("recipe").addEventListener("change", () => refreshRecipes());
 
+  // Quick Starts restoration
+  document.querySelectorAll(".quick-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const intent = btn.getAttribute("data-intent");
+      const svc = btn.getAttribute("data-service");
+      if (intent) $("taskIntent").value = intent;
+      syncFilters();
+      if (svc) $("service").value = svc;
+      syncFilters();
+    });
+  });
+
   // Reactive Global settings
   ["profile", "region", "output", "useProfile", "useRegion", "useDryRun", "lockProd"].forEach(id => {
     $(id).addEventListener("input", () => debounceGenerate());
@@ -336,9 +351,23 @@ function showOnboarding() {
 }
 
 function showModal(title, html) {
-  $("modalTitle").textContent = title; $("modalBody").innerHTML = html; $("modal").classList.remove("hidden");
+  $("modalTitle").textContent = title;
+  $("modalBody").innerHTML = html;
+  $("modal").classList.remove("hidden");
 }
-function hideModal() { $("modal").classList.add("hidden"); }
+
+function hideModal() {
+  $("modal").classList.add("hidden");
+}
+
+// Global scope for onclick in generated HTML
+window.hideModal = hideModal;
+
+function wireGlobalEvents() {
+  $("modalClose").addEventListener("click", hideModal);
+  $("modal").addEventListener("click", (e) => { if (e.target.id === "modal") hideModal(); });
+  window.addEventListener("keydown", (e) => { if (e.key === "Escape") hideModal(); });
+}
 
 async function load() {
   const [cRes, sRes] = await Promise.all([fetch("./data/aws.commands.json"), fetch("./data/aws.services.json")]);
@@ -347,6 +376,7 @@ async function load() {
   services = (await sRes.json()).services || [];
 
   wireSelectors();
+  wireGlobalEvents();
   syncFilters();
 }
 

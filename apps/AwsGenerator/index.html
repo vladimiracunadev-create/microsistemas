@@ -120,6 +120,17 @@
         <select id="recipe"></select>
       </div>
 
+      <div id="quickStarts"
+        style="display:flex; gap:8px; flex-wrap:wrap; margin:1rem 0; padding:1rem; background:rgba(255,255,255,0.02); border:1px dashed var(--border); border-radius:12px;">
+        <span style="font-size:0.7rem; color:var(--text-muted); width:100%; margin-bottom:4px;">🚀 Accesos
+          Rápidos:</span>
+        <button class="quick-btn" data-intent="archivos" data-service="s3">Sincronizar S3</button>
+        <button class="quick-btn" data-intent="consultar" data-service="ec2">Ver Instancias</button>
+        <button class="quick-btn" data-intent="apps" data-service="lambda">Update Lambda</button>
+        <button class="quick-btn" data-intent="seguridad" data-service="sts">¿Quién soy?</button>
+        <button class="quick-btn" data-intent="costos" data-service="budgets">Presupuestos</button>
+      </div>
+
       <div id="conceptCard" class="hidden"
         style="margin: 1rem 0; padding:1.25rem; border-radius:16px; background:rgba(59, 130, 246, 0.05); border:1px solid rgba(59, 130, 246, 0.2);">
         <div
@@ -176,8 +187,9 @@
         </div>
 
         <div id="operationalImpact"
-          style="margin-bottom: 1.5rem; padding:1.25rem; border-radius:16px; background:rgba(239, 68, 68, 0.05); border:1px solid rgba(239, 68, 68, 0.1); font-size:0.85rem; color:var(--text-muted);">
-          <!-- Se llena por JS -->
+          style="margin-bottom: 1.5rem; padding:1.25rem; border-radius:16px; background:rgba(15, 23, 42, 0.3); border:1px solid var(--border); font-size:0.85rem; color:var(--text-muted); display:flex; align-items:center; gap:12px;">
+          <div id="impactSemaphore" style="width:12px; height:12px; border-radius:50%; flex-shrink:0;"></div>
+          <div id="impactDescription" style="flex:1;"></div>
         </div>
 
         <div class="code-block" style="margin-top:0;">
