@@ -67,10 +67,15 @@ La suite se organiza en un **Dashboard Central** que actúa como puerta de enlac
 * **Propósito**: Consulta y generación de arquitecturas de despliegue.
 * **Workflow Pro**: Use el buscador para encontrar su stack (ej: "node ssh") y abra el modal de detalle para obtener el código YAML y la lista de secretos necesarios.
 
-#### AWS CLI Generator
+#### AWS Assistant Pro
 
-* **Propósito**: Generador de comandos AWS CLI basado en recetas reales.
-* **Workflow Pro**: Defina su perfil y región, busque una receta (ej: `s3 sync`) y use los botones de **Precheck** y **Cleanup** para asegurar ejecuciones seguras.
+* **Propósito**: Asistente inteligente para administración de AWS CLI (v2.1.0).
+* **Workflow Pro**: 
+  1. Use el **Selector de Intenciones** para definir su objetivo (ej: "Gestionar S3"). 
+  2. Observe el **Semáforo de Impacto** para entender el riesgo operativo.
+  3. Use los **EduIcons** (ⓘ) para aprender el detalle de los parámetros técnicos.
+  4. Valide con el **Modo Simulado** antes de ejecutar acciones reales.
+* **Seguridad**: Bloqueo automático en perfiles de producción y alertas visuales para comandos críticos.
 
 ---
 

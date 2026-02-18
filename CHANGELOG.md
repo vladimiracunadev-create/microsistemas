@@ -2,17 +2,24 @@
 
 Todos los cambios notables en este proyecto serán documentados en este archivo. El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.3.0] - 2026-02-18
+## [2.1.0] - 2026-02-18
 
-### Añadido
+### Añadido (AWS Assistant Pro)
 
-- **AwsGenerator (Nuevo Microsistema)**: Generador experto de comandos AWS CLI con validación de seguridad proactiva, gestión de favoritos y exportación de scripts multilingüe (.sh, .ps1).
-- **Integración Profunda**: Incorporación del generador en el Dashboard principal, guías para reclutadores, manuales de usuario y catálogo técnico.
+- **Evolución "Pro"**: Re-branding total de `AwsGenerator` a **AWS Assistant Pro**, enfocándose en la experiencia del usuario novato.
+- **Selector de Intenciones (Guided Flow)**: Nueva navegación basada en objetivos de negocio que simplifica la selección de recetas entre más de 500 opciones.
+- **GlassCode Syntax Highlighting**: Resaltado de sintaxis dinámico y colorido para comandos de AWS CLI en tiempo real.
+- **Semáforo de Impacto Operativo**: Indicadores visuales dinámicos de riesgo (Rojo/Amarillo/Verde) con explicaciones en lenguaje natural.
+- **EduIcons (Tooltips Contextuales)**: Ayuda técnica integrada (`ⓘ`) en parámetros para facilitar el aprendizaje de la arquitectura cloud.
+- **Onboarding Premium v2.0**: Nuevo modal de bienvenida con estética Glassmorphic y tutorial interactivo de 3 pasos.
 
 ### Mejorado
 
-- ** README principal**: Reorganización alfabética del catálogo de herramientas para una mejor navegación.
-- **Branding**: Alineación estética de `AwsGenerator` con el ecosistema Microsistemas.
+- **Cascada de Filtros**: Lógica inteligente que coordina Intenciones, Servicios y Categorías de forma no destructiva.
+- **Dashboard de Accesos Rápidos**: Ampliación a más de 10 atajos para las tareas más frecuentes de S3, EC2, Lambda, ECS, RDS y más.
+- **Documentación Completa**: Auditoría y actualización de todos los manuales (`USER_MANUAL`, `SYSTEMS_CATALOG`, `README`) para reflejar el nuevo estándar v2.1.0.
+
+## [1.3.0] - 2026-02-18
 
 ## [1.2.2] - 2026-02-15
 
