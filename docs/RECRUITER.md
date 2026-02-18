@@ -169,6 +169,7 @@ Una suite unificada de micro-aplicaciones que:
 **Problema**: Dificultad para gestionar infraestructura AWS de forma segura y aprendizaje de AWS CLI.
 
 **Solución Técnica**:
+
 - Navegación basada en intenciones (S3, ECR, ECS, IAM).
 - Semáforo de riesgo visual para prevenir ejecuciones peligrosas.
 - Syntax highlighting (GlassCode) y elementos educativos interactivos.
@@ -182,6 +183,7 @@ Una suite unificada de micro-aplicaciones que:
 **Problema**: Dificultad para estandarizar y escalar procesos de automatización en múltiples stacks y orquestadores.
 
 **Solución Técnica**:
+
 - Motor de renderizado basado en **Mustache** para generación dinámica de pipelines.
 - Cobertura de 192 escenarios (GitHub Actions, GitLab CI, Jenkins, SSH Hooks).
 - Interfaz interactiva para consulta de requisitos, secretos y configuraciones "fuera de YAML".
@@ -195,6 +197,7 @@ Una suite unificada de micro-aplicaciones que:
 **Problema**: Curva de aprendizaje empinada de Git y riesgo de errores en escenarios complejos.
 
 **Solución Técnica**:
+
 - Biblioteca interactiva de comandos con explicaciones visuales.
 - Buscador optimizado para resoluciones rápidas de problemas comunes.
 - Interfaz moderna (Glassmorphism) para mejorar la retención del conocimiento.
@@ -208,6 +211,7 @@ Una suite unificada de micro-aplicaciones que:
 **Problema**: Auditoría de errores en el servidor sin acceso SSH o permisos de root.
 
 **Solución Técnica**:
+
 - Sistema de lectura de logs mediante allowlist (seguridad por diseño).
 - Interfaz web para visualización en tiempo real.
 - Filtrado y búsqueda rápida de patrones de error.
@@ -221,6 +225,7 @@ Una suite unificada de micro-aplicaciones que:
 **Problema**: Errores de indentación y sintaxis al crear archivos Docker y Kubernetes.
 
 **Solución Técnica**:
+
 - Generador visual de configuraciones YAML.
 - Plantillas predefinidas para servicios comunes.
 - Validación estructural antes de la exportación.
@@ -234,6 +239,7 @@ Una suite unificada de micro-aplicaciones que:
 **Problema**: Necesidad de herramientas rápidas para minificar, formatear y manipular código JS.
 
 **Solución Técnica**:
+
 - Suite de utilidades JavaScript Vanilla.
 - Algoritmos de optimización de assets.
 - Herramientas de diagnóstico de performance en el cliente.
