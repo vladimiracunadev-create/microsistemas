@@ -84,6 +84,12 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 - **¿Para qué?**: Para estandarizar cómo el código se prueba y se despliega en GitHub, GitLab o Jenkins sin tener que investigar archivos YAML complejos desde cero.
 - **Importancia**: Eficiencia y Robustez. Proporciona patrones probados que incluyen mejores prácticas de seguridad (como OIDC y escaneo de secretos), permitiendo que cualquier proyecto de la suite sea "production-ready" en minutos.
 
+### ☁️ AwsGenerator (El Recetario Cloud)
+
+- **¿Qué hace?**: Generador de comandos AWS CLI basado en recetas reales curadas.
+- **¿Para qué?**: Para facilitar la administración de infraestructura AWS (S3, ECR, ECS, IAM) sin tener que memorizar sintaxis compleja.
+- **Importancia**: Eficiencia y Seguridad. Incluye validaciones de "alto riesgo" para comandos destructivos y permite exportar scripts listos para usar en local o CI/CD.
+
 ---
 
 ## 🚀 Conclusión: ¿Por qué creamos todo esto?

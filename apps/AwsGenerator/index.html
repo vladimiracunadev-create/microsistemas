@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Microsistemas | AWS CLI Generator</title>
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+
+<body>
+  <header class="top">
+    <div class="brand">
+      <div class="logo">☁️</div>
+      <div>
+        <h1>AWS CLI Generator</h1>
+        <p class="muted">Microsistema de gestión de comandos AWS CLI · Recetas reales · Seguridad · Exportación</p>
+      </div>
+    </div>
+
+    <div class="globals">
+      <div class="field">
+        <label for="profile">Profile</label>
+        <input id="profile" type="text" placeholder="default" value="default" />
+      </div>
+      <div class="field">
+        <label for="region">Region</label>
+        <input id="region" type="text" placeholder="sa-east-1" value="sa-east-1" />
+      </div>
+      <div class="field">
+        <label for="output">Output</label>
+        <select id="output">
+          <option value="">(sin output)</option>
+          <option value="--output json">json</option>
+          <option value="--output table">table</option>
+          <option value="--output text">text</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Opciones</label>
+        <div class="row">
+          <label class="chk"><input id="useProfile" type="checkbox" checked /> --profile</label>
+          <label class="chk"><input id="useRegion" type="checkbox" checked /> --region</label>
+          <label class="chk"><input id="useDryRun" type="checkbox" /> Dry-run (si aplica)</label>
+          <label class="chk"><input id="lockProd" type="checkbox" /> Bloquear peligrosos en prod</label>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div style="margin-left: auto;">
+      <a href="../../index.php" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem;">← Volver
+        al Dashboard</a>
+    </div>
+  </header>
+
+  <main class="grid">
+    <section class="card">
+      <h2>Selector</h2>
+
+      <div class="field">
+        <label for="search">Buscar</label>
+        <input id="search" type="search" placeholder="Ej: s3 sync, lambda update, ecs force, ecr list-images..." />
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label for="service">Servicio</label>
+          <select id="service"></select>
+        </div>
+        <div class="field">
+          <label for="category">Categoría</label>
+          <select id="category"></select>
+        </div>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label for="recipe">Receta</label>
+          <select id="recipe"></select>
+        </div>
+        <div class="field">
+          <label>Acciones</label>
+          <div class="row">
+            <button id="btnFavorite" title="Agregar/Quitar favorito">⭐ Favorito</button>
+            <button id="btnHistory" title="Ver historial">🕘 Historial</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="meta" id="recipeMeta"></div>
+
+      <div id="dangerBox" class="danger hidden">
+        <div><b>⚠ Receta de riesgo ALTO</b></div>
+        <div class="muted">Debes marcar confirmación antes de generar/copi ar/exportar.</div>
+        <label class="chk"><input id="dangerConfirm" type="checkbox" /> Entiendo el riesgo y revisé el comando</label>
+      </div>
+
+      <hr />
+
+      <h3>Parámetros</h3>
+      <div id="params"></div>
+
+      <div class="actions">
+        <button id="btnGenerate" class="primary">Generar</button>
+        <button id="btnReset" class="ghost">Reset</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Salida</h2>
+
+      <div class="outBlock">
+        <div class="outHeader">
+          <h3>Comando</h3>
+          <div class="btns">
+            <button id="copyCmd">Copiar</button>
+            <button id="exportSh">Export .sh</button>
+            <button id="exportPs1">Export .ps1</button>
+          </div>
+        </div>
+        <pre id="outCommand" class="code"></pre>
+      </div>
+
+      <div class="outBlock">
+        <div class="outHeader">
+          <h3>Prechecks</h3>
+          <div class="btns">
+            <button id="copyPre">Copiar</button>
+          </div>
+        </div>
+        <pre id="outPrechecks" class="code"></pre>
+      </div>
+
+      <div class="outBlock">
+        <div class="outHeader">
+          <h3>Cleanup</h3>
+          <div class="btns">
+            <button id="copyClean">Copiar</button>
+          </div>
+        </div>
+        <pre id="outCleanup" class="code"></pre>
+      </div>
+
+      <div class="notes">
+        <div class="pill" id="riskPill"></div>
+        <p id="riskNotes" class="muted"></p>
+        <p id="permHint" class="muted"></p>
+        <p id="costHint" class="muted"></p>
+        <p class="muted" id="countHint"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="muted">Recomendación: ejecuta primero prechecks. Si fue PoC, ejecuta cleanup. Para prod, usa perfiles
+      separados.</span>
+  </footer>
+
+  <div id="modal" class="modal hidden">
+    <div class="modalCard">
+      <div class="modalHeader">
+        <b id="modalTitle">Historial</b>
+        <button id="modalClose">Cerrar</button>
+      </div>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script src="./assets/app.js"></script>
+</body>
+
+</html>

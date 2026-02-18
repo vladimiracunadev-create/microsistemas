@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "version",
+    "generated_at",
+    "count",
+    "recipes"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "count": {
+      "type": "integer"
+    },
+    "recipes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "service",
+          "category",
+          "action",
+          "title",
+          "command",
+          "risk"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "service": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "command": {
+            "type": "string"
+          },
+          "params": {
+            "type": "array"
+          },
+          "prechecks": {
+            "type": "array"
+          },
+          "cleanup": {
+            "type": "array"
+          },
+          "risk": {
+            "type": "object",
+            "required": [
+              "level",
+              "notes"
+            ],
+            "properties": {
+              "level": {
+                "type": "string",
+                "enum": [
+                  "bajo",
+                  "medio",
+                  "alto"
+                ]
+              },
+              "notes": {
+                "type": "string"
+              }
+            }
+          },
+          "dangerous": {
+            "type": "boolean"
+          },
+          "supports_dryrun": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

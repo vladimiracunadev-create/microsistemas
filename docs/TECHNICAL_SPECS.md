@@ -83,6 +83,7 @@ Para garantizar la **Resiliencia Operativa**, todas las micro-apps deben impleme
 - **PSR-12**: Guía de estilo de codificación PHP.
 - **CamelCase**: Nomenclatura para funciones y variables en JavaScript.
 - **Kebab-Case**: Nomenclatura para archivos y clases CSS.
+- **PascalCase**: Nomenclatura para nombres de aplicaciones en `apps/` (ej: `AwsGenerator`, `SqlViewer`).
 - **Calidad Automatizada**: Cada cambio es validado por un pipeline de CI que detecta cambios selectivos por ruta.
 - **Seguridad Docker**: Imágenes escaneadas con **Trivy** y generación de **SBOM**.
 

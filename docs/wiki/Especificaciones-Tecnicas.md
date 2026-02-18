@@ -35,6 +35,7 @@ El sistema sigue una **Arquitectura de Módulos Independientes (Micro-Apps)**.
 Para mantener la calidad profesional, el repositorio implementa:
 
 - **PHP PSR-12**: Estándar de estilo de código automatizado vía `PHP-CS-Fixer`.
+- **PascalCase**: Nomenclatura para nombres de aplicaciones en `apps/` (ej: `AwsGenerator`, `SqlViewer`).
 - **Static Analysis**: Uso de `PHPStan` (Nivel 5) para prevenir errores de lógica antes de ejecución.
 - **Markdown Lint**: Validación de consistencia en la documentación.
 

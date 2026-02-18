@@ -11,6 +11,11 @@ graph TD
     subgraph "Nivel Usuario (Navegador)"
         Dashboard["Dashboard (index.php)"]
         Apps["Módulos (apps/*)"]
+        subgraph "Apps destacados"
+            CapacitySim
+            AwsGenerator
+            CicdLibrary
+        end
     end
 
     subgraph "Capa de Aplicación (Package Core)"

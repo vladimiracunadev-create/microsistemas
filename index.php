@@ -237,6 +237,16 @@
             </div>
             <a href="apps/CicdLibrary/" class="btn">Abrir Motor</a>
         </div>
+
+        <!-- Tarjeta 10 -->
+        <div class="card">
+            <div>
+                <span class="badge js">DevOps</span>
+                <h2>AWS CLI Generator</h2>
+                <p>Generador de comandos AWS CLI basado en recetas reales con validación de seguridad y exportación de scripts.</p>
+            </div>
+            <a href="apps/AwsGenerator/" class="btn">Abrir Herramienta</a>
+        </div>
     </div>
 
 </body>

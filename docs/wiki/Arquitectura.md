@@ -9,6 +9,8 @@ El repositorio está organizado como un **monorepo**, donde el "Core" gestiona l
 ```text
 /
 ├── apps/           # Todas las micro-herramientas (Módulos)
+│   ├── AwsGenerator
+│   └── ...
 ├── core/           # Clases base, Autoloading y Configuración
 ├── docs/           # Guías técnicas y manuales
 ├── scripts/        # Automatización de catálogo y revisión

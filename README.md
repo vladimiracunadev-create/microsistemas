@@ -121,6 +121,7 @@ docker-compose up -d
 | **[PhpMigrator](apps/PhpMigrator)** | ![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white) | Modernización de código PHP legacy (5.x) a estándares modernos (8.x). |
 | **[SqlViewer](apps/SqlViewer)** | ![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white) | Inspección y gestión de bases de datos sin necesidad de clientes pesados. |
 | **[YmlGenerator](apps/YmlGenerator)** | ![JS](https://img.shields.io/badge/-JS-F7DF1E?logo=javascript&logoColor=black) | Generador visual de configuraciones YAML para Docker y Kubernetes. |
+| **[AwsGenerator](apps/AwsGenerator)** | ![DevOps](https://img.shields.io/badge/-DevOps-2496ED?logo=docker&logoColor=white) | Generador de recetas y comandos para AWS CLI con validación de seguridad. |
 
 <!-- CATALOG_END -->
 

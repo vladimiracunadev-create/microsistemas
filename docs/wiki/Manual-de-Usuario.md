@@ -67,6 +67,11 @@ La suite se organiza en un **Dashboard Central** que actúa como puerta de enlac
 * **Propósito**: Consulta y generación de arquitecturas de despliegue.
 * **Workflow Pro**: Use el buscador para encontrar su stack (ej: "node ssh") y abra el modal de detalle para obtener el código YAML y la lista de secretos necesarios.
 
+#### AWS CLI Generator
+
+* **Propósito**: Generador de comandos AWS CLI basado en recetas reales.
+* **Workflow Pro**: Defina su perfil y región, busque una receta (ej: `s3 sync`) y use los botones de **Precheck** y **Cleanup** para asegurar ejecuciones seguras.
+
 ---
 
 ## ❓ Preguntas Frecuentes (FAQ)

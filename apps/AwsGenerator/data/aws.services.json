@@ -1,0 +1,114 @@
+{
+  "services": [
+    {
+      "id": "sts",
+      "area": "Seguridad/Identidad",
+      "title": "AWS STS"
+    },
+    {
+      "id": "iam",
+      "area": "Seguridad/Identidad",
+      "title": "IAM"
+    },
+    {
+      "id": "s3api",
+      "area": "Storage",
+      "title": "S3 API"
+    },
+    {
+      "id": "s3",
+      "area": "Storage",
+      "title": "S3 High-level"
+    },
+    {
+      "id": "cloudfront",
+      "area": "CDN",
+      "title": "CloudFront"
+    },
+    {
+      "id": "logs",
+      "area": "Observabilidad",
+      "title": "CloudWatch Logs"
+    },
+    {
+      "id": "cloudwatch",
+      "area": "Observabilidad",
+      "title": "CloudWatch Metrics"
+    },
+    {
+      "id": "budgets",
+      "area": "Costos",
+      "title": "Budgets"
+    },
+    {
+      "id": "ce",
+      "area": "Costos",
+      "title": "Cost Explorer"
+    },
+    {
+      "id": "ecr",
+      "area": "Contenedores",
+      "title": "ECR"
+    },
+    {
+      "id": "ecs",
+      "area": "Contenedores",
+      "title": "ECS"
+    },
+    {
+      "id": "ec2",
+      "area": "Compute",
+      "title": "EC2"
+    },
+    {
+      "id": "lambda",
+      "area": "Serverless",
+      "title": "Lambda"
+    },
+    {
+      "id": "apigateway",
+      "area": "Serverless",
+      "title": "API Gateway v1"
+    },
+    {
+      "id": "dynamodb",
+      "area": "Database",
+      "title": "DynamoDB"
+    },
+    {
+      "id": "rds",
+      "area": "Database",
+      "title": "RDS"
+    },
+    {
+      "id": "ssm",
+      "area": "Ops",
+      "title": "SSM"
+    },
+    {
+      "id": "secretsmanager",
+      "area": "Seguridad/Secrets",
+      "title": "Secrets Manager"
+    },
+    {
+      "id": "sns",
+      "area": "Mensajería",
+      "title": "SNS"
+    },
+    {
+      "id": "sqs",
+      "area": "Mensajería",
+      "title": "SQS"
+    },
+    {
+      "id": "cloudformation",
+      "area": "IaC",
+      "title": "CloudFormation"
+    },
+    {
+      "id": "route53",
+      "area": "DNS",
+      "title": "Route 53"
+    }
+  ]
+}
