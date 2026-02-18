@@ -7,6 +7,16 @@ const LS_FAV = "awsgen.favs.v2";
 const LS_HIST = "awsgen.hist.v2";
 const LS_SETTINGS = "awsgen.settings.v2";
 
+const INTENT_MAP = {
+  consultar: ["consulta", "analisis", "observabilidad", "ls", "describe", "list"],
+  archivos: ["s3", "cloudfront", "almacenamiento", "sync"],
+  apps: ["lambda", "ecs", "deploy", "rollout", "update"],
+  db: ["rds", "dynamodb", "database", "put", "get"],
+  seguridad: ["iam", "sts", "seguridad", "identity", "role"],
+  costos: ["budgets", "cost", "explorer"],
+  limpiar: ["cleanup", "delete", "remove", "purgar"]
+};
+
 function getFavs() { try { return JSON.parse(localStorage.getItem(LS_FAV) || "[]") } catch (e) { return [] } }
 function setFavs(v) { localStorage.setItem(LS_FAV, JSON.stringify(v)); }
 function getHist() { try { return JSON.parse(localStorage.getItem(LS_HIST) || "[]") } catch (e) { return [] } }
@@ -23,18 +33,16 @@ function getGlobalFlags() {
   const profile = $("profile").value.trim();
   const region = $("region").value;
   const output = $("output").value;
-
   const useProfile = $("useProfile").checked;
   const useRegion = $("useRegion").checked;
 
-  const profile_flag = (useProfile && profile) ? `--profile ${profile}` : "";
-  const region_flag = (useRegion && region) ? `--region ${region}` : "";
-  const output_flag = output || "";
-
-  const useDryRun = $("useDryRun").checked;
-  const dryrun_flag = useDryRun ? "--dryrun" : "";
-
-  return { profile, region, output, profile_flag, region_flag, output_flag, dryrun_flag };
+  return {
+    profile, region, output,
+    profile_flag: (useProfile && profile) ? `--profile ${profile}` : "",
+    region_flag: (useRegion && region) ? `--region ${region}` : "",
+    output_flag: output || "",
+    dryrun_flag: $("useDryRun").checked ? "--dryrun" : ""
+  };
 }
 
 function buildVarsFromParams(params) {
@@ -47,6 +55,7 @@ function buildVarsFromParams(params) {
 }
 
 function renderSelectOptions(selectEl, items, { valueKey = "id", labelKey = "title" } = {}) {
+  const current = selectEl.value;
   selectEl.innerHTML = "";
   for (const it of items) {
     const opt = document.createElement("option");
@@ -54,60 +63,87 @@ function renderSelectOptions(selectEl, items, { valueKey = "id", labelKey = "tit
     opt.textContent = it[labelKey];
     selectEl.appendChild(opt);
   }
+  // Preserve selection if it still exists in the new list
+  if ([...selectEl.options].some(o => o.value === current)) {
+    selectEl.value = current;
+  }
 }
 
 function unique(arr) { return [...new Set(arr)]; }
 
-function filterRecipes() {
-  const serviceId = $("service").value;
-  const category = $("category").value;
+// --- FILTER CORE ---
+
+function getFilteredBase() {
   const intent = $("taskIntent").value;
+  const service = $("service").value;
+  const category = $("category").value;
 
   let list = recipes;
 
-  if (serviceId !== "all") list = list.filter(r => r.service === serviceId);
-  if (category !== "all") list = list.filter(r => r.category === category);
-
-  // Intent Logic - Map high level goals to tags/services
+  // Level 1: Intent
   if (intent !== "all") {
-    const map = {
-      consultar: ["consulta", "analisis", "observabilidad", "ls", "describe", "list"],
-      archivos: ["s3", "cloudfront", "almacenamiento", "sync"],
-      apps: ["lambda", "ecs", "deploy", "rollout", "update"],
-      db: ["rds", "dynamodb", "database", "put", "get"],
-      seguridad: ["iam", "sts", "seguridad", "identity", "role"],
-      costos: ["budgets", "cost", "explorer"],
-      limpiar: ["cleanup", "delete", "remove", "purgar"]
-    };
-    const searchTerms = map[intent] || [];
+    const terms = INTENT_MAP[intent] || [];
     list = list.filter(r => {
       const hay = `${r.id} ${r.service} ${r.category} ${r.action} ${r.title}`.toLowerCase();
-      return searchTerms.some(term => hay.includes(term));
+      return terms.some(t => hay.includes(t));
     });
   }
 
+  // Level 2: Service
+  if (service !== "all") {
+    list = list.filter(r => r.service === service);
+  }
+
+  // Level 3: Category
+  if (category !== "all") {
+    list = list.filter(r => r.category === category);
+  }
+
+  return list;
+}
+
+function syncFilters() {
+  const intent = $("taskIntent").value;
+  const currentSvc = $("service").value;
+  const currentCat = $("category").value;
+
+  // Filter possible services based on intent
+  let svcList = recipes;
+  if (intent !== "all") {
+    const terms = INTENT_MAP[intent] || [];
+    svcList = svcList.filter(r => {
+      const hay = `${r.id} ${r.service} ${r.category} ${r.action} ${r.title}`.toLowerCase();
+      return terms.some(t => hay.includes(t));
+    });
+  }
+  const availSvcs = unique(svcList.map(r => r.service)).sort();
+  renderSelectOptions($("service"), [{ id: "all", title: "(todos)" }, ...availSvcs.map(s => ({ id: s, title: s }))]);
+
+  // Filter possible categories based on intent + current service
+  let catList = svcList;
+  const svc = $("service").value;
+  if (svc !== "all") {
+    catList = catList.filter(r => r.service === svc);
+  }
+  const availCats = unique(catList.map(r => r.category)).sort();
+  renderSelectOptions($("category"), [{ id: "all", title: "(todas)" }, ...availCats.map(c => ({ id: c, title: c }))]);
+
+  refreshRecipes();
+}
+
+function refreshRecipes() {
+  const list = getFilteredBase();
+  const display = list.slice(0, 400);
+
   // keep favorites on top
   const favs = new Set(getFavs());
-  list.sort((a, b) => {
+  display.sort((a, b) => {
     const af = favs.has(a.id) ? 1 : 0;
     const bf = favs.has(b.id) ? 1 : 0;
     if (af !== bf) return bf - af;
     return a.title.localeCompare(b.title);
   });
-  return list;
-}
 
-function refreshCategories() {
-  const serviceId = $("service").value;
-  const list = recipes.filter(r => (serviceId === "all" ? true : r.service === serviceId));
-  const cats = unique(list.map(r => r.category)).sort();
-  const items = [{ id: "all", title: "(todas)" }].concat(cats.map(c => ({ id: c, title: c })));
-  renderSelectOptions($("category"), items);
-}
-
-function refreshRecipes() {
-  const list = filterRecipes();
-  const display = list.slice(0, 400);
   renderSelectOptions($("recipe"), display.map(r => ({ id: r.id, title: `${isFav(r.id) ? "⭐ " : ""}[${r.service}] ${r.title}` })));
 
   const r = getSelectedRecipe();
@@ -117,13 +153,12 @@ function refreshRecipes() {
   updateDangerBox(r);
 
   if (!display.length) {
-    $("recipeMeta").textContent = "No hay resultados para esta intención.";
+    $("recipeMeta").textContent = "No hay resultados para esta combinación de filtros.";
   }
 }
 
 function getSelectedRecipe() {
-  const id = $("recipe").value;
-  return recipes.find(r => r.id === id);
+  return recipes.find(r => r.id === $("recipe").value);
 }
 
 function isFav(id) { return getFavs().includes(id); }
@@ -162,12 +197,12 @@ const GLOSSARY = {
 };
 
 function renderRecipeMeta(r) {
-  const meta = $("recipeMeta");
+  const concept = $("conceptCard");
+  const conceptContent = $("conceptContent");
   const welcome = $("welcomeScreen");
   const output = $("outputContainer");
   const step3 = $("step3Container");
-  const concept = $("conceptCard");
-  const conceptContent = $("conceptContent");
+  const meta = $("recipeMeta");
 
   if (!r) {
     meta.innerHTML = `<div class='muted'>Selecciona un objetivo para comenzar.</div>`;
@@ -182,7 +217,6 @@ function renderRecipeMeta(r) {
   output.classList.remove("hidden");
   step3.classList.remove("hidden");
 
-  // Dynamic Concept Help
   const svcId = r.service.toLowerCase();
   if (GLOSSARY[svcId]) {
     concept.classList.remove("hidden");
@@ -215,34 +249,21 @@ function renderParams(r) {
     const div = document.createElement("div");
     div.className = "field";
     const lab = document.createElement("label");
-    lab.htmlFor = `p_${p.key}`;
     lab.textContent = `${p.label}${p.required ? " *" : ""}`;
     const inp = document.createElement(p.type === "select" ? "select" : "input");
     inp.id = `p_${p.key}`;
     if (p.type !== "select") inp.type = p.type || "text";
     inp.value = p.default ?? "";
     if (p.type === "select" && Array.isArray(p.options)) {
-      for (const optVal of p.options) {
+      for (const oVal of p.options) {
         const o = document.createElement("option");
-        o.value = optVal; o.textContent = optVal;
+        o.value = oVal; o.textContent = oVal;
         inp.appendChild(o);
       }
-      inp.value = p.default ?? (p.options[0] ?? "");
     }
-
     inp.addEventListener("input", () => debounceGenerate());
-    if (p.type === "select") inp.addEventListener("change", () => debounceGenerate());
-
     div.appendChild(lab);
     div.appendChild(inp);
-    if (p.help) {
-      const help = document.createElement("div");
-      help.className = "muted";
-      help.style.fontSize = "11px";
-      help.style.marginTop = "4px";
-      help.textContent = p.help;
-      div.appendChild(help);
-    }
     wrap.appendChild(div);
   }
   generate();
@@ -254,174 +275,68 @@ function debounceGenerate() {
   generateTimeout = setTimeout(generate, 150);
 }
 
-function validateParams(r) {
-  const params = r.params || [];
-  const missing = [];
-  for (const p of params) {
-    if (!p.required) continue;
-    const el = $(`p_${p.key}`);
-    const v = (el ? el.value : "").trim();
-    if (!v) missing.push(p.label || p.key);
-  }
-  return missing;
-}
-
-function prodLockBlocks(r, globals) {
-  const lock = $("lockProd").checked;
-  if (!lock) return false;
-  const isProd = (globals.profile || "").toLowerCase().includes("prod");
-  if (!isProd) return false;
-  return (r?.risk?.level === "alto") || r?.dangerous;
-}
-
-function explainCommand(r, vars) {
-  if (!r) return "";
-  let baseAction = r.title.replace(/AWS CLI/gi, "").trim();
-  let expl = `🧭 <b>¿Qué hará este comando?</b><br><span style="color:var(--text);">${baseAction}</span>.<br><br>`;
-
-  if (vars.dryrun_flag) {
-    expl += `<div style="color:var(--accent); background:rgba(59,130,246,0.1); padding:10px; border-radius:8px; border:1px solid rgba(59,130,246,0.2);">✨ <b>Modo Seguro:</b> Esto es una simulación. Puedes ver qué pasaría sin gastar dinero ni borrar nada.</div>`;
-  } else if (r.risk?.level === "alto") {
-    expl += `<div style="color:var(--danger); background:rgba(239,68,68,0.1); padding:10px; border-radius:8px; border:1px solid rgba(239,68,68,0.2);">🔥 <b>¡Acción Real!</b> Estás operando sobre tu infraestructura. Los cambios serán permanentes.</div>`;
-  } else {
-    expl += `✅ Listo para usar. Operación común y segura.`;
-  }
-  return expl;
-}
-
-function explainImpact(r) {
-  if (!r) return "";
-  let impact = `🏢 <b>Resumen de Consecuencias:</b> `;
-  if (r.dangerous) {
-    impact += `<span style="color:var(--danger);">Cuidado: comando destructivo. Asegúrate de tener backups.</span>`;
-  } else if (r.risk?.level === "alto") {
-    impact += `Alto impacto en el servicio. Podría haber indisponibilidad temporal.`;
-  } else {
-    impact += `Bajo impacto. Es seguro ejecutarlo en cualquier momento.`;
-  }
-  return impact;
-}
-
 function generate(silent = true) {
   const r = getSelectedRecipe();
   if (!r) return;
 
   const globals = getGlobalFlags();
-  if (!silent && (prodLockBlocks(r, globals) || !($("dangerConfirm").checked || r.risk?.level !== "alto"))) {
-    // These are handled by specific alerts elsewhere or logic in wireCopy
-  }
-
   const vars = { ...globals, ...buildVarsFromParams(r.params || []) };
   if (!r.supports_dryrun) vars.dryrun_flag = "";
 
-  const cmd = applyTemplate(r.command, vars).trim().replace(/\s+/g, " ").trim();
-  $("outCommand").textContent = cmd || "(vacío)";
-
+  $("outCommand").textContent = applyTemplate(r.command, vars).trim().replace(/\s+/g, " ").trim();
   $("outPrechecks").textContent = (r.prechecks || []).map(x => applyTemplate(x.command, vars).trim()).filter(Boolean).join("\n") || "(sin prechecks)";
   $("outCleanup").textContent = (r.cleanup || []).map(x => applyTemplate(x.command, vars).trim()).filter(Boolean).join("\n") || "(sin cleanup)";
 
-  const risk = r.risk || { level: "bajo", notes: "" };
-  const riskColor = risk.level === "alto" ? "var(--danger)" : (risk.level === "medio" ? "#f59e0b" : "var(--success)");
-
-  $("riskPill").innerHTML = `<span style="padding:4px 12px; border-radius:999px; background:${riskColor}20; color:${riskColor}; border:1px solid ${riskColor}40; font-size:0.7rem; font-weight:700;">RIESGO: ${risk.level.toUpperCase()}</span>`;
-  $("riskNotes").innerHTML = risk.notes ? `<b>Notas Seguridad:</b> ${risk.notes}` : "";
-  $("permHint").innerHTML = r.permissions_hint ? `<b>Permisos IAM:</b> ${r.permissions_hint}` : "";
-  $("costHint").innerHTML = r.cost_hint ? `<b>Costo estimado:</b> ${r.cost_hint}` : "";
+  const risk = r.risk || { level: "bajo" };
+  const color = risk.level === "alto" ? "var(--danger)" : (risk.level === "medio" ? "#f59e0b" : "var(--success)");
+  $("riskPill").innerHTML = `<span style="padding:4px 12px; border-radius:999px; background:${color}20; color:${color}; border:1px solid ${color}40; font-size:0.7rem; font-weight:700;">RIESGO: ${risk.level.toUpperCase()}</span>`;
 
   $("naturalLanguage").innerHTML = explainCommand(r, vars);
   if ($("operationalImpact")) $("operationalImpact").innerHTML = explainImpact(r);
+}
 
-  pushHistory(r, vars, cmd);
+function explainCommand(r, vars) {
+  if (!r) return "";
+  let base = r.title.replace(/AWS CLI/gi, "").trim();
+  let expl = `🧭 <b>¿Qué hará este comando?</b><br><span style="color:var(--text);">${base}</span>.<br><br>`;
+  if (vars.dryrun_flag) expl += `<div style="color:var(--accent); background:rgba(59,130,246,0.1); padding:10px; border-radius:8px;">✨ <b>Modo Seguro:</b> Esto es una simulación.</div>`;
+  else if (r.risk?.level === "alto") expl += `<div style="color:var(--danger); background:rgba(239,68,68,0.1); padding:10px; border-radius:8px;">🔥 <b>¡Acción Real!</b> Cambios permanentes.</div>`;
+  return expl;
+}
+
+function explainImpact(r) {
+  if (!r?.dangerous && r?.risk?.level !== "alto") return `🏢 <b>Resumen:</b> Bajo impacto y seguro.`;
+  return `🏢 <b>Resumen:</b> <span style="color:var(--danger);">Cuidado: comando destructivo o de alto impacto.</span>`;
 }
 
 function wireSelectors() {
-  $("taskIntent").addEventListener("change", () => refreshRecipes());
-  $("service").addEventListener("change", () => { refreshCategories(); refreshRecipes(); });
+  $("taskIntent").addEventListener("change", () => syncFilters());
+  $("service").addEventListener("change", () => syncFilters());
   $("category").addEventListener("change", () => refreshRecipes());
-  $("recipe").addEventListener("change", () => {
-    const r = getSelectedRecipe();
-    renderRecipeMeta(r);
-    renderParams(r);
-    updateFavoriteButton();
-    updateDangerBox(r);
+  $("recipe").addEventListener("change", () => refreshRecipes());
+
+  // Reactive Global settings
+  ["profile", "region", "output", "useProfile", "useRegion", "useDryRun", "lockProd"].forEach(id => {
+    $(id).addEventListener("input", () => debounceGenerate());
+    $(id).addEventListener("change", () => debounceGenerate());
   });
 
   $("btnHelp").addEventListener("click", showOnboarding);
-  $("btnGenerate").addEventListener("click", () => {
-    const r = getSelectedRecipe();
-    if (!r) return;
-    const missing = validateParams(r);
-    if (missing.length) return alert("Faltan: " + missing.join(", "));
-    generate(false);
-  });
-
   $("btnReset").addEventListener("click", () => {
     $("taskIntent").value = "all";
     $("service").value = "all";
-    refreshCategories();
-    refreshRecipes();
+    syncFilters();
     renderRecipeMeta(null);
   });
-
-  $("btnFavorite").addEventListener("click", () => {
-    const r = getSelectedRecipe(); if (!r) return;
-    toggleFav(r.id);
-    updateFavoriteButton();
-    refreshRecipes();
-  });
-
-  $("btnHistory").addEventListener("click", () => {
-    showModal("Historial de Operaciones", renderHistory());
-  });
-
-  $("dangerConfirm").addEventListener("change", () => debounceGenerate());
-  $("modalClose").addEventListener("click", hideModal);
 }
 
-// ... helper functions for onboarding/copy/export ...
 function showOnboarding() {
-  const html = `
-    <div style="padding:1rem;">
-      <h3 style="margin-bottom:1.5rem;">Guía de Usuario Microsistemas</h3>
-      <div class="tour-grid">
-        <div class="tour-item"><h4>1. Configura</h4><p>Define tu perfil y región. Esto asegura que el comando afecte a la cuenta correcta.</p></div>
-        <div class="tour-item"><h4>2. Elige</h4><p>Busca por tu objetivo (ej: S3, IAM). Te explicaremos qué es cada servicio.</p></div>
-        <div class="tour-item"><h4>3. Ejecuta</h4><p>Copia el comando a tu terminal o úsalo en tus tareas programadas con seguridad.</p></div>
-      </div>
-      <button class="primary" style="margin-top:1.5rem; width:100%;" onclick="hideModal()">Comenzar ahora</button>
-    </div>
-  `;
-  showModal("¿Cómo funciona el Asistente?", html);
-}
-
-async function copyText(text) {
-  try { await navigator.clipboard.writeText(text); } catch (e) { console.error("Clipboard error"); }
-}
-
-function wireButtons() {
-  $("copyCmd").addEventListener("click", () => {
-    const r = getSelectedRecipe();
-    if (r && (r.risk?.level === "alto" || r.dangerous) && !$("dangerConfirm").checked) return alert("Debes confirmar el riesgo.");
-    copyText($("outCommand").textContent);
-  });
-  $("copyPre").addEventListener("click", () => copyText($("outPrechecks").textContent));
-  $("copyClean").addEventListener("click", () => copyText($("outCleanup").textContent));
-}
-
-function pushHistory(r, vars, cmd) {
-  const hist = getHist();
-  hist.unshift({ title: r.title, date: new Date().toLocaleString(), cmd });
-  setHist(hist.slice(0, 50));
-}
-
-function renderHistory() {
-  return getHist().map(h => `<div class='modal-item'><b>${h.title}</b> [${h.date}]<pre class='code'>${h.cmd}</pre></div>`).join("");
+  const html = `<div style="padding:1rem;"><h3>Guía Microsistemas</h3><p>1. Configura tu perfil.<br>2. Elige tu objetivo.<br>3. Copia y ejecuta.</p><button class="primary" onclick="hideModal()">Comenzar</button></div>`;
+  showModal("¿Cómo funciona?", html);
 }
 
 function showModal(title, html) {
-  $("modalTitle").textContent = title;
-  $("modalBody").innerHTML = html;
-  $("modal").classList.remove("hidden");
+  $("modalTitle").textContent = title; $("modalBody").innerHTML = html; $("modal").classList.remove("hidden");
 }
 function hideModal() { $("modal").classList.add("hidden"); }
 
@@ -431,12 +346,8 @@ async function load() {
   recipes = DB.recipes || [];
   services = (await sRes.json()).services || [];
 
-  renderSelectOptions($("service"), [{ id: "all", title: "(todos)" }, ...services.map(s => ({ id: s.id, title: s.title }))]);
-
   wireSelectors();
-  wireButtons();
-  refreshCategories();
-  refreshRecipes();
+  syncFilters();
 }
 
-load().catch(e => console.error("Error cargando app", e));
+load().catch(e => console.error(e));
