@@ -238,6 +238,47 @@ function renderRecipeMeta(r) {
   `;
 }
 
+function highlightCommand(cmd, vars) {
+  if (!cmd) return "";
+  let h = cmd;
+  // 1. Highlight vars (must be first to catch placeholders if they are still there, or real values)
+  Object.keys(vars).forEach(k => {
+    if (vars[k] && vars[k].length > 0) {
+      const val = vars[k].toString();
+      h = h.split(val).join(`<span class="var" title="Valor del parámetro: ${k}">${val}</span>`);
+    }
+  });
+
+  // 2. Highlight core keywords
+  h = h.replace(/^(aws)/i, '<span class="aws">$1</span>')
+    .replace(/\b(s3|ec2|lambda|ecs|rds|iam|sts|dynamodb|cloudfront|cloudwatch|sns|sqs|secretsmanager|cloudformation)\b/gi, '<span class="svc">$1</span>')
+    .replace(/--[a-z0-9-]+/gi, '<span class="flag">$&</span>');
+
+  return h;
+}
+
+function generate(silent = true) {
+  const r = getSelectedRecipe();
+  if (!r) return;
+
+  const globals = getGlobalFlags();
+  const vars = { ...globals, ...buildVarsFromParams(r.params || []) };
+  if (!r.supports_dryrun) vars.dryrun_flag = "";
+
+  const fullCmd = applyTemplate(r.command, vars).trim().replace(/\s+/g, " ").trim();
+  $("outCommand").innerHTML = highlightCommand(fullCmd, vars);
+
+  $("outPrechecks").textContent = (r.prechecks || []).map(x => applyTemplate(x.command, vars).trim()).filter(Boolean).join("\n") || "(sin prechecks)";
+  $("outCleanup").textContent = (r.cleanup || []).map(x => applyTemplate(x.command, vars).trim()).filter(Boolean).join("\n") || "(sin cleanup)";
+
+  const risk = r.risk || { level: "bajo" };
+  const color = risk.level === "alto" ? "var(--danger)" : (risk.level === "medio" ? "#f59e0b" : "var(--success)");
+  $("riskPill").innerHTML = `<span style="padding:4px 12px; border-radius:999px; background:${color}20; color:${color}; border:1px solid ${color}40; font-size:0.7rem; font-weight:700;">RIESGO: ${risk.level.toUpperCase()}</span>`;
+
+  $("naturalLanguage").innerHTML = explainCommand(r, vars);
+  if ($("operationalImpact")) $("operationalImpact").innerHTML = explainImpact(r);
+}
+
 function renderParams(r) {
   const wrap = $("params");
   wrap.innerHTML = "";
@@ -251,8 +292,28 @@ function renderParams(r) {
   for (const p of params) {
     const div = document.createElement("div");
     div.className = "field";
+
+    const labWrap = document.createElement("div");
+    labWrap.style.display = "flex";
+    labWrap.style.justifyContent = "space-between";
+    labWrap.style.alignItems = "center";
+
     const lab = document.createElement("label");
     lab.textContent = `${p.label}${p.required ? " *" : ""}`;
+    labWrap.appendChild(lab);
+
+    if (p.help) {
+      const help = document.createElement("span");
+      help.innerHTML = "ⓘ";
+      help.style.cursor = "help";
+      help.style.color = "var(--accent)";
+      help.style.fontSize = "0.8rem";
+      help.title = p.help;
+      labWrap.appendChild(help);
+    }
+
+    div.appendChild(labWrap);
+
     const inp = document.createElement(p.type === "select" ? "select" : "input");
     inp.id = `p_${p.key}`;
     if (p.type !== "select") inp.type = p.type || "text";
@@ -265,37 +326,10 @@ function renderParams(r) {
       }
     }
     inp.addEventListener("input", () => debounceGenerate());
-    div.appendChild(lab);
     div.appendChild(inp);
     wrap.appendChild(div);
   }
   generate();
-}
-
-let generateTimeout = null;
-function debounceGenerate() {
-  clearTimeout(generateTimeout);
-  generateTimeout = setTimeout(generate, 150);
-}
-
-function generate(silent = true) {
-  const r = getSelectedRecipe();
-  if (!r) return;
-
-  const globals = getGlobalFlags();
-  const vars = { ...globals, ...buildVarsFromParams(r.params || []) };
-  if (!r.supports_dryrun) vars.dryrun_flag = "";
-
-  $("outCommand").textContent = applyTemplate(r.command, vars).trim().replace(/\s+/g, " ").trim();
-  $("outPrechecks").textContent = (r.prechecks || []).map(x => applyTemplate(x.command, vars).trim()).filter(Boolean).join("\n") || "(sin prechecks)";
-  $("outCleanup").textContent = (r.cleanup || []).map(x => applyTemplate(x.command, vars).trim()).filter(Boolean).join("\n") || "(sin cleanup)";
-
-  const risk = r.risk || { level: "bajo" };
-  const color = risk.level === "alto" ? "var(--danger)" : (risk.level === "medio" ? "#f59e0b" : "var(--success)");
-  $("riskPill").innerHTML = `<span style="padding:4px 12px; border-radius:999px; background:${color}20; color:${color}; border:1px solid ${color}40; font-size:0.7rem; font-weight:700;">RIESGO: ${risk.level.toUpperCase()}</span>`;
-
-  $("naturalLanguage").innerHTML = explainCommand(r, vars);
-  if ($("operationalImpact")) $("operationalImpact").innerHTML = explainImpact(r);
 }
 
 function explainCommand(r, vars) {

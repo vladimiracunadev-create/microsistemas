@@ -9,6 +9,11 @@
     --danger: #ef4444;
     --danger-bg: rgba(239, 68, 68, 0.1);
     --success: #10b981;
+    --code-aws: #93c5fd;
+    --code-svc: #3b82f6;
+    --code-act: #60a5fa;
+    --code-flag: #94a3b8;
+    --code-var: #fbbf24;
 }
 
 * {
@@ -312,6 +317,29 @@ pre.code {
     margin: 0;
     white-space: pre-wrap;
     word-break: break-all;
+}
+
+pre.code span.aws {
+    color: var(--code-aws);
+    font-weight: 700;
+}
+
+pre.code span.svc {
+    color: var(--code-svc);
+}
+
+pre.code span.act {
+    color: var(--code-act);
+    font-weight: 600;
+}
+
+pre.code span.flag {
+    color: var(--code-flag);
+}
+
+pre.code span.var {
+    color: var(--code-var);
+    text-decoration: underline rgba(251, 191, 36, 0.3);
 }
 
 .tour-grid {
