@@ -145,17 +145,31 @@ function updateDangerBox(r) {
   }
 }
 
+const GLOSSARY = {
+  s3: "<b>S3 (Simple Storage Service)</b>: Es como un disco duro infinito en internet. Se usa para guardar imágenes, backups o archivos de tu sitio web.",
+  lambda: "<b>Lambda</b>: Te permite ejecutar código sin preocuparte por servidores. Solo pagas por los milisegundos que tu código está funcionando.",
+  ecs: "<b>ECS (Elastic Container Service)</b>: Es un sistema para correr aplicaciones empaquetadas (Docker) de forma automática y escalable.",
+  ec2: "<b>EC2 (Elastic Compute Cloud)</b>: Son servidores virtuales en la nube. Es como tener una computadora en un centro de datos de AWS.",
+  rds: "<b>RDS (Relational Database Service)</b>: Bases de datos gestionadas. AWS se encarga de los parches y backups por ti.",
+  iam: "<b>IAM (Identity and Access Management)</b>: Es el sistema de seguridad que controla quién puede entrar y qué puede hacer en tu cuenta AWS.",
+  ecr: "<b>ECR (Elastic Container Registry)</b>: Un almacén privado para tus imágenes de aplicaciones (Docker).",
+  cloudwatch: "<b>CloudWatch</b>: Los ojos de tu infraestructura. Sirve para ver logs (registros) y métricas de rendimiento."
+};
+
 function renderRecipeMeta(r) {
   const meta = $("recipeMeta");
   const welcome = $("welcomeScreen");
   const output = $("outputContainer");
   const step3 = $("step3Container");
+  const concept = $("conceptCard");
+  const conceptContent = $("conceptContent");
 
   if (!r) {
-    meta.innerHTML = `<div class='muted'>Selecciona una receta para ver detalles.</div>`;
+    meta.innerHTML = `<div class='muted'>Elige una receta para ver sus detalles.</div>`;
     welcome.classList.remove("hidden");
     output.classList.add("hidden");
     step3.classList.add("hidden");
+    concept.classList.add("hidden");
     return;
   }
 
@@ -163,12 +177,21 @@ function renderRecipeMeta(r) {
   output.classList.remove("hidden");
   step3.classList.remove("hidden");
 
+  // Glossary Logic
+  const svcId = r.service.toLowerCase();
+  if (GLOSSARY[svcId]) {
+    concept.classList.remove("hidden");
+    conceptContent.innerHTML = GLOSSARY[svcId];
+  } else {
+    concept.classList.add("hidden");
+  }
+
   meta.innerHTML = `
     <div style="font-weight:700; color:var(--accent); margin-bottom:0.5rem;">${r.title}</div>
-    <div class="muted" style="font-size:0.85rem;">${r.when_to_use || r.description || ""}</div>
-    <div style="margin-top:0.75rem; display:flex; gap:8px; flex-wrap:wrap;">
-      <span style="font-size:0.7rem; padding:2px 8px; border-radius:4px; background:rgba(255,255,255,0.05); border:1px solid var(--border);">SV: ${r.service}</span>
-      <span style="font-size:0.7rem; padding:2px 8px; border-radius:4px; background:rgba(255,255,255,0.05); border:1px solid var(--border);">CAT: ${r.category}</span>
+    <div class="muted" style="font-size:0.85rem; line-height:1.4;">${r.when_to_use || r.description || ""}</div>
+    <div style="margin-top:1rem; display:flex; gap:8px; flex-wrap:wrap;">
+      <span style="font-size:0.7rem; padding:4px 10px; border-radius:6px; background:rgba(59,130,246,0.1); border:1px solid rgba(59,130,246,0.2); color:var(--accent); font-weight:700;">SERVICIO: ${r.service.toUpperCase()}</span>
+      <span style="font-size:0.7rem; padding:4px 10px; border-radius:6px; background:rgba(255,255,255,0.05); border:1px solid var(--border);">TIPO: ${r.category}</span>
     </div>
   `;
 }

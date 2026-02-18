@@ -17,12 +17,12 @@
     <div class="brand">
       <div class="logo">☁️</div>
       <div>
-        <h1>AWS Operations Assistant</h1>
-        <p class="muted">Convierte tareas complejas de la nube en comandos seguros y listos para ejecutar.</p>
+        <h1>AWS Assistant Pro</h1>
+        <p class="muted">Gestión de infraestructura en la nube para humanos.</p>
       </div>
     </div>
     <div style="display:flex; gap:12px; align-items:center;">
-      <button id="btnHelp" class="ghost" style="color:var(--accent); font-weight:700;">¿Cómo funciona?</button>
+      <button id="btnHelp" class="ghost" style="color:var(--accent); font-weight:700;">Guía de Inicio</button>
       <a href="../../index.php" class="back-link">
         <button class="ghost">← Dashboard</button>
       </a>
@@ -32,40 +32,49 @@
   <div class="globals-container">
     <div class="step-header" style="margin-left: 2rem; border-bottom: none; margin-bottom: 0.5rem;">
       <span class="step-badge">1</span>
-      <h2>Punto de Origen: ¿Dónde operamos?</h2>
-      <span class="muted" style="margin-left: 1rem; font-size: 0.75rem;">Define tu perfil de acceso y región para evitar
-        errores de cuenta.</span>
+      <h2>Paso 1: ¿Dónde trabajamos?</h2>
     </div>
     <div class="globals">
       <div class="field">
-        <label for="profile">AWS Profile <span title="Perfil de credenciales en ~/.aws/credentials"
+        <label for="profile">Tu Perfil de Acceso <span title="Define qué cuenta de AWS usaremos"
             style="cursor:help;">ⓘ</span></label>
         <input id="profile" type="text" placeholder="default" />
       </div>
       <div class="field">
-        <label for="region">Región <span title="Zona geográfica de AWS" style="cursor:help;">ⓘ</span></label>
-        <input id="region" type="text" placeholder="sa-east-1" />
+        <label for="region">Región (Ubicación Geográfica)</label>
+        <select id="region">
+          <option value="us-east-1">EE.UU. Este (N. Virginia)</option>
+          <option value="us-east-2">EE.UU. Este (Ohio)</option>
+          <option value="us-west-1">EE.UU. Oeste (N. California)</option>
+          <option value="us-west-2">EE.UU. Oeste (Oregón)</option>
+          <option value="sa-east-1" selected>América del Sur (São Paulo)</option>
+          <option value="eu-west-1">Europa (Irlanda)</option>
+          <option value="eu-central-1">Europa (Fráncfort)</option>
+          <option value="ap-southeast-1">Asia Pacífico (Singapur)</option>
+        </select>
       </div>
       <div class="field">
-        <label for="output">Formato</label>
+        <label for="output">Formato de Respuesta</label>
         <select id="output">
           <option value="">(estándar)</option>
-          <option value="--output json">JSON (Intercambio)</option>
-          <option value="--output table">Tabla (Lectura)</option>
+          <option value="--output json">JSON (Para programadores)</option>
+          <option value="--output table">Tabla (Fácil lectura)</option>
           <option value="--output text">Texto (Simple)</option>
         </select>
       </div>
       <div class="field">
-        <label>Protección y Modo</label>
+        <label>Capa de Seguridad</label>
         <div style="display:flex; gap:12px; flex-wrap:wrap; padding-top:4px;">
           <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"><input
-              id="useProfile" type="checkbox" checked /> Usar Perfil</label>
+              id="useProfile" type="checkbox" checked /> Enviar Perfil</label>
           <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"><input
-              id="useRegion" type="checkbox" checked /> Usar Región</label>
-          <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"><input
-              id="useDryRun" type="checkbox" /> Modo Prueba (Simular)</label>
-          <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"><input
-              id="lockProd" type="checkbox" /> Trabar en Producción</label>
+              id="useRegion" type="checkbox" checked /> Enviar Región</label>
+          <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"
+            title="Simula el comando sin aplicar cambios reales"><input id="useDryRun" type="checkbox" /> Modo
+            Simulado</label>
+          <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"
+            title="Evita cambios destructivos si detecta perfil 'prod'"><input id="lockProd" type="checkbox" /> Traba de
+            Prod</label>
         </div>
       </div>
     </div>
@@ -75,7 +84,7 @@
     <section class="card">
       <div class="step-header">
         <span class="step-badge">2</span>
-        <h2>Busca una Solución</h2>
+        <h2>Paso 2: ¿Cuál es tu objetivo?</h2>
         <div style="margin-left: auto; display:flex; gap:8px;">
           <button id="btnFavorite" class="ghost" style="padding:4px 10px;" title="Ver Favoritos">⭐</button>
           <button id="btnHistory" class="ghost" style="padding:4px 10px;" title="Ver Historial">🕘</button>
@@ -83,33 +92,40 @@
       </div>
 
       <div class="field">
-        <label for="search">¿Qué necesitas hacer hoy?</label>
-        <input id="search" type="search" placeholder="Ej: sincronizar s3, reiniciar servicio, crear usuario..." />
+        <label for="search">Describe tu tarea o busca una receta</label>
+        <input id="search" type="search" placeholder="Ej: sincronizar, borrar, crear, listar..." />
       </div>
 
       <div id="quickStarts" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1.5rem;">
-        <span style="font-size:0.75rem; color:var(--text-muted); width:100%; margin-bottom:4px;">Ejemplos
-          rápidos:</span>
-        <button class="quick-btn" data-search="s3 sync">Sincronizar S3</button>
-        <button class="quick-btn" data-search="ecs force-deployment">Reiniciar ECS</button>
-        <button class="quick-btn" data-search="lambda update-code">Update Lambda</button>
-        <button class="quick-btn" data-search="ec2 instances">Listar EC2</button>
+        <span style="font-size:0.75rem; color:var(--text-muted); width:100%; margin-bottom:4px;">Accesos rápidos:</span>
+        <button class="quick-btn" data-search="s3 sync">Archivos S3</button>
+        <button class="quick-btn" data-search="ecs">Servicios ECS</button>
+        <button class="quick-btn" data-search="lambda">Funciones Lambda</button>
+        <button class="quick-btn" data-search="ec2">Servidores EC2</button>
       </div>
 
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
         <div class="field">
-          <label for="service">Servicio Cloud</label>
+          <label for="service">Servicio de Nube</label>
           <select id="service"></select>
         </div>
         <div class="field">
-          <label for="category">Acción / Objetivo</label>
+          <label for="category">Categoría de Operación</label>
           <select id="category"></select>
         </div>
       </div>
 
       <div class="field">
-        <label for="recipe">Receta de Operación</label>
+        <label for="recipe">Receta Paso a Paso</label>
         <select id="recipe"></select>
+      </div>
+
+      <div id="conceptCard" class="hidden"
+        style="margin: 1rem 0; padding:1.25rem; border-radius:16px; background:rgba(59, 130, 246, 0.05); border:1px solid rgba(59, 130, 246, 0.2);">
+        <div
+          style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--accent); margin-bottom:0.5rem;">
+          Aprende sobre este servicio</div>
+        <div id="conceptContent" style="font-size:0.85rem; line-height:1.5;"></div>
       </div>
 
       <div id="recipeMeta"
@@ -119,19 +135,19 @@
       <div id="dangerBox" class="danger-box hidden">
         <div
           style="font-weight:700; color:var(--danger); margin-bottom:0.5rem; display:flex; align-items:center; gap:8px;">
-          <span>⚠️</span> ACCIÓN CRÍTICA
+          <span>⚠️</span> ACCIÓN DE ALTO IMPACTO
         </div>
-        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">Estás por ejecutar un comando que
-          modifica o borra recursos.</p>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">Este comando modificará recursos de
+          forma permanente.</p>
         <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:0.85rem; font-weight:600;">
-          <input id="dangerConfirm" type="checkbox" /> Confirmo que revisé las variables
+          <input id="dangerConfirm" type="checkbox" /> Entiendo el impacto y quiero proceder
         </label>
       </div>
 
       <div id="step3Container" class="hidden">
         <div class="step-header" style="margin-top: 2rem;">
           <span class="step-badge">3</span>
-          <h2>Variables de tu Infraestructura</h2>
+          <h2>Paso 3: Tus Datos</h2>
         </div>
         <div id="params"></div>
       </div>
@@ -140,32 +156,32 @@
     <section class="card">
       <div class="step-header">
         <div class="live-indicator"></div>
-        <h2 style="font-size: 0.9rem;">Comando Generado Listo para Usar</h2>
+        <h2 style="font-size: 0.9rem;">Asistente de Generación Reactivo</h2>
       </div>
 
       <div id="welcomeScreen" class="welcome-state">
-        <div class="icon">🚀</div>
-        <h3>Bienvenido al Asistente AWS</h3>
-        <p>Selecciona una receta a la izquierda para ver cómo se construye el comando automáticamente.</p>
+        <div class="icon">🪄</div>
+        <h3>¿Cómo empezar?</h3>
+        <p>1. Ajusta tu entorno arriba.<br>2. Elige una receta a la izquierda.<br>3. Completa tus datos y obtén el
+          comando listo.</p>
         <div class="hint-box">
-          <b>¿Sabías que?</b> Puedes exportar el comando como un script (.sh o .ps1) para usarlo en tus procesos de
-          CI/CD.
+          <b>Tip para novatos:</b> Usa el "Modo Simulado" si tienes miedo de romper algo. AWS te dirá qué pasaría sin
+          hacerlo realmente.
         </div>
       </div>
 
       <div id="outputContainer" class="hidden">
         <div id="naturalLanguage"
           style="margin-bottom: 1.5rem; padding:1.25rem; border-radius:16px; background:rgba(59, 130, 246, 0.1); border:1px solid rgba(59, 130, 246, 0.2); font-size:0.9rem; font-weight:600;">
-          <!-- Se llena por JS -->
         </div>
 
         <div class="code-block" style="margin-top:0;">
           <div class="code-header">
-            <h3>Código del Comando</h3>
+            <h3>Comando de Consola (CLI)</h3>
             <div style="display:flex; gap:8px;">
               <button id="copyCmd" class="ghost" style="font-size:0.75rem;">Copiar</button>
-              <button id="exportSh" class="ghost" style="font-size:0.75rem;">BASH (.sh)</button>
-              <button id="exportPs1" class="ghost" style="font-size:0.75rem;">POWERSHELL (.ps1)</button>
+              <button id="exportSh" class="ghost" style="font-size:0.75rem;">Linux/Mac (.sh)</button>
+              <button id="exportPs1" class="ghost" style="font-size:0.75rem;">Windows (.ps1)</button>
             </div>
           </div>
           <pre id="outCommand" class="code"></pre>
@@ -173,7 +189,7 @@
 
         <div class="code-block">
           <div class="code-header">
-            <h3>Paso 0: Verificaciones Previas</h3>
+            <h3>Paso Previo Recomendo</h3>
             <button id="copyPre" class="ghost" style="font-size:0.75rem;">Copiar</button>
           </div>
           <pre id="outPrechecks" class="code"></pre>
@@ -181,7 +197,7 @@
 
         <div class="code-block" style="margin-bottom:2.5rem;">
           <div class="code-header">
-            <h3>Paso Final: Limpiar / Deshacer</h3>
+            <h3>Acción de Retroceso (Rollback)</h3>
             <button id="copyClean" class="ghost" style="font-size:0.75rem;">Copiar</button>
           </div>
           <pre id="outCleanup" class="code"></pre>
@@ -204,10 +220,9 @@
   </main>
 
   <footer class="footer">
-    <p>© 2026 Microsistemas Suite · Operaciones en la Nube con Seguridad Integrada</p>
+    <p>© 2026 Microsistemas Suite · Infraestructura como Asistencia</p>
   </footer>
 
-  <!-- Modal de Ayuda / Onboarding -->
   <div id="modal" class="modal hidden">
     <div class="modal-card">
       <div class="modal-header">
