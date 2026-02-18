@@ -1,0 +1,35 @@
+# Microsistemas Suite
+
+> Developer productivity suite: modular PHP web tools for diagnostics, data conversion, and system administration.
+
+## Key Information
+- **Type**: Modular Web Toolkit / PHP Package Core
+- **Architecture**: PHP 8.2+ (Core) + Independent Micro-Apps (apps/*)
+- **Infrastructure**: Dockerized (Apache/PHP/MySQL)
+- **Primary Access**: Dashboard (index.php) or CLI Hub (make hub-*)
+
+## Main Components
+- `apps/`: Directory containing independent micro-applications.
+- `src/`: Core logic (Config, Database Singleton) under `Microsistemas\` namespace.
+- `docs/`: Comprehensive technical and user documentation.
+- `scripts/`: Diagnostic and automation utilities.
+
+## Critical Documentation
+- [Architecture](docs/ARCHITECTURE.md): Global structure and integration flows.
+- [Technical Specs](docs/TECHNICAL_SPECS.md): Technology stack, health standards, and security policies.
+- [Systems Catalog](docs/SYSTEMS_CATALOG.md): Detailed purpose of each micro-app.
+- [Hub Guide](docs/HUB.md): Centralized CLI management instructions.
+- [Recruiter Guide](docs/RECRUITER.md): High-level overview of decisions and patterns.
+
+## App Catalog Highlights
+- **AWS Assistant Pro**: Smart AWS CLI assistant with risk assessment.
+- **CapacitySim**: Heuristic capacity and cost simulator.
+- **CicdLibrary**: Multi-platform CI/CD configuration generator.
+- **PhpMigrator**: Legacy PHP to modern standard analyzer.
+- **SqlViewer**: Browser-based database inspector.
+- **YmlGenerator**: Visual YAML configuration studio.
+
+## Development Workflow
+- **Dependency Management**: Composer (PSR-4).
+- **Automation**: Makefile for standard actions (`make install`, `make up`, `make smoke`).
+- **Standard**: 12-Factor App (env files), PSR-12 (style).
