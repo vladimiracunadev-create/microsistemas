@@ -146,11 +146,24 @@ function updateDangerBox(r) {
 }
 
 function renderRecipeMeta(r) {
+  const meta = $("recipeMeta");
+  const welcome = $("welcomeScreen");
+  const output = $("outputContainer");
+  const step3 = $("step3Container");
+
   if (!r) {
-    $("recipeMeta").innerHTML = `<div class='muted'>Selecciona una receta para ver detalles.</div>`;
+    meta.innerHTML = `<div class='muted'>Selecciona una receta para ver detalles.</div>`;
+    welcome.classList.remove("hidden");
+    output.classList.add("hidden");
+    step3.classList.add("hidden");
     return;
   }
-  $("recipeMeta").innerHTML = `
+
+  welcome.classList.add("hidden");
+  output.classList.remove("hidden");
+  step3.classList.remove("hidden");
+
+  meta.innerHTML = `
     <div style="font-weight:700; color:var(--accent); margin-bottom:0.5rem;">${r.title}</div>
     <div class="muted" style="font-size:0.85rem;">${r.when_to_use || r.description || ""}</div>
     <div style="margin-top:0.75rem; display:flex; gap:8px; flex-wrap:wrap;">
@@ -165,7 +178,8 @@ function renderParams(r) {
   wrap.innerHTML = "";
   const params = r.params || [];
   if (!params.length) {
-    wrap.innerHTML = `<div class="muted">Esta receta no requiere parámetros adicionales.</div>`;
+    wrap.innerHTML = `<div class="hint-box">No se requieren parámetros adicionales para esta receta. El comando está listo.</div>`;
+    generate();
     return;
   }
   for (const p of params) {
@@ -186,17 +200,30 @@ function renderParams(r) {
       }
       inp.value = p.default ?? (p.options[0] ?? "");
     }
+
+    // Live update listener
+    inp.addEventListener("input", () => debounceGenerate());
+    if (p.type === "select") inp.addEventListener("change", () => debounceGenerate());
+
     div.appendChild(lab);
     div.appendChild(inp);
     if (p.help) {
       const help = document.createElement("div");
       help.className = "muted";
-      help.style.fontSize = "12px";
+      help.style.fontSize = "11px";
+      help.style.marginTop = "4px";
       help.textContent = p.help;
       div.appendChild(help);
     }
     wrap.appendChild(div);
   }
+  generate();
+}
+
+let generateTimeout = null;
+function debounceGenerate() {
+  clearTimeout(generateTimeout);
+  generateTimeout = setTimeout(generate, 150);
 }
 
 function validateParams(r) {
@@ -225,24 +252,27 @@ function requireDangerConfirm(r) {
   return $("dangerConfirm").checked;
 }
 
-function generate() {
+function generate(silent = true) {
   const r = getSelectedRecipe();
-  if (!r) return;
+  if (!r) {
+    renderRecipeMeta(null);
+    return;
+  }
 
   const globals = getGlobalFlags();
 
-  if (prodLockBlocks(r, globals)) {
+  if (!silent && prodLockBlocks(r, globals)) {
     alert("Bloqueado: perfil parece prod y 'Bloquear peligrosos en prod' está activo.");
     return;
   }
 
-  if (!requireDangerConfirm(r)) {
+  if (!silent && !requireDangerConfirm(r)) {
     alert("Debes confirmar el riesgo (checkbox) antes de generar.");
     return;
   }
 
   const missing = validateParams(r);
-  if (missing.length) {
+  if (!silent && missing.length) {
     alert("Faltan parámetros obligatorios: " + missing.join(", "));
     return;
   }
@@ -428,6 +458,7 @@ function wireSelectors() {
     $("riskNotes").textContent = "";
     $("permHint").textContent = "";
     $("costHint").textContent = "";
+    renderRecipeMeta(null); // Show welcome screen
   });
 
   $("btnFavorite").addEventListener("click", () => {
@@ -469,8 +500,8 @@ function loadSettings() {
     });
   };
   ["profile", "region", "output", "useProfile", "useRegion", "useDryRun", "lockProd"].forEach(id => {
-    $(id).addEventListener("change", save);
-    $(id).addEventListener("input", save);
+    $(id).addEventListener("change", () => { save(); debounceGenerate(); });
+    $(id).addEventListener("input", () => { save(); debounceGenerate(); });
   });
 }
 

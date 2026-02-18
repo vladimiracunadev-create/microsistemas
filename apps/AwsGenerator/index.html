@@ -18,7 +18,7 @@
       <div class="logo">☁️</div>
       <div>
         <h1>AWS CLI Generator</h1>
-        <p class="muted">Asistente experto de comandos AWS CLI · v1.3.0</p>
+        <p class="muted">Asistente de comandos AWS CLI · Paso a Paso</p>
       </div>
     </div>
     <a href="../../index.php" class="back-link">
@@ -27,26 +27,31 @@
   </header>
 
   <div class="globals-container">
+    <div class="step-header" style="margin-left: 2rem; border-bottom: none; margin-bottom: 0.5rem;">
+      <span class="step-badge">1</span>
+      <h2>Configuración de Entorno</h2>
+    </div>
     <div class="globals">
       <div class="field">
         <label for="profile">AWS Profile</label>
-        <input id="profile" type="text" placeholder="default" />
+        <input id="profile" type="text" placeholder="default"
+          title="Selecciona el perfil de credenciales (.aws/credentials)" />
       </div>
       <div class="field">
         <label for="region">Region</label>
-        <input id="region" type="text" placeholder="sa-east-1" />
+        <input id="region" type="text" placeholder="sa-east-1" title="Región de AWS donde se ejecutarán los comandos" />
       </div>
       <div class="field">
-        <label for="output">Output Format</label>
+        <label for="output">Formato de Salida</label>
         <select id="output">
-          <option value="">(sin output)</option>
+          <option value="">(sin flag)</option>
           <option value="--output json">JSON</option>
           <option value="--output table">Table</option>
           <option value="--output text">Text</option>
         </select>
       </div>
       <div class="field">
-        <label>Settings</label>
+        <label>Opciones Globales</label>
         <div style="display:flex; gap:12px; flex-wrap:wrap; padding-top:4px;">
           <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"><input
               id="useProfile" type="checkbox" checked /> --profile</label>
@@ -63,24 +68,23 @@
 
   <main class="grid">
     <section class="card">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
-        <h2 style="margin:0; font-size:1.1rem; font-weight:700;">Configurador</h2>
-        <div style="display:flex; gap:8px;">
-          <button id="btnFavorite" class="ghost" style="padding:4px 10px; font-size:1.1rem;"
-            title="Favoritos">⭐</button>
-          <button id="btnHistory" class="ghost" style="padding:4px 10px; font-size:1.1rem;"
-            title="Historial">🕘</button>
+      <div class="step-header">
+        <span class="step-badge">2</span>
+        <h2>Selección de Receta</h2>
+        <div style="margin-left: auto; display:flex; gap:8px;">
+          <button id="btnFavorite" class="ghost" style="padding:4px 10px;" title="Tus Favoritos">⭐</button>
+          <button id="btnHistory" class="ghost" style="padding:4px 10px;" title="Historial Reciente">🕘</button>
         </div>
       </div>
 
       <div class="field">
-        <label for="search">Explorar Recetas</label>
-        <input id="search" type="search" placeholder="Ej: s3 sync, lambda, ecs, rds..." />
+        <label for="search">Filtro Inteligente</label>
+        <input id="search" type="search" placeholder="Busca por acción: s3 sync, ecs deploy, lambda update..." />
       </div>
 
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
         <div class="field">
-          <label for="service">Servicio</label>
+          <label for="service">Filtrar por Servicio</label>
           <select id="service"></select>
         </div>
         <div class="field">
@@ -90,12 +94,12 @@
       </div>
 
       <div class="field">
-        <label for="recipe">Receta</label>
+        <label for="recipe">Receta Detectada</label>
         <select id="recipe"></select>
       </div>
 
       <div id="recipeMeta"
-        style="margin: 1rem 0; padding:1.25rem; border-radius:16px; background:rgba(15, 23, 42, 0.4); border:1px solid var(--border); min-height:80px;">
+        style="margin: 1rem 0; padding:1.25rem; border-radius:16px; background:rgba(15, 23, 42, 0.4); border:1px solid var(--border);">
       </div>
 
       <div id="dangerBox" class="danger-box hidden">
@@ -104,64 +108,79 @@
           <span>⚠️</span> RIESGO ALTO DETECTADO
         </div>
         <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">Esta operación es destructiva o afecta
-          recursos críticos.</p>
+          recursos críticos. Revisa bien antes de continuar.</p>
         <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:0.85rem; font-weight:600;">
-          <input id="dangerConfirm" type="checkbox" /> Confirmar ejecución
+          <input id="dangerConfirm" type="checkbox" /> Confirmar ejecución consciente
         </label>
       </div>
 
-      <div style="margin-top:2rem;">
-        <h3
-          style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1rem; font-weight:700;">
-          Parámetros dinámicos</h3>
+      <div id="step3Container" class="hidden">
+        <div class="step-header" style="margin-top: 2rem;">
+          <span class="step-badge">3</span>
+          <h2>Personalización</h2>
+        </div>
         <div id="params"></div>
-      </div>
 
-      <div style="display:flex; gap:1rem; margin-top:2.5rem;">
-        <button id="btnGenerate" class="primary" style="flex:2;">Generar Comando CLI</button>
-        <button id="btnReset" class="ghost" style="flex:1;">Reiniciar</button>
+        <div style="display:flex; gap:1rem; margin-top:2.5rem;">
+          <button id="btnGenerate" class="primary" style="flex:2;">Forzar Generación</button>
+          <button id="btnReset" class="ghost" style="flex:1;">Reiniciar</button>
+        </div>
       </div>
     </section>
 
     <section class="card">
-      <h2 style="margin-top:0; font-size:1.1rem; font-weight:700; margin-bottom:1.5rem;">Caja de Herramientas</h2>
+      <div class="step-header">
+        <div class="live-indicator"></div>
+        <h2 style="font-size: 0.9rem;">Salida en Tiempo Real</h2>
+      </div>
 
-      <div class="code-block">
-        <div class="code-header">
-          <h3>Comando Generado</h3>
-          <div style="display:flex; gap:8px;">
-            <button id="copyCmd" class="ghost" style="font-size:0.75rem;">Copiar</button>
-            <button id="exportSh" class="ghost" style="font-size:0.75rem;">Shell (.sh)</button>
-            <button id="exportPs1" class="ghost" style="font-size:0.75rem;">PS (.ps1)</button>
+      <div id="welcomeScreen" class="welcome-state">
+        <div class="icon">🔍</div>
+        <h3>Selecciona una receta para comenzar</h3>
+        <p>Busca en el panel lateral por servicio o acción para generar el comando correspondiente.</p>
+        <div class="hint-box">
+          <b>Tip:</b> Los comandos se actualizan automáticamente mientras completas los parámetros.
+        </div>
+      </div>
+
+      <div id="outputContainer" class="hidden">
+        <div class="code-block" style="margin-top:0;">
+          <div class="code-header">
+            <h3>Comando Final</h3>
+            <div style="display:flex; gap:8px;">
+              <button id="copyCmd" class="ghost" style="font-size:0.75rem;">Copiar</button>
+              <button id="exportSh" class="ghost" style="font-size:0.75rem;">Shell</button>
+              <button id="exportPs1" class="ghost" style="font-size:0.75rem;">PowerShell</button>
+            </div>
           </div>
+          <pre id="outCommand" class="code"></pre>
         </div>
-        <pre id="outCommand" class="code"></pre>
-      </div>
 
-      <div class="code-block">
-        <div class="code-header">
-          <h3>Validaciones Recomendadas</h3>
-          <button id="copyPre" class="ghost" style="font-size:0.75rem;">Copiar</button>
+        <div class="code-block">
+          <div class="code-header">
+            <h3>Verificaciones Recomendadas</h3>
+            <button id="copyPre" class="ghost" style="font-size:0.75rem;">Copiar</button>
+          </div>
+          <pre id="outPrechecks" class="code"></pre>
         </div>
-        <pre id="outPrechecks" class="code"></pre>
-      </div>
 
-      <div class="code-block" style="margin-bottom:2.5rem;">
-        <div class="code-header">
-          <h3>Scripts de Cleanup</h3>
-          <button id="copyClean" class="ghost" style="font-size:0.75rem;">Copiar</button>
+        <div class="code-block" style="margin-bottom:2.5rem;">
+          <div class="code-header">
+            <h3>Retroceso / Cleanup</h3>
+            <button id="copyClean" class="ghost" style="font-size:0.75rem;">Copiar</button>
+          </div>
+          <pre id="outCleanup" class="code"></pre>
         </div>
-        <pre id="outCleanup" class="code"></pre>
-      </div>
 
-      <div
-        style="background:rgba(15, 23, 42, 0.4); border-radius:20px; padding:1.5rem; border:1px solid var(--border);">
-        <div id="riskPill" style="margin-bottom:1.25rem;"></div>
-        <div id="riskNotes" style="font-size:0.85rem; line-height:1.6; color:var(--text-muted); margin-bottom:1rem;">
+        <div
+          style="background:rgba(15, 23, 42, 0.4); border-radius:20px; padding:1.5rem; border:1px solid var(--border);">
+          <div id="riskPill" style="margin-bottom:1.25rem;"></div>
+          <div id="riskNotes" style="font-size:0.85rem; line-height:1.6; color:var(--text-muted); margin-bottom:1rem;">
+          </div>
+          <div id="permHint" style="font-size:0.85rem; line-height:1.6; color:var(--text-muted); margin-bottom:1rem;">
+          </div>
+          <div id="costHint" style="font-size:0.85rem; line-height:1.6; color:var(--text-muted);"></div>
         </div>
-        <div id="permHint" style="font-size:0.85rem; line-height:1.6; color:var(--text-muted); margin-bottom:1rem;">
-        </div>
-        <div id="costHint" style="font-size:0.85rem; line-height:1.6; color:var(--text-muted);"></div>
       </div>
 
       <div id="countHint" style="text-align:right; margin-top:1.5rem; font-size:0.75rem; color:var(--text-muted);">
@@ -170,14 +189,14 @@
   </main>
 
   <footer class="footer">
-    <p>© 2026 Microsistemas Suite · Entorno de Operaciones AWS Seguro</p>
+    <p>© 2026 Microsistemas Suite · Herramienta Experimental de Operaciones Cloud</p>
   </footer>
 
   <div id="modal" class="modal hidden">
     <div class="modal-card">
       <div class="modal-header">
-        <h2 id="modalTitle" style="margin:0; font-size:1.1rem; font-weight:700;">Historial</h2>
-        <button id="modalClose" class="ghost" style="font-size:1.5rem;">✕</button>
+        <h2 id="modalTitle">Detalle</h2>
+        <button id="modalClose" class="ghost">✕</button>
       </div>
       <div id="modalBody" class="modal-body"></div>
     </div>
