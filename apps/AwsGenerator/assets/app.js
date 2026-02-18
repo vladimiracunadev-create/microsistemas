@@ -430,6 +430,106 @@ function renderHistory() {
   `).join("");
 }
 
+// --- UX & ONBOARDING HELPERS ---
+
+function showOnboarding() {
+  const html = `
+    <div class="welcome-state" style="padding: 1rem 0;">
+      <h3 style="color:var(--text); margin-bottom:1.5rem;">Guía de Inicio Rápido</h3>
+      <div class="tour-grid">
+        <div class="tour-item">
+          <h4><span class="step-badge">1</span> Configura</h4>
+          <p>Define tu <b>Perfil AWS</b> para asegurar que el comando se ejecute en la cuenta correcta. Selecciona tu <b>Región</b> (ej: us-east-1) para apuntar a tus recursos.</p>
+        </div>
+        <div class="tour-item">
+          <h4><span class="step-badge">2</span> Elige</h4>
+          <p>Usa el buscador o los filtros para encontrar una <b>Receta</b>. Estas son plantillas probadas de comandos reales para tareas comunes.</p>
+        </div>
+        <div class="tour-item">
+          <h4><span class="step-badge">3</span> Personaliza</h4>
+          <p>Completa los parámetros (como nombres de buckets o IDs de instancia). El comando se generará <b>en tiempo real</b> a medida que escribes.</p>
+        </div>
+        <div class="tour-item">
+          <h4>🚀 Ejecuta</h4>
+          <p>Copia el comando a tu terminal o expórtalo como script <b>.sh</b> o <b>.ps1</b> para automatizar tus flujos de trabajo.</p>
+        </div>
+      </div>
+      <button class="primary" style="margin-top:2rem;" onclick="hideModal()">¡Entendido, vamos a trabajar!</button>
+    </div>
+  `;
+  showModal("¿Cómo usar el Asistente AWS?", html);
+}
+
+function explainCommand(r, vars) {
+  if (!r) return "";
+  let baseAction = r.title.replace(/AWS CLI/gi, "").trim();
+  let explanation = `🤖 <b>Acción:</b> ${baseAction}.<br>`;
+
+  if (vars.dryrun_flag) {
+    explanation += `<span style="color:var(--accent);">⚠️ Estás en modo DRY-RUN: Se simulará la acción sin aplicar cambios reales.</span>`;
+  } else if (r.risk?.level === "alto") {
+    explanation += `<span style="color:var(--danger);">⚠️ ADVERTENCIA: Esta es una operación de alto riesgo. Revisa los parámetros cuidadosamente.</span>`;
+  } else {
+    explanation += `Listo para ejecutar de forma segura en el entorno configurado.`;
+  }
+
+  return explanation;
+}
+
+// Actualización de la función generate para incluir la explicación
+function generate(silent = true) {
+  const r = getSelectedRecipe();
+  if (!r) {
+    renderRecipeMeta(null);
+    return;
+  }
+
+  const globals = getGlobalFlags();
+
+  if (!silent && prodLockBlocks(r, globals)) {
+    alert("Bloqueado: perfil parece prod y 'Bloquear peligrosos en prod' está activo.");
+    return;
+  }
+
+  if (!silent && !requireDangerConfirm(r)) {
+    alert("Debes confirmar el riesgo (checkbox) antes de generar.");
+    return;
+  }
+
+  const missing = validateParams(r);
+  if (!silent && missing.length) {
+    alert("Faltan parámetros obligatorios: " + missing.join(", "));
+    return;
+  }
+
+  const vars = { ...globals, ...buildVarsFromParams(r.params || []) };
+  if (!r.supports_dryrun) vars.dryrun_flag = "";
+
+  const cmd = applyTemplate(r.command, vars).trim().replace(/\s+/g, " ").trim();
+  $("outCommand").textContent = cmd || "(vacío)";
+
+  const pre = (r.prechecks || []).map(x => applyTemplate(x.command, vars).trim()).filter(Boolean).join("\n");
+  $("outPrechecks").textContent = pre || "(sin prechecks)";
+
+  const cln = (r.cleanup || []).map(x => applyTemplate(x.command, vars).trim()).filter(Boolean).join("\n");
+  $("outCleanup").textContent = cln || "(sin cleanup)";
+
+  const risk = r.risk || { level: "bajo", notes: "" };
+  const riskColor = risk.level === "alto" ? "var(--danger)" : (risk.level === "medio" ? "#f59e0b" : "var(--success)");
+
+  $("riskPill").innerHTML = `<span style="padding:6px 14px; border-radius:999px; background:${riskColor}15; color:${riskColor}; border:1px solid ${riskColor}30; font-size:0.7rem; font-weight:700; letter-spacing:0.05em;">NIVEL DE RIESGO: ${risk.level.toUpperCase()}</span>`;
+  $("riskNotes").innerHTML = risk.notes ? `<div style="margin-bottom:4px; font-weight:700; color:var(--text); font-size:0.75rem; text-transform:uppercase;">Notas de Seguridad</div>${risk.notes}` : "";
+  $("permHint").innerHTML = r.permissions_hint ? `<div style="margin-bottom:4px; font-weight:700; color:var(--text); font-size:0.75rem; text-transform:uppercase;">Permisos IAM Necesarios</div>${r.permissions_hint}` : "";
+  $("costHint").innerHTML = r.cost_hint ? `<div style="margin-bottom:4px; font-weight:700; color:var(--text); font-size:0.75rem; text-transform:uppercase;">Impacto en Costos</div>${r.cost_hint}` : "";
+
+  // Nueva explicación en lenguaje natural
+  const langEl = $("naturalLanguage");
+  if (langEl) langEl.innerHTML = explainCommand(r, vars);
+
+  pushHistory(r, vars, cmd);
+}
+
+// Modificación de wireSelectors para los nuevos elementos
 function wireSelectors() {
   $("service").addEventListener("change", () => {
     refreshCategories();
@@ -444,7 +544,18 @@ function wireSelectors() {
     updateDangerBox(r);
   });
   $("search").addEventListener("input", () => refreshRecipes());
-  $("btnGenerate").addEventListener("click", generate);
+
+  // Quick Starts
+  document.querySelectorAll(".quick-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      $("search").value = btn.getAttribute("data-search");
+      refreshRecipes();
+    });
+  });
+
+  $("btnHelp").addEventListener("click", showOnboarding);
+
+  $("btnGenerate").addEventListener("click", () => generate(false));
   $("btnReset").addEventListener("click", () => {
     $("search").value = "";
     $("service").value = "all";
@@ -458,7 +569,7 @@ function wireSelectors() {
     $("riskNotes").textContent = "";
     $("permHint").textContent = "";
     $("costHint").textContent = "";
-    renderRecipeMeta(null); // Show welcome screen
+    renderRecipeMeta(null);
   });
 
   $("btnFavorite").addEventListener("click", () => {
@@ -469,10 +580,10 @@ function wireSelectors() {
   });
 
   $("btnHistory").addEventListener("click", () => {
-    showModal("Historial (últimas 50)", renderHistory());
+    showModal("Historial de Operaciones", renderHistory());
   });
 
-  $("dangerConfirm").addEventListener("change", () => { /* no-op */ });
+  $("dangerConfirm").addEventListener("change", () => debounceGenerate());
 
   $("modalClose").addEventListener("click", hideModal);
   $("modal").addEventListener("click", (e) => { if (e.target.id === "modal") hideModal(); });

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Microsistemas | AWS CLI Generator</title>
+  <title>AWS Operations Assistant | Microsistemas</title>
   <link rel="stylesheet" href="./assets/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,50 +17,55 @@
     <div class="brand">
       <div class="logo">☁️</div>
       <div>
-        <h1>AWS CLI Generator</h1>
-        <p class="muted">Asistente de comandos AWS CLI · Paso a Paso</p>
+        <h1>AWS Operations Assistant</h1>
+        <p class="muted">Convierte tareas complejas de la nube en comandos seguros y listos para ejecutar.</p>
       </div>
     </div>
-    <a href="../../index.php" class="back-link">
-      <button class="ghost">← Dashboard</button>
-    </a>
+    <div style="display:flex; gap:12px; align-items:center;">
+      <button id="btnHelp" class="ghost" style="color:var(--accent); font-weight:700;">¿Cómo funciona?</button>
+      <a href="../../index.php" class="back-link">
+        <button class="ghost">← Dashboard</button>
+      </a>
+    </div>
   </header>
 
   <div class="globals-container">
     <div class="step-header" style="margin-left: 2rem; border-bottom: none; margin-bottom: 0.5rem;">
       <span class="step-badge">1</span>
-      <h2>Configuración de Entorno</h2>
+      <h2>Punto de Origen: ¿Dónde operamos?</h2>
+      <span class="muted" style="margin-left: 1rem; font-size: 0.75rem;">Define tu perfil de acceso y región para evitar
+        errores de cuenta.</span>
     </div>
     <div class="globals">
       <div class="field">
-        <label for="profile">AWS Profile</label>
-        <input id="profile" type="text" placeholder="default"
-          title="Selecciona el perfil de credenciales (.aws/credentials)" />
+        <label for="profile">AWS Profile <span title="Perfil de credenciales en ~/.aws/credentials"
+            style="cursor:help;">ⓘ</span></label>
+        <input id="profile" type="text" placeholder="default" />
       </div>
       <div class="field">
-        <label for="region">Region</label>
-        <input id="region" type="text" placeholder="sa-east-1" title="Región de AWS donde se ejecutarán los comandos" />
+        <label for="region">Región <span title="Zona geográfica de AWS" style="cursor:help;">ⓘ</span></label>
+        <input id="region" type="text" placeholder="sa-east-1" />
       </div>
       <div class="field">
-        <label for="output">Formato de Salida</label>
+        <label for="output">Formato</label>
         <select id="output">
-          <option value="">(sin flag)</option>
-          <option value="--output json">JSON</option>
-          <option value="--output table">Table</option>
-          <option value="--output text">Text</option>
+          <option value="">(estándar)</option>
+          <option value="--output json">JSON (Intercambio)</option>
+          <option value="--output table">Tabla (Lectura)</option>
+          <option value="--output text">Texto (Simple)</option>
         </select>
       </div>
       <div class="field">
-        <label>Opciones Globales</label>
+        <label>Protección y Modo</label>
         <div style="display:flex; gap:12px; flex-wrap:wrap; padding-top:4px;">
           <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"><input
-              id="useProfile" type="checkbox" checked /> --profile</label>
+              id="useProfile" type="checkbox" checked /> Usar Perfil</label>
           <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"><input
-              id="useRegion" type="checkbox" checked /> --region</label>
+              id="useRegion" type="checkbox" checked /> Usar Región</label>
           <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"><input
-              id="useDryRun" type="checkbox" /> Dry-run</label>
+              id="useDryRun" type="checkbox" /> Modo Prueba (Simular)</label>
           <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;"><input
-              id="lockProd" type="checkbox" /> Lock Prod</label>
+              id="lockProd" type="checkbox" /> Trabar en Producción</label>
         </div>
       </div>
     </div>
@@ -70,87 +75,97 @@
     <section class="card">
       <div class="step-header">
         <span class="step-badge">2</span>
-        <h2>Selección de Receta</h2>
+        <h2>Busca una Solución</h2>
         <div style="margin-left: auto; display:flex; gap:8px;">
-          <button id="btnFavorite" class="ghost" style="padding:4px 10px;" title="Tus Favoritos">⭐</button>
-          <button id="btnHistory" class="ghost" style="padding:4px 10px;" title="Historial Reciente">🕘</button>
+          <button id="btnFavorite" class="ghost" style="padding:4px 10px;" title="Ver Favoritos">⭐</button>
+          <button id="btnHistory" class="ghost" style="padding:4px 10px;" title="Ver Historial">🕘</button>
         </div>
       </div>
 
       <div class="field">
-        <label for="search">Filtro Inteligente</label>
-        <input id="search" type="search" placeholder="Busca por acción: s3 sync, ecs deploy, lambda update..." />
+        <label for="search">¿Qué necesitas hacer hoy?</label>
+        <input id="search" type="search" placeholder="Ej: sincronizar s3, reiniciar servicio, crear usuario..." />
+      </div>
+
+      <div id="quickStarts" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1.5rem;">
+        <span style="font-size:0.75rem; color:var(--text-muted); width:100%; margin-bottom:4px;">Ejemplos
+          rápidos:</span>
+        <button class="quick-btn" data-search="s3 sync">Sincronizar S3</button>
+        <button class="quick-btn" data-search="ecs force-deployment">Reiniciar ECS</button>
+        <button class="quick-btn" data-search="lambda update-code">Update Lambda</button>
+        <button class="quick-btn" data-search="ec2 instances">Listar EC2</button>
       </div>
 
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
         <div class="field">
-          <label for="service">Filtrar por Servicio</label>
+          <label for="service">Servicio Cloud</label>
           <select id="service"></select>
         </div>
         <div class="field">
-          <label for="category">Categoría</label>
+          <label for="category">Acción / Objetivo</label>
           <select id="category"></select>
         </div>
       </div>
 
       <div class="field">
-        <label for="recipe">Receta Detectada</label>
+        <label for="recipe">Receta de Operación</label>
         <select id="recipe"></select>
       </div>
 
       <div id="recipeMeta"
-        style="margin: 1rem 0; padding:1.25rem; border-radius:16px; background:rgba(15, 23, 42, 0.4); border:1px solid var(--border);">
+        style="margin: 1rem 0; padding:1.25rem; border-radius:16px; background:rgba(15, 23, 42, 0.4); border:1px solid var(--border); min-height:80px;">
       </div>
 
       <div id="dangerBox" class="danger-box hidden">
         <div
           style="font-weight:700; color:var(--danger); margin-bottom:0.5rem; display:flex; align-items:center; gap:8px;">
-          <span>⚠️</span> RIESGO ALTO DETECTADO
+          <span>⚠️</span> ACCIÓN CRÍTICA
         </div>
-        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">Esta operación es destructiva o afecta
-          recursos críticos. Revisa bien antes de continuar.</p>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">Estás por ejecutar un comando que
+          modifica o borra recursos.</p>
         <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:0.85rem; font-weight:600;">
-          <input id="dangerConfirm" type="checkbox" /> Confirmar ejecución consciente
+          <input id="dangerConfirm" type="checkbox" /> Confirmo que revisé las variables
         </label>
       </div>
 
       <div id="step3Container" class="hidden">
         <div class="step-header" style="margin-top: 2rem;">
           <span class="step-badge">3</span>
-          <h2>Personalización</h2>
+          <h2>Variables de tu Infraestructura</h2>
         </div>
         <div id="params"></div>
-
-        <div style="display:flex; gap:1rem; margin-top:2.5rem;">
-          <button id="btnGenerate" class="primary" style="flex:2;">Forzar Generación</button>
-          <button id="btnReset" class="ghost" style="flex:1;">Reiniciar</button>
-        </div>
       </div>
     </section>
 
     <section class="card">
       <div class="step-header">
         <div class="live-indicator"></div>
-        <h2 style="font-size: 0.9rem;">Salida en Tiempo Real</h2>
+        <h2 style="font-size: 0.9rem;">Comando Generado Listo para Usar</h2>
       </div>
 
       <div id="welcomeScreen" class="welcome-state">
-        <div class="icon">🔍</div>
-        <h3>Selecciona una receta para comenzar</h3>
-        <p>Busca en el panel lateral por servicio o acción para generar el comando correspondiente.</p>
+        <div class="icon">🚀</div>
+        <h3>Bienvenido al Asistente AWS</h3>
+        <p>Selecciona una receta a la izquierda para ver cómo se construye el comando automáticamente.</p>
         <div class="hint-box">
-          <b>Tip:</b> Los comandos se actualizan automáticamente mientras completas los parámetros.
+          <b>¿Sabías que?</b> Puedes exportar el comando como un script (.sh o .ps1) para usarlo en tus procesos de
+          CI/CD.
         </div>
       </div>
 
       <div id="outputContainer" class="hidden">
+        <div id="naturalLanguage"
+          style="margin-bottom: 1.5rem; padding:1.25rem; border-radius:16px; background:rgba(59, 130, 246, 0.1); border:1px solid rgba(59, 130, 246, 0.2); font-size:0.9rem; font-weight:600;">
+          <!-- Se llena por JS -->
+        </div>
+
         <div class="code-block" style="margin-top:0;">
           <div class="code-header">
-            <h3>Comando Final</h3>
+            <h3>Código del Comando</h3>
             <div style="display:flex; gap:8px;">
               <button id="copyCmd" class="ghost" style="font-size:0.75rem;">Copiar</button>
-              <button id="exportSh" class="ghost" style="font-size:0.75rem;">Shell</button>
-              <button id="exportPs1" class="ghost" style="font-size:0.75rem;">PowerShell</button>
+              <button id="exportSh" class="ghost" style="font-size:0.75rem;">BASH (.sh)</button>
+              <button id="exportPs1" class="ghost" style="font-size:0.75rem;">POWERSHELL (.ps1)</button>
             </div>
           </div>
           <pre id="outCommand" class="code"></pre>
@@ -158,7 +173,7 @@
 
         <div class="code-block">
           <div class="code-header">
-            <h3>Verificaciones Recomendadas</h3>
+            <h3>Paso 0: Verificaciones Previas</h3>
             <button id="copyPre" class="ghost" style="font-size:0.75rem;">Copiar</button>
           </div>
           <pre id="outPrechecks" class="code"></pre>
@@ -166,7 +181,7 @@
 
         <div class="code-block" style="margin-bottom:2.5rem;">
           <div class="code-header">
-            <h3>Retroceso / Cleanup</h3>
+            <h3>Paso Final: Limpiar / Deshacer</h3>
             <button id="copyClean" class="ghost" style="font-size:0.75rem;">Copiar</button>
           </div>
           <pre id="outCleanup" class="code"></pre>
@@ -189,14 +204,15 @@
   </main>
 
   <footer class="footer">
-    <p>© 2026 Microsistemas Suite · Herramienta Experimental de Operaciones Cloud</p>
+    <p>© 2026 Microsistemas Suite · Operaciones en la Nube con Seguridad Integrada</p>
   </footer>
 
+  <!-- Modal de Ayuda / Onboarding -->
   <div id="modal" class="modal hidden">
     <div class="modal-card">
       <div class="modal-header">
         <h2 id="modalTitle">Detalle</h2>
-        <button id="modalClose" class="ghost">✕</button>
+        <button id="modalClose" class="ghost" style="font-size:1.5rem;">✕</button>
       </div>
       <div id="modalBody" class="modal-body"></div>
     </div>
