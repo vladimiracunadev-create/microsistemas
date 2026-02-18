@@ -2,6 +2,18 @@
 
 Todos los cambios notables en este proyecto serán documentados en este archivo. El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-02-18
+
+### Añadido
+
+- **AwsGenerator (Nuevo Microsistema)**: Generador experto de comandos AWS CLI con validación de seguridad proactiva, gestión de favoritos y exportación de scripts multilingüe (.sh, .ps1).
+- **Integración Profunda**: Incorporación del generador en el Dashboard principal, guías para reclutadores, manuales de usuario y catálogo técnico.
+
+### Mejorado
+
+- ** README principal**: Reorganización alfabética del catálogo de herramientas para una mejor navegación.
+- **Branding**: Alineación estética de `AwsGenerator` con el ecosistema Microsistemas.
+
 ## [1.2.2] - 2026-02-15
 
 ### Añadido

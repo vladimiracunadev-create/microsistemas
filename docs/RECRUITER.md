@@ -378,4 +378,4 @@ Si estás evaluando este proyecto como parte de un proceso de selección, te rec
 
 ---
 
-*Última actualización: 15 de Febrero, 2026 (v1.2.2)*
+*Última actualización: 18 de Febrero, 2026 (v1.3.0)*
