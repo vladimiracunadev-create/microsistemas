@@ -1,14 +1,16 @@
-# AwsGenerator (recetas reales para AWS CLI)
+# AWS Assistant Pro (Expert Recipes for AWS CLI)
+![Version](https://img.shields.io/badge/version-2.1.0-blue)
 
-Microsistema tipo “generador de comandos” similar al de Git, pero para **AWS CLI**.
+**AWS Assistant Pro** es un asistente inteligente diseñado para simplificar la gestión de infraestructura en la nube. A diferencia de un simple generador, guía al usuario a través de un flujo intuitivo basado en intenciones reales de negocio.
 
-Incluye:
-- Base de recetas en JSON (`data/aws.commands.json`) con **recetas reales** (comandos existentes en AWS CLI).
-- UI estática (HTML/CSS/JS): búsqueda, filtros, parámetros.
-- ⭐ Favoritos + 🕘 Historial (localStorage).
-- Exportación de scripts: **.sh** y **.ps1** (incluye prechecks + comando + cleanup).
-- Seguridad: confirmación para recetas **alto riesgo**, y bloqueo opcional si el perfil parece `prod`.
-- Validación automática (CI): `.github/workflows/validate.yml` + `scripts/validate.py`.
+## Características Destacadas (v2.1.0) 🚀
+- **Navegación Guiada**: Selector de intenciones (Consultar, Gestionar, Seguridad) que filtra automáticamente los servicios relevantes.
+- **GlassCode Syntax Highlighting**: Resaltado de sintaxis en tiempo real para comandos de AWS CLI.
+- **Semáforo de Impacto**: Indicadores visuales de riesgo operativo (Rojo/Amarillo/Verde) con explicaciones en lenguaje natural.
+- **EduIcons**: Ayuda contextual (`ⓘ`) en parámetros técnicos para facilitar el aprendizaje.
+- **Seguridad**: Bloqueo inteligente de comandos peligrosos en perfiles de producción y Modo Simulado (Dry-run).
+- **Favoritos + Historial**: Gestión de recetas preferidas y rastro de comandos previos.
+- **Exportación Multi-plataforma**: Generación de scripts `.sh` (Bash) y `.ps1` (PowerShell) listos para producción.
 
 ---
 

@@ -1,15 +1,14 @@
-# Costos y seguridad
+# Seguridad y Control de Impacto (AWS Assistant Pro)
 
-## Regla de oro
-Si un comando crea compute (EC2/ECS/RDS), asume costo si queda encendido.
+## El Semáforo de Impacto 🚦
+La herramienta clasifica cada acción según su riesgo operativo potencial:
 
-## Budgets
-**Budgets normalmente solo avisa** (email/SNS). No corta servicios por sí solo.
+- 🔴 **Riesgo Alto (Crítico)**: Acciones destructivas (`delete`, `terminate`), cambios en IAM o políticas públicas. Requieren doble confirmación.
+- 🟡 **Riesgo Medio (Modificación)**: Actualizaciones de código, cambios de configuración en servicios activos o despliegues.
+- 🟢 **Riesgo Bajo (Consulta)**: Comandos de lectura como `list`, `describe` o `get-metrics`.
 
-## Riesgos típicos
-- **Alto**: IAM, delete, terminate, policies públicas, `--force`, `--delete`, `rm --recursive`.
-- **Medio**: despliegues (ECS/Lambda/CFN), cambios de config.
-- **Bajo**: list/describe/get/metrics/logs.
+## Regla de Oro
+Si un comando crea recursos de cómputo (EC2/ECS/RDS), asume que generará costos inmediatamente si queda activo. Usa la sección de **Cost Hint** integrada en la receta.
 
 ## Recomendaciones para tu caso (free tier + créditos)
 - Usa perfiles separados: `dev` y `prod`.

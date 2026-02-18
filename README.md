@@ -112,7 +112,7 @@ docker-compose up -d
 
 | Herramienta | Tecnología | Propósito |
 | :--- | :--- | :--- |
-| **[AwsGenerator](apps/AwsGenerator)** | ![DevOps](https://img.shields.io/badge/-DevOps-2496ED?logo=docker&logoColor=white) | Generador de recetas y comandos para AWS CLI con validación de seguridad, favoritos y exportación. |
+| **[AWS Assistant Pro](apps/AwsGenerator)** | ![DevOps](https://img.shields.io/badge/-DevOps-2496ED?logo=docker&logoColor=white) | Asistente inteligente (v2.1.0) para AWS CLI con navegación por intenciones, semáforo de riesgo y resaltado de sintaxis. |
 | **[CapacitySim](apps/CapacitySim)** | ![DevOps](https://img.shields.io/badge/-DevOps-2496ED?logo=docker&logoColor=white) | Simulador heurístico de capacidad y RPS para infraestructuras con estimación de costos. |
 | **[CicdLibrary](apps/CicdLibrary)** | ![DevOps](https://img.shields.io/badge/-DevOps-2496ED?logo=docker&logoColor=white) | Biblioteca técnica interactiva con 192 combinaciones de CI/CD para GitHub, GitLab y Jenkins. |
 | **[Conversor](apps/Conversor)** | ![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white) | Herramienta de sanitización y codificación segura de texto. |
