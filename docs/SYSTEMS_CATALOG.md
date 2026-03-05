@@ -72,11 +72,11 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 - **¿Para qué?**: Para preparar el código antes de subirlo a producción, haciéndolo más ligero y difícil de copiar por terceros.
 - **Importancia**: Rendimiento y Propiedad Intelectual. Menos peso de archivo significa que tu web carga más rápido.
 
-### 🧩 Katas MultiLang (El Comparador Visual)
+### 🧩 Katas MultiLang (El Comparador Visual Premium)
 
-- **¿Qué hace?**: Compara visualmente soluciones de código en múltiples lenguajes y frameworks.
-- **¿Para qué?**: Para encontrar rápidamente la sintaxis o enfoque correcto de un patrón en diferentes lenguajes con opciones de filtrado y copiado rápido.
-- **Importancia**: Acelera el desarrollo en entornos políglotas, funcionando como una referencia unificada y rápida para buenas prácticas.
+- **¿Qué hace?**: Compara visualmente 195 soluciones únicas de código en múltiples lenguajes y frameworks a través de una interfaz de alta factura visual (Glassmorphism & Grid Layout).
+- **¿Para qué?**: Para encontrar rápidamente la sintaxis o enfoque correcto de un patrón en diferentes lenguajes con opciones de filtrado, copiado instantáneo, y soporte de modo paralelo (lado a lado).
+- **Importancia**: Acelera el desarrollo en entornos políglotas, funcionando como una referencia unificada y rápida para buenas prácticas con un diseño inmersivo y oscuro antifatiga.
 
 ### 📄 YAML Studio (El Ingeniero de Configuración)
 
