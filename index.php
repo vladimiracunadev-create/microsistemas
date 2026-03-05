@@ -187,6 +187,16 @@
             <a href="apps/JsTools/" class="btn">Abrir Herramienta</a>
         </div>
 
+        <!-- Tarjeta KatasMultiLang -->
+        <div class="card">
+            <div>
+                <span class="badge js">HTML + JS</span>
+                <h2>Katas MultiLang</h2>
+                <p>Comparador visual de soluciones por caso en múltiples lenguajes y frameworks (copiar rápido + filtros).</p>
+            </div>
+            <a href="apps/KatasMultiLang/" class="btn">Abrir Herramienta</a>
+        </div>
+
         <!-- Tarjeta 5 -->
         <div class="card">
             <div>

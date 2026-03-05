@@ -1,0 +1,7 @@
+name: KatasMultiLang
+type: static
+description: Comparador visual de soluciones por caso en múltiples lenguajes y frameworks (JSON por lenguaje, carga bajo demanda, copiar rápido).
+ports:
+  - 80
+healthcheck: /
+run_cmd: null

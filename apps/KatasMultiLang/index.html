@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Multi-JSON Katas</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">{ }</div>
+      <div class="title">
+        <h1>Multi-JSON Katas</h1>
+        <p>714 casos · 67 lenguajes · JSON por lenguaje (carga bajo demanda)</p>
+      </div>
+    </div>
+
+
+    <div class="modeToggle">
+      <button id="modeCompareBtn" class="btn on">Comparar por caso</button>
+      <button id="modeExploreBtn" class="btn">Explorar por lenguaje</button>
+    <div class="quickbar">
+  <div class="pills">
+    <a class="pill" href="?mode=compare&case=C0683" title="Pack Web Frameworks (C0683–C0702)">📦 Pack Web Frameworks</a>
+    <a class="pill" href="?mode=compare&cat=Base%20de%20datos" title="Filtrar por categoría Base de datos">🗄️ Base de datos</a>
+    <a class="pill" href="?mode=compare&cat=Reportes" title="Filtrar por Reportes (Excel/PDF/Gráficos)">📄 Reportes</a>
+    <a class="pill" href="?mode=compare&cat=Seguridad" title="JWT/Hash/Validaciones">🛡️ Seguridad</a>
+    <a class="pill" href="?mode=explore&el=nodejs" title="Explorar por lenguaje: Node.js">🧭 Explorar Node</a>
+  </div>
+
+  <details class="help">
+    <summary>Ayuda rápida</summary>
+    <ul>
+      <li><b>Comparar por caso:</b> elige un caso y verás su solución en varios lenguajes.</li>
+      <li><b>Explorar por lenguaje:</b> eliges un lenguaje y recorres los casos de <i>simple → complejo</i>.</li>
+      <li><b>Copiar:</b> en cada bloque usa el botón <b>Copiar</b> (queda listo para pegar en tu editor).</li>
+      <li><b>URL compartible:</b> el estado se guarda en la barra de direcciones (case/langs/cat/lvl/mode).</li>
+    </ul>
+  </details>
+</div>
+
+</div>
+
+
+    <div class="controls" id="controlsExplore" style="display:none">
+      <div class="control">
+        <label for="exploreLangSelect">Lenguaje</label>
+        <select id="exploreLangSelect"></select>
+      </div>
+
+      <div class="control">
+        <label for="exploreSearch">Buscar caso</label>
+        <input id="exploreSearch" type="search" placeholder="Ej: C0678, CTE, reloj, PDF..." />
+      </div>
+
+      <div class="control">
+        <label for="exploreLevelSelect">Nivel</label>
+        <select id="exploreLevelSelect">
+          <option value="__all__" selected>Todos</option>
+          <option value="Básico">Básico</option>
+          <option value="Intermedio">Intermedio</option>
+          <option value="Avanzado">Avanzado</option>
+        </select>
+      </div>
+
+      <div class="control actions">
+        <label>&nbsp;</label>
+        <div class="btnrow">
+          <button id="exploreLoadMoreBtn" class="btn">+ Cargar 50</button>
+          <button id="exploreTopBtn" class="btn">⬆ Arriba</button>
+        </div>
+      </div>
+
+      <div class="control wide">
+        <label>Relacionados</label>
+        <div id="exploreRelated" class="related"></div>
+      </div>
+    </div>
+
+        <div class="controls" id="controlsCompare">
+      <div class="control">
+        <label for="search">Buscar</label>
+        <input id="search" type="search" placeholder="Ej: IVA, círculo, anagrama, búsqueda..." />
+      </div>
+
+      <div class="control">
+        <label for="categorySelect">Categoría</label>
+        <select id="categorySelect"></select>
+      </div>
+
+      <div class="control">
+        <label for="levelSelect">Nivel</label>
+        <select id="levelSelect">
+          <option value="__all__" selected>Todos</option>
+          <option value="Básico">Básico</option>
+          <option value="Intermedio">Intermedio</option>
+          <option value="Avanzado">Avanzado</option>
+        </select>
+      </div>
+
+      <div class="control">
+        <label for="caseSelect">Caso</label>
+        <select id="caseSelect"></select>
+      </div>
+
+      <div class="control actions">
+        <label>&nbsp;</label>
+        <div class="btnrow">
+          <button id="randomBtn" class="btn">🎲 Aleatorio</button>
+          <button id="resetLangsBtn" class="btn">↺ Reset lenguajes</button>
+          <button id="allLangsBtn" class="btn">≡ Todos</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card" id="comparePanel">
+      <div class="meta">
+        <div>
+          <h2 id="caseName">Cargando...</h2>
+          <p id="caseDesc" class="muted"></p>
+        </div>
+        <div class="badges">
+          <span id="badgeLevel" class="badge">Nivel</span>
+          <span id="badgeCategory" class="badge badge2">Categoría</span>
+          <span id="badgeId" class="badge badge3">ID</span>
+        </div>
+      </div>
+
+      <div class="langhelp">Selecciona <b>lenguajes</b> para comparar (puedes activar varios).</div>
+      <div class="langbar" id="langbar"></div>
+
+      <div id="codeArea" class="codeArea">
+        <div class="loading">Cargando meta.json...</div>
+      </div>
+    </section>
+
+    <section class="card" id="explorePanel" style="display:none">
+      <div class="meta">
+        <div>
+          <h2 id="exploreTitle">Explorar por lenguaje</h2>
+          <p id="exploreDesc" class="muted">Elige un lenguaje arriba. Verás los casos ordenados de <b>Básico → Avanzado</b> y podrás copiar el código.</p>
+        </div>
+        <div class="badges">
+          <span id="exploreBadgeLang" class="badge">Lenguaje</span>
+          <span id="exploreBadgeCount" class="badge badge2">0 casos</span>
+        </div>
+      </div>
+
+      <div id="exploreArea" class="codeArea">
+        <div class="loading">Selecciona un lenguaje para comenzar.</div>
+      </div>
+    </section>
+
+<section class="card small">
+      <h3>Cómo funciona</h3>
+      <ul class="tips">
+        <li><b>meta.json</b>: lista de casos (sin código).</li>
+        <li><b>data/lang/&lt;lenguaje&gt;.json</b>: snippets por ID.</li>
+        <li>En modo pestañas, solo carga el JSON del lenguaje seleccionado.</li>
+      </ul>
+      <p class="muted" style="margin-top:10px;">
+        Si al abrir como archivo falla por CORS: ejecuta <code>python -m http.server 8000</code> y abre <code>http://localhost:8000</code>.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Hecho para estudio mental — escala con Multi-JSON.</span>
+    <span class="muted">Repo demo</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-powershell.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-r.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-sql.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-kotlin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-scala.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-dart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-swift.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-csharp.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-go.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-rust.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-julia.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-php.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-ruby.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-perl.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-lua.min.js"></script>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

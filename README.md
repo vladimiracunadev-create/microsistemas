@@ -118,6 +118,7 @@ docker-compose up -d
 | **[Conversor](apps/Conversor)** | ![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white) | Herramienta de sanitización y codificación segura de texto. |
 | **[GitTrainer](apps/GitTrainer)** | ![JS](https://img.shields.io/badge/-JS-F7DF1E?logo=javascript&logoColor=black) | Biblioteca interactiva de comandos Git y aprendizaje visual. |
 | **[JsTools](apps/JsTools)** | ![JS](https://img.shields.io/badge/-JS-F7DF1E?logo=javascript&logoColor=black) | Colección de herramientas y utilidades JavaScript para productividad. |
+| **[KatasMultiLang](apps/KatasMultiLang)** | ![JS](https://img.shields.io/badge/-JS-F7DF1E?logo=javascript&logoColor=black) | Comparador visual de soluciones por caso en múltiples lenguajes y frameworks (copiar rápido + filtros). |
 | **[LogViewer](apps/LogViewer)** | ![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white) | Auditoría segura y visualización de logs del sistema en tiempo real. |
 | **[PhpMigrator](apps/PhpMigrator)** | ![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white) | Modernización de código PHP legacy (5.x) a estándares modernos (8.x). |
 | **[SqlViewer](apps/SqlViewer)** | ![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white) | Inspección y gestión de bases de datos sin necesidad de clientes pesados. |
