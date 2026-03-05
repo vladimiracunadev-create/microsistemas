@@ -2,7 +2,7 @@
 
 Microsistema para **estudiar y comparar** cómo se resuelven problemas (“katas/casos”) en **muchos lenguajes y frameworks**, desde una sola interfaz `index.html`.
 
-- **714 casos** (incluye pack de frameworks web **C0683–C0702**)
+- **195 casos únicos** (incluye pack de frameworks web **C0683–C0702** y limpiados de duplicados)
 - **67 lenguajes/frameworks**
 - **Datos en JSON por lenguaje**, cargados **bajo demanda** (no revienta el navegador)
 - Cada bloque tiene botón **Copiar** y resaltado de sintaxis (Prism)
