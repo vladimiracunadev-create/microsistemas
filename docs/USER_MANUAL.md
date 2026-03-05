@@ -39,6 +39,11 @@ La suite se organiza en un **Dashboard Central** que actúa como puerta de enlac
 * **Propósito**: Dominio interactivo de flujos Git.
 * **Workflow Pro**: Busque por "dolores de cabeza" comunes (ej: "olvidé añadir un archivo al último commit") para encontrar soluciones elegantes.
 
+#### Katas MultiLang
+
+* **Propósito**: Comparador visual de código para dominar múltiples lenguajes o frameworks.
+* **Workflow Pro**: Cambie al modo "Comparar Caso", seleccione dos lenguajes (ej: Python y JavaScript) en el panel izquierdo (con diseño UI Premium), y explore cómo se resuelve un mismo problema lado a lado en distintas tecnologías para acelerar su aprendizaje.
+
 ---
 
 ### 🔧 Utilidades de Configuración

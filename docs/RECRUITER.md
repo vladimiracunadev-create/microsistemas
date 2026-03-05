@@ -248,6 +248,20 @@ Una suite unificada de micro-aplicaciones que:
 
 ---
 
+### 11. **Katas MultiLang** (apps/KatasMultiLang)
+
+**Problema**: Fragmentación de conocimiento al estudiar y comparar cómo se resuelven problemas en distintos lenguajes, requiriendo búsquedas dispersas y pérdida de contexto.
+
+**Solución Técnica**:
+
+- Comparador visual Multi-JSON interactivo con carga bajo demanda para 67 lenguajes.
+- UI Premium (Glassmorphism + Grid Layout) para visualización Side-by-Side.
+- Catálogo deduplicado y curado de 195 casos/katas únicos.
+
+**Complejidad**: Media-Alta | **Impacto**: Muy Alto (Educación/Productividad Políglota)
+
+---
+
 ## 🛡️ Seguridad y Mejores Prácticas
 
 ### Medidas Implementadas
