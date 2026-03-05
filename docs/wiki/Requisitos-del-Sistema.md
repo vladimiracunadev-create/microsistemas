@@ -83,6 +83,11 @@ Si despliega en un entorno con firewall restringido, asegúrese de liberar los s
 | SQL Viewer | ✅ | ✅ | ✅ |
 | Git Trainer | ✅ | ✅ | ✅ |
 | CapacitySim | ✅ | ✅ | ✅ |
+| KatasMultiLang | ✅ | ✅ | ✅ |
+| CicdLibrary | ✅ | ✅ | ✅ |
+| AWS Assistant Pro | ✅ | ✅ | ✅ |
 | **Make commands** | ⚠️ (Requiere install) | ✅ | ✅ |
+| **make lint-md** | ⚠️ (Requiere npx) | ✅ | ✅ (CI automático) |
+| **Skills Playbooks** | ✅ | ✅ | ✅ |
 
 > **Nota**: Para entornos de producción, se recomienda encarecidamente deshabilitar las herramientas de depuración como *SQL Viewer* o protegerlas tras una VPN.

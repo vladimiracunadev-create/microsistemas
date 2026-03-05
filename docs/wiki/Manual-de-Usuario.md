@@ -67,10 +67,19 @@ La suite se organiza en un **Dashboard Central** que actúa como puerta de enlac
 * **Propósito**: Consulta y generación de arquitecturas de despliegue.
 * **Workflow Pro**: Use el buscador para encontrar su stack (ej: "node ssh") y abra el modal de detalle para obtener el código YAML y la lista de secretos necesarios.
 
-#### AWS CLI Generator
+#### AWS Assistant Pro
 
-* **Propósito**: Generador de comandos AWS CLI basado en recetas reales.
-* **Workflow Pro**: Defina su perfil y región, busque una receta (ej: `s3 sync`) y use los botones de **Precheck** y **Cleanup** para asegurar ejecuciones seguras.
+* **Propósito**: Asistente inteligente para administración de AWS CLI (v2.1.0).
+* **Workflow Pro**: Use el **Selector de Intenciones**, observe el **Semáforo de Impacto** y valide con el **Modo Simulado** antes de ejecutar acciones reales.
+
+---
+
+### 🌐 Estudio y Aprendizaje
+
+#### Katas MultiLang
+
+* **Propósito**: Comparador visual de 195 katas de código en 67 lenguajes/frameworks.
+* **Workflow Pro**: Seleccione dos lenguajes en el panel lateral y active el modo "Comparar Caso" para ver la solución lado a lado. Use el botón copiar para transferir snippets al instante.
 
 ---
 
@@ -78,7 +87,8 @@ La suite se organiza en un **Dashboard Central** que actúa como puerta de enlac
 
 ### ¿Cómo añado mis propias herramientas?
 
-Consulte la [Guía de Contribución](../CONTRIBUTING.md#cómo-añadir-un-nuevo-microsistema).
+Usa el **Skill de Integración** del repo: `skills/integrar-microsistema/skill.md`.
+Flujo de 6 pasos con plantillas. Consulta también la [Guía de Contribución](Guia-de-Contribucion).
 
 ### ¿Es seguro habilitar el SQL Viewer en servidores de producción?
 

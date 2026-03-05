@@ -96,6 +96,12 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 - **¿Para qué?**: Para facilitar la administración de infraestructura AWS (S3, ECR, ECS, IAM) mediante una navegación guiada y segura.
 - **Importancia**: Es la herramienta de "seguridad primero". Incluye un **Semáforo de Impacto** visual, **Syntax Highlighting** (GlassCode) y **EduIcons** (ⓘ) que enseñan arquitectura mientras se opera, garantizando ejecuciones precisas en entornos locales y CI/CD.
 
+### 🧩 Katas MultiLang (El Comparador Visual Premium)
+
+- **¿Qué hace?**: Compara visualmente 195 soluciones de código en 67 lenguajes/frameworks a través de una interfaz Glassmorphism Premium.
+- **¿Para qué?**: Para encontrar la sintaxis correcta de un patrón en distintos lenguajes, con filtrado, copiado instantáneo y modo paralelo (lado a lado).
+- **Importancia**: Acelera el desarrollo en entornos políglotas. Funciona como referencia unificada con diseño inmersivo antifatiga.
+
 ---
 
 ## 🚀 Conclusión: ¿Por qué creamos todo esto?

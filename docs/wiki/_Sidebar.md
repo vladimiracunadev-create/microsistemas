@@ -27,4 +27,4 @@
 - **[Roadmap](Roadmap)**
 - **[Código de Conducta](Codigo-de-Conducta)**
 
-<!-- Sync: 2026-02-05 18:35 -->
+<!-- Sync: 2026-03-05 16:20 -->

@@ -84,11 +84,17 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 - **¿Para qué?**: Para estandarizar cómo el código se prueba y se despliega en GitHub, GitLab o Jenkins sin tener que investigar archivos YAML complejos desde cero.
 - **Importancia**: Eficiencia y Robustez. Proporciona patrones probados que incluyen mejores prácticas de seguridad (como OIDC y escaneo de secretos), permitiendo que cualquier proyecto de la suite sea "production-ready" en minutos.
 
-### ☁️ AwsGenerator (El Recetario Cloud)
+### ☁️ AWS Assistant Pro (El Recetario Cloud Pro)
 
-- **¿Qué hace?**: Generador de comandos AWS CLI basado en recetas reales curadas.
-- **¿Para qué?**: Para facilitar la administración de infraestructura AWS (S3, ECR, ECS, IAM) sin tener que memorizar sintaxis compleja.
-- **Importancia**: Eficiencia y Seguridad. Incluye validaciones de "alto riesgo" para comandos destructivos y permite exportar scripts listos para usar en local o CI/CD.
+- **¿Qué hace?**: Asistente inteligente (v2.1.0) para AWS CLI basado en intenciones reales de negocio.
+- **¿Para qué?**: Para facilitar la administración de infraestructura AWS (S3, ECR, ECS, IAM) mediante una navegación guiada y segura.
+- **Importancia**: Incluye **Semáforo de Impacto**, **Syntax Highlighting** y **EduIcons** que enseñan arquitectura cloud mientras se opera.
+
+### 🧩 Katas MultiLang (El Comparador Visual Premium)
+
+- **¿Qué hace?**: Compara visualmente 195 soluciones de código en 67 lenguajes/frameworks con UI Glassmorphism Premium.
+- **¿Para qué?**: Para encontrar la sintaxis correcta de un patrón en distintos lenguajes, con filtrado, copiado instantáneo y modo paralelo (lado a lado).
+- **Importancia**: Acelera el desarrollo políglota. Funciona como referencia unificada con diseño inmersivo antifatiga.
 
 ---
 
