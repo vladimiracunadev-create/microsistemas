@@ -1,0 +1,20 @@
+#!/bin/sh
+# Git pre-push hook — Markdown lint validation
+# Runs markdownlint-cli2 before every push to prevent CI failures.
+# Install: copy this file to .git/hooks/pre-push and make it executable.
+#
+# To install automatically run: make install-hooks
+
+echo "Running Markdown lint check before push..."
+npx markdownlint-cli2 "**/*.md" --ignore node_modules
+
+STATUS=$?
+if [ $STATUS -ne 0 ]; then
+  echo ""
+  echo "ERROR: Markdown lint failed. Fix the errors above before pushing."
+  echo "Tip: run 'make lint-md' to re-check locally."
+  exit 1
+fi
+
+echo "Markdown lint OK."
+exit 0

@@ -1,6 +1,6 @@
 # Makefile for Microsistemas
 
-.PHONY: help install autoload refresh up down serve git-push hub-list hub-run hub-up hub-doctor k8s-apply
+.PHONY: help install autoload refresh up down serve lint-md install-hooks git-push hub-list hub-run hub-up hub-doctor k8s-apply
 
 # Default target
 help:
@@ -21,6 +21,7 @@ help:
 	@echo "  make hub-doctor   Check system health"
 	@echo ""
 	@echo "Quality & Dev Commands:"
+	@echo "  make lint-md      Check Markdown formatting (MD022, MD032, MD037, MD047)"
 	@echo "  make validate     Run linters and static analysis"
 	@echo "  make test         Run health tests"
 	@echo "  make catalog      Regenerate app catalog"
@@ -48,9 +49,21 @@ serve:
 	php -S localhost:8000 -t .
 
 git-push:
+	@$(MAKE) lint-md || (echo "\nFix Markdown errors before pushing!" && exit 1)
 	git add .
 	git commit -m "$(MSG)"
 	git push origin main
+
+lint-md:
+	@echo "--- Checking Markdown lint ---"
+	npx markdownlint-cli2 "**/*.md" --ignore node_modules
+	@echo "--- Markdown OK ---"
+
+install-hooks:
+	@echo "Installing git hooks..."
+	cp scripts/hooks/pre-push .git/hooks/pre-push
+	chmod +x .git/hooks/pre-push
+	@echo "pre-push hook installed. Markdown will be checked before every push."
 
 ifeq ($(OS),Windows_NT)
     HUB_CLI := powershell -ExecutionPolicy Bypass -File .\hub.ps1
