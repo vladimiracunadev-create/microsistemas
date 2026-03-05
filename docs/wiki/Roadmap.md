@@ -19,10 +19,11 @@ Este documento traza el camino evolutivo de **Microsistemas Suite**. Nuestra vis
 
 *Enfoque: Refinamiento visual y robustez.*
 
-- [ ] **UI Unificada**: Implementar un sistema de diseño CSS compartido para que todas las aplicaciones en `apps/` se sientan como parte de la misma marca.
+- [x] **UI Unificada (Blueprint)**: Glassmorphism / Slate Dark implementado en KatasMultiLang como estándar de la suite.
+- [x] **Skills System**: Playbooks reutilizables en `skills/` para integrar microsistemas con coherencia total.
+- [x] **Guías para Desarrolladores**: `skills/integrar-microsistema/skill.md` — tutorial de 6 pasos + plantillas.
+- [x] **CI/CD Hardening**: Trivy instalado vía APT directo; `make lint-md` + pre-push hook anti-regresión.
 - [ ] **Localización (i18n)**: Soporte completo para Inglés y Español en todas las herramientas.
-- [ ] **Unit Testing**: Introducir PHPUnit para validar la lógica del Core (`Config`, `Database`).
-- [ ] **Guías para Desarrolladores**: Tutorial paso a paso para crear el primer microsistema desde cero.
 
 ## 📦 Fase 2: Ecosistema Extensible
 

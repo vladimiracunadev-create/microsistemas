@@ -59,9 +59,19 @@ Para garantizar la **Resiliencia Operativa**, todas las micro-apps deben impleme
 
 ## 🔄 Proceso de Mantenimiento
 
-Para añadir un nuevo microsistema de forma profesional:
+Para añadir un microsistema, usa el **Skill de Integración**:
 
-1. **Carpeta**: Crear carpeta en `apps/MiNuevaApp`.
-2. **Manifiesto**: Crear `app.manifest.yml` con el nombre, tipo y **descripción**.
-3. **Catálogo**: Ejecutar `make catalog` para actualizar el README.
-4. **Validación**: Ejecutar `make validate` localmente antes de enviar el PR.
+```bash
+cat skills/integrar-microsistema/skill.md
+```
+
+Pasos: Preflight → Carpeta → Dashboard → Docs → Chequeos → Evidencia.
+Plantillas disponibles en `skills/integrar-microsistema/templates/`.
+
+---
+
+## 🔐 Seguridad CI/CD
+
+- **Trivy**: Instalado vía `apt-get` desde repositorio oficial de Aqua Security. Genera reporte SARIF subido al Security Tab de GitHub.
+- **TruffleHog**: Detecta credenciales expuestas en cada push.
+- **Markdown Lint**: `make lint-md` + pre-push hook en `scripts/hooks/pre-push` evitan errores de formato antes de llegar al CI.

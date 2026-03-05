@@ -6,11 +6,13 @@
 
 ## 🕒 Historial de Versiones
 
-- **v1.2.2** (Actual): Integración de **CicdLibrary** y mejoras en el visor de documentación.
+- **v2.3.0** (Actual): **Skills System** — playbooks de integración + fix CI/CD Trivy + validación Markdown pre-push.
+- **v2.2.0**: **Katas MultiLang** — UI Glassmorphism Premium, 195 casos curados, 67 tecnologías side-by-side.
+- **v2.1.0**: **AWS Assistant Pro** — Guided Flow, semáforo de riesgo, EduIcons.
+- **v1.2.2**: Integración de **CicdLibrary** y mejoras en el visor de documentación.
 - **v1.2.1**: Estándar de Salud y Monitoreo.
 - **v1.2.0**: Microsistemas Hub y Escaneo de Secretos.
 - **v1.1.0**: CapacitySim Pro y Simulación de Costos Cloud.
-- **v1.0.1**: Infraestructura CI/CD y Dockerización.
 - **v1.0.0**: Lanzamiento Inicial (Arquitectura Modular).
 
 ---

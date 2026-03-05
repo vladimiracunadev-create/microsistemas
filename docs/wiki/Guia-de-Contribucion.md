@@ -54,10 +54,16 @@ Para asegurar que el proyecto se mantenga profesional y legible:
 
 ## 🏗️ Cómo añadir un Nuevo Microsistema
 
-1. Crea una carpeta en `apps/MiHerramienta`.
-2. Incluye un `index.php` o `index.html`.
-3. **Registro**: Añade una nueva tarjeta en el archivo raíz `index.php` con el icono y descripción correspondiente.
-4. **Namespace**: Si necesitas lógica de servidor, añade una clase en `src/Utils/` y úsala mediante el autoloader.
+Usa el **Skill de Integración** incluido en el repo:
+
+```bash
+cat skills/integrar-microsistema/skill.md
+```
+
+El skill cubre 6 pasos: Preflight → Carpeta → Dashboard → Docs → Chequeos → Evidencia.
+Incluye plantillas en `skills/integrar-microsistema/templates/` y un `referencia.txt` con inputs de ejemplo.
+
+> Antes de hacer push, ejecuta `make lint-md` para validar Markdown localmente.
 
 ---
 
