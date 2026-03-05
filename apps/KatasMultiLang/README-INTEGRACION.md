@@ -1,7 +1,7 @@
 # Integración en tu repo `microsistemas`
 
 ## 1) Copiar carpeta
-    
+
 Copia esta carpeta completa a:
 
 - `microsistemas/apps/KatasMultiLang/`
