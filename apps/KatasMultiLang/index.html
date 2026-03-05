@@ -1,49 +1,54 @@
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Multi-JSON Katas</title>
+
+  <!-- Modern Font (Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
   <link rel="stylesheet" href="assets/styles.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+
+  <!-- Prism Syntax Highlighting (Okaidia theme fits dark mode well) -->
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
 </head>
+
 <body>
   <header class="topbar">
     <div class="brand">
       <div class="logo">{ }</div>
       <div class="title">
         <h1>Multi-JSON Katas</h1>
-        <p>195 casos · 67 lenguajes · JSON por lenguaje (carga bajo demanda)</p>
+        <p>195 casos · 67 lenguajes · Carga bajo demanda</p>
       </div>
     </div>
 
-
     <div class="modeToggle">
-      <button id="modeCompareBtn" class="btn on">Comparar por caso</button>
-      <button id="modeExploreBtn" class="btn">Explorar por lenguaje</button>
-    <div class="quickbar">
-  <div class="pills">
-    <a class="pill" href="?mode=compare&case=C0683" title="Pack Web Frameworks (C0683–C0702)">📦 Pack Web Frameworks</a>
-    <a class="pill" href="?mode=compare&cat=Base%20de%20datos" title="Filtrar por categoría Base de datos">🗄️ Base de datos</a>
-    <a class="pill" href="?mode=compare&cat=Reportes" title="Filtrar por Reportes (Excel/PDF/Gráficos)">📄 Reportes</a>
-    <a class="pill" href="?mode=compare&cat=Seguridad" title="JWT/Hash/Validaciones">🛡️ Seguridad</a>
-    <a class="pill" href="?mode=explore&el=nodejs" title="Explorar por lenguaje: Node.js">🧭 Explorar Node</a>
+      <button id="modeCompareBtn" class="btn on">🎯 Comparar Caso</button>
+      <button id="modeExploreBtn" class="btn">🧭 Explorar Lenguaje</button>
+    </div>
+  </header>
+
+  <div class="quickbar">
+    <span class="quickbar-label">Acceso Rápido:</span>
+    <div class="pills">
+      <a class="pill" href="?mode=compare&case=C0683" title="Pack Web Frameworks">📦 Web Frameworks</a>
+      <a class="pill" href="?mode=compare&cat=Base%20de%20datos">🗄️ Base de Datos</a>
+      <a class="pill" href="?mode=compare&cat=Reportes">📄 Reportes (Excel/PDF)</a>
+      <a class="pill" href="?mode=compare&cat=Seguridad">🛡️ Seguridad</a>
+      <a class="pill" href="?mode=explore&el=nodejs">🟢 Explorar Node.js</a>
+      <a class="pill" href="?mode=explore&el=python">🐍 Explorar Python</a>
+    </div>
   </div>
 
-  <details class="help">
-    <summary>Ayuda rápida</summary>
-    <ul>
-      <li><b>Comparar por caso:</b> elige un caso y verás su solución en varios lenguajes.</li>
-      <li><b>Explorar por lenguaje:</b> eliges un lenguaje y recorres los casos de <i>simple → complejo</i>.</li>
-      <li><b>Copiar:</b> en cada bloque usa el botón <b>Copiar</b> (queda listo para pegar en tu editor).</li>
-      <li><b>URL compartible:</b> el estado se guarda en la barra de direcciones (case/langs/cat/lvl/mode).</li>
-    </ul>
-  </details>
-</div>
-
-</div>
-
-
+  <div class="controls-wrapper">
+    <!-- CONTROLS: EXPLORE MODE -->
     <div class="controls" id="controlsExplore" style="display:none">
       <div class="control">
         <label for="exploreLangSelect">Lenguaje</label>
@@ -51,11 +56,11 @@
       </div>
 
       <div class="control">
-        <label for="exploreSearch">Buscar caso</label>
+        <label for="exploreSearch">Filtrar por nombre o palabra</label>
         <input id="exploreSearch" type="search" placeholder="Ej: C0678, CTE, reloj, PDF..." />
       </div>
 
-      <div class="control">
+      <div class="control narrow">
         <label for="exploreLevelSelect">Nivel</label>
         <select id="exploreLevelSelect">
           <option value="__all__" selected>Todos</option>
@@ -72,25 +77,21 @@
           <button id="exploreTopBtn" class="btn">⬆ Arriba</button>
         </div>
       </div>
-
-      <div class="control wide">
-        <label>Relacionados</label>
-        <div id="exploreRelated" class="related"></div>
-      </div>
     </div>
 
-        <div class="controls" id="controlsCompare">
+    <!-- CONTROLS: COMPARE MODE -->
+    <div class="controls" id="controlsCompare">
       <div class="control">
-        <label for="search">Buscar</label>
+        <label for="search">Filtrar catálogo</label>
         <input id="search" type="search" placeholder="Ej: IVA, círculo, anagrama, búsqueda..." />
       </div>
 
-      <div class="control">
+      <div class="control narrow">
         <label for="categorySelect">Categoría</label>
         <select id="categorySelect"></select>
       </div>
 
-      <div class="control">
+      <div class="control narrow">
         <label for="levelSelect">Nivel</label>
         <select id="levelSelect">
           <option value="__all__" selected>Todos</option>
@@ -101,76 +102,113 @@
       </div>
 
       <div class="control">
-        <label for="caseSelect">Caso</label>
+        <label for="caseSelect">Seleccionar Caso a Comparar</label>
         <select id="caseSelect"></select>
       </div>
 
       <div class="control actions">
         <label>&nbsp;</label>
         <div class="btnrow">
-          <button id="randomBtn" class="btn">🎲 Aleatorio</button>
-          <button id="resetLangsBtn" class="btn">↺ Reset lenguajes</button>
-          <button id="allLangsBtn" class="btn">≡ Todos</button>
+          <button id="randomBtn" class="btn primary">🎲 Sorpréndeme</button>
         </div>
       </div>
     </div>
-  </header>
+  </div>
 
   <main class="container">
-    <section class="card" id="comparePanel">
-      <div class="meta">
-        <div>
-          <h2 id="caseName">Cargando...</h2>
-          <p id="caseDesc" class="muted"></p>
-        </div>
-        <div class="badges">
-          <span id="badgeLevel" class="badge">Nivel</span>
-          <span id="badgeCategory" class="badge badge2">Categoría</span>
-          <span id="badgeId" class="badge badge3">ID</span>
-        </div>
-      </div>
 
-      <div class="langhelp">Selecciona <b>lenguajes</b> para comparar (puedes activar varios).</div>
-      <div class="langbar" id="langbar"></div>
-
-      <div id="codeArea" class="codeArea">
-        <div class="loading">Cargando meta.json...</div>
-      </div>
-    </section>
-
-    <section class="card" id="explorePanel" style="display:none">
-      <div class="meta">
-        <div>
-          <h2 id="exploreTitle">Explorar por lenguaje</h2>
-          <p id="exploreDesc" class="muted">Elige un lenguaje arriba. Verás los casos ordenados de <b>Básico → Avanzado</b> y podrás copiar el código.</p>
-        </div>
-        <div class="badges">
-          <span id="exploreBadgeLang" class="badge">Lenguaje</span>
-          <span id="exploreBadgeCount" class="badge badge2">0 casos</span>
+    <!-- SIDEBAR: LANGUAGE SELECTION (Only visible in Compare mode) -->
+    <aside class="card sidebar" id="langSidebar">
+      <div class="sidebar-header">
+        <h3>Activar Lenguajes</h3>
+        <div style="display: flex; gap: 4px;">
+          <button id="resetLangsBtn" class="btn" style="padding: 4px 8px; font-size: 11px;" title="Limpiar todos"><svg
+              width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6" />
+            </svg></button>
+          <button id="allLangsBtn" class="btn" style="padding: 4px 8px; font-size: 11px;" title="Seleccionar Todos"><svg
+              width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M4 12l2 2 4-4m5.28-4.28a2 2 0 00-2.83 0l-9 9a2 2 0 000 2.83 2 2 0 002.83 0l9-9a2 2 0 000-2.83z" />
+            </svg></button>
         </div>
       </div>
-
-      <div id="exploreArea" class="codeArea">
-        <div class="loading">Selecciona un lenguaje para comenzar.</div>
+      <div id="langbar">
+        <!-- Populated via JS grouped by language type -->
       </div>
-    </section>
+    </aside>
 
-<section class="card small">
-      <h3>Cómo funciona</h3>
-      <ul class="tips">
-        <li><b>meta.json</b>: lista de casos (sin código).</li>
-        <li><b>data/lang/&lt;lenguaje&gt;.json</b>: snippets por ID.</li>
-        <li>En modo pestañas, solo carga el JSON del lenguaje seleccionado.</li>
-      </ul>
-      <p class="muted" style="margin-top:10px;">
-        Si al abrir como archivo falla por CORS: ejecuta <code>python -m http.server 8000</code> y abre <code>http://localhost:8000</code>.
-      </p>
-    </section>
+    <!-- MAIN CONTENT AREA -->
+    <div class="content-wrapper">
+
+      <!-- COMPARE PANEL -->
+      <section class="card" id="comparePanel">
+        <div class="meta">
+          <div>
+            <h2 id="caseName">Cargando...</h2>
+            <p id="caseDesc" class="muted"></p>
+          </div>
+          <div class="badges">
+            <span id="badgeLevel" class="badge">Nivel</span>
+            <span id="badgeCategory" class="badge blue">Categoría</span>
+            <span id="badgeId" class="badge green">ID</span>
+          </div>
+        </div>
+
+        <div id="codeArea" class="codeArea">
+          <div class="loading">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"
+              style="animation: spin 2s linear infinite; margin-bottom: 12px; display: block; margin: 0 auto 12px;">
+              <line x1="12" y1="2" x2="12" y2="6" />
+              <line x1="12" y1="18" x2="12" y2="22" />
+              <line x1="4.93" y1="4.93" x2="7.76" y2="7.76" />
+              <line x1="16.24" y1="16.24" x2="19.07" y2="19.07" />
+              <line x1="2" y1="12" x2="6" y2="12" />
+              <line x1="18" y1="12" x2="22" y2="12" />
+              <line x1="4.93" y1="19.07" x2="7.76" y2="16.24" />
+              <line x1="16.24" y1="7.76" x2="19.07" y2="4.93" />
+            </svg>
+            Sincronizando meta.json...
+            <style>
+              @keyframes spin {
+                100% {
+                  transform: rotate(360deg);
+                }
+              }
+            </style>
+          </div>
+        </div>
+      </section>
+
+      <!-- EXPLORE PANEL -->
+      <section class="card" id="explorePanel" style="display:none">
+        <div class="meta">
+          <div>
+            <h2 id="exploreTitle">Explorar por lenguaje</h2>
+            <p id="exploreDesc" class="muted">Elige un lenguaje arriba. Verás los casos ordenados de <b>Básico →
+                Avanzado</b>.</p>
+          </div>
+          <div class="badges">
+            <span id="exploreBadgeLang" class="badge blue">Lenguaje</span>
+            <span id="exploreBadgeCount" class="badge green">0 casos</span>
+          </div>
+        </div>
+
+        <div id="exploreArea" class="codeArea">
+          <div class="loading">Selecciona un lenguaje en la barra superior para comenzar.</div>
+        </div>
+      </section>
+
+    </div>
   </main>
 
   <footer class="footer">
     <span>Hecho para estudio mental — escala con Multi-JSON.</span>
-    <span class="muted">Repo demo</span>
+    <span class="muted">Repo demo integrado en Microsistemas</span>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
@@ -200,4 +238,5 @@
 
   <script src="assets/app.js"></script>
 </body>
+
 </html>
