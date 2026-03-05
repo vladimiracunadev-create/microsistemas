@@ -2,6 +2,20 @@
 
 Todos los cambios notables en este proyecto serán documentados en este archivo. El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-03-05
+
+### Añadido (Katas MultiLang Redesign)
+
+- **UI Premium Glassmorphism**: Rediseño total de la interfaz con estética Slate Dark, efectos de desenfoque gaussianos y bordes translúcidos.
+- **Layout Inteligente (Anti-Staggering)**: Implementación de sistema de rejilla flexible que asegura que los snippets ocupen todo el ancho disponible en una columna vertical limpia.
+- **Sidebar de Control Avanzado**: Nuevo panel lateral para selección de lenguajes con indicadores de estado de alto contraste (Blue Glow).
+- **Catálogo Curado (195 Casos)**: Deduplicación masiva y auditoría profunda de la base de datos de Katas, eliminando redundancias y asegurando integridad (IDS C0001-C0702 curados).
+
+### Mejorado
+
+- **Visibilidad Políglota**: Mejorada la distinción visual entre lenguajes activos e inactivos mediante sombreados dinámicos y tipografía de alto peso.
+- **Documentación General**: Actualización completa de `RECRUITER.md`, `USER_MANUAL.md`, `SYSTEMS_CATALOG.md` y `README.md` con la nueva realidad del microsistema.
+
 ## [2.1.0] - 2026-02-18
 
 ### Añadido (AWS Assistant Pro)

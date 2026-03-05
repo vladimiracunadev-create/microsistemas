@@ -85,6 +85,6 @@ compose_file: "docker-compose.yml" # Opcional
 
 El Hub solo gestiona herramientas que contienen un `app.manifest.yml` válido en el directorio `apps/`. Actualmente incluye:
 
-- Conversor, SQL Viewer, Git Trainer, JS Toolkit, YAML Generator, Log Viewer, PHP Migrator, Capacity Simulator, CI/CD Library.
+- Conversor, SQL Viewer, Git Trainer, JS Toolkit, YAML Generator, Log Viewer, PHP Migrator, Capacity Simulator, CI/CD Library, Katas MultiLang.
 
 Para más detalles sobre políticas de seguridad, consulta [SECURITY.md](../SECURITY.md).

@@ -493,6 +493,7 @@ Cada subdirectorio dentro de `apps/` es una **micro-aplicación independiente** 
 | `PhpMigrator/`     | PHP        | Guía de migración de PHP 5.x a 8.x con detección de obsoletos.  |
 | `SqlViewer/`       | PHP        | Inspector de bases de datos desde el navegador.                  |
 | `YmlGenerator/`    | JS         | Generador visual de YAML para Docker y Kubernetes.               |
+| `KatasMultiLang/`  | JS         | Comparador visual premium de código con 195 katas (Glassmorphism).|
 
 ---
 
