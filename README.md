@@ -133,6 +133,7 @@ docker-compose up -d
 Explora nuestras guías detalladas para convertirte en un experto de la suite:
 
 - 📁 **[Referencia de Archivos](docs/FILES_REFERENCE.md)**: Explicación detallada de cada archivo del sistema con su importancia.
+- 🤖 **[Skills / Playbooks](skills/integrar-microsistema/skill.md)**: Flujos reutilizables para automatizar tareas complejas (integración de apps, actualización de docs, CI checks).
 - 📖 **[Guía para Principiantes](docs/BEGINNERS_GUIDE.md)**: ¿Eres nuevo? Empieza aquí para entender las carpetas.
 - 📖 **[Manual de Usuario](docs/USER_MANUAL.md)**: Cómo sacar el máximo provecho a cada herramienta.
 - 🚀 **[Guía de Instalación](docs/INSTALL.md)**: Despliegue en Docker, Linux y XAMPP.

@@ -89,9 +89,28 @@ Para garantizar la **Resiliencia Operativa**, todas las micro-apps deben impleme
 
 ## 🛠️ Mantenimiento y Extensiones
 
-Para añadir un nuevo microsistema de forma profesional:
+Para añadir un nuevo microsistema de forma profesional, utiliza el **Skill de Integración**:
 
-1. **Carpeta**: Crear carpeta en `apps/MiNuevaApp`.
-2. **Manifiesto**: Crear `app.manifest.yml` con el nombre, tipo y **descripción**.
-3. **Catálogo**: Ejecutar `make catalog` para actualizar el README.
-4. **Validación**: Ejecutar `make validate` localmente antes de enviar el PR.
+```bash
+# Leer el playbook completo de 6 pasos:
+cat skills/integrar-microsistema/skill.md
+```
+
+Flujo resumido (ver skill para detalle):
+
+1. **Preflight**: Verificar estructura del repo.
+2. **Carpeta**: Crear `apps/<NombreApp>/` con `app.manifest.yml`.
+3. **Dashboard**: Insertar tarjeta en `index.php` usando la plantilla.
+4. **Docs**: Actualizar README + docs/* + docs/wiki/* según existan.
+5. **Chequeos**: `make hub-list`, `make catalog`, `make validate`, `make test`.
+6. **Evidencia**: Reportar archivos modificados y outputs de checks.
+
+Plantillas disponibles en `skills/integrar-microsistema/templates/`.
+
+---
+
+## 🔐 Seguridad CI/CD
+
+- **Scanner de Vulnerabilidades Trivy**: Instalado directamente vía `apt-get` desde el repositorio oficial de Aqua Security (`aquasecurity.github.io/trivy-repo`), saltando el `trivy-action` que presentaba fallos de descarga de binario en runners Ubuntu. El resultado SARIF se sube al Security Tab de GitHub.
+- **Secret Scanning (TruffleHog)**: Detecta credenciales expuestas en cada push (`.github/workflows/secret-scanning.yml`).
+- **Image SBOM**: Se genera el Software Bill of Materials de la imagen Docker tras cada build exitoso.

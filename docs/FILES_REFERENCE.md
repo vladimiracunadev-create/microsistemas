@@ -553,4 +553,30 @@ Microsistemas/
 
 ---
 
+## 🤖 Skills / Playbooks (`skills/`)
+
+El directorio `skills/` contiene flujos de trabajo reutilizables (playbooks) que guían la ejecución de tareas complejas y repetitivas en el repositorio.
+
+### 🟡 `skills/integrar-microsistema/` — Skill de Integración
+
+| Atributo        | Valor                                        |
+| :-------------- | :------------------------------------------- |
+| **Ubicación**   | `/skills/integrar-microsistema/`             |
+| **Tipo**        | Playbook de 6 pasos                          |
+| **Importancia** | 🟡 Importante                                |
+
+**¿Qué hace?**
+
+Guía la integración de cualquier nueva micro-app en el repositorio de forma coherente, cubriendo todos los puntos de impacto: dashboard, manifest, docs, wiki y chequeos de validación.
+
+**Archivos incluidos:**
+
+- `skill.md` — Playbook principal. Define los 6 pasos, reglas de oro, lista de inputs/outputs y flujo completo.
+- `referencia.txt` — Ejemplo de invocación con valores de inputs reales.
+- `templates/app.manifest.yml.tpl` — Plantilla para el manifiesto de la app.
+- `templates/dashboard-card.html.tpl` — Plantilla para la tarjeta del Dashboard.
+- `templates/wiki-entry.md.tpl` — Plantilla para la entrada de Wiki.
+
+---
+
 *Documento generado para la suite Microsistemas. Para volver al dashboard, visita [index.php](../index.php).*

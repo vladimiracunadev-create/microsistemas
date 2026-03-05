@@ -2,6 +2,20 @@
 
 Todos los cambios notables en este proyecto serán documentados en este archivo. El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2026-03-05
+
+### Añadido
+
+- **Skills System (`skills/`)**: Sistema de playbooks reutilizables para automatizar tareas complejas de desarrollo.
+  - `skills/integrar-microsistema/` → Skill de 6 pasos para integrar cualquier app nueva con coherencia total (dashboard, manifest, docs, wiki, chequeos).
+  - Plantillas incluidas: `app.manifest.yml.tpl`, `dashboard-card.html.tpl`, `wiki-entry.md.tpl`.
+  - Archivo `referencia.txt` con ejemplo de inputs para rápida invocación.
+
+### Corregido
+
+- **CI/CD Seguridad (Trivy)**: El scanner de vulnerabilidades Trivy se reemplazó por instalación directa vía `apt-get` desde el repositorio oficial de Aqua Security, resolviendo el fallo persistente de descarga del binario en el runner Ubuntu.
+- **Markdown Lint**: Corregidos 31 errores de formato (MD022/MD032 — espacios en encabezados y listas) en `apps/KatasMultiLang/README.md`, `README-INTEGRACION.md`, `scripts/notes.md` y `VERSIONS_AUDIT.md`.
+
 ## [2.2.0] - 2026-03-05
 
 ### Añadido (Katas MultiLang Redesign)

@@ -88,7 +88,11 @@ La suite se organiza en un **Dashboard Central** que actúa como puerta de enlac
 
 ### ¿Cómo añado mis propias herramientas?
 
-Consulte la [Guía de Contribución](../CONTRIBUTING.md#cómo-añadir-un-nuevo-microsistema).
+Utiliza el **Skill de Integración** incluido en el repositorio: `skills/integrar-microsistema/skill.md`.
+
+Es un flujo de 6 pasos que garantiza integración coherente (dashboard, manifest, docs, wiki, chequeos automáticos). Incluye plantillas listas para copiar y un archivo `referencia.txt` con ejemplo de inputs.
+
+Consulta también la [Guía de Contribución](../CONTRIBUTING.md#cómo-añadir-un-nuevo-microsistema).
 
 ### ¿Es seguro habilitar el SQL Viewer en servidores de producción?
 
