@@ -44,8 +44,11 @@
 
 - JSON: parse OK (meta + lang/*.json)
 - Cobertura: cada lenguaje tiene snippet para cada caso
+
 - Fix aplicado: Math.PI en fórmulas -> PHP: 21 casos, PowerShell: 21 casos
+
 ## Lenguajes legacy agregados
+
 - cobol: GnuCOBOL 3.2 (COBOL 2014)
 - powerscript: PowerBuilder 2025 (PowerScript)
 - vbscript: VBScript 5.8 (deprecated; Windows optional feature)
@@ -54,4 +57,5 @@
 - fortran: Fortran 2018 (ISO/IEC 1539-1:2018)
 
 ## Nota
+
 - Verificación: consistencia JSON y sintaxis esperada (no se ejecutan compiladores).
