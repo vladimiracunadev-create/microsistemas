@@ -101,7 +101,7 @@ Flujo resumido (ver skill para detalle):
 1. **Preflight**: Verificar estructura del repo.
 2. **Carpeta**: Crear `apps/<NombreApp>/` con `app.manifest.yml`.
 3. **Dashboard**: Insertar tarjeta en `index.php` usando la plantilla.
-4. **Docs**: Actualizar README + docs/* + docs/wiki/* según existan.
+4. **Docs**: Actualizar README, docs/\*, docs/wiki/\* según existan.
 5. **Chequeos**: `make hub-list`, `make catalog`, `make validate`, `make test`.
 6. **Evidencia**: Reportar archivos modificados y outputs de checks.
 
