@@ -54,10 +54,24 @@ Para asegurar que el proyecto se mantenga profesional y legible:
 
 ## 🏗️ Cómo añadir un Nuevo Microsistema
 
-1. Crea una carpeta en `apps/MiHerramienta`.
-2. Incluye un `index.php` o `index.html`.
-3. **Registro**: Añade una nueva tarjeta en el archivo raíz `index.php` con el icono y descripción correspondiente.
-4. **Namespace**: Si necesitas lógica de servidor, añade una clase en `src/Utils/` y úsala mediante el autoloader.
+Este repositorio incluye un **Skill de Integración** que automatiza y estandariza el proceso completo. Es el camino recomendado para cualquier colaborador.
+
+**Usar el playbook:**
+
+```bash
+cat skills/integrar-microsistema/skill.md
+```
+
+El skill cubre 6 pasos con reglas claras y plantillas listas:
+
+1. **Preflight** — verificar estructura del repo.
+2. **Carpeta** — crear `apps/<NombreApp>/` con `app.manifest.yml` (usa `skills/integrar-microsistema/templates/app.manifest.yml.tpl`).
+3. **Dashboard** — insertar tarjeta en `index.php` (usa `templates/dashboard-card.html.tpl`).
+4. **Docs** — actualizar README, `docs/*` y `docs/wiki/*` según existan.
+5. **Chequeos** — `make hub-list`, `make catalog`, `make validate`, `make test`.
+6. **Evidencia** — reportar archivos modificados y outputs de los checks.
+
+> Antes de hacer push, corre `make lint-md` para evitar errores de Markdown en CI.
 
 ---
 
