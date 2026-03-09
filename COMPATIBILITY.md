@@ -1,6 +1,6 @@
 # Matriz de Compatibilidad (COMPATIBILITY)
 
-El objetivo de **Microsistemas** es mantener un umbral lo más universal posible reduciendo la dependencia de componentes de servidor pesados, sin sacrificar metodologías modernas. 
+El objetivo de **Microsistemas** es mantener un umbral lo más universal posible reduciendo la dependencia de componentes de servidor pesados, sin sacrificar metodologías modernas.
 
 A continuación se detalla el nivel de compatibilidad documentado y evidenciado a través de nuestra automatización y pruebas empíricas.
 
@@ -24,12 +24,15 @@ A continuación se detalla el nivel de compatibilidad documentado y evidenciado 
 ## 3. Infraestructura Operativa
 
 ### Sistemas Operativos Host (para `Make` & Docker Local)
+
 - **Linux (Ubuntu/Debian/Alpine):** Nativo y Probado exhaustivamente.
 - **Windows (WSL2):** Ampliamente Probado. Se recomienda operar el CLI mediante distribuciones de WSL. Los scripts `hub.ps1` dan compatibilidad en Powershell nativo.
 - **MacOS (Intel & Apple Silicon):** Esperado. Imágenes base PHP multi-arquitectura aseguran su funcionamiento de forma transparente.
 
 ### Navegadores Cliente Requeridos
+
 El ecosistema utiliza propiedades modernas de interfaz gráfica (CSS Grid, Variables, Glassmorphism, ES6+ JavaScript), por tanto se exige:
+
 - **Google Chrome** v100+
 - **Mozilla Firefox** v100+
 - **Apple Safari** v15+
@@ -40,8 +43,10 @@ El ecosistema utiliza propiedades modernas de interfaz gráfica (CSS Grid, Varia
 ## 4. Dependencias Cloud (Herramientas Específicas)
 
 Algunas micro-aplicaciones integradas intentan emular comportamientos o generar directivas para entornos externos. Su compatibilidad teórica es:
+
 - **AWS Generator:** Orientado a generar políticas formadas para AWS CLI v2.
-- **Kubernetes / Docker YAMLs:** Plantillas ajustadas a especificaciones `apps/v1` de K8S, y Compose v3+. 
+- **Kubernetes / Docker YAMLs:** Plantillas ajustadas a especificaciones `apps/v1` de K8S, y Compose v3+.
 
 ## 5. Restricciones Conocidas
+
 - **Limitaciones del OS:** Correr la Suite bajo **Windows puro** (sin WSL2 o sin Docker) podría causar problemas en el script de arranque `hub.sh` o en algunas utilidades Make que invocan dependencias bash/grep posix, obligando al usuario a utilizar el port de Powershell `hub.ps1` el cual podría tener menor paridad de features.

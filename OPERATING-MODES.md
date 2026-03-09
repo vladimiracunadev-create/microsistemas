@@ -7,7 +7,7 @@ El ecosistema **Microsistemas** ha sido diseñado con pragmatismo para poder eje
 **Este es el modo oficial y recomendado para la evaluación del proyecto o despliegue en un VPS.**
 
 - **El Cómo:** Funciona a través de los archivos `Dockerfile` y `docker-compose.yml`. Se ejecuta de forma abstracta usando el binario Make (`make up`) o directamente con `docker-compose up -d`.
-- **Ventajas:** 
+- **Ventajas:**
   - Infraestructura inmutable. Garantiza las versiones de PHP (8.1) y Base de Datos.
   - El enrutamiento local y el healthcheck vienen auto-configurados.
   - Reducción total de fricción en la instalación (No importa Windows, Mac o Linux, el contexto de ejecución será idéntico dentro del contenedor).
@@ -18,21 +18,21 @@ El ecosistema **Microsistemas** ha sido diseñado con pragmatismo para poder eje
 **Ideal para desarrolladores haciendo cambios incrementales en el frontend o analizando el core.**
 
 - **El Cómo:** Invoca el servidor web interno de PHP mediante `make serve`. (Requiere tener PHP instalado de manera nativa en tu ordenador).
-- **Ventajas:** 
+- **Ventajas:**
   - Levanta instantáneamente en `http://localhost:8000`.
   - Perfecto si no deseas consumir recursos con Docker u otras VM locales.
-- **Límites:** 
+- **Límites:**
   - No incorpora o expone una base de datos local asociada de forma predeterminada (las aplicaciones del repositorio que persisten información o conectan a SQL (ej: SqlViewer) mostrarán fallos de conexión salvo se apunte el `.env` a un MySQL accesible de manera externa o paralela).
 
 ## 3. Modo Legacy / Híbrido (XAMPP, WAMP, LAMP)
 
 **Ideal para flujos de despliegue sobre sistemas compartidos de hace 10 años, demostrando resiliencia y fuerte compatibilidad hacia atrás.**
 
-- **El Cómo:** Se clona el contenido del repositorio directamente en el sub-directorio público por defecto (ej. `C:\xampp\htdocs\microsistemas\`). 
-- **Ventajas:** 
+- **El Cómo:** Se clona el contenido del repositorio directamente en el sub-directorio público por defecto (ej. `C:\xampp\htdocs\microsistemas\`).
+- **Ventajas:**
   - Permite levantar sistemas que asumen las rutas con la raíz del nombre de carpeta (`http://localhost/microsistemas/`).
   - Uso extendido en academias o empresas tradicionales sin acceso a arquitecturas efímeras o Docker.
-- **Límites:** 
+- **Límites:**
   - Podrían surgir problemas de resolución de rutas relativas o variables de entorno `DOCUMENT_ROOT` si el sistema no está configurado como host virtual independiente (VirtualHost en Apache). Sin embargo, el "Core" de microsistemas está codificado para adaptarse en la medida de lo posible a los subdirectorios.
 
 ## 4. Modo Desacoplado por Aplicación Individual (Hub Local)

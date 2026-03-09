@@ -9,6 +9,7 @@ Este documento detalla los procedimientos operativos estándar para administrar,
 ## 🏗️ 1. Requisitos Previos Generales
 
 Asegúrate de tener instalado:
+
 - **Git** (para control de versiones y actualizaciones).
 - **Make** (para uso de comandos simplificados).
 - Opcionalmente, dependiendo del Modo de Operación (`OPERATING-MODES.md`):
@@ -20,6 +21,7 @@ Asegúrate de tener instalado:
 ## 🚀 2. Procedimientos de Arranque
 
 ### Arranque Rápido (Local Testing - Docker)
+
 El método más fiable que garantiza un entorno inmutable.
 
 ```bash
@@ -41,6 +43,7 @@ make hub-doctor
 > **Verificación Post-Arranque:** Accede a `http://localhost:8080/`. Debes ver el Dashboard principal cargado.
 
 ### Arranque Nativo (Servidor PHP Embebido)
+
 Útil para desarrollo rápido sin dependencias pesadas.
 
 ```bash
@@ -57,14 +60,18 @@ make serve
 ## 🛠️ 3. Operaciones Frecuentes
 
 ### Parar y Destruir Contenedores
+
 Si necesitas bajar el sistema liberando recursos:
+
 ```bash
 make down
 # o: docker-compose down
 ```
 
 ### Limpieza Fuerte (Prune)
+
 Si hay cambios grandes en Dockerfiles o corrupción en la base de datos (elimina volúmenes locales):
+
 ```bash
 docker-compose down -v --rmi local
 docker system prune -f
@@ -72,6 +79,7 @@ make up
 ```
 
 ### Gestión de Micro-Aplicaciones mediante el Hub CLI
+
 El repositorio cuenta con una capa de orquestación local:
 
 ```bash
@@ -90,6 +98,7 @@ make hub-up APP=CapacitySim
 ## 🩺 4. Monitorización y Diagnóstico
 
 ### Revisión de Logs
+
 Al ser una plataforma contenida, la forma principal de diagnóstico es la lectura de logs de los contenedores Docker:
 
 ```bash
@@ -103,7 +112,9 @@ docker-compose logs -f db
 *Adicionalmente,* el ecosistema incluye la propia micro-app **`LogViewer`** para inspección visual de errores a través de la interfaz web, asumiendo que el core pudo inicializar.
 
 ### Healthcheck
+
 El contenedor web ya tiene un healthcheck interno hacia `/apps/CapacitySim/health/` (ref: `docker-compose.yml`). Para validar desde fuera:
+
 ```bash
 docker ps
 # Verificar que el estado del contenedor `microsistemas-web` indique (healthy).
@@ -123,5 +134,6 @@ docker ps
 ---
 
 ## ⛔ 6. Limitaciones Conocidas
+
 - **Alta Disponibilidad:** Aunque se proveen manifiestos `k8s/`, el `docker-compose.yml` base no levanta réplicas del servicio web automáticamente.
 - **Persistencia Aislada:** Los estados de las herramientas (como simulaciones PDF o configuraciones del AWS Generator) no se persisten de manera remota compartida si se destruyen los contenedores base, salvo que se mapeen volúmenes específicos.
