@@ -1,5 +1,5 @@
 # Use a specific version for supply chain security
-FROM php:8.2.27-apache-bookworm
+FROM php:8.5.3-apache-bookworm
 
 # Security: Set working directory
 WORKDIR /var/www/html
