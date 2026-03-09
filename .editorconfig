@@ -1,0 +1,20 @@
+# EditorConfig ayuda a mantener estilos de codificación consistentes
+# entre distintos editores y entornos de desarrollo.
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# El Markdown a veces requiere espacios al final para saltos de línea físicos
+[*.md]
+trim_trailing_whitespace = false
+
+# Los archivos de configuración o frontends modernos prefieren 2 espacios
+[*.{yml,yaml,json,js,css,html}]
+indent_size = 2

@@ -1,8 +1,19 @@
 # CODEOWNERS - Responsables del código
 
-# Regla global (administradores)
-*       @admin
+# Regla global: Al ser un repositorio tipo portafolio personal / showcase, 
+# la gobernanza recae principalmente en el autor.
+*       @vladimiracunadev-create
 
-# Apps específicas
-/apps/CapacitySim/  @equipo-calculo
-/apps/Conversor/    @equipo-frontend
+# Secciones Especializadas (Ejemplo de segmentación para futuras colaboraciones)
+/docs/                  @vladimiracunadev-create
+/apps/CicdLibrary/      @vladimiracunadev-create
+/apps/AwsGenerator/     @vladimiracunadev-create
+/apps/CapacitySim/      @vladimiracunadev-create
+
+# Infraestructura y Despliegue
+/docker-compose.yml     @vladimiracunadev-create
+/Dockerfile             @vladimiracunadev-create
+/k8s/                   @vladimiracunadev-create
+
+# GitHub Actions
+/.github/workflows/     @vladimiracunadev-create

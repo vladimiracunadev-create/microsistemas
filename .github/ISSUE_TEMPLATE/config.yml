@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💼 Contacto Profesional (LinkedIn)
+    url: https://www.linkedin.com/in/vladimir-acuña-valdebenito-11924a29/
+    about: ¿Eres Reclutador o Lider Técnico evaluando este repositorio? Podemos conectar directamente para conversar sobre la arquitectura y mi perfil profesional.
+  - name: 🔒 Reporte Confidencial de Seguridad
+    url: https://github.com/vladimiracunadev-create/microsistemas/security/advisories/new
+    about: Por favor no utilices los Issues públicos para reportar inyecciones SQL, exposición de variables críticas o fallos Severos.

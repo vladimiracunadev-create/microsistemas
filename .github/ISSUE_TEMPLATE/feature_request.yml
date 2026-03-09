@@ -1,17 +1,47 @@
-name: Propuesta de Mejora
-description: Sugiere una idea para este proyecto
+name: Propuesta de Mejora (Feature)
+description: Sugiere una nueva micro-app, funcionalidad o mejora arquitectónica al ecosistema.
 title: "[FEATURE]: "
 labels: ["enhancement"]
 body:
-  - type: textarea
-    id: feature-description
+  - type: markdown
     attributes:
-      label: Descripción de la mejora
-      description: ¿Qué problema resuelve o qué valor añade?
+      value: |
+        Las contribuciones siempre son bienvenidas. Usa este formulario para describir la mejora o caso de uso.
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: Descripción de la Necesidad o Problema
+      description: ¿Qué problema intentas resolver o qué capacidad nueva añadirías? (Ej. La suite necesita una herramienta para debugear JWTs).
     validations:
       required: true
   - type: textarea
     id: solution
     attributes:
-      label: Solución propuesta
-      description: Describe cómo te imaginas que debería funcionar.
+      label: Solución y Arquitectura Propuesta
+      description: Describe cómo te imaginas que debería implementarse. ¿Es una app nueva (MVC)? ¿Es una mejora a la CLI Hub (hub.sh)?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas Consideradas
+      description: ¿Existe hoy alguna forma manual de lograrlo dentro u fuera del ecosistema actual?
+  - type: dropdown
+    id: impact-area
+    attributes:
+      label: Área de Impacto
+      description: ¿En qué componente impactará primordialmente esta idea?
+      options:
+        - Backend Core (PHP)
+        - Nueva Micro-app 
+        - Frontend / UI / Theme
+        - DevOps / Docker / Orquestación
+        - Documentación Técnica
+    validations:
+      required: true
+  - type: checkboxes
+    id: self-assign
+    attributes:
+      label: Colaboración
+      options:
+        - label: Estoy dispuesto(a) a crear un Pull Request (PR) implementando esta nueva mejora.

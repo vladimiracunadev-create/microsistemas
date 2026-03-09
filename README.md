@@ -176,12 +176,34 @@ Este proyecto está bajo la **Licencia MIT**. Consulta el archivo [LICENSE](LICE
 
 Desarrollado con ❤️ por **[Vladimir Acuña Valdebenito](https://www.linkedin.com/in/vladimir-acu%C3%B1a-valdebenito-11924a29/)** para la comunidad de desarrolladores.
 
-## 📚 Documentación del Proyecto
+## 📚 Centro de Documentación y Gobernanza
 
-Como parte de los estándares de este ecosistema, la documentación detallada se divide en:
+El proyecto adopta un enfoque de **documentación como código** orientado a mantener estándares y facilitar la vida de desarrolladores, operadores y evaluadores de talento. Toda la documentación técnica está categorizada para su rápido acceso.
 
-- [📘 Guía de Instalación y Despliegue (INSTALL.md)](INSTALL.md)
-- [📜 Historial de Cambios (CHANGELOG.md)](CHANGELOG.md)
-- [🤝 Guía de Contribución (CONTRIBUTING.md)](CONTRIBUTING.md)
-- [🛡️ Política de Seguridad (SECURITY.md)](SECURITY.md)
-- [⚖️ Código de Conducta (CODE_OF_CONDUCT.md)](CODE_OF_CONDUCT.md)
+### 📋 Operaciones, Arquitectura y Configuración
+
+- [🏗️ Arquitectura Inicial y Contexto (ADR-0001)](docs/adr/0001-contexto-y-decisiones-iniciales.md)
+- [🔧 Manual de Operación y Diagnóstico (RUNBOOK)](RUNBOOK.md)
+- [🧩 Matriz de Compatibilidad y Ambientes (COMPATIBILITY)](COMPATIBILITY.md)
+- [🔀 Casos y Modos de Ejecución (OPERATING-MODES)](OPERATING-MODES.md)
+- [🎯 Estrategia de Versionado y Entrega (RELEASE)](RELEASE.md)
+- [📜 Historial de Cambios (CHANGELOG)](CHANGELOG.md)
+- [📘 Guía Rápida de Instalación (INSTALL)](docs/INSTALL.md)
+
+### 🤝 Soporte, Comunidad y Gobernanza
+
+- [💬 Políticas de Asistencia y Soporte (SUPPORT)](SUPPORT.md)
+- [👔 Guía Directa para Reclutadores Técnicos](docs/RECRUITER.md)
+- [🤝 Guía Oficial de Contribución](CONTRIBUTING.md)
+- [🛡️ Política de Seguridad y Reportes](SECURITY.md)
+- [⚖️ Código de Conducta de la Comunidad](CODE_OF_CONDUCT.md)
+
+### ⚙️ Configuración Estratégica (Metadata / No-MD)
+
+Además del contenido legible, el repositorio contiene archivos de gobernanza ocultos que definen su calidad profesional para ser auditados:
+
+- [📝 Metadatos de Citación del Software (`CITATION.cff`)](CITATION.cff)
+- [👥 Asignación de Responsabilidades (`CODEOWNERS`)](.github/CODEOWNERS)
+- [📌 Formularios y Plantillas de Issues (`.github/ISSUE_TEMPLATE/`)](.github/ISSUE_TEMPLATE/)
+- [🤖 Auditoría Automática de Dependencias (`dependabot.yml`)](.github/dependabot.yml)
+- [✨ Reglas Globales de Formateo (`.editorconfig`)](.editorconfig)

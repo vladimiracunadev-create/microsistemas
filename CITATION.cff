@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "Si este proyecto te ha sido útil para análisis arquitectónico, evaluación técnica o en tu trabajo diario, por favor cítalo como se indica a continuación."
+title: "Microsistemas – Developer Productivity Suite"
+type: software
+authors:
+  - given-names: "Vladimir"
+    family-names: "Acuña Valdebenito"
+    # orcid: "https://orcid.org/0000-0000-0000-0000" # REPLACE: Poner ORCID real si existe
+repository-code: "https://github.com/vladimiracunadev-create/microsistemas"
+url: "https://github.com/vladimiracunadev-create/microsistemas"
+abstract: >-
+  Ecosistema modular de productividad para desarrolladores y plataforma tipo showcase/laboratorio. 
+  Contiene micro-aplicaciones integradas para DevOps, utilidades de conversión, simuladores de arquitectura 
+  y gestores, operables bajo infraestructura inmutable (Docker, K8s) empleando un stack ágil (PHP/JS).
+keywords:
+  - php
+  - javascript
+  - docker
+  - devops
+  - developer-tools
+  - showcase
+  - architecture
+  - monorepo
+  - kubernetes
+license: MIT
+# version: "1.4.0" # REPLACE: Actualizar con versión de release si corresponde
+# date-released: "2026-03-09" # REPLACE: Actualizar con la fecha de la última release

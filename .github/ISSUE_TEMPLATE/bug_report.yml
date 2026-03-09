@@ -1,38 +1,69 @@
-name: Reporte de Error
-description: Crea un informe para ayudarnos a mejorar
+name: Reporte de Error (Bug)
+description: Ayúdanos a identificar y corregir comportamientos inesperados en las micro-aplicaciones o core.
 title: "[BUG]: "
-labels: ["bug"]
+labels: ["bug", "triage"]
 body:
   - type: markdown
     attributes:
       value: |
-        Gracias por tomarte el tiempo para reportar un error.
+        ¡Gracias por tomarte el tiempo para reportar este problema! Por favor proporciona tanta información de tu entorno como sea posible.
   - type: textarea
     id: what-happened
     attributes:
       label: ¿Qué sucedió?
-      description: Describe el error de la forma más clara posible.
-      placeholder: El sistema falla al...
+      description: Describe el error de la forma más precisa.
+      placeholder: Al intentar generar un YAML en AwsGenerator, el sistema devuelve un error 500.
     validations:
       required: true
   - type: textarea
     id: reproduction
     attributes:
       label: Pasos para reproducir
-      description: Indica los pasos para encontrar el error.
+      description: Indica detalladamente los pasos para encontrar el error.
       placeholder: |
-        1. Ir a...
-        2. Hacer click en...
-        3. Ver el error...
+        1. Levantar el entorno usando `make up`
+        2. Ir a la micro-app 'AwsGenerator'
+        3. Hacer click en '...'
+        4. Ver el error en pantalla o logs.
     validations:
       required: true
   - type: textarea
     id: expected-behavior
     attributes:
       label: Comportamiento esperado
-      description: ¿Qué debería haber pasado?
-  - type: input
-    id: version
+      description: ¿Qué debería haber pasado en su lugar?
+    validations:
+      required: true
+  - type: dropdown
+    id: execution-mode
     attributes:
-      label: Versión del Micro-sistema
-      description: Si aplica, indica qué app falla.
+      label: Entorno de Ejecución
+      description: ¿Bajo qué infraestructura ejecutaste el proyecto?
+      options:
+        - Docker local (docker-compose)
+        - PHP Embebido (make serve)
+        - Servidor Externo / XAMPP / LAMP
+        - Kubernetes (k8s manifests)
+    validations:
+      required: true
+  - type: input
+    id: os-browser
+    attributes:
+      label: SO y Navegador
+      description: Ejemplo Windows 11 / WSL2 / Chrome 120
+    validations:
+      required: true
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Logs / Evidencia Contextual
+      description: Copia y pega líneas del log relevantes (`docker-compose logs web`), capturas de pantalla, etc.
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist Final
+      options:
+        - label: He validado que esto NO es un problema de conectividad de mi propia red.
+          required: true
+        - label: He leído la documentación asociada a esta aplicación antes de reportar el error.
+          required: true

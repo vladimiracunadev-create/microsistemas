@@ -1,0 +1,30 @@
+name: Pregunta o Duda Operativa
+description: Dudas relacionadas a la instalación, extensión o compresión de la arquitectura.
+title: "[QUESTION]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Antes de preguntar, asegúrate de haber revisado los archivos en `docs/` y el archivo `RUNBOOK.md`.
+  - type: input
+    id: context
+    attributes:
+      label: Temática central
+      description: Resumen en una línea (Ej "Duda sobre cómo crear una nueva app", "Duda sobre Kustomize")
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Tu pregunta o requerimiento de claridad
+      description: Explica tu duda. Procura ser específico y prolijo.
+    validations:
+      required: true
+  - type: textarea
+    id: docs-read
+    attributes:
+      label: ¿Qué intentaste o leíste previamente?
+      description: Evitemos redundancia. ¿Leíste la Guía de Mantenedores u otro documento relacionado?
+    validations:
+      required: true

@@ -1,0 +1,11 @@
+Usa el skill: skills/integrar-microsistema/skill.md
+
+Inputs:
+APP_NAME=MiNuevoSistema
+APP_TYPE=static
+APP_DESC=Herramienta X para resolver Y
+APP_LINK=apps/MiNuevoSistema/
+ZIP_SOURCE=./dist/microsistemas-app-MiNuevoSistema.zip
+DOCS_SCOPE=completo
+
+Ejecuta el flujo completo y entrega evidencia de make validate/test.
