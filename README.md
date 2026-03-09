@@ -163,7 +163,8 @@ Explora nuestras guías detalladas para convertirte en un experto de la suite:
 Para mantener la calidad y estabilidad, implementamos:
 
 - **Protección de Rama**: Los cambios en `main` requieren un **Pull Request** y al menos una **revisión**.
-- **Checks Automáticos**: El CI valida que todo funcione antes de integrar.
+- **Checks Automáticos**: El CI valida que todo funcione de manera segura antes de integrar.
+- **Auditoría Autónoma**: Integración de **Dependabot** para escaneo continuo de dependencias y secretos, creando Pull Requests automáticos ante vulnerabilidades (CVEs).
 - **Plantillas Estándar**: Facilitamos la comunicación mediante estructuras predefinidas para Issues y PRs.
 
 ---

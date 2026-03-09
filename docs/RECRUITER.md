@@ -271,7 +271,7 @@ Una suite unificada de micro-aplicaciones que:
 - ✅ **CSRF Tokens**: Protección contra ataques cross-site
 - ✅ **Input Validation**: Sanitización exhaustiva de datos de entrada
 - ✅ **Secret Scanning**: GitHub Actions detecta credenciales expuestas
-- ✅ **Dependency Audit**: Análisis automático de vulnerabilidades
+- ✅ **Dependency Audit (Dependabot)**: Análisis autónomo que previene vulnerabilidades (CVEs) generando Pull Requests y aislando el impacto hasta revisión manual.
 - ✅ **Rate Limiting**: Protección contra abuso de APIs
 - ✅ **Allowlist de Apps**: Control de aplicaciones ejecutables
 

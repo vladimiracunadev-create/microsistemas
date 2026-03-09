@@ -83,4 +83,4 @@ Este repositorio ha pasado por un proceso de hardening para mitigar riesgos:
 ### 🛡️ Desarrollo & CI/CD
 
 - **Secret Scanning**: Integración de TruffleHog y pre-commit (detect-secrets).
-- **Dependency Scanning**: Flujo de CI para detección de vulnerabilidades en librerías.
+- **Dependency Scanning (Dependabot)**: Flujo autónomo de CI configurado en `.github/dependabot.yml` para auditar paquetes de Composer, contenedores Docker y flujos de GitHub Actions. Ante vulnerabilidades (CVEs), el bot crea silenciosamente ramas `dependabot/*` y propone Pull Requests aislados que no rompen `main` hasta que los Tests (Status Checks) validen su idoneidad, garantizando una postura de seguridad proactiva.

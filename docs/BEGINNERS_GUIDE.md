@@ -56,7 +56,8 @@ Esta carpeta conecta tu código con los servidores de GitHub.
   * `ci.yml`: El robot que revisa que todo funcione antes de aceptar cambios.
   * `wiki-sync.yml`: El robot que mantiene la Wiki actualizada.
   * `docker-publish.yml`: El robot que fabrica tu paquete oficial.
-* **Para el novato**: Es como tener un robot invisible que limpia y organiza tu proyecto cada vez que tú terminas de trabajar.
+* **Archivo `dependabot.yml`**: Un robot auditor que lee constantemente tus herramientas prestadas (`vendor/`) y te avisa muy amablemente (haciendo un "Pull Request") cuando alguna pieza se volvió vieja o insegura.
+* **Para el novato**: Es como tener un equipo de robots invisibles que limpian, organizan y vigilan tu proyecto cada vez que tú terminas de trabajar.
 
 ---
 

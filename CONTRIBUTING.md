@@ -27,6 +27,12 @@ Para garantizar la estabilidad del proyecto, la rama `main` tiene las siguientes
 - **Revisión**: Cada cambio requiere al menos una aprobación de un mantenedor.
 - **Checks de CI**: Los tests automatizados deben pasar antes de fusionar.
 
+### Interacción con Automatizaciones y Bots (Dependabot)
+
+- Para mantener la salud del código, este repositorio recibe auditorías semanales de **Dependabot** para `Composer`, `Docker` y `GitHub Actions`.
+- Los **Mantenedores** deben revisar los Pull Requests (PRs) autogenerados por el bot.
+- **Regla Estricta:** Nunca hacer "Merge" de un PR del bot si los Status Checks de CI/CD (linting, build, trivy) no están en **verde**. El bot se encarga de crear el PR y el Humano aprueba sólo cuando la auditoría automática valida que el sistema no colapsará.
+
 ---
 
 ## 🛠️ Estándares de Código

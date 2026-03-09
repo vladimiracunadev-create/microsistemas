@@ -93,6 +93,14 @@ make hub-doctor APP=CapacitySim
 make hub-up APP=CapacitySim
 ```
 
+### Mantenimiento de Dependencias (Dependabot PRs)
+
+El mantenimiento preventivo de terceros es automatizado mediante Pull Requests de **Dependabot** (`.github/dependabot.yml`). El flujo operativo exigido para fusionarlos es:
+
+1. **Alerta**: Dependabot levanta un PR con la actualización de un paquete en Composer, Docker o Actions.
+2. **Status Checks**: El ingeniero debe visualizar que el Pipeline de GitHub Actions (Linting, Build, Seguridad) se encuentre en **Verde**. Si está rojo, el PR se descarta o reconfigura porque introdujo un Breaking Change.
+3. **Merge**: Sólo una vez validados los checks, el mantenedor aprueba y fusiona el PR.
+
 ---
 
 ## 🩺 4. Monitorización y Diagnóstico

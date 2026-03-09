@@ -6,6 +6,9 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 
 ### Añadido
 
+- **Gobernanza Profesional y Metadatos**: Generación de archivos esenciales no-MD (`.github/CODEOWNERS`, `CITATION.cff`, `.editorconfig`, `.gitattributes`) para estandarizar la colaboración y citación académica del repositorio.
+- **Escaneo de Dependencias (SecOps)**: Activación oficial de **Dependabot** (`.github/dependabot.yml`) para auditar proactivamente el ecosistema. Creación automatizada de Pull Requests para vulnerabilidades en Composer, Docker y GitHub Actions.
+- **Plantillas de Issues (YAML)**: Modernización de los canales de reporte (`bug_report.yml`, `feature_request.yml`, `question.yml`, `config.yml`) para asegurar métricas y entornos consistentes en cada ticket.
 - **Skills System (`skills/`)**: Sistema de playbooks reutilizables para automatizar tareas complejas de desarrollo.
   - `skills/integrar-microsistema/` → Skill de 6 pasos para integrar cualquier app nueva con coherencia total (dashboard, manifest, docs, wiki, chequeos).
   - Plantillas incluidas: `app.manifest.yml.tpl`, `dashboard-card.html.tpl`, `wiki-entry.md.tpl`.

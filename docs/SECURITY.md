@@ -21,6 +21,10 @@ Al utilizar Docker, cada herramienta se ejecuta en un entorno aislado. Esto prev
 
 Recomendamos encarecidamente que el usuario de base de datos configurado en `SQL Viewer` tenga permisos limitados (ej: solo `SELECT`, `INSERT`, `UPDATE`) y no permisos de administrador global (`SUPER`).
 
+### 4. Auditoría Automática (Dependabot)
+
+El repositorio está protegido por Dependabot, un agente que escanea ininterrumpidamente las dependencias de Composer, Docker y GitHub Actions en busca de vulnerabilidades conocidas (CVEs), abriendo Pull Requests automáticos para su mitigación inmediata.
+
 ## 📝 Reporte de Vulnerabilidades
 
 Valoramos enormemente el trabajo de los investigadores de seguridad. Si descubre un fallo:

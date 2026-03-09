@@ -118,11 +118,13 @@ Cada cambio en la rama `main` o en un `tag` dispara un proceso de despliegue aut
 ```mermaid
 sequenceDiagram
     participant Dev as Desarrollador
+    participant Bot as Dependabot
     participant GH as GitHub Repo
     participant GA as GitHub Actions
     participant GHCR as Container Registry
 
-    Dev->>GH: git push origin main
+    Bot-->>GH: Scanner: CVE Detectado -> Genera PR
+    Dev->>GH: git push origin main / Aprobar PR
     GH->>GA: Trigger: workflow ci.yml (Selectivo)
     GA->>GA: Linting (PHP, MD, Python)
     GA->>GA: Build Docker Image (Local)
