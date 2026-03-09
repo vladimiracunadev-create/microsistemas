@@ -60,6 +60,17 @@ Para más detalles, consulta la 📖 **[Guía del Hub (docs/HUB.md)](docs/HUB.md
 
 ---
 
+## 🤖 Servidor MCP Local (Para IA)
+
+Microsistemas integra un **Servidor Model Context Protocol (MCP)** en Python (`mcp/`) diseñado para exponer de forma local, estandarizada y segura todos los manifiestos, configuraciones y documentaciones del Hub a asistentes de Inteligencia Artificial (ej: Claude Desktop).
+
+> **Aviso de Seguridad:** La implementación V1 es estrictamente de **Solo Lectura**. El servidor MCP expone herramientas de diagnóstico (`run_hub_doctor`, `run_smoke`) y lectura de archivos mediante listas blancas, imposibilitando inyecciones, mutaciones no autorizadas o modificaciones destructivas en tu infraestructura.
+
+Para conectar tu cliente MCP preferido, revisa la configuración en:
+🧠 **[Servidor MCP Local (V1)](mcp/README.md)**
+
+---
+
 ## ⚡ Inicio Inmediato
 
 ### 🐳 Con Docker (Recomendado)
@@ -134,6 +145,7 @@ Explora nuestras guías detalladas para convertirte en un experto de la suite:
 
 - 📁 **[Referencia de Archivos](docs/FILES_REFERENCE.md)**: Explicación detallada de cada archivo del sistema con su importancia.
 - 🤖 **[Skills / Playbooks](skills/integrar-microsistema/skill.md)**: Flujos reutilizables para automatizar tareas complejas (integración de apps, actualización de docs, CI checks).
+- 🧠 **[Servidor MCP Local (V1)](mcp/README.md)**: Integración segura y de solo lectura de Model Context Protocol para proveer contexto instantáneo a Asistentes de Inteligencia Artificial.
 - 📖 **[Guía para Principiantes](docs/BEGINNERS_GUIDE.md)**: ¿Eres nuevo? Empieza aquí para entender las carpetas.
 - 📖 **[Manual de Usuario](docs/USER_MANUAL.md)**: Cómo sacar el máximo provecho a cada herramienta.
 - 🚀 **[Guía de Instalación](docs/INSTALL.md)**: Despliegue en Docker, Linux y XAMPP.

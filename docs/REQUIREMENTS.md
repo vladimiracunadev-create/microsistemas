@@ -46,6 +46,7 @@ Este documento define las especificaciones técnicas de hardware y software nece
 - **Docker**: Motor 20.10+ y Docker Compose 1.29+.
 - **Make**: GNU Make 3.8+ (para usar el `Makefile`).
 - **Git**: 2.30+.
+- **Python**: 3.11+ (Requerido únicamente para inicializar el protocolo `mcp/server.py` para Inteligencias Artificiales).
 
 ---
 

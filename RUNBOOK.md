@@ -93,6 +93,15 @@ make hub-doctor APP=CapacitySim
 make hub-up APP=CapacitySim
 ```
 
+### Inicialización del Servidor MCP Local (Para IA)
+
+Si deseas conectar el proyecto a clientes de IA como **Claude Desktop**, inicia el entorno pasivo "Sidecar":
+
+```bash
+# Iniciar el servidor MCP nativo expuesto por Standard IO
+python -m mcp.server
+```
+
 ### Mantenimiento de Dependencias (Dependabot PRs)
 
 El mantenimiento preventivo de terceros es automatizado mediante Pull Requests de **Dependabot** (`.github/dependabot.yml`). El flujo operativo exigido para fusionarlos es:

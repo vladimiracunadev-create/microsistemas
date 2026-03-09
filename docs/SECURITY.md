@@ -25,6 +25,10 @@ Recomendamos encarecidamente que el usuario de base de datos configurado en `SQL
 
 El repositorio está protegido por Dependabot, un agente que escanea ininterrumpidamente las dependencias de Composer, Docker y GitHub Actions en busca de vulnerabilidades conocidas (CVEs), abriendo Pull Requests automáticos para su mitigación inmediata.
 
+### 5. Interfaz de IA Segura (Servidor MCP)
+
+El servidor MCP integrado en este repositorio (`/mcp`) está restringido por diseño (Hardcoded) a **solo lectura**. Implementa protecciones Anti-Path-Traversal mediante Regex estandarizadas y Whitelists absolutas, imposibilitando que un asistente de IA exfiltre variables del `.env` o ejecute comandos mutacionales sobre el host.
+
 ## 📝 Reporte de Vulnerabilidades
 
 Valoramos enormemente el trabajo de los investigadores de seguridad. Si descubre un fallo:

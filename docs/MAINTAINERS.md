@@ -14,6 +14,7 @@ Este documento enumera a las personas que tienen responsabilidad directa sobre e
 4. **Lanzamientos**: Gestionar el versionado SemVer y la publicación de imágenes en GitHub Packages.
 5. **Seguridad**: Atender de forma prioritaria cualquier vulnerabilidad reportada según la `SECURITY.md`.
 6. **Monitoreo de Salud**: Verificar periódicamente que los endpoints `/health` y `/ready` de todas las apps respondan correctamente. Usar `make hub-doctor` para diagnóstico completo del entorno.
+7. **Infraestructura IA (MCP)**: Auditar que las `tools` y `resources` definidos en `mcp/` mantengan siempre la barrera estricta de "Solo Lectura", sin exponer comandos destructables al LLM. Gestionar y actualizar prudencialmente las _AllowLists_ (Listas Blancas Documentales) centralizadas en la configuración (`mcp/config.py`).
 
 ## Cómo Convertirse en Mantenedor
 

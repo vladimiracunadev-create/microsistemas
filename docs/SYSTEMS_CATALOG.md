@@ -26,6 +26,12 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 - **Por qué**: Para evitar el clásico error "en mi máquina funciona".
 - **Importancia**: Permite que un nuevo desarrollador o un servidor de producción levante el sistema en segundos con una configuración idéntica a la original.
 
+### 4. Capa de Asistencia IA (Servidor MCP Local)
+
+- **Qué es**: Un servidor "Sidecar" escrito en Python (`mcp/server.py`) con API de Solo Lectura.
+- **Por qué**: Proporciona a modelos como Claude o GenAI un endpoint seguro para leer infraestructura y diagnosticar código a través del *Model Context Protocol*, sin darles permisos de escritura destructiva.
+- **Importancia**: Alinea el ecosistema Microsistemas con los últimos estándares de IA en entornos locales.
+
 ---
 
 ## 🛠️ Catálogo de Microsistemas (apps/)

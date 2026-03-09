@@ -73,7 +73,12 @@ Este repositorio ha pasado por un proceso de hardening para mitigar riesgos:
 
 - **Input Sanitization**: Validación estricta de IDs de aplicación.
 - **Path Traversal Prevention**: Validación de rutas usando `abspath` para asegurar el scope en `apps/`.
-- **Allowed Commands**: Lista blanca de ejecutables permitidos (`php`, `python`, `node`, etc).
+
+### 🛡️ Servidor MCP (IA Context Layer)
+
+- **Solo Lectura V1**: El servidor expone explícitamente herramientas que imitan un "Sidecar" pasivo (`read_doc`, `read_manifest`, `run_hub_list`). Todo está restringido por diseño para evitar "Prompt Injections" sobre comandos destructables.
+- **Prevención de Path Traversal**: La lectura de documentos/skills se restringe vía Whitelists estrictas (ej. arreglo de nombres permitidos en configuración). Se prohíbe explícitamente la lectura de archivos confidenciales ocultos, credenciales, la DB local o tokens.
+- **Sanitización Nativa**: Los sub-comandos ejecutados (hub doctor o listeo) están harcodeados y no aceptan secuencias de terminal arbitrarias provenientes de un LLM.
 
 ### 🛡️ CI/CD & Automatización
 

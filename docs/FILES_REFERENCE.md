@@ -530,6 +530,13 @@ Microsistemas/
 │   ├── 🟡 dev.sh / dev.ps1
 │   └── 🟡 generate_catalog.py
 │
+├── mcp/                       ← Servidor MCP (Protocolo de IA)
+│   ├── 🔴 server.py          ← Entrypoint del "Sidecar" 
+│   ├── 🔴 config.py          ← Hardening y AllowLists
+│   ├── 🟡 tools/             ← Scripts de CLI Hub wrappers
+│   ├── 🟡 prompts/           ← Comportamientos IA estáticos
+│   └── 🟢 resources/         ← Mapeo de Documentación
+│
 ├── docs/                      ← 12 documentos técnicos + wiki
 ├── k8s/demo/                  ← Manifiestos Kubernetes
 ├── .github/                   ← CI/CD + plantillas de Issues/PRs

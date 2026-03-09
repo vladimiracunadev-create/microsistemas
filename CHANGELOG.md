@@ -2,6 +2,14 @@
 
 Todos los cambios notables en este proyecto serán documentados en este archivo. El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Añadido
+
+- **Servidor MCP Local (AI Context Layer)**: Integración "sidecar" de *Model Context Protocol* escrita en `FastMCP` de Python, orquestando una API de Solo Lectura exclusiva para clientes de Inteligencia Artificial locales (Claude Desktop, Cursor).
+- **Tools MCP**: Inclusión de herramientas diagnósticas harcodeadas (`run_hub_list`, `run_hub_doctor`, `run_smoke`, `find_ports`, `read_manifest`, `read_doc`, `read_skill`) para analizar la infraestructura dockerizada, puertos o componentes del "Hub CLI", prohibiendo inyecciones con Whitelists rigurosas y mitigación de Path Traversals.
+- **Resources & Prompts MCP**: Rutas pre-cocidas (`repo://`) y asistentes sistémicos (`integrar-microapp`, `auditar-manifest`, `diagnosticar-entorno`, `preparar-release-docs`) que otorgan "Memoria Institucional" estandarizada sobre la arquitectura `Microsistemas` sin sacrificar la inmutabilidad de los repositorios.
+
 ## [2.3.0] - 2026-03-05
 
 ### Añadido

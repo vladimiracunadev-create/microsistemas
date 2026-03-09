@@ -10,6 +10,8 @@ Integrar un microsistema nuevo en `apps/<Nombre>/` de forma **limpia, mínima, c
 - Wiki (docs/wiki/*) → preparado para sync
 - Chequeos (make validate/test/catalog/hub-list)
 
+> **💡 IA Context Layer**: Si un Asistente de IA está liderando la integración, puede consultar esta skill con la Tool `read_skill("integrar-microsistema")` y automatizar tareas de redacción con el Prompt `integrar-microapp`.
+
 ## Entrada (Inputs)
 
 - `APP_NAME`: nombre del microsistema (ej: `KatasMultiLang`)

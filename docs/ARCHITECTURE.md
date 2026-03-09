@@ -215,6 +215,7 @@ La imagen oficial se basa en `php:8.2-apache` para maximizar la compatibilidad:
 | **12-Factor App**              | `.env`, Dockerfile, Composer                    | Portabilidad entre entornos.                  |
 | **Infrastructure as Code**     | `Dockerfile`, `docker-compose.yml`, `k8s/`      | Entornos reproducibles y versionados.         |
 | **CI/CD Pipeline**             | `.github/workflows/`                            | Calidad y despliegue automatizado.            |
+| **AI Context Layer (MCP)**     | `mcp/` — Servidor Python FastMCP                | Sidecar local estandarizado para brindar memoria e inteligencia contextual (Manifiestos, Docs, Scripts) a Asistentes LLM bajo el esquema `Solo Lectura`. |
 
 ---
 

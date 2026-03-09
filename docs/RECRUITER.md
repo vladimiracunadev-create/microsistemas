@@ -57,6 +57,7 @@ Una suite unificada de micro-aplicaciones que:
 | **Orquestación** | Kubernetes (Kustomize) | Escalabilidad horizontal, alta disponibilidad |
 | **CI/CD** | GitHub Actions | Automatización completa, integración nativa |
 | **Gestión de Configuración** | Makefile, CLI Hub | Estandarización de comandos, DX mejorada |
+| **AI Context Layer (MCP)** | Python (FastMCP) | "Sidecar" estandarizado (Read-Only) para Inteligencia Artificial. |
 
 ### Patrones de Diseño Aplicados
 
