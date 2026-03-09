@@ -176,10 +176,10 @@ Este proyecto está bajo la **Licencia MIT**. Consulta el archivo [LICENSE](LICE
 
 Desarrollado con ❤️ por **[Vladimir Acuña Valdebenito](https://www.linkedin.com/in/vladimir-acu%C3%B1a-valdebenito-11924a29/)** para la comunidad de desarrolladores.
 
-
 ## 📚 Documentación del Proyecto
 
 Como parte de los estándares de este ecosistema, la documentación detallada se divide en:
+
 - [📘 Guía de Instalación y Despliegue (INSTALL.md)](INSTALL.md)
 - [📜 Historial de Cambios (CHANGELOG.md)](CHANGELOG.md)
 - [🤝 Guía de Contribución (CONTRIBUTING.md)](CONTRIBUTING.md)
