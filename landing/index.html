@@ -3,47 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Microsistemas | Landing del Producto</title>
+    <title>Microsistemas | Developer Productivity Suite</title>
     <meta
         name="description"
-        content="Landing page de Microsistemas: suite modular para productividad de desarrollo, soporte tecnico, DevOps y modernizacion de software."
+        content="Microsistemas es una suite modular de herramientas tecnicas para soporte, modernizacion, automatizacion y documentacion operativa."
     >
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
     >
     <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-    <div class="page-shell">
-        <header class="topbar">
-            <a class="brand" href="#hero">
-                <span class="brand-mark">M</span>
-                <span class="brand-copy">
+    <header class="nav">
+        <div class="nav-inner">
+            <a class="nav-brand" href="#hero">
+                <span class="nav-mark">MS</span>
+                <span class="nav-copy">
                     <strong>Microsistemas</strong>
                     <small>Developer Productivity Suite</small>
                 </span>
             </a>
 
-            <nav class="topnav" aria-label="Navegacion principal">
+            <nav class="nav-links" aria-label="Navegacion principal">
                 <a href="#suite">Suite</a>
-                <a href="#workflow">Flujo</a>
-                <a href="#architecture">Arquitectura</a>
+                <a href="#workflow">Workflow</a>
+                <a href="#apps">Apps</a>
                 <a href="#docs">Docs</a>
+                <a href="https://github.com/vladimiracunadev-create/microsistemas" target="_blank" rel="noreferrer" class="nav-button">Repositorio</a>
             </nav>
-        </header>
+        </div>
+    </header>
 
-        <main>
-            <section class="hero reveal is-visible" id="hero">
+    <main>
+        <section class="hero reveal is-visible" id="hero">
+            <div class="container hero-grid">
                 <div class="hero-copy">
-                    <p class="eyebrow">Producto listo para desarrollo, soporte y operaciones</p>
-                    <h1>Una sola suite para diagnosticar, modernizar, automatizar y documentar trabajo tecnico real.</h1>
-                    <p class="lead">
-                        Microsistemas agrupa microapps web especializadas, un Hub CLI, integracion con Docker/XAMPP y
-                        una capa MCP de solo lectura para llevar tareas dispersas a un flujo de trabajo mas claro y reusable.
+                    <p class="eyebrow">Suite modular para desarrollo, soporte y operaciones</p>
+                    <h1>Microsistemas convierte utilidades tecnicas dispersas en una suite mas clara, mas reusable y mas comercial.</h1>
+                    <p class="hero-lead">
+                        Reune microapps web, Hub CLI, ejecucion local con Docker o XAMPP y una capa MCP de solo lectura
+                        para que diagnostico, automatizacion, migracion y documentacion convivan dentro de una misma narrativa de producto.
                     </p>
+
+                    <div class="hero-badges" aria-label="Capacidades principales">
+                        <img src="https://img.shields.io/badge/apps-11-blue" alt="11 apps">
+                        <img src="https://img.shields.io/badge/runtime-PHP%208.1%2B-777BB4?logo=php&logoColor=white" alt="PHP 8.1+">
+                        <img src="https://img.shields.io/badge/devops-Docker-2496ED?logo=docker&logoColor=white" alt="Docker">
+                        <img src="https://img.shields.io/badge/cli-Hub-0f172a?logo=gnubash&logoColor=white" alt="Hub CLI">
+                        <img src="https://img.shields.io/badge/ai-MCP%20local-0ea5e9" alt="MCP local">
+                        <img src="https://img.shields.io/badge/docs-GitHub%20Pages-181717?logo=github&logoColor=white" alt="GitHub Pages">
+                    </div>
 
                     <div class="hero-actions">
                         <a class="btn btn-primary" href="#suite">Explorar la suite</a>
@@ -59,237 +71,323 @@
                         <a class="btn btn-ghost" href="https://github.com/vladimiracunadev-create/microsistemas" target="_blank" rel="noreferrer">Ver repositorio</a>
                     </div>
 
-                    <p class="deployment-note" data-runtime-note>
-                        En entorno local, esta landing convive con el dashboard PHP y las microapps del repositorio.
+                    <p class="hero-note" data-runtime-note>
+                        En local, esta landing convive con el dashboard PHP y las microapps reales del repositorio.
                     </p>
 
-                    <ul class="signal-list" aria-label="Puntos clave">
-                        <li>11 herramientas orientadas a productividad tecnica</li>
-                        <li>CLI Hub para listar, ejecutar y diagnosticar</li>
-                        <li>MCP local de solo lectura para asistentes IA</li>
-                        <li>Compatible con Docker, XAMPP y despliegue documental</li>
-                    </ul>
+                    <div class="proof-grid">
+                        <article class="proof-card">
+                            <strong>11</strong>
+                            <span>microapps enfocadas en productividad tecnica</span>
+                        </article>
+                        <article class="proof-card">
+                            <strong>1</strong>
+                            <span>Hub CLI para discovery, run y health checks</span>
+                        </article>
+                        <article class="proof-card">
+                            <strong>3</strong>
+                            <span>modos principales: Docker, XAMPP y PHP local</span>
+                        </article>
+                    </div>
                 </div>
 
                 <aside class="hero-panel">
-                    <div class="panel-label">Panorama del producto</div>
-                    <div class="metric-grid">
-                        <article class="metric-card">
-                            <strong>11</strong>
-                            <span>microapps incluidas</span>
-                        </article>
-                        <article class="metric-card">
-                            <strong>1</strong>
-                            <span>Hub CLI para operar todo</span>
-                        </article>
-                        <article class="metric-card">
-                            <strong>3</strong>
-                            <span>modos de entrada: Docker, XAMPP y PHP local</span>
-                        </article>
-                        <article class="metric-card">
-                            <strong>AI</strong>
-                            <span>contexto seguro con servidor MCP local</span>
-                        </article>
+                    <div class="panel-header">
+                        <span class="panel-dot"></span>
+                        <span class="panel-dot"></span>
+                        <span class="panel-dot"></span>
+                        <small>suite-preview.log</small>
                     </div>
 
-                    <div class="mini-note">
-                        <p>Esta landing es estatica y aislada.</p>
-                        <p>Tambien queda preparada para publicarse con GitHub Pages sin afectar el runtime principal.</p>
+                    <div class="terminal-card">
+<pre><code><span class="terminal-prompt">$</span> make hub-list
+AwsGenerator
+CapacitySim
+CicdLibrary
+Conversor
+GitTrainer
+JsTools
+KatasMultiLang
+LogViewer
+PhpMigrator
+SqlViewer
+YmlGenerator
+
+<span class="terminal-prompt">$</span> make hub-doctor
+OK  entorno detectado
+OK  rutas base disponibles
+OK  suite lista para operar</code></pre>
+                    </div>
+
+                    <div class="hero-stack">
+                        <div class="stack-card">
+                            <span>Soporte</span>
+                            <strong>SQL Viewer, Log Viewer, Conversor</strong>
+                        </div>
+                        <div class="stack-card">
+                            <span>Modernizacion</span>
+                            <strong>PhpMigrator para bases PHP legacy</strong>
+                        </div>
+                        <div class="stack-card">
+                            <span>DevOps</span>
+                            <strong>AWS Assistant, CapacitySim y CicdLibrary</strong>
+                        </div>
+                        <div class="stack-card">
+                            <span>Aprendizaje</span>
+                            <strong>GitTrainer, KatasMultiLang y utilidades de apoyo</strong>
+                        </div>
                     </div>
                 </aside>
-            </section>
+            </div>
+        </section>
 
-            <section class="strip reveal" aria-label="Resumen ejecutivo">
-                <div class="strip-card">
-                    <span class="strip-kicker">Problema</span>
-                    <p>Las tareas de soporte, SQL, migracion legacy, CI/CD y documentacion suelen terminar repartidas en demasiadas herramientas.</p>
+        <section class="section reveal">
+            <div class="container">
+                <div class="section-heading compact">
+                    <p class="section-label">Resumen</p>
+                    <h2>Una capa visual mas fuerte para un producto que ya tiene fondo tecnico.</h2>
                 </div>
-                <div class="strip-card">
-                    <span class="strip-kicker">Propuesta</span>
-                    <p>Microsistemas concentra esos flujos en un ecosistema modular, ligero y facil de operar desde navegador, CLI y contenedores.</p>
-                </div>
-                <div class="strip-card">
-                    <span class="strip-kicker">Resultado</span>
-                    <p>Menos friccion, mejor onboarding y una base mas consistente para trabajar localmente o presentar el proyecto como producto.</p>
-                </div>
-            </section>
 
-            <section class="section reveal" id="suite">
+                <div class="summary-grid">
+                    <article class="summary-card">
+                        <span>Problema</span>
+                        <p>Muchas tareas tecnicas quedan repartidas entre utilidades sueltas, herramientas pesadas y documentacion que cuesta recorrer.</p>
+                    </article>
+                    <article class="summary-card">
+                        <span>Propuesta</span>
+                        <p>Microsistemas agrupa esos flujos en una suite modular, con acceso rapido, gobernanza documental y mejor narrativa de producto.</p>
+                    </article>
+                    <article class="summary-card">
+                        <span>Resultado</span>
+                        <p>Menos friccion, mejor onboarding y una presentacion mas convincente para demos, portafolio o adopcion interna.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-alt reveal" id="suite">
+            <div class="container">
                 <div class="section-heading">
                     <p class="section-label">Suite</p>
-                    <h2>Una caja de herramientas organizada por frentes de trabajo.</h2>
+                    <h2>No es una sola aplicacion. Es una coleccion curada de frentes de trabajo.</h2>
                     <p>
-                        En lugar de vender apps aisladas, la propuesta de Microsistemas funciona como una suite: cada
-                        pieza resuelve un dolor concreto, pero juntas forman un entorno de productividad tecnica mas coherente.
+                        La referencia visual que compartiste funciona porque ordena el producto por bloques claros. Aca aplicamos esa misma logica,
+                        pero al valor real de Microsistemas como suite para desarrolladores, soporte y operaciones.
                     </p>
                 </div>
 
-                <div class="feature-grid">
-                    <article class="feature-card feature-card-wide">
-                        <span class="pill">Diagnostico y datos</span>
-                        <h3>SQL Viewer, Log Viewer y Conversor</h3>
-                        <p>
-                            Inspeccion de bases de datos, lectura segura de logs y conversion de texto para resolver
-                            incidencias rapidas sin depender de herramientas pesadas.
-                        </p>
+                <div class="capability-grid">
+                    <article class="capability-card">
+                        <span class="capability-tag">Diagnostico y soporte</span>
+                        <h3>Resolver incidentes con menos cambio de contexto</h3>
+                        <p>SQL Viewer, Log Viewer y Conversor ayudan a inspeccionar datos, revisar logs y tratar texto seguro sin depender de clientes externos pesados.</p>
                     </article>
-                    <article class="feature-card">
-                        <span class="pill">Modernizacion</span>
-                        <h3>PhpMigrator</h3>
-                        <p>Ayuda a llevar codigo PHP legacy a una base mas actual, mantenible y alineada con estandares modernos.</p>
+                    <article class="capability-card">
+                        <span class="capability-tag">Modernizacion</span>
+                        <h3>Dar salida a sistemas legacy</h3>
+                        <p>PhpMigrator acorta la distancia entre una base PHP heredada y una base mas mantenible, alineada con practicas actuales.</p>
                     </article>
-                    <article class="feature-card">
-                        <span class="pill">DevOps</span>
-                        <h3>CapacitySim, AWS Assistant Pro y CicdLibrary</h3>
-                        <p>Simulacion, automatizacion y recetas operativas para infraestructura, pipelines y despliegue continuo.</p>
+                    <article class="capability-card">
+                        <span class="capability-tag">DevOps</span>
+                        <h3>Planificar, generar y automatizar infraestructura</h3>
+                        <p>CapacitySim, AWS Assistant Pro y CicdLibrary cubren simulacion, recetas operativas y pipelines para escenarios concretos.</p>
                     </article>
-                    <article class="feature-card">
-                        <span class="pill">Aprendizaje</span>
-                        <h3>GitTrainer y KatasMultiLang</h3>
-                        <p>Herramientas para acelerar onboarding, consulta de comandos y trabajo poliglota con una UX visual mas didactica.</p>
-                    </article>
-                    <article class="feature-card">
-                        <span class="pill">Configuracion</span>
-                        <h3>YmlGenerator y JsTools</h3>
-                        <p>Soporte para generar YAML, manipular JavaScript y reducir errores repetitivos en tareas de preparacion tecnica.</p>
+                    <article class="capability-card">
+                        <span class="capability-tag">Aprendizaje y aceleracion</span>
+                        <h3>Onboarding tecnico mas rapido</h3>
+                        <p>GitTrainer, KatasMultiLang, JsTools y YmlGenerator funcionan como apoyo para consulta, formacion y reduccion de errores repetitivos.</p>
                     </article>
                 </div>
-            </section>
 
-            <section class="section reveal" id="workflow">
+                <div class="matrix-shell">
+                    <table class="matrix-table">
+                        <thead>
+                            <tr>
+                                <th>Frente</th>
+                                <th>Herramientas</th>
+                                <th>Impacto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>Soporte</code></td>
+                                <td>SqlViewer, LogViewer, Conversor</td>
+                                <td>Inspeccion rapida y menos dependencia de herramientas externas</td>
+                            </tr>
+                            <tr>
+                                <td><code>Legacy</code></td>
+                                <td>PhpMigrator</td>
+                                <td>Modernizacion progresiva de codigo PHP heredado</td>
+                            </tr>
+                            <tr>
+                                <td><code>DevOps</code></td>
+                                <td>AwsGenerator, CapacitySim, CicdLibrary</td>
+                                <td>Mejor planificacion, recetas reutilizables y CI/CD mas consistente</td>
+                            </tr>
+                            <tr>
+                                <td><code>Productividad</code></td>
+                                <td>GitTrainer, JsTools, YmlGenerator, KatasMultiLang</td>
+                                <td>Aprendizaje, consulta rapida y menos friccion operativa</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="section reveal" id="workflow">
+            <div class="container">
                 <div class="section-heading">
-                    <p class="section-label">Flujo</p>
-                    <h2>Del diagnostico al despliegue en una misma narrativa.</h2>
-                    <p>La suite no solo agrega utilidades. Tambien ordena el recorrido operativo de un equipo tecnico.</p>
+                    <p class="section-label">Workflow</p>
+                    <h2>Desde detectar un problema hasta dejar una solucion documentada.</h2>
+                    <p>La suite tiene sentido porque tambien ordena el recorrido operativo completo.</p>
                 </div>
 
-                <div class="timeline">
-                    <article class="timeline-card">
+                <div class="workflow-grid">
+                    <article class="workflow-card">
                         <span>01</span>
                         <h3>Descubrir</h3>
                         <p>El Hub CLI centraliza inventario, ejecucion y chequeos de salud para que cada app sea facil de ubicar y operar.</p>
                     </article>
-                    <article class="timeline-card">
+                    <article class="workflow-card">
                         <span>02</span>
-                        <h3>Resolver</h3>
-                        <p>Las microapps cubren soporte, datos, nube, migracion y aprendizaje sin cambiar constantemente de contexto.</p>
+                        <h3>Actuar</h3>
+                        <p>Cada microapp ataca un caso real: datos, logs, cloud, Git, YAML, migracion o aprendizaje tecnico.</p>
                     </article>
-                    <article class="timeline-card">
+                    <article class="workflow-card">
                         <span>03</span>
                         <h3>Estandarizar</h3>
-                        <p>Docker, manifests, Makefile, health checks y documentacion convierten la suite en algo repetible y auditable.</p>
+                        <p>Docker, manifests, health checks, Makefile y docs-first convierten la suite en algo repetible y evaluable.</p>
                     </article>
-                    <article class="timeline-card">
+                    <article class="workflow-card">
                         <span>04</span>
                         <h3>Escalar</h3>
-                        <p>La capa MCP y la gobernanza documental abren la puerta a automatizacion, IA asistida y crecimiento ordenado.</p>
+                        <p>MCP local, GitHub Pages y documentacion viva amplian la suite hacia asistentes IA, demos y presentacion publica.</p>
                     </article>
                 </div>
-            </section>
 
-            <section class="section reveal" id="architecture">
+                <div class="ops-grid">
+                    <article class="ops-card">
+                        <h3>Inicio rapido</h3>
+<pre><code># instalar dependencias PHP
+make install
+
+# levantar entorno local
+make up
+
+# listar microapps
+make hub-list
+
+# ejecutar chequeo general
+make hub-doctor</code></pre>
+                    </article>
+                    <article class="ops-card">
+                        <h3>Canales de uso</h3>
+                        <ul class="ops-list">
+                            <li><strong>Navegador:</strong> dashboard central y microapps web.</li>
+                            <li><strong>CLI:</strong> Hub para discovery, run y health checks.</li>
+                            <li><strong>Contenedores:</strong> Docker para portabilidad y demo rapida.</li>
+                            <li><strong>IA local:</strong> servidor MCP de solo lectura para contexto seguro.</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-alt reveal" id="apps">
+            <div class="container">
                 <div class="section-heading">
-                    <p class="section-label">Arquitectura</p>
-                    <h2>DiseÃ±ado para mostrarse como producto y seguir funcionando como repositorio vivo.</h2>
-                    <p>
-                        Esta landing resume la propuesta comercial, pero el proyecto real conserva su estructura modular,
-                        su dashboard PHP y toda la documentacion tecnica original.
-                    </p>
+                    <p class="section-label">Apps destacadas</p>
+                    <h2>Una presentacion mas comercial empieza por hacer legibles las piezas del producto.</h2>
+                    <p>Estas microapps ayudan a comunicar el alcance real de Microsistemas sin saturar la vista.</p>
                 </div>
 
-                <div class="architecture-grid">
-                    <article class="architecture-card">
-                        <h3>Core PHP + Composer</h3>
-                        <p>Autoloading PSR-4, configuracion centralizada y base limpia para evolucionar la suite sin mezclar responsabilidades.</p>
-                    </article>
-                    <article class="architecture-card">
-                        <h3>Hub CLI</h3>
-                        <p>Una capa operativa comun para listar apps, correrlas localmente y ejecutar chequeos de entorno.</p>
-                    </article>
-                    <article class="architecture-card">
-                        <h3>Servidor MCP local</h3>
-                        <p>Acceso de solo lectura para asistentes IA, con foco en seguridad y contexto tecnico reutilizable.</p>
-                    </article>
-                    <article class="architecture-card">
-                        <h3>Docker, XAMPP y K8s</h3>
-                        <p>Compatibilidad con entornos locales y despliegues mas serios sin sacrificar simplicidad para quien evalua o aprende.</p>
-                    </article>
-                </div>
-            </section>
-
-            <section class="section reveal">
-                <div class="section-heading">
-                    <p class="section-label">Microapps destacadas</p>
-                    <h2>Ejemplos del valor que la suite entrega en terreno.</h2>
-                </div>
-
-                <div class="catalog-grid">
-                    <article class="catalog-card">
-                        <span class="catalog-tag">DevOps</span>
+                <div class="apps-grid">
+                    <article class="app-card">
+                        <span class="app-type">Cloud Ops</span>
                         <h3>AWS Assistant Pro</h3>
-                        <p>Recetas guiadas para AWS CLI con enfoque pedagÃ³gico y controles visuales de riesgo.</p>
-                        <a href="https://github.com/vladimiracunadev-create/microsistemas/tree/main/apps/AwsGenerator" target="_blank" rel="noreferrer">Ver carpeta</a>
+                        <p>Recetas guiadas para AWS CLI con enfoque operativo, lectura pedagogica y senales de riesgo visibles.</p>
                     </article>
-                    <article class="catalog-card">
-                        <span class="catalog-tag">Simulacion</span>
+                    <article class="app-card">
+                        <span class="app-type">Capacity</span>
                         <h3>CapacitySim</h3>
-                        <p>Modela capacidad, RPS y costos para planificar infraestructura antes de desplegar.</p>
-                        <a href="https://github.com/vladimiracunadev-create/microsistemas/tree/main/apps/CapacitySim" target="_blank" rel="noreferrer">Ver carpeta</a>
+                        <p>Simula capacidad, RPS y costos para conversar sobre infraestructura antes de desplegar.</p>
                     </article>
-                    <article class="catalog-card">
-                        <span class="catalog-tag">Datos</span>
+                    <article class="app-card">
+                        <span class="app-type">Data</span>
                         <h3>SqlViewer</h3>
-                        <p>Inspeccion de BD sin clientes pesados, ideal para soporte y validaciones rapidas.</p>
-                        <a href="https://github.com/vladimiracunadev-create/microsistemas/tree/main/apps/SqlViewer" target="_blank" rel="noreferrer">Ver carpeta</a>
+                        <p>Inspeccion ligera de base de datos desde navegador para soporte y validacion rapida.</p>
                     </article>
-                    <article class="catalog-card">
-                        <span class="catalog-tag">Legacy</span>
+                    <article class="app-card">
+                        <span class="app-type">Legacy</span>
                         <h3>PhpMigrator</h3>
-                        <p>Reduce la distancia entre un sistema heredado y una base PHP moderna.</p>
-                        <a href="https://github.com/vladimiracunadev-create/microsistemas/tree/main/apps/PhpMigrator" target="_blank" rel="noreferrer">Ver carpeta</a>
+                        <p>Reduce la friccion entre sistemas heredados y una base moderna en PHP 8.x.</p>
                     </article>
-                    <article class="catalog-card">
-                        <span class="catalog-tag">Aprendizaje</span>
+                    <article class="app-card">
+                        <span class="app-type">Learning</span>
                         <h3>GitTrainer</h3>
-                        <p>Biblioteca visual para resolver situaciones Git con mayor seguridad y menos friccion.</p>
-                        <a href="https://github.com/vladimiracunadev-create/microsistemas/tree/main/apps/GitTrainer" target="_blank" rel="noreferrer">Ver carpeta</a>
+                        <p>Biblioteca visual para resolver situaciones Git sin improvisar comandos bajo presion.</p>
                     </article>
-                    <article class="catalog-card">
-                        <span class="catalog-tag">Poliglota</span>
+                    <article class="app-card">
+                        <span class="app-type">Polyglot</span>
                         <h3>KatasMultiLang</h3>
-                        <p>Comparador side-by-side para estudiar patrones entre multiples lenguajes y frameworks.</p>
-                        <a href="https://github.com/vladimiracunadev-create/microsistemas/tree/main/apps/KatasMultiLang" target="_blank" rel="noreferrer">Ver carpeta</a>
+                        <p>Comparador side-by-side para estudiar patrones en muchos lenguajes y frameworks desde una misma vista.</p>
                     </article>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section class="section reveal" id="docs">
-                <div class="docs-panel">
-                    <div>
-                        <p class="section-label">Documentacion</p>
-                        <h2>La landing tambien queda respaldada en Markdown.</h2>
+        <section class="section reveal" id="docs">
+            <div class="container">
+                <div class="docs-shell">
+                    <article class="docs-card docs-card-primary">
+                        <p class="section-label">Docs y despliegue</p>
+                        <h2>La landing no reemplaza el proyecto. Lo organiza, lo presenta y lo hace mas facil de vender.</h2>
                         <p>
-                            Ademas de la vista HTML, se agrego una guia dedicada para explicar donde vive esta landing,
-                            como previsualizarla, como desplegarla con GitHub Pages y como encaja dentro del repositorio
-                            sin afectar el dashboard actual.
+                            Sigue siendo una capa estatica sobre Microsistemas. El dashboard PHP, las apps y la documentacion original
+                            permanecen intactos mientras esta vista mejora la presentacion del repositorio como producto tecnico.
                         </p>
-                    </div>
+                        <div class="hero-actions">
+                            <a class="btn btn-primary" href="https://github.com/vladimiracunadev-create/microsistemas" target="_blank" rel="noreferrer">Ir al repositorio</a>
+                        </div>
+                    </article>
 
-                    <div class="docs-actions">
-                        <a class="btn btn-primary" href="https://github.com/vladimiracunadev-create/microsistemas/blob/main/docs/LANDING_PAGE.md" target="_blank" rel="noreferrer">Ver version Markdown</a>
-                        <a class="btn btn-secondary" href="https://github.com/vladimiracunadev-create/microsistemas/blob/main/README.md" target="_blank" rel="noreferrer">Abrir README principal</a>
-                    </div>
+                    <article class="docs-card">
+                        <h3>Queda lista para:</h3>
+                        <ul class="docs-list">
+                            <li>mostrar Microsistemas como producto y no solo como carpeta de utilidades,</li>
+                            <li>publicarse con GitHub Pages como sitio estatico del repositorio,</li>
+                            <li>convivir con el runtime local sin tocar el dashboard actual,</li>
+                            <li>servir como entrada visual para demos, portafolio o evaluacion tecnica.</li>
+                        </ul>
+                    </article>
                 </div>
-            </section>
-        </main>
+            </div>
+        </section>
+    </main>
 
-        <footer class="footer">
-            <p>Microsistemas, una suite modular para productividad tecnica y operaciones.</p>
-            <p><span data-year></span> Â· Landing estatica en <code>landing/</code> sin modificar el runtime principal.</p>
-        </footer>
-    </div>
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div>
+                <p class="footer-brand">Microsistemas</p>
+                <p class="footer-copy">Suite modular para diagnostico, modernizacion, automatizacion y documentacion tecnica.</p>
+            </div>
+            <div>
+                <p class="footer-title">Producto</p>
+                <a href="#suite">Suite</a>
+                <a href="#workflow">Workflow</a>
+                <a href="#apps">Apps</a>
+            </div>
+            <div>
+                <p class="footer-title">Repositorio</p>
+                <a href="https://github.com/vladimiracunadev-create/microsistemas" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p><span data-year></span> · Landing estatica de Microsistemas en <code>landing/</code></p>
+        </div>
+    </footer>
 
     <script src="assets/app.js"></script>
 </body>
 </html>
-
