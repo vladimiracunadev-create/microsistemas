@@ -33,3 +33,6 @@ venv/
 
 # Logs
 *.log
+
+# Claude Code local memory (not for repo)
+.claude/
