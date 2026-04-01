@@ -1,10 +1,10 @@
-# Catálogo de tecnologías (enfoque didáctico)
+# Catalogo de tecnologias (enfoque didactico)
 
-Resumen de para qué sirve cada opción del simulador, cuándo conviene y riesgos típicos.
+Resumen de para que sirve cada opcion del simulador, cuando conviene y riesgos tipicos.
 
 ## OS
 
-- Linux: común en servidores y DevOps.
+- Linux: comun en servidores y DevOps.
 - Windows: frecuente en stacks .NET/IIS.
 
 ## Servidor web
@@ -12,54 +12,54 @@ Resumen de para qué sirve cada opción del simulador, cuándo conviene y riesgo
 - Nginx: reverse proxy, alto manejo de concurrencia.
 - Apache: flexible; requiere tuning para alta concurrencia.
 - IIS: integrado con Windows/.NET.
-- Caddy: simple; TLS automático en escenarios reales.
+- Caddy: simple; TLS automatico en escenarios reales.
 
 ## Runtime backend
 
 - Node.js: I/O no bloqueante, muy eficiente con muchas conexiones.
-- PHP-FPM: clásico web; tuning de workers.
+- PHP-FPM: clasico web; tuning de workers.
 - Python+Gunicorn: potente; requiere tuning de workers.
 - Java+Tomcat: robusto; tuning JVM.
 - .NET: alto rendimiento; tuning del hosting.
 
 ## DB
 
-- Postgres/MySQL: relacionales; escalan con réplicas/sharding según caso.
+- Postgres/MySQL: relacionales; escalan con replicas/sharding segun caso.
 - SQL Server: enterprise; tuning/licencias.
-- MongoDB: documento; cuidado con índices.
-- Cassandra: distribuida; alta disponibilidad; modelado específico.
+- MongoDB: documento; cuidado con indices.
+- Cassandra: distribuida; alta disponibilidad; modelado especifico.
 
 ## Cache/CDN/TLS
 
-- Cache reduce lecturas repetidas; implica invalidación.
-- CDN descarga estáticos y acerca contenido.
-- TLS cifra tráfico; tiene costo computacional.
+- Cache reduce lecturas repetidas; implica invalidacion.
+- CDN descarga estaticos y acerca contenido.
+- TLS cifra trafico; tiene costo computacional.
 
 ## Perfil de carga
 
 CPU-bound · I/O-bound · DB-bound · Red-bound
 
-## Patrón de arquitectura
+## Patron de arquitectura
 
 Monolito · 3 capas · Microservicios · Serverless
 
 ## Estrategia de escalado
 
 - Vertical: scale-up.
-- Horizontal: más réplicas.
-- Auto-scaling: ajuste automático.
+- Horizontal: mas replicas.
+- Auto-scaling: ajuste automatico.
 
 ## Read replicas (DB)
 
 - Aumentan lecturas; escrituras siguen en primaria.
-- Útiles si el sistema es mayoritariamente lectura.
+- Utiles si el sistema es mayoritariamente lectura.
 
 ## LB / Service Mesh
 
-- LB (ALB/NLB): reparte tráfico; overhead bajo.
-- Service Mesh (Istio/Linkerd): más control/seguridad/observabilidad; overhead mayor.
+- LB (ALB/NLB): reparte trafico; overhead bajo.
+- Service Mesh (Istio/Linkerd): mas control/seguridad/observabilidad; overhead mayor.
 
 ## Pool de conexiones
 
 - Ajusta la concurrencia real hacia la DB.
-- Un pool demasiado grande puede tumbar DB por conexiones; demasiado pequeño puede crear colas.
+- Un pool demasiado grande puede tumbar DB por conexiones; demasiado pequeno puede crear colas.

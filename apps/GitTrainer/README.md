@@ -1,29 +1,29 @@
 # Git Trainer - Micro-App
 
-## Descripción
+## Descripcion
 
-Una biblioteca interactiva diseñada para aprender y practicar los comandos de Git más utilizados en entornos reales de desarrollo.
+Una biblioteca interactiva disenada para aprender y practicar los comandos de Git mas utilizados en entornos reales de desarrollo.
 
 ## Funcionalidades
 
-- **Buscador Inteligente**: Encuentra comandos por acción (ej: "eliminar rama").
-- **Explicaciones Contextuales**: ¿Qué hace el comando? y ¿Cuándo usarlo?.
-- **Casos de Uso**: Basado en el archivo `cases.json` con más de 1000 escenarios.
+- **Buscador Inteligente**: Encuentra comandos por accion (ej: "eliminar rama").
+- **Explicaciones Contextuales**: Que hace el comando? y Cuando usarlo?.
+- **Casos de Uso**: Basado en el archivo `cases.json` con mas de 1000 escenarios.
 
-## Instalación y Requisitos
+## Instalacion y Requisitos
 
-Esta herramienta utiliza `fetch()` para cargar los datos. **Requiere ser servida por un servidor web** (Apache, Nginx o Docker). No funcionará si se abre el archivo `.html` directamente desde el explorador.
+Esta herramienta utiliza `fetch()` para cargar los datos. **Requiere ser servida por un servidor web** (Apache, Nginx o Docker). No funcionara si se abre el archivo `.html` directamente desde el explorador.
 
-## Detalles Técnicos
+## Detalles Tecnicos
 
-- **Tecnología**: JavaScript ES6, CSS Grid.
+- **Tecnologia**: JavaScript ES6, CSS Grid.
 - **Fuentes**: Google Fonts (Inter).
 
 ## Endpoints de Monitoreo
 
-Esta aplicación implementa los siguientes endpoints de diagnóstico:
+Esta aplicacion implementa los siguientes endpoints de diagnostico:
 
-- **/health**: Verifica que la aplicación está corriendo (liveness check). Retorna JSON con estado `ok`.
-- **/ready**: Verifica que la aplicación está lista para recibir tráfico (readiness check). Retorna JSON con estado de dependencias.
+- **/health**: Verifica que la aplicacion esta corriendo (liveness check). Retorna JSON con estado `ok`.
+- **/ready**: Verifica que la aplicacion esta lista para recibir trafico (readiness check). Retorna JSON con estado de dependencias.
 
-Para más información, consulta [TECHNICAL_SPECS.md](../../docs/TECHNICAL_SPECS.md).
+Para mas informacion, consulta [TECHNICAL_SPECS.md](../../docs/TECHNICAL_SPECS.md).

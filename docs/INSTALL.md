@@ -1,4 +1,4 @@
-# Guía de Instalación y Despliegue
+# Guia de Instalacion y Despliegue
 
 Este documento detalla los pasos para instalar y ejecutar la suite **Microsistemas** en diferentes entornos.
 
@@ -7,9 +7,9 @@ Este documento detalla los pasos para instalar y ejecutar la suite **Microsistem
 ## Requisitos Previos
 
 - **Navegador Web Moderno**: Chrome, Firefox, Edge o Safari.
-- **Entorno de Ejecución**:
-  - **Opción A (Moderna)**: Docker Desktop.
-  - **Opción B (Clásica)**: Servidor Web (Apache/Nginx) con PHP 8.x instalado (ej: XAMPP, WAMP, MAMP).
+- **Entorno de Ejecucion**:
+  - **Opcion A (Moderna)**: Docker Desktop.
+  - **Opcion B (Clasica)**: Servidor Web (Apache/Nginx) con PHP 8.x instalado (ej: XAMPP, WAMP, MAMP).
 
 - **Herramientas de Consola (Opcional - Hub CLI)**:
 
@@ -18,9 +18,9 @@ Este documento detalla los pasos para instalar y ejecutar la suite **Microsistem
 
 ---
 
-## 🐳 Opción 1: Docker (Recomendada)
+## 🐳 Opcion 1: Docker (Recomendada)
 
-La forma más rápida y limpia de ejecutar el sistema sin instalar dependencias en su máquina.
+La forma mas rapida y limpia de ejecutar el sistema sin instalar dependencias en su maquina.
 
 ### Pasos
 
@@ -45,21 +45,21 @@ La forma más rápida y limpia de ejecutar el sistema sin instalar dependencias 
 5. **Verificar Salud** (Opcional):
 
    ```bash
-   # Verificar diagnóstico del sistema
+   # Verificar diagnostico del sistema
    make hub-doctor
    
    # O directamente con PowerShell
    powershell -ExecutionPolicy Bypass -File hub.ps1 doctor
    ```
 
-### Gestión
+### Gestion
 
 - **Detener servidor**: `docker-compose down`
 - **Ver logs**: `docker-compose logs -f`
 
 ---
 
-## 🐘 Opción 2: Windows con XAMPP
+## 🐘 Opcion 2: Windows con XAMPP
 
 Para usuarios que prefieren un entorno local tradicional.
 
@@ -68,7 +68,7 @@ Para usuarios que prefieren un entorno local tradicional.
 1. **Instalar XAMPP**: Descargue desde [apachefriends.org](https://www.apachefriends.org/es/index.html).
 2. **Ubicar Archivos**:
 
-- Vaya a la carpeta de instalación (usualmente `C:\xampp`).
+- Vaya a la carpeta de instalacion (usualmente `C:\xampp`).
 - Entre en la carpeta `htdocs`.
 - Cree una carpeta llamada `microsistemas`.
 - Copie todo el contenido de este repositorio dentro de `C:\xampp\htdocs\microsistemas`.
@@ -77,13 +77,13 @@ Para usuarios que prefieren un entorno local tradicional.
 
    - Abra el **XAMPP Control Panel**.
    - Inicie **Apache** (Start).
-   - Inicie **MySQL** (Start) *solo si usará el SQL Viewer*.
+   - Inicie **MySQL** (Start) *solo si usara el SQL Viewer*.
 
 1. **Acceder**: Abra su navegador en [http://localhost/microsistemas](http://localhost/microsistemas).
 
 ---
 
-## 🐧 Opción 3: Linux (Ubuntu/Debian)
+## 🐧 Opcion 3: Linux (Ubuntu/Debian)
 
 ### Pasos
 
@@ -103,7 +103,7 @@ sudo apt install apache2 php libapache2-mod-php php-mysql
 
 1. **Permisos**:
 
-   Asegúrese de que Apache pueda leer los archivos.
+   Asegurese de que Apache pueda leer los archivos.
 
    ```bash
    sudo chown -R www-data:www-data /var/www/html/microsistemas
@@ -113,37 +113,37 @@ sudo apt install apache2 php libapache2-mod-php php-mysql
 
 ---
 
-## ⚠️ Solución de Problemas Comunes
+## ⚠️ Solucion de Problemas Comunes
 
 ### Error: "No se encuentra `cases.json`" en Git Trainer
 
-- **Causa**: Está intentando abrir el archivo `.html` directamente con doble clic (`file://`).
-- **Solución**: Debe acceder siempre a través de `http://localhost/...`. Los navegadores bloquean la carga de archivos JSON locales por seguridad (CORS).
+- **Causa**: Esta intentando abrir el archivo `.html` directamente con doble clic (`file://`).
+- **Solucion**: Debe acceder siempre a traves de `http://localhost/...`. Los navegadores bloquean la carga de archivos JSON locales por seguridad (CORS).
 
 ### Error: "500 Internal Server Error" en Docker
 
 - **Causa**: El archivo `.env` no existe o tiene permisos incorrectos.
-- **Solución**: Ejecute `cp .env.example .env` y asegúrese de que el archivo es legible por el contenedor.
+- **Solucion**: Ejecute `cp .env.example .env` y asegurese de que el archivo es legible por el contenedor.
 
 ### Error: Credenciales de Base de Datos
 
-- Las herramientas están configuradas por defecto para usar los valores del archivo `.env`.
+- Las herramientas estan configuradas por defecto para usar los valores del archivo `.env`.
 - Si usas Docker, el host **DEBE** ser `db`, no `localhost`.
 
 ---
 
-## 💡 Tips de Rendimiento y Producción
+## 💡 Tips de Rendimiento y Produccion
 
-1. **Optimización de Composer**: En tu servidor final, ejecuta `composer install --no-dev --optimize-autoloader` para una carga de clases ultra-rápida.
-2. **Caché de Apache**: Habilita `mod_expires` en Apache para que los archivos estáticos de herramientas como *Git Trainer* se carguen instantáneamente desde la caché del navegador.
-3. **Seguridad**: Si despliegas en un servidor público, utiliza un archivo `.htpasswd` para proteger el acceso a la carpeta `microsistemas`.
+1. **Optimizacion de Composer**: En tu servidor final, ejecuta `composer install --no-dev --optimize-autoloader` para una carga de clases ultra-rapida.
+2. **Cache de Apache**: Habilita `mod_expires` en Apache para que los archivos estaticos de herramientas como *Git Trainer* se carguen instantaneamente desde la cache del navegador.
+3. **Seguridad**: Si despliegas en un servidor publico, utiliza un archivo `.htpasswd` para proteger el acceso a la carpeta `microsistemas`.
 
 ---
 
 ## Preguntas Frecuentes (FAQ)
 
-**¿Puedo añadir mis propios archivos de log al Log Viewer?**
-Sí, edita el array `$logFiles` en `apps/LogViewer/index.php` o utiliza una variable de entorno `LOG_PATH_[NOMBRE]`.
+**Puedo anadir mis propios archivos de log al Log Viewer?**
+Si, edita el array `$logFiles` en `apps/LogViewer/index.php` o utiliza una variable de entorno `LOG_PATH_[NOMBRE]`.
 
-**¿El SQL Viewer es seguro para PHPMyAdmin?**
-Es una alternativa ligera. Para gestión masiva, PHPMyAdmin es superior. Para consultas rápidas de depuración, SQL Viewer es más ágil.
+**El SQL Viewer es seguro para PHPMyAdmin?**
+Es una alternativa ligera. Para gestion masiva, PHPMyAdmin es superior. Para consultas rapidas de depuracion, SQL Viewer es mas agil.
