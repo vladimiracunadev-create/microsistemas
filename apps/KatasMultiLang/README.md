@@ -1,58 +1,58 @@
 # Katas MultiLang (Microsistema)
 
-Microsistema para **estudiar y comparar** cómo se resuelven problemas (“katas/casos”) en **muchos lenguajes y frameworks**, desde una sola interfaz `index.html`.
+Microsistema para **estudiar y comparar** como se resuelven problemas (“katas/casos”) en **muchos lenguajes y frameworks**, desde una sola interfaz `index.html`.
 
-- **195 casos únicos** (catálogo curado y deduplicado, incluyendo pack web **C0683–C0702**)
-- **67 lenguajes/frameworks** con carga dinámica.
-- **UI Premium (Glassmorphism):** Diseño inmersivo estilo "Slate Dark" con efectos de transparencia y desenfoque.
-- **Layout Side-by-Side:** Comparación vertical limpia (Flex column) que evita el desorden visual.
-- **Sidebar de Navegación:** Acceso rápido a categorías y filtrado avanzado de tecnologías.
-- Cada bloque tiene botón **Copiar** y resaltado de sintaxis (Prism).
+- **195 casos unicos** (catalogo curado y deduplicado, incluyendo pack web **C0683–C0702**)
+- **67 lenguajes/frameworks** con carga dinamica.
+- **UI Premium (Glassmorphism):** Diseno inmersivo estilo "Slate Dark" con efectos de transparencia y desenfoque.
+- **Layout Side-by-Side:** Comparacion vertical limpia (Flex column) que evita el desorden visual.
+- **Sidebar de Navegacion:** Acceso rapido a categorias y filtrado avanzado de tecnologias.
+- Cada bloque tiene boton **Copiar** y resaltado de sintaxis (Prism).
 
 ## Nombre sugerido para tu repo “microsistemas”
 
 - **Nombre del microsistema:** `katas-multilang`
 - **Carpeta simple (dentro de microsistemas):** `katas-multilang/`
 
-## Qué hace
+## Que hace
 
-1. Mantiene un catálogo de casos en `data/meta.json` (id, nombre, nivel, categoría, descripción).
+1. Mantiene un catalogo de casos en `data/meta.json` (id, nombre, nivel, categoria, descripcion).
 2. Mantiene un JSON por lenguaje en `data/lang/<lenguaje>.json` con:
-   - metadata del lenguaje (versión, url oficial, keywords, operadores, etc.)
-   - snippets por caso (o **herencia** + overrides para no inflar tamaños)
+   - metadata del lenguaje (version, url oficial, keywords, operadores, etc.)
+   - snippets por caso (o **herencia** + overrides para no inflar tamanos)
 3. `index.html` + `assets/app.js` renderizan dos modos:
-   - **Comparar por caso:** eliges un caso y se muestran soluciones en múltiples lenguajes.
+   - **Comparar por caso:** eliges un caso y se muestran soluciones en multiples lenguajes.
    - **Explorar por lenguaje:** eliges un lenguaje y navegas casos de *simple → complejo*.
 4. La UI guarda el estado en la URL (para compartir): `?mode=...&case=...&langs=...&cat=...&lvl=...`
 
-## Cómo usar (local)
+## Como usar (local)
 
 - Abrir `index.html` en el navegador.
 
 > Nota: algunos navegadores bloquean `fetch()` desde `file://`. Si pasa:
 
-- Usa un servidor estático local (recomendado):
+- Usa un servidor estatico local (recomendado):
 
   - Python: `python -m http.server 8080`
   - Node: `npx serve .`
   - Luego abre: `http://localhost:8080`
 
-## Cómo publicar en GitHub Pages
+## Como publicar en GitHub Pages
 
 1. Sube esta carpeta a tu repositorio.
 2. En GitHub: **Settings → Pages**
 3. Source: **Deploy from a branch**
-4. Branch: `main` y folder `/ (root)` o el folder donde esté el microsistema.
+4. Branch: `main` y folder `/ (root)` o el folder donde este el microsistema.
 5. Abre la URL que te entrega Pages.
 
 ## Estructura
 
 - `index.html` – UI
 - `assets/` – JS y CSS
-  - `assets/app.js` – lógica (carga JSON por lenguaje, filtros, copia, URL state)
+  - `assets/app.js` – logica (carga JSON por lenguaje, filtros, copia, URL state)
   - `assets/styles.css` – estilos
-- `data/meta.json` – catálogo de casos + lista de lenguajes
-- `data/languages.json` – índice de lenguajes (para poblar selects)
+- `data/meta.json` – catalogo de casos + lista de lenguajes
+- `data/languages.json` – indice de lenguajes (para poblar selects)
 - `data/lang/*.json` – 1 archivo por lenguaje/framework
   - Formato soportado:
     - **Completo:** `{ language: {...}, snippets: { C0001: "...", ... } }`
@@ -61,8 +61,8 @@ Microsistema para **estudiar y comparar** cómo se resuelven problemas (“katas
 
 ## Agregar un caso nuevo
 
-1. Añade el caso en `data/meta.json` (en `casos[]`).
-2. Añade el snippet del caso para cada lenguaje:
+1. Anade el caso en `data/meta.json` (en `casos[]`).
+2. Anade el snippet del caso para cada lenguaje:
    - si el lenguaje tiene `snippets`, agrega `CXXXX` en su diccionario
    - si el lenguaje usa `extends`, agrega el snippet en `overrides` (solo si cambia respecto al base)
 3. Ejecuta el validador:
@@ -73,13 +73,13 @@ Microsistema para **estudiar y comparar** cómo se resuelven problemas (“katas
 1. Crea `data/lang/<key>.json`.
 2. Incluye `language.key`, `language.name`, `official_url`, etc.
 3. Agrega el lenguaje a `data/meta.json` en `meta.lenguajes[]`.
-4. (Opcional) Si es un framework “parecido” a un base, usa `extends` + `overrides` para mantener el tamaño bajo control.
+4. (Opcional) Si es un framework “parecido” a un base, usa `extends` + `overrides` para mantener el tamano bajo control.
 5. Ejecuta `python scripts/validate_repo.py`.
 
-## Packs útiles incluidos
+## Packs utiles incluidos
 
 - **Pack Web Frameworks (C0683–C0702):**
-  routing, CRUD, middleware, CORS, JWT/sesión, validación, errores, rate limit, uploads, static, SSR/templates, ORM+migraciones, websockets, jobs, health checks, tests, env config.
+  routing, CRUD, middleware, CORS, JWT/sesion, validacion, errores, rate limit, uploads, static, SSR/templates, ORM+migraciones, websockets, jobs, health checks, tests, env config.
 
 ---
 

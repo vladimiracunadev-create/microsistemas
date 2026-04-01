@@ -1,20 +1,20 @@
 # Referencia de la API Core (API.md)
 
-Este documento detalla los métodos y clases disponibles en el paquete `Microsistemas\Core` para desarrolladores que deseen extender la suite.
+Este documento detalla los metodos y clases disponibles en el paquete `Microsistemas\Core` para desarrolladores que deseen extender la suite.
 
 ## `Microsistemas\Core\Config`
 
-La clase de configuración utiliza el patrón **Singleton** para asegurar una única instancia durante la ejecución.
+La clase de configuracion utiliza el patron **Singleton** para asegurar una unica instancia durante la ejecucion.
 
-### Métodos
+### Metodos
 
 #### `getInstance(): self`
 
-Obtiene la instancia única de la clase.
+Obtiene la instancia unica de la clase.
 
 #### `get(string $key, mixed $default = null): mixed`
 
-Recupera un valor de configuración de las variables de entorno o del archivo `.env`.
+Recupera un valor de configuracion de las variables de entorno o del archivo `.env`.
 
 - **$key**: Nombre de la variable (ej: `DB_HOST`).
 - **$default**: Valor a retornar si la variable no existe.
@@ -23,39 +23,39 @@ Recupera un valor de configuración de las variables de entorno o del archivo `.
 
 ## `Microsistemas\Core\Database`
 
-Gestiona la conexión centralizada a la base de datos MySQL.
+Gestiona la conexion centralizada a la base de datos MySQL.
 
-### Métodos
+### Metodos
 
 #### `getConnection(): mysqli`
 
 Retorna una instancia activa de `mysqli`.
 
-- **Lanza**: `\Exception` si la conexión falla.
-- **Nota**: Las credenciales se inyectan automáticamente desde `Config`.
+- **Lanza**: `\Exception` si la conexion falla.
+- **Nota**: Las credenciales se inyectan automaticamente desde `Config`.
 
 #### `close(): void`
 
-Cierra la conexión activa si existe.
+Cierra la conexion activa si existe.
 
 ---
 
 ## 🤖 API de Asistencia IA (Servidor MCP Local)
 
-Además de la API Core en PHP, Microsistemas incluye un Servidor Model Context Protocol (MCP) en Python (`/mcp`) que actúa como API de Solo Lectura para agentes de IA (ej: Claude Desktop, Cursor).
+Ademas de la API Core en PHP, Microsistemas incluye un Servidor Model Context Protocol (MCP) en Python (`/mcp`) que actua como API de Solo Lectura para agentes de IA (ej: Claude Desktop, Cursor).
 
-Esta capa estandariza el acceso al "conocimiento tribal" del repositorio (arquitectura documental, manifiestos del Hub, recetas constructivas) sin exponer variables de entorno reales, endpoints sensibles ni ejecución de comandos mutables.
+Esta capa estandariza el acceso al "conocimiento tribal" del repositorio (arquitectura documental, manifiestos del Hub, recetas constructivas) sin exponer variables de entorno reales, endpoints sensibles ni ejecucion de comandos mutables.
 
 ### Resources Expuestos (Pre-cargados)
 
-- `repo://architecture`: Detalle arquitectónico.
-- `repo://apps/manifests`: Colección de manifiestos unificados.
+- `repo://architecture`: Detalle arquitectonico.
+- `repo://apps/manifests`: Coleccion de manifiestos unificados.
 - `repo://hub`, `repo://readme`, `repo://maintainers`, `repo://security`.
-- `repo://skills/integrar-microsistema`: Directivas completas para el onboarding de código nuevo.
+- `repo://skills/integrar-microsistema`: Directivas completas para el onboarding de codigo nuevo.
 
-### Tools Expuestos (Diagnóstico Seguro)
+### Tools Expuestos (Diagnostico Seguro)
 
-- `run_hub_list()`, `run_hub_doctor()`, `run_smoke()`: Wrapper seguro sobre el `Makefile` canónico.
+- `run_hub_list()`, `run_hub_doctor()`, `run_smoke()`: Wrapper seguro sobre el `Makefile` canonico.
 - `read_manifest(app_name)`: Interfaz curada para consumir el `app.manifest.yml`.
 - `read_skill(skill_name)`: Lector de playbooks.
 - `find_ports()`: RegEx seguro sobre el `docker-compose.yml`.
@@ -63,21 +63,21 @@ Esta capa estandariza el acceso al "conocimiento tribal" del repositorio (arquit
 ### Prompts de Sistema
 
 - `integrar-microapp`: Agente experto en el onboarding de una nueva app basado en nuestras _Skills_.
-- `auditar-manifest`: Auditor automático del contrato visual.
+- `auditar-manifest`: Auditor automatico del contrato visual.
 - `diagnosticar-entorno`: Rol de SRE utilizando _hub doctor / smoke_.
-- `preparar-release-docs`: Asistente enfocado en Release Notes y validación documental previa a lanzamientos.
+- `preparar-release-docs`: Asistente enfocado en Release Notes y validacion documental previa a lanzamientos.
 
-_El Servidor MCP V1 está estrictamente limitado por diseño para prevenir mutaciones indeseadas inducidas por IA en el código base. Ninguna tool otorga acceso a re-escritura ni terminal expuesta._
+_El Servidor MCP V1 esta estrictamente limitado por diseno para prevenir mutaciones indeseadas inducidas por IA en el codigo base. Ninguna tool otorga acceso a re-escritura ni terminal expuesta._
 
 ---
 
-## 🛠️ Cómo Extender la API Core
+## 🛠️ Como Extender la API Core
 
-Si deseas añadir una nueva utilidad global (ej: un sistema de manejo de archivos), sigue estos pasos:
+Si deseas anadir una nueva utilidad global (ej: un sistema de manejo de archivos), sigue estos pasos:
 
 1. Crea la clase en `src/Utils/MiClase.php`.
 2. Asigna el namespace `Microsistemas\Utils`.
-3. Invócala en cualquier módulo mediante:
+3. Invocala en cualquier modulo mediante:
 
 ```php
    use Microsistemas\Utils\MiClase;

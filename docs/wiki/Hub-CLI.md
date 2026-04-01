@@ -1,10 +1,10 @@
 # Microsistemas Hub (HUB CLI)
 
-El **Hub** es la capa de gestión centralizada de Microsistemas que permite interactuar con todas las micro-aplicaciones de forma unificada desde la línea de comandos.
+El **Hub** es la capa de gestion centralizada de Microsistemas que permite interactuar con todas las micro-aplicaciones de forma unificada desde la linea de comandos.
 
 ## 🚀 Concepto
 
-A diferencia del Dashboard web, el Hub está diseñado para automatización y gestión rápida de infraestructura. Cada aplicación en `apps/` se registra automáticamente si contiene un archivo `app.manifest.yml`.
+A diferencia del Dashboard web, el Hub esta disenado para automatizacion y gestion rapida de infraestructura. Cada aplicacion en `apps/` se registra automaticamente si contiene un archivo `app.manifest.yml`.
 
 ## 🛠️ Comandos Principales
 
@@ -19,7 +19,7 @@ Muestra un resumen de todas las herramientas instaladas, su tipo y puertos.
 # En Windows (PowerShell)
 .\hub.ps1 list
 
-# O vía Makefile (Universal)
+# O via Makefile (Universal)
 make hub-list
 ```
 
@@ -39,47 +39,47 @@ Hemos unificado la experiencia de desarrollo mediante scripts de alto nivel que 
 
 ### 2. Ejecutar Localmente
 
-Inicia el proceso de la aplicación (ej. servidor PHP integrado) directamente en tu consola.
+Inicia el proceso de la aplicacion (ej. servidor PHP integrado) directamente en tu consola.
 
 ```bash
-# Ejemplo vía Makefile:
+# Ejemplo via Makefile:
 make hub-run APP=Conversor
 ```
 
 ### 3. Levantar con Docker
 
-Si la aplicación define un `compose_file` en su manifiesto, el Hub puede gestionarla independientemente.
+Si la aplicacion define un `compose_file` en su manifiesto, el Hub puede gestionarla independientemente.
 
 ```bash
-# Ejemplo vía Makefile:
+# Ejemplo via Makefile:
 make hub-up APP=CapacitySim
 ```
 
-### 4. Diagnóstico (Doctor)
+### 4. Diagnostico (Doctor)
 
 Verifica la salud integral del entorno de desarrollo. Ahora incluye validaciones extendidas:
 
 1. **Herramientas Base**: Docker, Git, PHP.
-2. **Configuración**: Existencia de archivo `.env` y carpeta `vendor`.
-3. **Red**: Disponibilidad de puertos críticos (8000, 8080).
-4. **Contenedores**: Estado de salud (`healthy`) de los servicios Docker (si están corriendo).
+2. **Configuracion**: Existencia de archivo `.env` y carpeta `vendor`.
+3. **Red**: Disponibilidad de puertos criticos (8000, 8080).
+4. **Contenedores**: Estado de salud (`healthy`) de los servicios Docker (si estan corriendo).
 
 ```bash
-# Vía Makefile
+# Via Makefile
 make hub-doctor
 ```
 
 ### 5. Prueba de Humo (Smoke Test)
 
-Realiza una verificación rápida de la disponibilidad de todos los servicios principales.
+Realiza una verificacion rapida de la disponibilidad de todos los servicios principales.
 
 ```bash
 make smoke
 ```
 
-## 📝 Manifiesto de Aplicación (`app.manifest.yml`)
+## 📝 Manifiesto de Aplicacion (`app.manifest.yml`)
 
-Para que una aplicación sea reconocida por el Hub, debe tener un manifiesto con la siguiente estructura:
+Para que una aplicacion sea reconocida por el Hub, debe tener un manifiesto con la siguiente estructura:
 
 ```yaml
 name: "Nombre de la App"
@@ -93,8 +93,8 @@ compose_file: "docker-compose.yml" # Opcional
 
 El Hub implementa varias medidas de seguridad:
 
-- **Prevención de Path Traversal**: Solo permite operaciones dentro del directorio `apps/`.
-- **Allowlist**: Solo comandos pre-aprobados pueden ser ejecutados vía `run_cmd`.
-- **Validación de Input**: Sanitización estricta de IDs de aplicación.
+- **Prevencion de Path Traversal**: Solo permite operaciones dentro del directorio `apps/`.
+- **Allowlist**: Solo comandos pre-aprobados pueden ser ejecutados via `run_cmd`.
+- **Validacion de Input**: Sanitizacion estricta de IDs de aplicacion.
 
-Para más detalles sobre políticas de seguridad, consulta [Seguridad](Seguridad).
+Para mas detalles sobre politicas de seguridad, consulta [Seguridad](Seguridad).

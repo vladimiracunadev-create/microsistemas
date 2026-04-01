@@ -1,4 +1,4 @@
 Notas:
 
-- Generación automática.
-- Para agregar más casos: añade specs y regenera meta + JSONs por lenguaje.
+- Generacion automatica.
+- Para agregar mas casos: anade specs y regenera meta + JSONs por lenguaje.

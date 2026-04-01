@@ -1,7 +1,7 @@
-# Glosario rápido
+# Glosario rapido
 
 - RPS: requests per second.
-- Usuarios concurrentes: simultáneos.
+- Usuarios concurrentes: simultaneos.
 - p95: percentil 95 de latencia.
 - Throughput: volumen de requests procesados.
 - Bottleneck: recurso limitante (CPU/DB/Red).

@@ -2,17 +2,17 @@
 
 ![Version](https://img.shields.io/badge/version-2.1.0-blue)
 
-**AWS Assistant Pro** es un asistente inteligente diseñado para simplificar la gestión de infraestructura en la nube. A diferencia de un simple generador, guía al usuario a través de un flujo intuitivo basado en intenciones reales de negocio.
+**AWS Assistant Pro** es un asistente inteligente disenado para simplificar la gestion de infraestructura en la nube. A diferencia de un simple generador, guia al usuario a traves de un flujo intuitivo basado en intenciones reales de negocio.
 
-## Características Destacadas (v2.1.0) 🚀
+## Caracteristicas Destacadas (v2.1.0) 🚀
 
-- **Navegación Guiada**: Selector de intenciones (Consultar, Gestionar, Seguridad) que filtra automáticamente los servicios relevantes.
+- **Navegacion Guiada**: Selector de intenciones (Consultar, Gestionar, Seguridad) que filtra automaticamente los servicios relevantes.
 - **GlassCode Syntax Highlighting**: Resaltado de sintaxis en tiempo real para comandos de AWS CLI.
-- **Semáforo de Impacto**: Indicadores visuales de riesgo operativo (Rojo/Amarillo/Verde) con explicaciones en lenguaje natural.
-- **EduIcons**: Ayuda contextual (`ⓘ`) en parámetros técnicos para facilitar el aprendizaje.
-- **Seguridad**: Bloqueo inteligente de comandos peligrosos en perfiles de producción y Modo Simulado (Dry-run).
-- **Favoritos + Historial**: Gestión de recetas preferidas y rastro de comandos previos.
-- **Exportación Multi-plataforma**: Generación de scripts `.sh` (Bash) y `.ps1` (PowerShell) listos para producción.
+- **Semaforo de Impacto**: Indicadores visuales de riesgo operativo (Rojo/Amarillo/Verde) con explicaciones en lenguaje natural.
+- **EduIcons**: Ayuda contextual (`ⓘ`) en parametros tecnicos para facilitar el aprendizaje.
+- **Seguridad**: Bloqueo inteligente de comandos peligrosos en perfiles de produccion y Modo Simulado (Dry-run).
+- **Favoritos + Historial**: Gestion de recetas preferidas y rastro de comandos previos.
+- **Exportacion Multi-plataforma**: Generacion de scripts `.sh` (Bash) y `.ps1` (PowerShell) listos para produccion.
 
 ---
 
@@ -35,11 +35,11 @@ Luego abre `http://localhost:8080`
 
 ---
 
-## Cómo usar
+## Como usar
 
 1. Define `Profile` y `Region`
 2. Busca por palabra clave (ej: `ecr list-images`, `ecs force`, `s3 sync`)
-3. Completa parámetros
+3. Completa parametros
 4. Ejecuta **Prechecks**, luego **Comando**
 5. Si fue prueba: ejecuta **Cleanup**
 6. Si necesitas un script reutilizable: Exporta `.sh` o `.ps1`
@@ -48,13 +48,13 @@ Luego abre `http://localhost:8080`
 
 ## Seguridad / costos (importante)
 
-- Recetas con **riesgo alto** requieren confirmación.
+- Recetas con **riesgo alto** requieren confirmacion.
 - Activa “Bloquear peligrosos en prod” y usa perfiles separados (`dev`, `prod`).
 - Lee `docs/costos-y-seguridad.md`.
 
 ---
 
-## Validación (CI)
+## Validacion (CI)
 
 En GitHub Actions se ejecuta:
 
@@ -64,9 +64,9 @@ python scripts/validate.py
 
 Valida:
 
-- ids únicos
+- ids unicos
 - campos requeridos
-- `risk.level` válido
+- `risk.level` valido
 - variables `{{ }}` definidas (globales o params)
 
 ---

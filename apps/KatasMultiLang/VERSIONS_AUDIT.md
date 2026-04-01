@@ -1,4 +1,4 @@
-# Auditoría de versiones y compatibilidad
+# Auditoria de versiones y compatibilidad
 
 - Repo version: 3.1.0
 - Casos: 657
@@ -6,7 +6,7 @@
 
 ## Versiones objetivo por lenguaje
 
-- logic: Pseudocódigo
+- logic: Pseudocodigo
 - javascript: ES2024 (Browser)
 - nodejs: 24 LTS
 - jquery: 4.0.0
@@ -45,7 +45,7 @@
 - JSON: parse OK (meta + lang/*.json)
 - Cobertura: cada lenguaje tiene snippet para cada caso
 
-- Fix aplicado: Math.PI en fórmulas -> PHP: 21 casos, PowerShell: 21 casos
+- Fix aplicado: Math.PI en formulas -> PHP: 21 casos, PowerShell: 21 casos
 
 ## Lenguajes legacy agregados
 
@@ -58,4 +58,4 @@
 
 ## Nota
 
-- Verificación: consistencia JSON y sintaxis esperada (no se ejecutan compiladores).
+- Verificacion: consistencia JSON y sintaxis esperada (no se ejecutan compiladores).
