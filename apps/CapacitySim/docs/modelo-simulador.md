@@ -15,7 +15,7 @@ Luego:
 - **`RPS_cap = min(RPS_cpu, RPS_db, RPS_red) × safety_factor`**
 - **Usuarios concurrentes ≈ `RPS_cap × latencia_endpoint`** (en segundos)
 
-> No representa “usuarios totales del dia”, sino simultaneidad aproximada bajo la latencia elegida.
+> No representa "usuarios totales del dia", sino simultaneidad aproximada bajo la latencia elegida.
 
 ## 2) Que modela cada selector
 

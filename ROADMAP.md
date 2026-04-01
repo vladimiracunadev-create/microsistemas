@@ -20,7 +20,7 @@ Este documento traza el camino evolutivo de **Microsistemas Suite**. Nuestra vis
 
 - [x] **Monitoreo y Salud**: Endpoints estandarizados `/health` y `/ready` en todas las apps + diagnostico extendido con `hub-doctor`.
 - [x] **UI Unificada (Blueprint)**: Implementado el estandar **Glassmorphism / Slate Dark** en KatasMultiLang como modelo a seguir para el resto de la suite.
-- [x] **Skills System**: Playbooks reutilizables en `skills/` para integrar microsistemas, actualizar docs y correr chequeos — elimina trabajo manual repetitivo.
+- [x] **Skills System**: Playbooks reutilizables en `skills/` para integrar microsistemas, actualizar docs y correr chequeos - elimina trabajo manual repetitivo.
 - [x] **Guias para Desarrolladores**: `skills/integrar-microsistema/skill.md` incluye tutorial completo de 6 pasos + plantillas listas para usar.
 - [x] **CI/CD Hardening**: Scanner Trivy rebased a instalacion directa APT para mayor confiabilidad en runners GitHub Actions.
 - [ ] **Localizacion (i18n)**: Soporte completo para Ingles y Espanol en todas las herramientas.

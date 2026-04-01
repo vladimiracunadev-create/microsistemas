@@ -1,15 +1,15 @@
 # Katas MultiLang (Microsistema)
 
-Microsistema para **estudiar y comparar** como se resuelven problemas (“katas/casos”) en **muchos lenguajes y frameworks**, desde una sola interfaz `index.html`.
+Microsistema para **estudiar y comparar** como se resuelven problemas ("katas/casos") en **muchos lenguajes y frameworks**, desde una sola interfaz `index.html`.
 
-- **195 casos unicos** (catalogo curado y deduplicado, incluyendo pack web **C0683–C0702**)
+- **195 casos unicos** (catalogo curado y deduplicado, incluyendo pack web **C0683-C0702**)
 - **67 lenguajes/frameworks** con carga dinamica.
 - **UI Premium (Glassmorphism):** Diseno inmersivo estilo "Slate Dark" con efectos de transparencia y desenfoque.
 - **Layout Side-by-Side:** Comparacion vertical limpia (Flex column) que evita el desorden visual.
 - **Sidebar de Navegacion:** Acceso rapido a categorias y filtrado avanzado de tecnologias.
 - Cada bloque tiene boton **Copiar** y resaltado de sintaxis (Prism).
 
-## Nombre sugerido para tu repo “microsistemas”
+## Nombre sugerido para tu repo "microsistemas"
 
 - **Nombre del microsistema:** `katas-multilang`
 - **Carpeta simple (dentro de microsistemas):** `katas-multilang/`
@@ -47,17 +47,17 @@ Microsistema para **estudiar y comparar** como se resuelven problemas (“katas/
 
 ## Estructura
 
-- `index.html` – UI
-- `assets/` – JS y CSS
-  - `assets/app.js` – logica (carga JSON por lenguaje, filtros, copia, URL state)
-  - `assets/styles.css` – estilos
-- `data/meta.json` – catalogo de casos + lista de lenguajes
-- `data/languages.json` – indice de lenguajes (para poblar selects)
-- `data/lang/*.json` – 1 archivo por lenguaje/framework
+- `index.html` - UI
+- `assets/` - JS y CSS
+  - `assets/app.js` - logica (carga JSON por lenguaje, filtros, copia, URL state)
+  - `assets/styles.css` - estilos
+- `data/meta.json` - catalogo de casos + lista de lenguajes
+- `data/languages.json` - indice de lenguajes (para poblar selects)
+- `data/lang/*.json` - 1 archivo por lenguaje/framework
   - Formato soportado:
     - **Completo:** `{ language: {...}, snippets: { C0001: "...", ... } }`
     - **Herencia:** `{ language: {...}, extends: "javascript", overrides: { C0683: "...", ... } }`
-- `scripts/validate_repo.py` – validador de integridad
+- `scripts/validate_repo.py` - validador de integridad
 
 ## Agregar un caso nuevo
 
@@ -73,12 +73,12 @@ Microsistema para **estudiar y comparar** como se resuelven problemas (“katas/
 1. Crea `data/lang/<key>.json`.
 2. Incluye `language.key`, `language.name`, `official_url`, etc.
 3. Agrega el lenguaje a `data/meta.json` en `meta.lenguajes[]`.
-4. (Opcional) Si es un framework “parecido” a un base, usa `extends` + `overrides` para mantener el tamano bajo control.
+4. (Opcional) Si es un framework "parecido" a un base, usa `extends` + `overrides` para mantener el tamano bajo control.
 5. Ejecuta `python scripts/validate_repo.py`.
 
 ## Packs utiles incluidos
 
-- **Pack Web Frameworks (C0683–C0702):**
+- **Pack Web Frameworks (C0683-C0702):**
   routing, CRUD, middleware, CORS, JWT/sesion, validacion, errores, rate limit, uploads, static, SSR/templates, ORM+migraciones, websockets, jobs, health checks, tests, env config.
 
 ---

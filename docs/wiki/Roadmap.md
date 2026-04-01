@@ -21,7 +21,7 @@ Este documento traza el camino evolutivo de **Microsistemas Suite**. Nuestra vis
 
 - [x] **UI Unificada (Blueprint)**: Glassmorphism / Slate Dark implementado en KatasMultiLang como estandar de la suite.
 - [x] **Skills System**: Playbooks reutilizables en `skills/` para integrar microsistemas con coherencia total.
-- [x] **Guias para Desarrolladores**: `skills/integrar-microsistema/skill.md` — tutorial de 6 pasos + plantillas.
+- [x] **Guias para Desarrolladores**: `skills/integrar-microsistema/skill.md` - tutorial de 6 pasos + plantillas.
 - [x] **CI/CD Hardening**: Trivy instalado via APT directo; `make lint-md` + pre-push hook anti-regresion.
 - [ ] **Localizacion (i18n)**: Soporte completo para Ingles y Espanol en todas las herramientas.
 

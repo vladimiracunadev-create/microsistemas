@@ -30,7 +30,7 @@ Su proposito es **didactico**: modelar combinaciones de tecnologias (por SELECT)
 - Cuello de botella probable
 - Supuestos y multiplicadores usados
 
-Para llevarlo “a la vida real”, debes **calibrar** con pruebas de carga y metricas (se incluye guia).
+Para llevarlo "a la vida real", debes **calibrar** con pruebas de carga y metricas (se incluye guia).
 
 ---
 

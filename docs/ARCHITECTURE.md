@@ -13,7 +13,7 @@ Microsistemas no sigue una unica arquitectura, sino una **combinacion deliberada
 Es la **arquitectura principal** del proyecto. Todo el sistema corre bajo un unico proceso Apache, pero internamente cada directorio dentro de `apps/` es una **aplicacion independiente y autocontenida**:
 
 - Cada micro-app tiene su propio `index.php` o `index.html`, assets propios y un manifiesto `app.manifest.yml`.
-- **No comparten codigo entre si** — la unica dependencia compartida es el Core (`src/`).
+- **No comparten codigo entre si** - la unica dependencia compartida es el Core (`src/`).
 - Cualquier app puede extraerse a su propio servicio sin refactoring del resto.
 
 ```mermaid
@@ -52,7 +52,7 @@ Un verdadero microservicio requiere despliegue independiente, su propia base de 
 
 ---
 
-### 2. 🎯 Patron Singleton — Core del Sistema
+### 2. 🎯 Patron Singleton - Core del Sistema
 
 Las clases `Config` y `Database` implementan el **patron Singleton**, garantizando una unica instancia en memoria durante todo el ciclo de vida de cada solicitud HTTP:
 
@@ -209,13 +209,13 @@ La imagen oficial se basa en `php:8.2-apache` para maximizar la compatibilidad:
 
 | Patron/Arquitectura            | Donde se aplica?                              | Proposito                                    |
 | :----------------------------- | :---------------------------------------------- | :------------------------------------------- |
-| **Monolito Modular**           | `apps/` — 10 micro-apps independientes          | Organizacion modular sin complejidad de red.  |
-| **Shared Core Library (PSR-4)**| `src/Core/` — Config + Database                 | Codigo compartido sin duplicacion.            |
+| **Monolito Modular**           | `apps/` - 10 micro-apps independientes          | Organizacion modular sin complejidad de red.  |
+| **Shared Core Library (PSR-4)**| `src/Core/` - Config + Database                 | Codigo compartido sin duplicacion.            |
 | **Singleton**                  | `Config.php`, `Database.php`                    | Una conexion/config por request.              |
 | **12-Factor App**              | `.env`, Dockerfile, Composer                    | Portabilidad entre entornos.                  |
 | **Infrastructure as Code**     | `Dockerfile`, `docker-compose.yml`, `k8s/`      | Entornos reproducibles y versionados.         |
 | **CI/CD Pipeline**             | `.github/workflows/`                            | Calidad y despliegue automatizado.            |
-| **AI Context Layer (MCP)**     | `mcp/` — Servidor Python FastMCP                | Sidecar local estandarizado para brindar memoria e inteligencia contextual (Manifiestos, Docs, Scripts) a Asistentes LLM bajo el esquema `Solo Lectura`. |
+| **AI Context Layer (MCP)**     | `mcp/` - Servidor Python FastMCP                | Sidecar local estandarizado para brindar memoria e inteligencia contextual (Manifiestos, Docs, Scripts) a Asistentes LLM bajo el esquema `Solo Lectura`. |
 
 ---
 

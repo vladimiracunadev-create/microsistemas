@@ -16,7 +16,7 @@ Si encuentras una vulnerabilidad, por favor **no la publiques como issue**.
 - Indica el microsistema afectado y el archivo.
 - Adjunta evidencia minima (capturas, logs) sin exponer datos sensibles.
 
-**Canal sugerido:** crear un issue marcado como “security” **sin datos sensibles** y solicitar contacto privado, o comunicarlo por el canal directo que definas en tu perfil.
+**Canal sugerido:** crear un issue marcado como "security" **sin datos sensibles** y solicitar contacto privado, o comunicarlo por el canal directo que definas en tu perfil.
 
 ## Guia de uso seguro (recomendaciones)
 
@@ -27,7 +27,7 @@ Estos microsistemas estan pensados para uso local (XAMPP/MAMP/LAMP) o redes cont
 ✅ Recomendado: `http://localhost/...`
 ❌ Evitar: servidor publico accesible desde Internet.
 
-### 2) Principio de “minimo privilegio”
+### 2) Principio de "minimo privilegio"
 
 - Si un microsistema requiere credenciales de BD, usar un usuario con permisos minimos (idealmente solo `SELECT`).
 - Evitar credenciales de produccion.

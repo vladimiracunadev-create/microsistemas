@@ -49,7 +49,7 @@ Luego abre `http://localhost:8080`
 ## Seguridad / costos (importante)
 
 - Recetas con **riesgo alto** requieren confirmacion.
-- Activa “Bloquear peligrosos en prod” y usa perfiles separados (`dev`, `prod`).
+- Activa "Bloquear peligrosos en prod" y usa perfiles separados (`dev`, `prod`).
 - Lee `docs/costos-y-seguridad.md`.
 
 ---

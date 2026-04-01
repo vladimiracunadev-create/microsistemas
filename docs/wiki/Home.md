@@ -6,9 +6,9 @@
 
 ## 🕒 Historial de Versiones
 
-- **v2.3.0** (Actual): **Skills System** — playbooks de integracion + fix CI/CD Trivy + validacion Markdown pre-push.
-- **v2.2.0**: **Katas MultiLang** — UI Glassmorphism Premium, 195 casos curados, 67 tecnologias side-by-side.
-- **v2.1.0**: **AWS Assistant Pro** — Guided Flow, semaforo de riesgo, EduIcons.
+- **v2.3.0** (Actual): **Skills System** - playbooks de integracion + fix CI/CD Trivy + validacion Markdown pre-push.
+- **v2.2.0**: **Katas MultiLang** - UI Glassmorphism Premium, 195 casos curados, 67 tecnologias side-by-side.
+- **v2.1.0**: **AWS Assistant Pro** - Guided Flow, semaforo de riesgo, EduIcons.
 - **v1.2.2**: Integracion de **CicdLibrary** y mejoras en el visor de documentacion.
 - **v1.2.1**: Estandar de Salud y Monitoreo.
 - **v1.2.0**: Microsistemas Hub y Escaneo de Secretos.

@@ -70,12 +70,12 @@ cat skills/integrar-microsistema/skill.md
 
 El skill cubre 6 pasos con reglas claras y plantillas listas:
 
-1. **Preflight** — verificar estructura del repo.
-2. **Carpeta** — crear `apps/<NombreApp>/` con `app.manifest.yml` (usa `skills/integrar-microsistema/templates/app.manifest.yml.tpl`).
-3. **Dashboard** — insertar tarjeta en `index.php` (usa `templates/dashboard-card.html.tpl`).
-4. **Docs** — actualizar README, `docs/*` y `docs/wiki/*` segun existan.
-5. **Chequeos** — `make hub-list`, `make catalog`, `make validate`, `make test`.
-6. **Evidencia** — reportar archivos modificados y outputs de los checks.
+1. **Preflight** - verificar estructura del repo.
+2. **Carpeta** - crear `apps/<NombreApp>/` con `app.manifest.yml` (usa `skills/integrar-microsistema/templates/app.manifest.yml.tpl`).
+3. **Dashboard** - insertar tarjeta en `index.php` (usa `templates/dashboard-card.html.tpl`).
+4. **Docs** - actualizar README, `docs/*` y `docs/wiki/*` segun existan.
+5. **Chequeos** - `make hub-list`, `make catalog`, `make validate`, `make test`.
+6. **Evidencia** - reportar archivos modificados y outputs de los checks.
 
 > Antes de hacer push, corre `make lint-md` para evitar errores de Markdown en CI.
 

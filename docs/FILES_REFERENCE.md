@@ -1,17 +1,17 @@
-# 📁 Referencia Completa de Archivos – Microsistemas
+# 📁 Referencia Completa de Archivos - Microsistemas
 
 Guia detallada de **cada archivo y directorio** del proyecto. Cada entrada incluye su proposito, como funciona internamente y su nivel de importancia para el sistema.
 
 > **Leyenda de Importancia:**
-> 🔴 **Critico** – El sistema no funciona sin este archivo.
-> 🟡 **Importante** – Afecta la calidad, seguridad o experiencia de desarrollo.
-> 🟢 **Complementario** – Mejora el proyecto pero no es indispensable para ejecutarlo.
+> 🔴 **Critico** - El sistema no funciona sin este archivo.
+> 🟡 **Importante** - Afecta la calidad, seguridad o experiencia de desarrollo.
+> 🟢 **Complementario** - Mejora el proyecto pero no es indispensable para ejecutarlo.
 
 ---
 
 ## 1. Puntos de Entrada (Entry Points)
 
-### 🔴 `index.php` — Dashboard Principal
+### 🔴 `index.php` - Dashboard Principal
 
 | Atributo       | Valor                          |
 | :------------- | :----------------------------- |
@@ -35,7 +35,7 @@ Sin este archivo, no existe punto de acceso visual al sistema. Es la **fachada**
 
 ---
 
-### 🔴 `doc.php` — Visor de Documentacion Markdown
+### 🔴 `doc.php` - Visor de Documentacion Markdown
 
 | Atributo       | Valor                                  |
 | :------------- | :------------------------------------- |
@@ -62,7 +62,7 @@ Permite navegar toda la documentacion directamente desde el navegador sin necesi
 
 ## 2. Core del Sistema (`src/`)
 
-### 🔴 `src/Core/Config.php` — Gestion de Configuracion
+### 🔴 `src/Core/Config.php` - Gestion de Configuracion
 
 | Atributo       | Valor                            |
 | :------------- | :------------------------------- |
@@ -77,7 +77,7 @@ Centraliza la carga y lectura de variables de entorno (`.env`) para todo el sist
 **Como funciona internamente?**
 
 1. Usa el patron **Singleton** (`getInstance()`) para garantizar una sola instancia en memoria.
-2. En el constructor, carga el `.env` mediante `vlucas/phpdotenv` con `createImmutable()` — las variables del entorno del SO no se sobrescriben.
+2. En el constructor, carga el `.env` mediante `vlucas/phpdotenv` con `createImmutable()` - las variables del entorno del SO no se sobrescriben.
 3. Si el `.env` no existe (ej: en produccion con Docker/ECS), **falla silenciosamente** y asume que las variables vienen del sistema operativo.
 4. El metodo `get($key, $default)` busca primero en `$_ENV`, luego en `getenv()`, y finalmente retorna el valor por defecto.
 
@@ -86,7 +86,7 @@ Toda la configuracion del sistema (credenciales de BD, hosts, drivers) pasa por 
 
 ---
 
-### 🔴 `src/Core/Database.php` — Conexion a Base de Datos
+### 🔴 `src/Core/Database.php` - Conexion a Base de Datos
 
 | Atributo       | Valor                            |
 | :------------- | :------------------------------- |
@@ -115,7 +115,7 @@ Es la puerta de entrada a cualquier operacion de base de datos en las micro-apps
 
 ## 3. Infraestructura y Contenedores
 
-### 🔴 `Dockerfile` — Imagen Docker de Produccion
+### 🔴 `Dockerfile` - Imagen Docker de Produccion
 
 | Atributo       | Valor                            |
 | :------------- | :------------------------------- |
@@ -141,7 +141,7 @@ Sin este archivo no es posible el despliegue con Docker, que es el metodo recome
 
 ---
 
-### 🔴 `docker-compose.yml` — Orquestacion Multi-Contenedor
+### 🔴 `docker-compose.yml` - Orquestacion Multi-Contenedor
 
 | Atributo       | Valor                            |
 | :------------- | :------------------------------- |
@@ -162,7 +162,7 @@ Levanta el ecosistema completo (web + base de datos) con un solo comando `docker
 
 ---
 
-### 🟡 `.dockerignore` — Exclusiones de Build Docker
+### 🟡 `.dockerignore` - Exclusiones de Build Docker
 
 | Atributo       | Valor                |
 | :------------- | :------------------- |
@@ -175,7 +175,7 @@ Excluye archivos innecesarios del contexto de build de Docker, reduciendo el tam
 
 ---
 
-### 🟡 `k8s/demo/` — Manifiestos de Kubernetes
+### 🟡 `k8s/demo/` - Manifiestos de Kubernetes
 
 | Archivo               | Proposito                                                        |
 | :-------------------- | :--------------------------------------------------------------- |
@@ -184,13 +184,13 @@ Excluye archivos innecesarios del contexto de build de Docker, reduciendo el tam
 | `network-policy.yaml` | Restringe trafico de red al namespace (Zero Trust).              |
 | `kustomization.yaml`  | Orquesta los manifiestos con Kustomize (`kubectl apply -k`).     |
 
-**Importancia:** 🟢 Complementario — Demuestra preparacion para orquestacion en la nube, pero no es requerido para desarrollo local.
+**Importancia:** 🟢 Complementario - Demuestra preparacion para orquestacion en la nube, pero no es requerido para desarrollo local.
 
 ---
 
 ## 4. Automatizacion y CLI
 
-### 🟡 `Makefile` — Interfaz de Comandos Simplificada
+### 🟡 `Makefile` - Interfaz de Comandos Simplificada
 
 | Atributo       | Valor                       |
 | :------------- | :-------------------------- |
@@ -218,7 +218,7 @@ Provee **atajos estandarizados** para las tareas mas comunes del proyecto.
 
 ---
 
-### 🟡 `hub.sh` — Hub CLI (Linux/Mac)
+### 🟡 `hub.sh` - Hub CLI (Linux/Mac)
 
 | Atributo       | Valor                       |
 | :------------- | :-------------------------- |
@@ -237,7 +237,7 @@ Herramienta CLI en Bash para gestionar todas las micro-apps de forma centralizad
 
 ---
 
-### 🟡 `hub.ps1` — Hub CLI (Windows PowerShell)
+### 🟡 `hub.ps1` - Hub CLI (Windows PowerShell)
 
 | Atributo       | Valor                       |
 | :------------- | :-------------------------- |
@@ -250,7 +250,7 @@ Equivalente a `hub.sh` pero escrito en PowerShell para compatibilidad con Window
 
 ## 5. Scripts de Desarrollo (`scripts/`)
 
-### 🟡 `scripts/dev.sh` — Script de Desarrollo (Bash)
+### 🟡 `scripts/dev.sh` - Script de Desarrollo (Bash)
 
 | Atributo       | Valor                             |
 | :------------- | :-------------------------------- |
@@ -267,13 +267,13 @@ Equivalente a `hub.sh` pero escrito en PowerShell para compatibilidad con Window
 
 ---
 
-### 🟡 `scripts/dev.ps1` — Script de Desarrollo (PowerShell)
+### 🟡 `scripts/dev.ps1` - Script de Desarrollo (PowerShell)
 
 Equivalente a `dev.sh` para Windows. Misma funcionalidad.
 
 ---
 
-### 🟡 `scripts/generate_catalog.py` — Generador Automatico de Catalogo
+### 🟡 `scripts/generate_catalog.py` - Generador Automatico de Catalogo
 
 | Atributo       | Valor                              |
 | :------------- | :--------------------------------- |
@@ -293,7 +293,7 @@ Lee todos los archivos `app.manifest.yml` dentro de `apps/` y genera automaticam
 
 ---
 
-### 🟢 `scripts/update_app_readmes.ps1` — Actualizador de READMEs de Apps
+### 🟢 `scripts/update_app_readmes.ps1` - Actualizador de READMEs de Apps
 
 Script PowerShell auxiliar para mantener los README individuales de cada micro-app actualizados.
 
@@ -301,7 +301,7 @@ Script PowerShell auxiliar para mantener los README individuales de cada micro-a
 
 ## 6. Configuracion del Proyecto
 
-### 🔴 `composer.json` — Dependencias PHP
+### 🔴 `composer.json` - Dependencias PHP
 
 | Atributo       | Valor                              |
 | :------------- | :--------------------------------- |
@@ -318,7 +318,7 @@ Script PowerShell auxiliar para mantener los README individuales de cada micro-a
 
 ---
 
-### 🔴 `.env.example` — Plantilla de Variables de Entorno
+### 🔴 `.env.example` - Plantilla de Variables de Entorno
 
 | Atributo       | Valor                              |
 | :------------- | :--------------------------------- |
@@ -339,7 +339,7 @@ Sin copiar este archivo a `.env`, la clase `Config.php` no puede cargar las cred
 
 ---
 
-### 🟡 `phpstan.neon` — Configuracion de Analisis Estatico
+### 🟡 `phpstan.neon` - Configuracion de Analisis Estatico
 
 | Atributo       | Valor                              |
 | :------------- | :--------------------------------- |
@@ -349,7 +349,7 @@ Configura PHPStan a **nivel 5** (de 10). Analiza los directorios `apps/` y `src/
 
 ---
 
-### 🟡 `.php-cs-fixer.dist.php` — Reglas de Estilo de Codigo PHP
+### 🟡 `.php-cs-fixer.dist.php` - Reglas de Estilo de Codigo PHP
 
 | Atributo       | Valor                              |
 | :------------- | :--------------------------------- |
@@ -368,7 +368,7 @@ Configura PHPStan a **nivel 5** (de 10). Analiza los directorios `apps/` y `src/
 
 ---
 
-### 🟡 `.pre-commit-config.yaml` — Hooks de Pre-commit
+### 🟡 `.pre-commit-config.yaml` - Hooks de Pre-commit
 
 | Atributo       | Valor                              |
 | :------------- | :--------------------------------- |
@@ -386,19 +386,19 @@ Configura PHPStan a **nivel 5** (de 10). Analiza los directorios `apps/` y `src/
 
 ---
 
-### 🟢 `.markdownlint.json` — Reglas de Linting Markdown
+### 🟢 `.markdownlint.json` - Reglas de Linting Markdown
 
 Desactiva reglas estrictas que no aplican al estilo del proyecto: longitud de linea (`MD013`), HTML inline (`MD033`), primer heading H1 (`MD041`), y otras.
 
 ---
 
-### 🟢 `.gitignore` — Exclusiones de Git
+### 🟢 `.gitignore` - Exclusiones de Git
 
 Excluye del repositorio: `.env`, `vendor/`, `.vscode/`, `.idea/`, archivos de secretos (`*.pem`, `*.key`), cache de Python (`__pycache__`), y logs.
 
 ---
 
-### 🟢 `.gitattributes` — Normalizacion de Fin de Linea
+### 🟢 `.gitattributes` - Normalizacion de Fin de Linea
 
 Configura `* text=auto` para que Git normalice automaticamente los finales de linea (LF en Linux, CRLF en Windows) evitando conflictos entre sistemas operativos.
 
@@ -406,31 +406,31 @@ Configura `* text=auto` para que Git normalice automaticamente los finales de li
 
 ## 7. CI/CD y GitHub (`.github/`)
 
-### 🟡 `.github/workflows/ci.yml` — Pipeline de Integracion Continua
+### 🟡 `.github/workflows/ci.yml` - Pipeline de Integracion Continua
 
 El pipeline principal. Ejecuta linters, analisis estatico, validacion de manifiestos y smoke tests en cada push/PR.
 
-### 🟡 `.github/workflows/docker-publish.yml` — Publicacion de Imagen Docker
+### 🟡 `.github/workflows/docker-publish.yml` - Publicacion de Imagen Docker
 
 Construye y publica la imagen Docker en **GitHub Container Registry** (`ghcr.io`) automaticamente al crear un tag o merge a `main`.
 
-### 🟡 `.github/workflows/secret-scanning.yml` — Escaneo de Secretos
+### 🟡 `.github/workflows/secret-scanning.yml` - Escaneo de Secretos
 
 Ejecuta `detect-secrets` como paso CI para prevenir la filtracion de credenciales en el codigo.
 
-### 🟢 `.github/workflows/wiki-sync.yml` — Sincronizacion de Wiki
+### 🟢 `.github/workflows/wiki-sync.yml` - Sincronizacion de Wiki
 
 Sincroniza automaticamente el contenido de `docs/wiki/` con la Wiki de GitHub del repositorio.
 
-### 🟢 `.github/CODEOWNERS` — Propietarios del Codigo
+### 🟢 `.github/CODEOWNERS` - Propietarios del Codigo
 
 Define quienes son los revisores requeridos para PRs que toquen ciertas areas del proyecto.
 
-### 🟢 `.github/PULL_REQUEST_TEMPLATE.md` — Plantilla de Pull Requests
+### 🟢 `.github/PULL_REQUEST_TEMPLATE.md` - Plantilla de Pull Requests
 
 Estructura predefinida para que cada PR incluya: descripcion, tipo de cambio, checklist de revision y screenshots.
 
-### 🟢 `.github/ISSUE_TEMPLATE/` — Plantillas de Issues
+### 🟢 `.github/ISSUE_TEMPLATE/` - Plantillas de Issues
 
 Contiene 4 archivos (`.md` y `.yml`) con formularios predefinidos para reportar bugs y solicitar features de forma estandarizada.
 
@@ -455,7 +455,7 @@ Contiene 4 archivos (`.md` y `.yml`) con formularios predefinidos para reportar 
 | `TECHNICAL_SPECS.md`     | Stack tecnologico, estandares de codigo y normas de mantenimiento.      | 🟡          |
 | `USER_MANUAL.md`         | Manual de usuario final para cada herramienta.                          | 🟡          |
 
-### 📂 `docs/wiki/` — Contenido de la Wiki
+### 📂 `docs/wiki/` - Contenido de la Wiki
 
 Contiene 15 paginas en formato Markdown que se sincronizan automaticamente con la Wiki de GitHub mediante el workflow `wiki-sync.yml`.
 
@@ -564,7 +564,7 @@ Microsistemas/
 
 El directorio `skills/` contiene flujos de trabajo reutilizables (playbooks) que guian la ejecucion de tareas complejas y repetitivas en el repositorio.
 
-### 🟡 `skills/integrar-microsistema/` — Skill de Integracion
+### 🟡 `skills/integrar-microsistema/` - Skill de Integracion
 
 | Atributo        | Valor                                        |
 | :-------------- | :------------------------------------------- |
@@ -578,11 +578,11 @@ Guia la integracion de cualquier nueva micro-app en el repositorio de forma cohe
 
 **Archivos incluidos:**
 
-- `skill.md` — Playbook principal. Define los 6 pasos, reglas de oro, lista de inputs/outputs y flujo completo.
-- `referencia.txt` — Ejemplo de invocacion con valores de inputs reales.
-- `templates/app.manifest.yml.tpl` — Plantilla para el manifiesto de la app.
-- `templates/dashboard-card.html.tpl` — Plantilla para la tarjeta del Dashboard.
-- `templates/wiki-entry.md.tpl` — Plantilla para la entrada de Wiki.
+- `skill.md` - Playbook principal. Define los 6 pasos, reglas de oro, lista de inputs/outputs y flujo completo.
+- `referencia.txt` - Ejemplo de invocacion con valores de inputs reales.
+- `templates/app.manifest.yml.tpl` - Plantilla para el manifiesto de la app.
+- `templates/dashboard-card.html.tpl` - Plantilla para la tarjeta del Dashboard.
+- `templates/wiki-entry.md.tpl` - Plantilla para la entrada de Wiki.
 
 ---
 

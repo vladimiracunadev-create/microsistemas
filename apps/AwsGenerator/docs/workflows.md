@@ -1,6 +1,6 @@
 # Workflows (multi‑paso)
 
-Estas recetas agrupan varios pasos en una sola “receta” para casos reales.
+Estas recetas agrupan varios pasos en una sola "receta" para casos reales.
 
 Incluidos:
 

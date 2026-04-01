@@ -25,7 +25,7 @@ Todos los cambios notables en este proyecto seran documentados en este archivo. 
 ### Corregido
 
 - **CI/CD Seguridad (Trivy)**: El scanner de vulnerabilidades Trivy se reemplazo por instalacion directa via `apt-get` desde el repositorio oficial de Aqua Security, resolviendo el fallo persistente de descarga del binario en el runner Ubuntu.
-- **Markdown Lint**: Corregidos 31 errores de formato (MD022/MD032 — espacios en encabezados y listas) en `apps/KatasMultiLang/README.md`, `README-INTEGRACION.md`, `scripts/notes.md` y `VERSIONS_AUDIT.md`.
+- **Markdown Lint**: Corregidos 31 errores de formato (MD022/MD032 - espacios en encabezados y listas) en `apps/KatasMultiLang/README.md`, `README-INTEGRACION.md`, `scripts/notes.md` y `VERSIONS_AUDIT.md`.
 
 ## [2.2.0] - 2026-03-05
 
