@@ -1,12 +1,12 @@
 # Seguridad y Control de Impacto (AWS Assistant Pro)
 
-## El Semaforo de Impacto =�
+## El Semaforo de Impacto 🚦
 
 La herramienta clasifica cada accion segun su riesgo operativo potencial:
 
-- =4 **Riesgo Alto (Critico)**: Acciones destructivas (`delete`, `terminate`), cambios en IAM o politicas publicas. Requieren doble confirmacion.
-- =� **Riesgo Medio (Modificacion)**: Actualizaciones de codigo, cambios de configuracion en servicios activos o despliegues.
-- =� **Riesgo Bajo (Consulta)**: Comandos de lectura como `list`, `describe` o `get-metrics`.
+- 🔴 **Riesgo Alto (Critico)**: Acciones destructivas (`delete`, `terminate`), cambios en IAM o politicas publicas. Requieren doble confirmacion.
+- 🟡 **Riesgo Medio (Modificacion)**: Actualizaciones de codigo, cambios de configuracion en servicios activos o despliegues.
+- 🟢 **Riesgo Bajo (Consulta)**: Comandos de lectura como `list`, `describe` o `get-metrics`.
 
 ## Regla de Oro
 

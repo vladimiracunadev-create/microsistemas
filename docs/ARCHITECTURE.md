@@ -4,16 +4,16 @@ Este documento describe la estructura interna de **Microsistemas Suite**, los pa
 
 ---
 
-## >� Patrones Arquitectonicos Identificados
+## 🧬 Patrones Arquitectonicos Identificados
 
 Microsistemas no sigue una unica arquitectura, sino una **combinacion deliberada** de patrones que resuelven distintas necesidades del sistema:
 
-### 1. >� Monolito Modular (Modular Monolith)
+### 1. 🧩 Monolito Modular (Modular Monolith)
 
 Es la **arquitectura principal** del proyecto. Todo el sistema corre bajo un unico proceso Apache, pero internamente cada directorio dentro de `apps/` es una **aplicacion independiente y autocontenida**:
 
 - Cada micro-app tiene su propio `index.php` o `index.html`, assets propios y un manifiesto `app.manifest.yml`.
-- **No comparten codigo entre si**  la unica dependencia compartida es el Core (`src/`).
+- **No comparten codigo entre si** — la unica dependencia compartida es el Core (`src/`).
 - Cualquier app puede extraerse a su propio servicio sin refactoring del resto.
 
 ```mermaid
@@ -52,7 +52,7 @@ Un verdadero microservicio requiere despliegue independiente, su propia base de 
 
 ---
 
-### 2. <� Patron Singleton  Core del Sistema
+### 2. 🎯 Patron Singleton — Core del Sistema
 
 Las clases `Config` y `Database` implementan el **patron Singleton**, garantizando una unica instancia en memoria durante todo el ciclo de vida de cada solicitud HTTP:
 
@@ -63,7 +63,7 @@ Las clases `Config` y `Database` implementan el **patron Singleton**, garantizan
 
 ---
 
-### 3. < Metodologia 12-Factor App
+### 3. 🌍 Metodologia 12-Factor App
 
 El proyecto sigue los principios de la metodologia [12-Factor App](https://12factor.net) disenada para aplicaciones SaaS modernas:
 
@@ -73,14 +73,14 @@ El proyecto sigue los principios de la metodologia [12-Factor App](https://12fac
 | **II. Dependencies**       | Explicitas en `composer.json`, instaladas via `composer install`. |
 | **III. Config**            | En variables de entorno (`.env`), nunca hardcodeada.          |
 | **IV. Backing Services**   | MySQL como recurso adjunto, configurable por `.env`.          |
-| **V. Build/Release/Run**   | `Dockerfile` � imagen inmutable � `docker-compose up`.       |
+| **V. Build/Release/Run**   | `Dockerfile` → imagen inmutable → `docker-compose up`.       |
 | **VI. Processes**          | Apache sirve sin estado en memoria (stateless).               |
 | **X. Dev/Prod Parity**     | Mismo `Dockerfile` para desarrollo y produccion.              |
 | **XI. Logs**               | Stdout/stderr de Apache, no archivos propietarios.            |
 
 ---
 
-### 4. =� PHP Package Pattern (PSR-4)
+### 4. 📦 PHP Package Pattern (PSR-4)
 
 El directorio `src/` funciona como un **paquete PHP** con namespace `Microsistemas\` y autoloading PSR-4 via Composer:
 
@@ -96,7 +96,7 @@ Las micro-apps consumen el Core a traves de `require_once __DIR__ . '/vendor/aut
 
 ---
 
-### 5. =3 Infraestructura como Codigo (IaC)
+### 5. 🐳 Infraestructura como Codigo (IaC)
 
 Toda la infraestructura esta definida como codigo versionado:
 
@@ -111,7 +111,7 @@ Toda la infraestructura esta definida como codigo versionado:
 
 ---
 
-### 6. = CI/CD Pipeline Automatizado
+### 6. 🔄 CI/CD Pipeline Automatizado
 
 Cada cambio en la rama `main` o en un `tag` dispara un proceso de despliegue automatico hacia **GitHub Packages**.
 
@@ -136,7 +136,7 @@ sequenceDiagram
 
 ---
 
-## <� Estructura Global
+## 🏗️ Estructura Global
 
 ```mermaid
 graph TD
@@ -171,7 +171,7 @@ graph TD
 
 ---
 
-## =� El Paquete PHP (`src/`)
+## 📦 El Paquete PHP (`src/`)
 
 La logica compartida se organiza bajo el namespace `Microsistemas\`.
 
@@ -193,7 +193,7 @@ Gestiona el ciclo de vida de las conexiones a base de datos.
 
 ---
 
-## =3 Imagen Docker de Produccion
+## 🐳 Imagen Docker de Produccion
 
 La imagen oficial se basa en `php:8.2-apache` para maximizar la compatibilidad:
 
@@ -205,21 +205,21 @@ La imagen oficial se basa en `php:8.2-apache` para maximizar la compatibilidad:
 
 ---
 
-## =� Resumen de Arquitecturas
+## 📊 Resumen de Arquitecturas
 
 | Patron/Arquitectura            | Donde se aplica?                              | Proposito                                    |
 | :----------------------------- | :---------------------------------------------- | :------------------------------------------- |
-| **Monolito Modular**           | `apps/`  10 micro-apps independientes          | Organizacion modular sin complejidad de red.  |
-| **Shared Core Library (PSR-4)**| `src/Core/`  Config + Database                 | Codigo compartido sin duplicacion.            |
+| **Monolito Modular**           | `apps/` — 10 micro-apps independientes          | Organizacion modular sin complejidad de red.  |
+| **Shared Core Library (PSR-4)**| `src/Core/` — Config + Database                 | Codigo compartido sin duplicacion.            |
 | **Singleton**                  | `Config.php`, `Database.php`                    | Una conexion/config por request.              |
 | **12-Factor App**              | `.env`, Dockerfile, Composer                    | Portabilidad entre entornos.                  |
 | **Infrastructure as Code**     | `Dockerfile`, `docker-compose.yml`, `k8s/`      | Entornos reproducibles y versionados.         |
 | **CI/CD Pipeline**             | `.github/workflows/`                            | Calidad y despliegue automatizado.            |
-| **AI Context Layer (MCP)**     | `mcp/`  Servidor Python FastMCP                | Sidecar local estandarizado para brindar memoria e inteligencia contextual (Manifiestos, Docs, Scripts) a Asistentes LLM bajo el esquema `Solo Lectura`. |
+| **AI Context Layer (MCP)**     | `mcp/` — Servidor Python FastMCP                | Sidecar local estandarizado para brindar memoria e inteligencia contextual (Manifiestos, Docs, Scripts) a Asistentes LLM bajo el esquema `Solo Lectura`. |
 
 ---
 
-## =� Estandares Utilizados
+## 🛠️ Estandares Utilizados
 
 - **PSR-4**: Autoloading de clases.
 - **PSR-12**: Estilo de codigo PHP (enforced por PHP CS-Fixer).

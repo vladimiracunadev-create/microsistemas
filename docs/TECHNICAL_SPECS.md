@@ -2,7 +2,7 @@
 
 Este documento detalla la arquitectura, tecnologias y estandares utilizados en el proyecto para asegurar su escalabilidad y mantenibilidad.
 
-## =� Stack Tecnologico
+## 🛠️ Stack Tecnologico
 
 ### Backend
 
@@ -18,7 +18,7 @@ Este documento detalla la arquitectura, tecnologias y estandares utilizados en e
 
 ---
 
-## <� Arquitectura de Software
+## 🏗️ Arquitectura de Software
 
 El sistema sigue una **Arquitectura de Modulos Independientes (Micro-Apps)**.
 
@@ -30,7 +30,7 @@ El sistema sigue una **Arquitectura de Modulos Independientes (Micro-Apps)**.
 
 ---
 
-## <� Estandar de Salud y Monitoreo
+## 🏥 Estandar de Salud y Monitoreo
 
 Para garantizar la **Resiliencia Operativa**, todas las micro-apps deben implementar el siguiente contrato de diagnostico:
 
@@ -70,7 +70,7 @@ Para garantizar la **Resiliencia Operativa**, todas las micro-apps deben impleme
 
 ---
 
-## = Seguridad e Integridad
+## 🔒 Seguridad e Integridad
 
 - **Sanitizacion de Entradas**: Todas las herramientas que procesan texto (Conversor, Migrador) utilizan `htmlspecialchars()` y filtros de expresion regular para prevenir ataques XSS.
 - **Whitelist de Archivos**: El `LogViewer` utiliza una lista blanca estricta de archivos permitidos, impidiendo la navegacion arbitraria por el sistema de archivos del servidor.
@@ -78,7 +78,7 @@ Para garantizar la **Resiliencia Operativa**, todas las micro-apps deben impleme
 
 ---
 
-## =� Estandares de Codigo
+## 📈 Estandares de Codigo
 
 - **PSR-12**: Guia de estilo de codificacion PHP.
 - **CamelCase**: Nomenclatura para funciones y variables en JavaScript.
@@ -87,7 +87,7 @@ Para garantizar la **Resiliencia Operativa**, todas las micro-apps deben impleme
 - **Calidad Automatizada**: Cada cambio es validado por un pipeline de CI que detecta cambios selectivos por ruta.
 - **Seguridad Docker**: Imagenes escaneadas con **Trivy** y generacion de **SBOM**.
 
-## =� Mantenimiento y Extensiones
+## 🛠️ Mantenimiento y Extensiones
 
 Para anadir un nuevo microsistema de forma profesional, utiliza el **Skill de Integracion**:
 
@@ -109,7 +109,7 @@ Plantillas disponibles en `skills/integrar-microsistema/templates/`.
 
 ---
 
-## = Seguridad CI/CD
+## 🔐 Seguridad CI/CD
 
 - **Scanner de Vulnerabilidades Trivy**: Instalado directamente via `apt-get` desde el repositorio oficial de Aqua Security (`aquasecurity.github.io/trivy-repo`), saltando el `trivy-action` que presentaba fallos de descarga de binario en runners Ubuntu. El resultado SARIF se sube al Security Tab de GitHub.
 - **Secret Scanning (TruffleHog)**: Detecta credenciales expuestas en cada push (`.github/workflows/secret-scanning.yml`).

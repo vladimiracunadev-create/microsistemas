@@ -40,7 +40,7 @@ Cierra la conexion activa si existe.
 
 ---
 
-## > API de Asistencia IA (Servidor MCP Local)
+## 🤖 API de Asistencia IA (Servidor MCP Local)
 
 Ademas de la API Core en PHP, Microsistemas incluye un Servidor Model Context Protocol (MCP) en Python (`/mcp`) que actua como API de Solo Lectura para agentes de IA (ej: Claude Desktop, Cursor).
 
@@ -71,7 +71,7 @@ _El Servidor MCP V1 esta estrictamente limitado por diseno para prevenir mutacio
 
 ---
 
-## =� Como Extender la API Core
+## 🛠️ Como Extender la API Core
 
 Si deseas anadir una nueva utilidad global (ej: un sistema de manejo de archivos), sigue estos pasos:
 

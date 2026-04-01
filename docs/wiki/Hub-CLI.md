@@ -2,11 +2,11 @@
 
 El **Hub** es la capa de gestion centralizada de Microsistemas que permite interactuar con todas las micro-aplicaciones de forma unificada desde la linea de comandos.
 
-## =� Concepto
+## 🚀 Concepto
 
 A diferencia del Dashboard web, el Hub esta disenado para automatizacion y gestion rapida de infraestructura. Cada aplicacion en `apps/` se registra automaticamente si contiene un archivo `app.manifest.yml`.
 
-## =� Comandos Principales
+## 🛠️ Comandos Principales
 
 ### 1. Listar Aplicaciones
 
@@ -77,7 +77,7 @@ Realiza una verificacion rapida de la disponibilidad de todos los servicios prin
 make smoke
 ```
 
-## =� Manifiesto de Aplicacion (`app.manifest.yml`)
+## 📝 Manifiesto de Aplicacion (`app.manifest.yml`)
 
 Para que una aplicacion sea reconocida por el Hub, debe tener un manifiesto con la siguiente estructura:
 
@@ -89,7 +89,7 @@ ports: [8080]
 compose_file: "docker-compose.yml" # Opcional
 ```
 
-## =� Seguridad
+## 🛡️ Seguridad
 
 El Hub implementa varias medidas de seguridad:
 

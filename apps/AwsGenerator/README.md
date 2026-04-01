@@ -4,12 +4,12 @@
 
 **AWS Assistant Pro** es un asistente inteligente disenado para simplificar la gestion de infraestructura en la nube. A diferencia de un simple generador, guia al usuario a traves de un flujo intuitivo basado en intenciones reales de negocio.
 
-## Caracteristicas Destacadas (v2.1.0) =�
+## Caracteristicas Destacadas (v2.1.0) 🚀
 
 - **Navegacion Guiada**: Selector de intenciones (Consultar, Gestionar, Seguridad) que filtra automaticamente los servicios relevantes.
 - **GlassCode Syntax Highlighting**: Resaltado de sintaxis en tiempo real para comandos de AWS CLI.
 - **Semaforo de Impacto**: Indicadores visuales de riesgo operativo (Rojo/Amarillo/Verde) con explicaciones en lenguaje natural.
-- **EduIcons**: Ayuda contextual (`�`) en parametros tecnicos para facilitar el aprendizaje.
+- **EduIcons**: Ayuda contextual (`ⓘ`) en parametros tecnicos para facilitar el aprendizaje.
 - **Seguridad**: Bloqueo inteligente de comandos peligrosos en perfiles de produccion y Modo Simulado (Dry-run).
 - **Favoritos + Historial**: Gestion de recetas preferidas y rastro de comandos previos.
 - **Exportacion Multi-plataforma**: Generacion de scripts `.sh` (Bash) y `.ps1` (PowerShell) listos para produccion.
@@ -21,7 +21,7 @@
 ### VS Code Live Server
 
 1. Abre `index.html`
-2. Click derecho � **Open with Live Server**
+2. Click derecho → **Open with Live Server**
 
 ### Python
 
@@ -49,7 +49,7 @@ Luego abre `http://localhost:8080`
 ## Seguridad / costos (importante)
 
 - Recetas con **riesgo alto** requieren confirmacion.
-- Activa Bloquear peligrosos en prod y usa perfiles separados (`dev`, `prod`).
+- Activa “Bloquear peligrosos en prod” y usa perfiles separados (`dev`, `prod`).
 - Lee `docs/costos-y-seguridad.md`.
 
 ---

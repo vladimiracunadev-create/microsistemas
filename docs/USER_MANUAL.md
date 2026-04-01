@@ -4,15 +4,15 @@ Bienvenido a la guia oficial de **Microsistemas Suite**. Este documento le ayuda
 
 ---
 
-## >� Introduccion al Ecosistema
+## 🧭 Introduccion al Ecosistema
 
 La suite se organiza en un **Dashboard Central** que actua como puerta de enlace a aplicaciones modulares. Cada herramienta en `apps/` es independiente pero comparte la misma estetica y estandares de seguridad.
 
 ---
 
-## =� Guia Detallada de Herramientas
+## 🛠️ Guia Detallada de Herramientas
 
-### =� Gestion de Datos y Bases de Datos
+### 📦 Gestion de Datos y Bases de Datos
 
 #### SQL Viewer
 
@@ -27,7 +27,7 @@ La suite se organiza en un **Dashboard Central** que actua como puerta de enlace
 
 ---
 
-### =� Modernizacion y Desarrollo
+### 💻 Modernizacion y Desarrollo
 
 #### PHP Migrator
 
@@ -46,7 +46,7 @@ La suite se organiza en un **Dashboard Central** que actua como puerta de enlace
 
 ---
 
-### =' Utilidades de Configuracion
+### 🔧 Utilidades de Configuracion
 
 #### YAML Studio
 
@@ -60,7 +60,7 @@ La suite se organiza en un **Dashboard Central** que actua como puerta de enlace
 
 ---
 
-### =� DevOps e Infraestructura Pro
+### 🚀 DevOps e Infraestructura Pro
 
 #### Capacity Simulator
 
@@ -78,13 +78,13 @@ La suite se organiza en un **Dashboard Central** que actua como puerta de enlace
 * **Workflow Pro**:
   1. Use el **Selector de Intenciones** para definir su objetivo (ej: "Gestionar S3").
   2. Observe el **Semaforo de Impacto** para entender el riesgo operativo.
-  3. Use los **EduIcons** (�) para aprender el detalle de los parametros tecnicos.
+  3. Use los **EduIcons** (ⓘ) para aprender el detalle de los parametros tecnicos.
   4. Valide con el **Modo Simulado** antes de ejecutar acciones reales.
 * **Seguridad**: Bloqueo automatico en perfiles de produccion y alertas visuales para comandos criticos.
 
 ---
 
-## S Preguntas Frecuentes (FAQ)
+## ❓ Preguntas Frecuentes (FAQ)
 
 ### Como anado mis propias herramientas?
 

@@ -1,23 +1,23 @@
-# =� Referencia Completa de Archivos  Microsistemas
+# 📁 Referencia Completa de Archivos – Microsistemas
 
 Guia detallada de **cada archivo y directorio** del proyecto. Cada entrada incluye su proposito, como funciona internamente y su nivel de importancia para el sistema.
 
 > **Leyenda de Importancia:**
-> =4 **Critico**  El sistema no funciona sin este archivo.
-> =� **Importante**  Afecta la calidad, seguridad o experiencia de desarrollo.
-> =� **Complementario**  Mejora el proyecto pero no es indispensable para ejecutarlo.
+> 🔴 **Critico** – El sistema no funciona sin este archivo.
+> 🟡 **Importante** – Afecta la calidad, seguridad o experiencia de desarrollo.
+> 🟢 **Complementario** – Mejora el proyecto pero no es indispensable para ejecutarlo.
 
 ---
 
 ## 1. Puntos de Entrada (Entry Points)
 
-### =4 `index.php`  Dashboard Principal
+### 🔴 `index.php` — Dashboard Principal
 
 | Atributo       | Valor                          |
 | :------------- | :----------------------------- |
 | **Ubicacion**  | `/index.php`                   |
 | **Tecnologia** | PHP + HTML/CSS inline          |
-| **Importancia**| =4 Critico                     |
+| **Importancia**| 🔴 Critico                     |
 
 **Que hace?**
 Es la **pagina principal** de la suite. Cuando un usuario accede a `http://localhost/microsistemas/` o `http://localhost:8080`, este archivo es lo primero que ve.
@@ -35,13 +35,13 @@ Sin este archivo, no existe punto de acceso visual al sistema. Es la **fachada**
 
 ---
 
-### =4 `doc.php`  Visor de Documentacion Markdown
+### 🔴 `doc.php` — Visor de Documentacion Markdown
 
 | Atributo       | Valor                                  |
 | :------------- | :------------------------------------- |
 | **Ubicacion**  | `/doc.php`                             |
 | **Tecnologia** | PHP + Marked.js (CDN)                  |
-| **Importancia**| =4 Critico                             |
+| **Importancia**| 🔴 Critico                             |
 
 **Que hace?**
 Renderiza cualquier archivo `.md` del proyecto como una pagina web estilizada con Dark Mode. Se accede mediante `doc.php?file=NOMBRE.md`.
@@ -62,14 +62,14 @@ Permite navegar toda la documentacion directamente desde el navegador sin necesi
 
 ## 2. Core del Sistema (`src/`)
 
-### =4 `src/Core/Config.php`  Gestion de Configuracion
+### 🔴 `src/Core/Config.php` — Gestion de Configuracion
 
 | Atributo       | Valor                            |
 | :------------- | :------------------------------- |
 | **Ubicacion**  | `/src/Core/Config.php`           |
 | **Namespace**  | `Microsistemas\Core`             |
 | **Patron**     | Singleton                        |
-| **Importancia**| =4 Critico                       |
+| **Importancia**| 🔴 Critico                       |
 
 **Que hace?**
 Centraliza la carga y lectura de variables de entorno (`.env`) para todo el sistema.
@@ -77,7 +77,7 @@ Centraliza la carga y lectura de variables de entorno (`.env`) para todo el sist
 **Como funciona internamente?**
 
 1. Usa el patron **Singleton** (`getInstance()`) para garantizar una sola instancia en memoria.
-2. En el constructor, carga el `.env` mediante `vlucas/phpdotenv` con `createImmutable()`  las variables del entorno del SO no se sobrescriben.
+2. En el constructor, carga el `.env` mediante `vlucas/phpdotenv` con `createImmutable()` — las variables del entorno del SO no se sobrescriben.
 3. Si el `.env` no existe (ej: en produccion con Docker/ECS), **falla silenciosamente** y asume que las variables vienen del sistema operativo.
 4. El metodo `get($key, $default)` busca primero en `$_ENV`, luego en `getenv()`, y finalmente retorna el valor por defecto.
 
@@ -86,14 +86,14 @@ Toda la configuracion del sistema (credenciales de BD, hosts, drivers) pasa por 
 
 ---
 
-### =4 `src/Core/Database.php`  Conexion a Base de Datos
+### 🔴 `src/Core/Database.php` — Conexion a Base de Datos
 
 | Atributo       | Valor                            |
 | :------------- | :------------------------------- |
 | **Ubicacion**  | `/src/Core/Database.php`         |
 | **Namespace**  | `Microsistemas\Core`             |
 | **Patron**     | Singleton                        |
-| **Importancia**| =4 Critico                       |
+| **Importancia**| 🔴 Critico                       |
 
 **Que hace?**
 Centraliza las conexiones a bases de datos con soporte para **MySQLi** y **PDO** (MySQL, PostgreSQL, SQLite).
@@ -115,13 +115,13 @@ Es la puerta de entrada a cualquier operacion de base de datos en las micro-apps
 
 ## 3. Infraestructura y Contenedores
 
-### =4 `Dockerfile`  Imagen Docker de Produccion
+### 🔴 `Dockerfile` — Imagen Docker de Produccion
 
 | Atributo       | Valor                            |
 | :------------- | :------------------------------- |
 | **Ubicacion**  | `/Dockerfile`                    |
 | **Base**       | `php:8.2.27-apache-bookworm`     |
-| **Importancia**| =4 Critico                       |
+| **Importancia**| 🔴 Critico                       |
 
 **Que hace?**
 Define la imagen Docker que empaqueta toda la suite para despliegue inmutable.
@@ -141,13 +141,13 @@ Sin este archivo no es posible el despliegue con Docker, que es el metodo recome
 
 ---
 
-### =4 `docker-compose.yml`  Orquestacion Multi-Contenedor
+### 🔴 `docker-compose.yml` — Orquestacion Multi-Contenedor
 
 | Atributo       | Valor                            |
 | :------------- | :------------------------------- |
 | **Ubicacion**  | `/docker-compose.yml`            |
 | **Servicios**  | `web` (Apache/PHP), `db` (MySQL) |
-| **Importancia**| =4 Critico                       |
+| **Importancia**| 🔴 Critico                       |
 
 **Que hace?**
 Levanta el ecosistema completo (web + base de datos) con un solo comando `docker-compose up -d`.
@@ -162,11 +162,11 @@ Levanta el ecosistema completo (web + base de datos) con un solo comando `docker
 
 ---
 
-### =� `.dockerignore`  Exclusiones de Build Docker
+### 🟡 `.dockerignore` — Exclusiones de Build Docker
 
 | Atributo       | Valor                |
 | :------------- | :------------------- |
-| **Importancia**| =� Importante        |
+| **Importancia**| 🟡 Importante        |
 
 **Que hace?**
 Excluye archivos innecesarios del contexto de build de Docker, reduciendo el tamano de la imagen y evitando filtrar secretos.
@@ -175,7 +175,7 @@ Excluye archivos innecesarios del contexto de build de Docker, reduciendo el tam
 
 ---
 
-### =� `k8s/demo/`  Manifiestos de Kubernetes
+### 🟡 `k8s/demo/` — Manifiestos de Kubernetes
 
 | Archivo               | Proposito                                                        |
 | :-------------------- | :--------------------------------------------------------------- |
@@ -184,17 +184,17 @@ Excluye archivos innecesarios del contexto de build de Docker, reduciendo el tam
 | `network-policy.yaml` | Restringe trafico de red al namespace (Zero Trust).              |
 | `kustomization.yaml`  | Orquesta los manifiestos con Kustomize (`kubectl apply -k`).     |
 
-**Importancia:** =� Complementario  Demuestra preparacion para orquestacion en la nube, pero no es requerido para desarrollo local.
+**Importancia:** 🟢 Complementario — Demuestra preparacion para orquestacion en la nube, pero no es requerido para desarrollo local.
 
 ---
 
 ## 4. Automatizacion y CLI
 
-### =� `Makefile`  Interfaz de Comandos Simplificada
+### 🟡 `Makefile` — Interfaz de Comandos Simplificada
 
 | Atributo       | Valor                       |
 | :------------- | :-------------------------- |
-| **Importancia**| =� Importante               |
+| **Importancia**| 🟡 Importante               |
 
 **Que hace?**
 Provee **atajos estandarizados** para las tareas mas comunes del proyecto.
@@ -218,12 +218,12 @@ Provee **atajos estandarizados** para las tareas mas comunes del proyecto.
 
 ---
 
-### =� `hub.sh`  Hub CLI (Linux/Mac)
+### 🟡 `hub.sh` — Hub CLI (Linux/Mac)
 
 | Atributo       | Valor                       |
 | :------------- | :-------------------------- |
 | **Ubicacion**  | `/hub.sh`                   |
-| **Importancia**| =� Importante               |
+| **Importancia**| 🟡 Importante               |
 
 **Que hace?**
 Herramienta CLI en Bash para gestionar todas las micro-apps de forma centralizada.
@@ -237,12 +237,12 @@ Herramienta CLI en Bash para gestionar todas las micro-apps de forma centralizad
 
 ---
 
-### =� `hub.ps1`  Hub CLI (Windows PowerShell)
+### 🟡 `hub.ps1` — Hub CLI (Windows PowerShell)
 
 | Atributo       | Valor                       |
 | :------------- | :-------------------------- |
 | **Ubicacion**  | `/hub.ps1`                  |
-| **Importancia**| =� Importante               |
+| **Importancia**| 🟡 Importante               |
 
 Equivalente a `hub.sh` pero escrito en PowerShell para compatibilidad con Windows. Mismas funcionalidades: `list`, `run`, `up`, `doctor`.
 
@@ -250,11 +250,11 @@ Equivalente a `hub.sh` pero escrito en PowerShell para compatibilidad con Window
 
 ## 5. Scripts de Desarrollo (`scripts/`)
 
-### =� `scripts/dev.sh`  Script de Desarrollo (Bash)
+### 🟡 `scripts/dev.sh` — Script de Desarrollo (Bash)
 
 | Atributo       | Valor                             |
 | :------------- | :-------------------------------- |
-| **Importancia**| =� Importante                     |
+| **Importancia**| 🟡 Importante                     |
 
 **Comandos:**
 
@@ -267,18 +267,18 @@ Equivalente a `hub.sh` pero escrito en PowerShell para compatibilidad con Window
 
 ---
 
-### =� `scripts/dev.ps1`  Script de Desarrollo (PowerShell)
+### 🟡 `scripts/dev.ps1` — Script de Desarrollo (PowerShell)
 
 Equivalente a `dev.sh` para Windows. Misma funcionalidad.
 
 ---
 
-### =� `scripts/generate_catalog.py`  Generador Automatico de Catalogo
+### 🟡 `scripts/generate_catalog.py` — Generador Automatico de Catalogo
 
 | Atributo       | Valor                              |
 | :------------- | :--------------------------------- |
 | **Tecnologia** | Python 3 + PyYAML                  |
-| **Importancia**| =� Importante                      |
+| **Importancia**| 🟡 Importante                      |
 
 **Que hace?**
 Lee todos los archivos `app.manifest.yml` dentro de `apps/` y genera automaticamente la tabla Markdown del catalogo en el `README.md`.
@@ -293,7 +293,7 @@ Lee todos los archivos `app.manifest.yml` dentro de `apps/` y genera automaticam
 
 ---
 
-### =� `scripts/update_app_readmes.ps1`  Actualizador de READMEs de Apps
+### 🟢 `scripts/update_app_readmes.ps1` — Actualizador de READMEs de Apps
 
 Script PowerShell auxiliar para mantener los README individuales de cada micro-app actualizados.
 
@@ -301,11 +301,11 @@ Script PowerShell auxiliar para mantener los README individuales de cada micro-a
 
 ## 6. Configuracion del Proyecto
 
-### =4 `composer.json`  Dependencias PHP
+### 🔴 `composer.json` — Dependencias PHP
 
 | Atributo       | Valor                              |
 | :------------- | :--------------------------------- |
-| **Importancia**| =4 Critico                         |
+| **Importancia**| 🔴 Critico                         |
 
 **Contenido clave:**
 
@@ -318,11 +318,11 @@ Script PowerShell auxiliar para mantener los README individuales de cada micro-a
 
 ---
 
-### =4 `.env.example`  Plantilla de Variables de Entorno
+### 🔴 `.env.example` — Plantilla de Variables de Entorno
 
 | Atributo       | Valor                              |
 | :------------- | :--------------------------------- |
-| **Importancia**| =4 Critico                         |
+| **Importancia**| 🔴 Critico                         |
 
 **Variables documentadas:**
 
@@ -339,21 +339,21 @@ Sin copiar este archivo a `.env`, la clase `Config.php` no puede cargar las cred
 
 ---
 
-### =� `phpstan.neon`  Configuracion de Analisis Estatico
+### 🟡 `phpstan.neon` — Configuracion de Analisis Estatico
 
 | Atributo       | Valor                              |
 | :------------- | :--------------------------------- |
-| **Importancia**| =� Importante                      |
+| **Importancia**| 🟡 Importante                      |
 
 Configura PHPStan a **nivel 5** (de 10). Analiza los directorios `apps/` y `src/`, excluye `vendor/`, y usa el autoloader de Composer como bootstrap.
 
 ---
 
-### =� `.php-cs-fixer.dist.php`  Reglas de Estilo de Codigo PHP
+### 🟡 `.php-cs-fixer.dist.php` — Reglas de Estilo de Codigo PHP
 
 | Atributo       | Valor                              |
 | :------------- | :--------------------------------- |
-| **Importancia**| =� Importante                      |
+| **Importancia**| 🟡 Importante                      |
 
 **Reglas aplicadas:**
 
@@ -368,11 +368,11 @@ Configura PHPStan a **nivel 5** (de 10). Analiza los directorios `apps/` y `src/
 
 ---
 
-### =� `.pre-commit-config.yaml`  Hooks de Pre-commit
+### 🟡 `.pre-commit-config.yaml` — Hooks de Pre-commit
 
 | Atributo       | Valor                              |
 | :------------- | :--------------------------------- |
-| **Importancia**| =� Importante                      |
+| **Importancia**| 🟡 Importante                      |
 
 **Hooks configurados:**
 
@@ -386,19 +386,19 @@ Configura PHPStan a **nivel 5** (de 10). Analiza los directorios `apps/` y `src/
 
 ---
 
-### =� `.markdownlint.json`  Reglas de Linting Markdown
+### 🟢 `.markdownlint.json` — Reglas de Linting Markdown
 
 Desactiva reglas estrictas que no aplican al estilo del proyecto: longitud de linea (`MD013`), HTML inline (`MD033`), primer heading H1 (`MD041`), y otras.
 
 ---
 
-### =� `.gitignore`  Exclusiones de Git
+### 🟢 `.gitignore` — Exclusiones de Git
 
 Excluye del repositorio: `.env`, `vendor/`, `.vscode/`, `.idea/`, archivos de secretos (`*.pem`, `*.key`), cache de Python (`__pycache__`), y logs.
 
 ---
 
-### =� `.gitattributes`  Normalizacion de Fin de Linea
+### 🟢 `.gitattributes` — Normalizacion de Fin de Linea
 
 Configura `* text=auto` para que Git normalice automaticamente los finales de linea (LF en Linux, CRLF en Windows) evitando conflictos entre sistemas operativos.
 
@@ -406,31 +406,31 @@ Configura `* text=auto` para que Git normalice automaticamente los finales de li
 
 ## 7. CI/CD y GitHub (`.github/`)
 
-### =� `.github/workflows/ci.yml`  Pipeline de Integracion Continua
+### 🟡 `.github/workflows/ci.yml` — Pipeline de Integracion Continua
 
 El pipeline principal. Ejecuta linters, analisis estatico, validacion de manifiestos y smoke tests en cada push/PR.
 
-### =� `.github/workflows/docker-publish.yml`  Publicacion de Imagen Docker
+### 🟡 `.github/workflows/docker-publish.yml` — Publicacion de Imagen Docker
 
 Construye y publica la imagen Docker en **GitHub Container Registry** (`ghcr.io`) automaticamente al crear un tag o merge a `main`.
 
-### =� `.github/workflows/secret-scanning.yml`  Escaneo de Secretos
+### 🟡 `.github/workflows/secret-scanning.yml` — Escaneo de Secretos
 
 Ejecuta `detect-secrets` como paso CI para prevenir la filtracion de credenciales en el codigo.
 
-### =� `.github/workflows/wiki-sync.yml`  Sincronizacion de Wiki
+### 🟢 `.github/workflows/wiki-sync.yml` — Sincronizacion de Wiki
 
 Sincroniza automaticamente el contenido de `docs/wiki/` con la Wiki de GitHub del repositorio.
 
-### =� `.github/CODEOWNERS`  Propietarios del Codigo
+### 🟢 `.github/CODEOWNERS` — Propietarios del Codigo
 
 Define quienes son los revisores requeridos para PRs que toquen ciertas areas del proyecto.
 
-### =� `.github/PULL_REQUEST_TEMPLATE.md`  Plantilla de Pull Requests
+### 🟢 `.github/PULL_REQUEST_TEMPLATE.md` — Plantilla de Pull Requests
 
 Estructura predefinida para que cada PR incluya: descripcion, tipo de cambio, checklist de revision y screenshots.
 
-### =� `.github/ISSUE_TEMPLATE/`  Plantillas de Issues
+### 🟢 `.github/ISSUE_TEMPLATE/` — Plantillas de Issues
 
 Contiene 4 archivos (`.md` y `.yml`) con formularios predefinidos para reportar bugs y solicitar features de forma estandarizada.
 
@@ -438,24 +438,24 @@ Contiene 4 archivos (`.md` y `.yml`) con formularios predefinidos para reportar 
 
 ## 8. Documentacion del Proyecto
 
-### =� Directorio `docs/`
+### 📂 Directorio `docs/`
 
 | Archivo                  | Proposito                                                              | Importancia |
 | :----------------------- | :--------------------------------------------------------------------- | :---------- |
-| `ARCHITECTURE.md`        | Diagramas Mermaid y explicacion de la arquitectura del sistema.         | =�          |
-| `API.md`                 | Referencia de la API interna del Core y puntos de extension.            | =�          |
-| `BEGINNERS_GUIDE.md`     | Guia de onboarding para desarrolladores nuevos.                         | =�          |
-| `HUB.md`                 | Documentacion completa del Hub CLI.                                     | =�          |
-| `INSTALL.md`             | Guia paso a paso de instalacion (Docker, XAMPP, Linux).                 | =4          |
-| `MAINTAINERS.md`         | Informacion para administradores del proyecto.                          | =�          |
-| `RECRUITER.md`           | Guia ejecutiva para reclutadores y evaluadores tecnicos.                | =�          |
-| `REQUIREMENTS.md`        | Requisitos de hardware y software (PHP, extensiones, etc.).             | =�          |
-| `SECURITY.md`            | Politicas de seguridad y proceso de reporte de vulnerabilidades.        | =�          |
-| `SYSTEMS_CATALOG.md`     | Catalogo detallado con ficha tecnica de cada micro-app.                 | =�          |
-| `TECHNICAL_SPECS.md`     | Stack tecnologico, estandares de codigo y normas de mantenimiento.      | =�          |
-| `USER_MANUAL.md`         | Manual de usuario final para cada herramienta.                          | =�          |
+| `ARCHITECTURE.md`        | Diagramas Mermaid y explicacion de la arquitectura del sistema.         | 🟡          |
+| `API.md`                 | Referencia de la API interna del Core y puntos de extension.            | 🟡          |
+| `BEGINNERS_GUIDE.md`     | Guia de onboarding para desarrolladores nuevos.                         | 🟢          |
+| `HUB.md`                 | Documentacion completa del Hub CLI.                                     | 🟡          |
+| `INSTALL.md`             | Guia paso a paso de instalacion (Docker, XAMPP, Linux).                 | 🔴          |
+| `MAINTAINERS.md`         | Informacion para administradores del proyecto.                          | 🟢          |
+| `RECRUITER.md`           | Guia ejecutiva para reclutadores y evaluadores tecnicos.                | 🟢          |
+| `REQUIREMENTS.md`        | Requisitos de hardware y software (PHP, extensiones, etc.).             | 🟡          |
+| `SECURITY.md`            | Politicas de seguridad y proceso de reporte de vulnerabilidades.        | 🟡          |
+| `SYSTEMS_CATALOG.md`     | Catalogo detallado con ficha tecnica de cada micro-app.                 | 🟡          |
+| `TECHNICAL_SPECS.md`     | Stack tecnologico, estandares de codigo y normas de mantenimiento.      | 🟡          |
+| `USER_MANUAL.md`         | Manual de usuario final para cada herramienta.                          | 🟡          |
 
-### =� `docs/wiki/`  Contenido de la Wiki
+### 📂 `docs/wiki/` — Contenido de la Wiki
 
 Contiene 15 paginas en formato Markdown que se sincronizan automaticamente con la Wiki de GitHub mediante el workflow `wiki-sync.yml`.
 
@@ -465,15 +465,15 @@ Contiene 15 paginas en formato Markdown que se sincronizan automaticamente con l
 
 | Archivo              | Proposito                                                           | Importancia |
 | :------------------- | :------------------------------------------------------------------ | :---------- |
-| `README.md`          | Pagina principal del repositorio en GitHub/GitLab.                   | =4          |
-| `CHANGELOG.md`       | Registro cronologico de versiones, cambios y mejoras.                | =�          |
-| `ROADMAP.md`         | Plan de funcionalidades futuras y evolucion del proyecto.            | =�          |
-| `CONTRIBUTING.md`    | Guia para contribuidores: como hacer PRs, reportar bugs, etc.       | =�          |
-| `CODE_OF_CONDUCT.md` | Codigo de conducta de la comunidad.                                  | =�          |
-| `SECURITY.md`        | Politica de seguridad y reporte responsable de vulnerabilidades.     | =�          |
-| `LICENSE`            | Licencia MIT del proyecto.                                           | =�          |
-| `NOTICE`             | Atribuciones legales y creditos de dependencias de terceros.         | =�          |
-| `llms.txt`           | Metadatos estructurados para consumo por modelos de IA/LLM.         | =�          |
+| `README.md`          | Pagina principal del repositorio en GitHub/GitLab.                   | 🔴          |
+| `CHANGELOG.md`       | Registro cronologico de versiones, cambios y mejoras.                | 🟡          |
+| `ROADMAP.md`         | Plan de funcionalidades futuras y evolucion del proyecto.            | 🟢          |
+| `CONTRIBUTING.md`    | Guia para contribuidores: como hacer PRs, reportar bugs, etc.       | 🟢          |
+| `CODE_OF_CONDUCT.md` | Codigo de conducta de la comunidad.                                  | 🟢          |
+| `SECURITY.md`        | Politica de seguridad y reporte responsable de vulnerabilidades.     | 🟡          |
+| `LICENSE`            | Licencia MIT del proyecto.                                           | 🟡          |
+| `NOTICE`             | Atribuciones legales y creditos de dependencias de terceros.         | 🟢          |
+| `llms.txt`           | Metadatos estructurados para consumo por modelos de IA/LLM.         | 🟢          |
 
 ---
 
@@ -501,76 +501,76 @@ Cada subdirectorio dentro de `apps/` es una **micro-aplicacion independiente** c
 
 ```text
 Microsistemas/
-   =4 index.php              � Dashboard principal
-   =4 doc.php                � Visor de documentacion
-   =4 composer.json          � Dependencias PHP
-   =4 .env.example           � Plantilla de variables
-   =4 Dockerfile             � Imagen de produccion
-   =4 docker-compose.yml     � Orquestacion de servicios
-   =� Makefile               � Atajos de comandos
-   =� hub.sh / hub.ps1       � CLI multiplataforma
-
-   src/Core/
-      =4 Config.php         � Singleton de configuracion
-      =4 Database.php       � Singleton de conexion a BD
-
-   apps/                      � 10 micro-aplicaciones
-      AwsGenerator/
-      CapacitySim/
-      CicdLibrary/
-      Conversor/
-      GitTrainer/
-      JsTools/
-      LogViewer/
-      PhpMigrator/
-      SqlViewer/
-      YmlGenerator/
-
-   scripts/                   � Automatizacion
-      =� dev.sh / dev.ps1
-      =� generate_catalog.py
-
-   mcp/                       � Servidor MCP (Protocolo de IA)
-      =4 server.py          � Entrypoint del "Sidecar" 
-      =4 config.py          � Hardening y AllowLists
-      =� tools/             � Scripts de CLI Hub wrappers
-      =� prompts/           � Comportamientos IA estaticos
-      =� resources/         � Mapeo de Documentacion
-
-   docs/                      � 12 documentos tecnicos + wiki
-   k8s/demo/                  � Manifiestos Kubernetes
-   .github/                   � CI/CD + plantillas de Issues/PRs
-
-   =� phpstan.neon            � Analisis estatico
-   =� .php-cs-fixer.dist.php � Estilo de codigo
-   =� .pre-commit-config.yaml� Hooks de calidad
-   =� .gitignore
-   =� .gitattributes
-   =� .dockerignore
-   =� .markdownlint.json
-   =� llms.txt
-   =� CHANGELOG.md
-   =� ROADMAP.md
-   =� CONTRIBUTING.md
-   =� CODE_OF_CONDUCT.md
-   =� SECURITY.md
-   =� LICENSE
-   =� NOTICE
+├── 🔴 index.php              ← Dashboard principal
+├── 🔴 doc.php                ← Visor de documentacion
+├── 🔴 composer.json          ← Dependencias PHP
+├── 🔴 .env.example           ← Plantilla de variables
+├── 🔴 Dockerfile             ← Imagen de produccion
+├── 🔴 docker-compose.yml     ← Orquestacion de servicios
+├── 🟡 Makefile               ← Atajos de comandos
+├── 🟡 hub.sh / hub.ps1       ← CLI multiplataforma
+│
+├── src/Core/
+│   ├── 🔴 Config.php         ← Singleton de configuracion
+│   └── 🔴 Database.php       ← Singleton de conexion a BD
+│
+├── apps/                      ← 10 micro-aplicaciones
+│   ├── AwsGenerator/
+│   ├── CapacitySim/
+│   ├── CicdLibrary/
+│   ├── Conversor/
+│   ├── GitTrainer/
+│   ├── JsTools/
+│   ├── LogViewer/
+│   ├── PhpMigrator/
+│   ├── SqlViewer/
+│   └── YmlGenerator/
+│
+├── scripts/                   ← Automatizacion
+│   ├── 🟡 dev.sh / dev.ps1
+│   └── 🟡 generate_catalog.py
+│
+├── mcp/                       ← Servidor MCP (Protocolo de IA)
+│   ├── 🔴 server.py          ← Entrypoint del "Sidecar" 
+│   ├── 🔴 config.py          ← Hardening y AllowLists
+│   ├── 🟡 tools/             ← Scripts de CLI Hub wrappers
+│   ├── 🟡 prompts/           ← Comportamientos IA estaticos
+│   └── 🟢 resources/         ← Mapeo de Documentacion
+│
+├── docs/                      ← 12 documentos tecnicos + wiki
+├── k8s/demo/                  ← Manifiestos Kubernetes
+├── .github/                   ← CI/CD + plantillas de Issues/PRs
+│
+├── 🟡 phpstan.neon            ← Analisis estatico
+├── 🟡 .php-cs-fixer.dist.php ← Estilo de codigo
+├── 🟡 .pre-commit-config.yaml← Hooks de calidad
+├── 🟢 .gitignore
+├── 🟢 .gitattributes
+├── 🟢 .dockerignore
+├── 🟢 .markdownlint.json
+├── 🟢 llms.txt
+├── 🟡 CHANGELOG.md
+├── 🟢 ROADMAP.md
+├── 🟢 CONTRIBUTING.md
+├── 🟢 CODE_OF_CONDUCT.md
+├── 🟡 SECURITY.md
+├── 🟡 LICENSE
+└── 🟢 NOTICE
 ```
 
 ---
 
-## > Skills / Playbooks (`skills/`)
+## 🤖 Skills / Playbooks (`skills/`)
 
 El directorio `skills/` contiene flujos de trabajo reutilizables (playbooks) que guian la ejecucion de tareas complejas y repetitivas en el repositorio.
 
-### =� `skills/integrar-microsistema/`  Skill de Integracion
+### 🟡 `skills/integrar-microsistema/` — Skill de Integracion
 
 | Atributo        | Valor                                        |
 | :-------------- | :------------------------------------------- |
 | **Ubicacion**   | `/skills/integrar-microsistema/`             |
 | **Tipo**        | Playbook de 6 pasos                          |
-| **Importancia** | =� Importante                                |
+| **Importancia** | 🟡 Importante                                |
 
 **Que hace?**
 
@@ -578,11 +578,11 @@ Guia la integracion de cualquier nueva micro-app en el repositorio de forma cohe
 
 **Archivos incluidos:**
 
-- `skill.md`  Playbook principal. Define los 6 pasos, reglas de oro, lista de inputs/outputs y flujo completo.
-- `referencia.txt`  Ejemplo de invocacion con valores de inputs reales.
-- `templates/app.manifest.yml.tpl`  Plantilla para el manifiesto de la app.
-- `templates/dashboard-card.html.tpl`  Plantilla para la tarjeta del Dashboard.
-- `templates/wiki-entry.md.tpl`  Plantilla para la entrada de Wiki.
+- `skill.md` — Playbook principal. Define los 6 pasos, reglas de oro, lista de inputs/outputs y flujo completo.
+- `referencia.txt` — Ejemplo de invocacion con valores de inputs reales.
+- `templates/app.manifest.yml.tpl` — Plantilla para el manifiesto de la app.
+- `templates/dashboard-card.html.tpl` — Plantilla para la tarjeta del Dashboard.
+- `templates/wiki-entry.md.tpl` — Plantilla para la entrada de Wiki.
 
 ---
 

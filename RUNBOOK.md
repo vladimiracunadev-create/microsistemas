@@ -6,7 +6,7 @@ Este documento detalla los procedimientos operativos estandar para administrar, 
 
 ---
 
-## <� 1. Requisitos Previos Generales
+## 🏗️ 1. Requisitos Previos Generales
 
 Asegurate de tener instalado:
 
@@ -18,7 +18,7 @@ Asegurate de tener instalado:
 
 ---
 
-## =� 2. Procedimientos de Arranque
+## 🚀 2. Procedimientos de Arranque
 
 ### Arranque Rapido (Local Testing - Docker)
 
@@ -57,7 +57,7 @@ make serve
 
 ---
 
-## =� 3. Operaciones Frecuentes
+## 🛠️ 3. Operaciones Frecuentes
 
 ### Parar y Destruir Contenedores
 
@@ -112,7 +112,7 @@ El mantenimiento preventivo de terceros es automatizado mediante Pull Requests d
 
 ---
 
-## >z 4. Monitorizacion y Diagnostico
+## 🩺 4. Monitorizacion y Diagnostico
 
 ### Revision de Logs
 
@@ -139,7 +139,7 @@ docker ps
 
 ---
 
-## � 5. Fallas Frecuentes y Resoluciones
+## ⚠️ 5. Fallas Frecuentes y Resoluciones
 
 | Sintoma | Posible Causa | Solucion |
 | :--- | :--- | :--- |
@@ -150,7 +150,7 @@ docker ps
 
 ---
 
-## � 6. Limitaciones Conocidas
+## ⛔ 6. Limitaciones Conocidas
 
 - **Alta Disponibilidad:** Aunque se proveen manifiestos `k8s/`, el `docker-compose.yml` base no levanta replicas del servicio web automaticamente.
 - **Persistencia Aislada:** Los estados de las herramientas (como simulaciones PDF o configuraciones del AWS Generator) no se persisten de manera remota compartida si se destruyen los contenedores base, salvo que se mapeen volumenes especificos.

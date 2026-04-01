@@ -4,15 +4,15 @@ Bienvenido a la guia oficial de **Microsistemas Suite**. Este documento le ayuda
 
 ---
 
-## >� Introduccion al Ecosistema
+## 🧭 Introduccion al Ecosistema
 
 La suite se organiza en un **Dashboard Central** que actua como puerta de enlace a aplicaciones modulares. Cada herramienta en `apps/` es independiente pero comparte la misma estetica y estandares de seguridad.
 
 ---
 
-## =� Guia Detallada de Herramientas
+## 🛠️ Guia Detallada de Herramientas
 
-### =� Gestion de Datos y Bases de Datos
+### 📦 Gestion de Datos y Bases de Datos
 
 #### SQL Viewer
 
@@ -27,7 +27,7 @@ La suite se organiza en un **Dashboard Central** que actua como puerta de enlace
 
 ---
 
-### =� Modernizacion y Desarrollo
+### 💻 Modernizacion y Desarrollo
 
 #### PHP Migrator
 
@@ -41,7 +41,7 @@ La suite se organiza en un **Dashboard Central** que actua como puerta de enlace
 
 ---
 
-### =' Utilidades de Configuracion
+### 🔧 Utilidades de Configuracion
 
 #### YAML Studio
 
@@ -55,7 +55,7 @@ La suite se organiza en un **Dashboard Central** que actua como puerta de enlace
 
 ---
 
-### =� DevOps e Infraestructura Pro
+### 🚀 DevOps e Infraestructura Pro
 
 #### Capacity Simulator
 
@@ -74,7 +74,7 @@ La suite se organiza en un **Dashboard Central** que actua como puerta de enlace
 
 ---
 
-### < Estudio y Aprendizaje
+### 🌐 Estudio y Aprendizaje
 
 #### Katas MultiLang
 
@@ -83,7 +83,7 @@ La suite se organiza en un **Dashboard Central** que actua como puerta de enlace
 
 ---
 
-## S Preguntas Frecuentes (FAQ)
+## ❓ Preguntas Frecuentes (FAQ)
 
 ### Como anado mis propias herramientas?
 

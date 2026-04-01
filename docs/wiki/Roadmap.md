@@ -4,7 +4,7 @@ Este documento traza el camino evolutivo de **Microsistemas Suite**. Nuestra vis
 
 ---
 
-##  Hitos Alcanzados (2026)
+## ✅ Hitos Alcanzados (2026)
 
 - [x] **Modularizacion Pro**: Separacion estricta de apps en `apps/`.
 - [x] **Arquitectura Core**: Implementacion de Paquete PHP con Autoloading PSR-4.
@@ -15,17 +15,17 @@ Este documento traza el camino evolutivo de **Microsistemas Suite**. Nuestra vis
 
 ---
 
-## =� Fase 1: Portafolio de Elite (Actual)
+## 🚀 Fase 1: Portafolio de Elite (Actual)
 
 *Enfoque: Refinamiento visual y robustez.*
 
 - [x] **UI Unificada (Blueprint)**: Glassmorphism / Slate Dark implementado en KatasMultiLang como estandar de la suite.
 - [x] **Skills System**: Playbooks reutilizables en `skills/` para integrar microsistemas con coherencia total.
-- [x] **Guias para Desarrolladores**: `skills/integrar-microsistema/skill.md`  tutorial de 6 pasos + plantillas.
+- [x] **Guias para Desarrolladores**: `skills/integrar-microsistema/skill.md` — tutorial de 6 pasos + plantillas.
 - [x] **CI/CD Hardening**: Trivy instalado via APT directo; `make lint-md` + pre-push hook anti-regresion.
 - [ ] **Localizacion (i18n)**: Soporte completo para Ingles y Espanol en todas las herramientas.
 
-## =� Fase 2: Ecosistema Extensible
+## 📦 Fase 2: Ecosistema Extensible
 
 *Enfoque: Plugins y APIs.*
 
@@ -33,7 +33,7 @@ Este documento traza el camino evolutivo de **Microsistemas Suite**. Nuestra vis
 - [ ] **Modulo de Autenticacion**: Sistema ligero de login para proteger la suite en servidores publicos.
 - [ ] **Marketplace Local**: Facilitar la instalacion de nuevos microsistemas mediante un script de consola.
 
-## =- Fase 3: Inteligencia y Automatizacion
+## 🔭 Fase 3: Inteligencia y Automatizacion
 
 *Enfoque: IA y Diagnostico Proactivo.*
 

@@ -17,7 +17,7 @@ Este documento detalla los pasos para instalar y ejecutar la suite **Microsistem
 
 ---
 
-## =3 Opcion 1: Docker (Recomendada)
+## 🐳 Opcion 1: Docker (Recomendada)
 
 La forma mas rapida y limpia de ejecutar el sistema sin instalar dependencias en su maquina.
 
@@ -43,7 +43,7 @@ La forma mas rapida y limpia de ejecutar el sistema sin instalar dependencias en
 
 ---
 
-##  Verificacion de la Instalacion
+## ✅ Verificacion de la Instalacion
 
 Una vez instalado, puede verificar la integridad del sistema:
 
@@ -66,7 +66,7 @@ Una vez instalado, puede verificar la integridad del sistema:
 
 ---
 
-## = Opcion 2: Windows con XAMPP
+## 🐘 Opcion 2: Windows con XAMPP
 
 Para usuarios que prefieren un entorno local tradicional.
 
@@ -86,7 +86,7 @@ Para usuarios que prefieren un entorno local tradicional.
 
 ---
 
-## =' Opcion 3: Linux (Ubuntu/Debian)
+## 🐧 Opcion 3: Linux (Ubuntu/Debian)
 
 ### Pasos
 
@@ -116,7 +116,7 @@ Para usuarios que prefieren un entorno local tradicional.
 
 ---
 
-## � Solucion de Problemas Comunes
+## ⚠️ Solucion de Problemas Comunes
 
 ### Error: "No se encuentra `cases.json`" en Git Trainer
 
@@ -135,7 +135,7 @@ Para usuarios que prefieren un entorno local tradicional.
 
 ---
 
-## =� Tips de Rendimiento y Produccion
+## 💡 Tips de Rendimiento y Produccion
 
 1. **Optimizacion de Composer**: En tu servidor final, ejecuta `composer install --no-dev --optimize-autoloader` para una carga de clases ultra-rapida.
 2. **Cache de Apache**: Habilita `mod_expires` en Apache para que los archivos estaticos de herramientas como *Git Trainer* se carguen instantaneamente desde la cache del navegador.

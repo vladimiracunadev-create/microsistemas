@@ -16,7 +16,7 @@ Si encuentras una vulnerabilidad, por favor **no la publiques como issue**.
 - Indica el microsistema afectado y el archivo.
 - Adjunta evidencia minima (capturas, logs) sin exponer datos sensibles.
 
-**Canal sugerido:** crear un issue marcado como security **sin datos sensibles** y solicitar contacto privado, o comunicarlo por el canal directo que definas en tu perfil.
+**Canal sugerido:** crear un issue marcado como “security” **sin datos sensibles** y solicitar contacto privado, o comunicarlo por el canal directo que definas en tu perfil.
 
 ## Guia de uso seguro (recomendaciones)
 
@@ -24,10 +24,10 @@ Si encuentras una vulnerabilidad, por favor **no la publiques como issue**.
 
 Estos microsistemas estan pensados para uso local (XAMPP/MAMP/LAMP) o redes controladas.
 
- Recomendado: `http://localhost/...`  
-L Evitar: servidor publico accesible desde Internet.
+✅ Recomendado: `http://localhost/...`  
+❌ Evitar: servidor publico accesible desde Internet.
 
-### 2) Principio de minimo privilegio
+### 2) Principio de “minimo privilegio”
 
 - Si un microsistema requiere credenciales de BD, usar un usuario con permisos minimos (idealmente solo `SELECT`).
 - Evitar credenciales de produccion.
@@ -56,26 +56,26 @@ Usar variables de entorno y archivos fuera del repo si aplica.
 
 Este repositorio ha pasado por un proceso de hardening para mitigar riesgos:
 
-### =� Docker & Contenedores
+### 🛡️ Docker & Contenedores
 
 - **Imagenes Especificas**: No se usan tags `latest`, se fijan versiones estables.
 - **No-Root**: Los procesos principales corren bajo usuarios con privilegios limitados (`www-data`).
 - **Healthchecks**: Monitoreo nativo del estado de salud de los servicios.
 - **Capas Minimas**: Limpieza de cache de apt y archivos temporales.
 
-### =� Kubernetes (K8s)
+### 🛡️ Kubernetes (K8s)
 
 - **SecurityContext**: Se obliga a la ejecucion como no-root y se deshabilitan escaladas de privilegios.
 - **Resource Limits**: Configuracion de cuotas de CPU y Memoria para evitar DoS por agotamiento de recursos.
 - **NetworkPolicies**: Aislamiento de red para trafico este-oeste (demo).
 
-### =� HUB CLI & Aplicaciones
+### 🛡️ HUB CLI & Aplicaciones
 
 - **Input Sanitization**: Validacion estricta de IDs de aplicacion.
 - **Path Traversal Prevention**: Validacion de rutas usando `abspath` para asegurar el scope en `apps/`.
 - **Allowed Commands**: Lista blanca de ejecutables permitidos (`php`, `python`, `node`, etc).
 
-### =� Desarrollo & CI/CD
+### 🛡️ Desarrollo & CI/CD
 
 - **Secret Scanning**: Integracion de TruffleHog y pre-commit (detect-secrets).
 - **Dependency Scanning**: Flujo de CI para deteccion de vulnerabilidades en librerias.
