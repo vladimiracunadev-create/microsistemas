@@ -1,4 +1,4 @@
-# Microsistemas a€" Developer Productivity Suite
+# Microsistemas - Developer Productivity Suite
 
 ![Version](https://img.shields.io/github/v/tag/vladimiracunadev-create/microsistemas?label=version&color=blue)
 ![Build Status](https://img.shields.io/github/actions/workflow/status/vladimiracunadev-create/microsistemas/docker-publish.yml?branch=main&label=build&logo=github)
@@ -16,11 +16,11 @@ Se agrego una landing page estatica y aislada para presentar Microsistemas como 
 - **Preview local**: `http://localhost/microsistemas/landing/` o `http://localhost:8080/landing/`
 - **GitHub Pages esperada**: `https://vladimiracunadev-create.github.io/microsistemas/`
 
-## ðŸ"‹ Requisitos del Sistema
+## " Requisitos del Sistema
 
 Para ver el detalle completo de hardware y software (PHP, extensiones, etc.), consulta:
 
-ðŸ'‰ **[Requisitos del Sistema (REQUIREMENTS.md)](docs/REQUIREMENTS.md)**
+' **[Requisitos del Sistema (REQUIREMENTS.md)](docs/REQUIREMENTS.md)**
 
 ## Inicio Rapido con Makefile
 
@@ -42,7 +42,7 @@ make help
 
 ---
 
-## ðŸ› i¸ Microsistemas Hub (CLI)
+##  i Microsistemas Hub (CLI)
 
 Hemos anadido una capa de gestion centralizada llamada **Hub**. Esta herramienta permite listar, ejecutar y diagnosticar todas las micro-apps de forma estandarizada.
 
@@ -65,24 +65,24 @@ make hub-doctor
 make smoke
 ```
 
-Para mas detalles, consulta la ðŸ"- **[Guia del Hub (docs/HUB.md)](docs/HUB.md)**.
+Para mas detalles, consulta la "- **[Guia del Hub (docs/HUB.md)](docs/HUB.md)**.
 
 ---
 
-## ðŸ¤- Servidor MCP Local (Para IA)
+## - Servidor MCP Local (Para IA)
 
 Microsistemas integra un **Servidor Model Context Protocol (MCP)** en Python (`mcp/`) disenado para exponer de forma local, estandarizada y segura todos los manifiestos, configuraciones y documentaciones del Hub a asistentes de Inteligencia Artificial (ej: Claude Desktop).
 
 > **Aviso de Seguridad:** La implementacion V1 es estrictamente de **Solo Lectura**. El servidor MCP expone herramientas de diagnostico (`run_hub_doctor`, `run_smoke`) y lectura de archivos mediante listas blancas, imposibilitando inyecciones, mutaciones no autorizadas o modificaciones destructivas en tu infraestructura.
 
 Para conectar tu cliente MCP preferido, revisa la configuracion en:
-ðŸ§  **[Servidor MCP Local (V1)](mcp/README.md)**
+  **[Servidor MCP Local (V1)](mcp/README.md)**
 
 ---
 
-## aš Inicio Inmediato
+## a Inicio Inmediato
 
-### ðŸ³ Con Docker (Recomendado)
+###  Con Docker (Recomendado)
 
 Levanta todo el ecosistema en menos de 30 segundos:
 
@@ -90,9 +90,9 @@ Levanta todo el ecosistema en menos de 30 segundos:
 docker-compose up -d
 ```
 
-ðŸŒ Dashboard: `http://localhost:8080`
+ Dashboard: `http://localhost:8080`
 
-### ðŸ˜ Con XAMPP
+###  Con XAMPP
 
 1. Clona en `htdocs/microsistemas`.
 2. Renombra `.env.example` a `.env`.
@@ -100,18 +100,18 @@ docker-compose up -d
 
 ---
 
-## ðŸš€ Caracteristicas Principales
+##  Caracteristicas Principales
 
 <table align="center">
   <tr>
-    <td align="center"><b>ðŸ› i¸ Modular</b><br>Apps independientes en <code>apps/</code></td>
-    <td align="center"><b>ðŸ"¦ Composer</b><br>Autoloading PSR-4</td>
-    <td align="center"><b>ðŸ›i¸ Seguro</b><br>Variables de entorno .env</td>
+    <td align="center"><b> i Modular</b><br>Apps independientes en <code>apps/</code></td>
+    <td align="center"><b>" Composer</b><br>Autoloading PSR-4</td>
+    <td align="center"><b>i Seguro</b><br>Variables de entorno .env</td>
   </tr>
   <tr>
-    <td align="center"><b>ðŸ³ Docker Ready</b><br>Infraestructura inmutable</td>
-    <td align="center"><b>ðŸŽ¨ Modern UI</b><br>Dashboard Dark Mode</td>
-    <td align="center"><b>e‡ªåŠ¨åŒ- CI/CD</b><br>GitHub Packages auto-deploy</td>
+    <td align="center"><b> Docker Ready</b><br>Infraestructura inmutable</td>
+    <td align="center"><b> Modern UI</b><br>Dashboard Dark Mode</td>
+    <td align="center"><b>e- CI/CD</b><br>GitHub Packages auto-deploy</td>
   </tr>
 </table>
 
@@ -126,7 +126,7 @@ Estas evaluando este proyecto como parte de un proceso de seleccion? Consulta nu
 
 ---
 
-## ðŸ"‚ Catalogo de Herramientas
+## " Catalogo de Herramientas
 
 <!-- CATALOG_START -->
 
@@ -148,39 +148,39 @@ Estas evaluando este proyecto como parte de un proceso de seleccion? Consulta nu
 
 ---
 
-## ðŸ"- Documentacion Avanzada
+## "- Documentacion Avanzada
 
 Explora nuestras guias detalladas para convertirte en un experto de la suite:
 
-- ðŸ" **[Referencia de Archivos](docs/FILES_REFERENCE.md)**: Explicacion detallada de cada archivo del sistema con su importancia.
-- ðŸ¤- **[Skills / Playbooks](skills/integrar-microsistema/skill.md)**: Flujos reutilizables para automatizar tareas complejas (integracion de apps, actualizacion de docs, CI checks).
+- " **[Referencia de Archivos](docs/FILES_REFERENCE.md)**: Explicacion detallada de cada archivo del sistema con su importancia.
+- - **[Skills / Playbooks](skills/integrar-microsistema/skill.md)**: Flujos reutilizables para automatizar tareas complejas (integracion de apps, actualizacion de docs, CI checks).
 - 🌐 **[Landing del Producto](docs/LANDING_PAGE.md)**: Resumen visual y documental de Microsistemas como suite, con implementacion aislada en `landing/` y despliegue preparado para GitHub Pages.
-- ðŸ§  **[Servidor MCP Local (V1)](mcp/README.md)**: Integracion segura y de solo lectura de Model Context Protocol para proveer contexto instantaneo a Asistentes de Inteligencia Artificial.
-- ðŸ"- **[Guia para Principiantes](docs/BEGINNERS_GUIDE.md)**: Eres nuevo? Empieza aqui para entender las carpetas.
-- ðŸ"- **[Manual de Usuario](docs/USER_MANUAL.md)**: Como sacar el maximo provecho a cada herramienta.
-- ðŸš€ **[Guia de Instalacion](docs/INSTALL.md)**: Despliegue en Docker, Linux y XAMPP.
-- ðŸ-i¸ **[Arquitectura](docs/ARCHITECTURE.md)**: Diagramas Mermaid y detalles del Core.
-- ðŸ"œ **[Catalogo de Sistemas](docs/SYSTEMS_CATALOG.md)**: Detalles tecnicos de cada micro-app.
-- ðŸ"Œ **[Referencia de API](docs/API.md)**: Como interactuar con el core y extensiones.
-- ðŸ›i¸ **[Seguridad](docs/SECURITY.md)**: Politicas de proteccion y reporte.
-- ðŸ› i¸ **[Specs Tecnicas](docs/TECHNICAL_SPECS.md)**: Stack, estandares y normas de mantencion.
-- ðŸ§'a€ðŸ'" **[Guia de Mantenedores](docs/MAINTAINERS.md)**: Informacion critica para administradores del proyecto.
-- aš-i¸ **[Codigo de Conducta](CODE_OF_CONDUCT.md)**: Normas para una comunidad saludable.
-- ðŸ•' **[Historial de Cambios](CHANGELOG.md)**: Registro detallado de versiones y mejoras.
+-   **[Servidor MCP Local (V1)](mcp/README.md)**: Integracion segura y de solo lectura de Model Context Protocol para proveer contexto instantaneo a Asistentes de Inteligencia Artificial.
+- "- **[Guia para Principiantes](docs/BEGINNERS_GUIDE.md)**: Eres nuevo? Empieza aqui para entender las carpetas.
+- "- **[Manual de Usuario](docs/USER_MANUAL.md)**: Como sacar el maximo provecho a cada herramienta.
+-  **[Guia de Instalacion](docs/INSTALL.md)**: Despliegue en Docker, Linux y XAMPP.
+- -i **[Arquitectura](docs/ARCHITECTURE.md)**: Diagramas Mermaid y detalles del Core.
+- " **[Catalogo de Sistemas](docs/SYSTEMS_CATALOG.md)**: Detalles tecnicos de cada micro-app.
+- " **[Referencia de API](docs/API.md)**: Como interactuar con el core y extensiones.
+- i **[Seguridad](docs/SECURITY.md)**: Politicas de proteccion y reporte.
+-  i **[Specs Tecnicas](docs/TECHNICAL_SPECS.md)**: Stack, estandares y normas de mantencion.
+- 'a'" **[Guia de Mantenedores](docs/MAINTAINERS.md)**: Informacion critica para administradores del proyecto.
+- a-i **[Codigo de Conducta](CODE_OF_CONDUCT.md)**: Normas para una comunidad saludable.
+- ' **[Historial de Cambios](CHANGELOG.md)**: Registro detallado de versiones y mejoras.
 
 ---
 
-## ðŸ¤ Comunidad y Colaboracion
+##  Comunidad y Colaboracion
 
 Este proyecto esta abierto a **Cooperacion Real**! Queremos que contribuir sea lo mas facil y seguro posible.
 
-### ðŸŒŸ Como ayudar?
+###  Como ayudar?
 
 - **Reporta Errores**: Usa nuestra [plantilla de errores](https://github.com/vladimiracunadev-create/microsistemas/issues/new?template=bug_report.md) para ayudarnos a mejorar.
 - **Sugiere Funciones**: Tenemos una [plantilla para nuevas ideas](https://github.com/vladimiracunadev-create/microsistemas/issues/new?template=feature_request.md).
 - **Resuelve Issues**: Busca etiquetas como `good first issue` o `help wanted` para empezar.
 
-### ðŸ›i¸ Contribuciones Seguras
+### i Contribuciones Seguras
 
 Para mantener la calidad y estabilidad, implementamos:
 
@@ -191,42 +191,42 @@ Para mantener la calidad y estabilidad, implementamos:
 
 ---
 
-## aš-i¸ Licencia
+## a-i Licencia
 
 Este proyecto esta bajo la **Licencia MIT**. Consulta el archivo [LICENSE](LICENSE) para mas detalles.
 
 ---
 
-Desarrollado con a¤i¸ por **[Vladimir Acuna Valdebenito](https://www.linkedin.com/in/vladimir-acu%C3%B1a-valdebenito-11924a29/)** para la comunidad de desarrolladores.
+Desarrollado con ai por **[Vladimir Acuna Valdebenito](https://www.linkedin.com/in/vladimir-acu%C3%B1a-valdebenito-11924a29/)** para la comunidad de desarrolladores.
 
-## ðŸ"š Centro de Documentacion y Gobernanza
+## " Centro de Documentacion y Gobernanza
 
 El proyecto adopta un enfoque de **documentacion como codigo** orientado a mantener estandares y facilitar la vida de desarrolladores, operadores y evaluadores de talento. Toda la documentacion tecnica esta categorizada para su rapido acceso.
 
-### ðŸ"‹ Operaciones, Arquitectura y Configuracion
+### " Operaciones, Arquitectura y Configuracion
 
-- [ðŸ-i¸ Arquitectura Inicial y Contexto (ADR-0001)](docs/adr/0001-contexto-y-decisiones-iniciales.md)
-- [ðŸ"§ Manual de Operacion y Diagnostico (RUNBOOK)](RUNBOOK.md)
-- [ðŸ§© Matriz de Compatibilidad y Ambientes (COMPATIBILITY)](COMPATIBILITY.md)
-- [ðŸ"€ Casos y Modos de Ejecucion (OPERATING-MODES)](OPERATING-MODES.md)
-- [ðŸŽ¯ Estrategia de Versionado y Entrega (RELEASE)](RELEASE.md)
-- [ðŸ"œ Historial de Cambios (CHANGELOG)](CHANGELOG.md)
-- [ðŸ"˜ Guia Rapida de Instalacion (INSTALL)](docs/INSTALL.md)
+- [-i Arquitectura Inicial y Contexto (ADR-0001)](docs/adr/0001-contexto-y-decisiones-iniciales.md)
+- [" Manual de Operacion y Diagnostico (RUNBOOK)](RUNBOOK.md)
+- [ Matriz de Compatibilidad y Ambientes (COMPATIBILITY)](COMPATIBILITY.md)
+- [" Casos y Modos de Ejecucion (OPERATING-MODES)](OPERATING-MODES.md)
+- [ Estrategia de Versionado y Entrega (RELEASE)](RELEASE.md)
+- [" Historial de Cambios (CHANGELOG)](CHANGELOG.md)
+- [" Guia Rapida de Instalacion (INSTALL)](docs/INSTALL.md)
 
-### ðŸ¤ Soporte, Comunidad y Gobernanza
+###  Soporte, Comunidad y Gobernanza
 
-- [ðŸ'¬ Politicas de Asistencia y Soporte (SUPPORT)](SUPPORT.md)
-- [ðŸ'" Guia Directa para Reclutadores Tecnicos](docs/RECRUITER.md)
-- [ðŸ¤ Guia Oficial de Contribucion](CONTRIBUTING.md)
-- [ðŸ›i¸ Politica de Seguridad y Reportes](SECURITY.md)
-- [aš-i¸ Codigo de Conducta de la Comunidad](CODE_OF_CONDUCT.md)
+- [' Politicas de Asistencia y Soporte (SUPPORT)](SUPPORT.md)
+- ['" Guia Directa para Reclutadores Tecnicos](docs/RECRUITER.md)
+- [ Guia Oficial de Contribucion](CONTRIBUTING.md)
+- [i Politica de Seguridad y Reportes](SECURITY.md)
+- [a-i Codigo de Conducta de la Comunidad](CODE_OF_CONDUCT.md)
 
-### aš™i¸ Configuracion Estrategica (Metadata / No-MD)
+### ai Configuracion Estrategica (Metadata / No-MD)
 
 Ademas del contenido legible, el repositorio contiene archivos de gobernanza ocultos que definen su calidad profesional para ser auditados:
 
-- [ðŸ" Metadatos de Citacion del Software (`CITATION.cff`)](CITATION.cff)
-- [ðŸ'¥ Asignacion de Responsabilidades (`CODEOWNERS`)](.github/CODEOWNERS)
-- [ðŸ"Œ Formularios y Plantillas de Issues (`.github/ISSUE_TEMPLATE/`)](.github/ISSUE_TEMPLATE/)
-- [ðŸ¤- Auditoria Automatica de Dependencias (`dependabot.yml`)](.github/dependabot.yml)
-- [aœ¨ Reglas Globales de Formateo (`.editorconfig`)](.editorconfig)
+- [" Metadatos de Citacion del Software (`CITATION.cff`)](CITATION.cff)
+- [' Asignacion de Responsabilidades (`CODEOWNERS`)](.github/CODEOWNERS)
+- [" Formularios y Plantillas de Issues (`.github/ISSUE_TEMPLATE/`)](.github/ISSUE_TEMPLATE/)
+- [- Auditoria Automatica de Dependencias (`dependabot.yml`)](.github/dependabot.yml)
+- [a Reglas Globales de Formateo (`.editorconfig`)](.editorconfig)
