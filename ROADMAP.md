@@ -2,7 +2,7 @@
 
 Este documento traza el camino evolutivo de **Microsistemas Suite**. Nuestra vision es crear la navaja suiza definitiva para ingenieros de software.
 
-## ✅ Hitos Alcanzados (2026)
+##  Hitos Alcanzados (2026)
 
 - [x] **Modularizacion Pro**: Separacion estricta de apps en `apps/`.
 - [x] **Arquitectura Core**: Implementacion de Paquete PHP con Autoloading PSR-4.
@@ -14,18 +14,18 @@ Este documento traza el camino evolutivo de **Microsistemas Suite**. Nuestra vis
 
 ---
 
-## 🚀 Fase 1: Portafolio de Elite (Actual)
+## =� Fase 1: Portafolio de Elite (Actual)
 
 *Enfoque: Refinamiento visual y robustez.*
 
 - [x] **Monitoreo y Salud**: Endpoints estandarizados `/health` y `/ready` en todas las apps + diagnostico extendido con `hub-doctor`.
 - [x] **UI Unificada (Blueprint)**: Implementado el estandar **Glassmorphism / Slate Dark** en KatasMultiLang como modelo a seguir para el resto de la suite.
-- [x] **Skills System**: Playbooks reutilizables en `skills/` para integrar microsistemas, actualizar docs y correr chequeos — elimina trabajo manual repetitivo.
+- [x] **Skills System**: Playbooks reutilizables en `skills/` para integrar microsistemas, actualizar docs y correr chequeos  elimina trabajo manual repetitivo.
 - [x] **Guias para Desarrolladores**: `skills/integrar-microsistema/skill.md` incluye tutorial completo de 6 pasos + plantillas listas para usar.
 - [x] **CI/CD Hardening**: Scanner Trivy rebased a instalacion directa APT para mayor confiabilidad en runners GitHub Actions.
 - [ ] **Localizacion (i18n)**: Soporte completo para Ingles y Espanol en todas las herramientas.
 
-## 📦 Fase 2: Ecosistema Extensible
+## =� Fase 2: Ecosistema Extensible
 
 *Enfoque: Plugins y APIs.*
 
@@ -33,7 +33,7 @@ Este documento traza el camino evolutivo de **Microsistemas Suite**. Nuestra vis
 - [ ] **Modulo de Autenticacion**: Sistema ligero de login para proteger la suite en servidores publicos.
 - [ ] **Marketplace Local**: Facilitar la instalacion de nuevos microsistemas mediante un script de consola.
 
-## 🔭 Fase 3: Inteligencia y Automatizacion
+## =- Fase 3: Inteligencia y Automatizacion
 
 *Enfoque: IA y Diagnostico Proactivo.*
 

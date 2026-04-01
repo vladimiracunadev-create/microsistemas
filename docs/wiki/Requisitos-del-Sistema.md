@@ -4,7 +4,7 @@ Este documento define las especificaciones tecnicas de hardware y software neces
 
 ---
 
-## 🖥️ Hardware
+## =� Hardware
 
 ### Minimo (Entorno Local / Pruebas)
 
@@ -22,7 +22,7 @@ Este documento define las especificaciones tecnicas de hardware y software neces
 
 ---
 
-## 💾 Software
+## =� Software
 
 ### Sistema Operativo
 
@@ -49,21 +49,21 @@ Este documento define las especificaciones tecnicas de hardware y software neces
 
 ---
 
-## 🌐 Cliente (Navegadores Soportados)
+## < Cliente (Navegadores Soportados)
 
 El sistema utiliza *Vanilla JS* y CSS moderno, compatible con:
 
 | Navegador | Version Minima | Estado |
 | :--- | :--- | :--- |
-| **Google Chrome** | 90+ | ✅ Soportado |
-| **Mozilla Firefox** | 88+ | ✅ Soportado |
-| **Microsoft Edge** | 90+ | ✅ Soportado |
-| **Safari** | 14+ | ✅ Soportado |
-| Internet Explorer | 11 | ❌ No Soportado |
+| **Google Chrome** | 90+ |  Soportado |
+| **Mozilla Firefox** | 88+ |  Soportado |
+| **Microsoft Edge** | 90+ |  Soportado |
+| **Safari** | 14+ |  Soportado |
+| Internet Explorer | 11 | L No Soportado |
 
 ---
 
-## 📡 Red y Puertos
+## =� Red y Puertos
 
 Si despliega en un entorno con firewall restringido, asegurese de liberar los siguientes puertos:
 
@@ -75,19 +75,19 @@ Si despliega en un entorno con firewall restringido, asegurese de liberar los si
 
 ---
 
-## 📋 Matriz de Compatibilidad
+## =� Matriz de Compatibilidad
 
 | Caracteristica | Local (XAMPP) | Docker | Cloud (AWS/GCP) |
 | :--- | :---: | :---: | :---: |
-| Dashboard | ✅ | ✅ | ✅ |
-| SQL Viewer | ✅ | ✅ | ✅ |
-| Git Trainer | ✅ | ✅ | ✅ |
-| CapacitySim | ✅ | ✅ | ✅ |
-| KatasMultiLang | ✅ | ✅ | ✅ |
-| CicdLibrary | ✅ | ✅ | ✅ |
-| AWS Assistant Pro | ✅ | ✅ | ✅ |
-| **Make commands** | ⚠️ (Requiere install) | ✅ | ✅ |
-| **make lint-md** | ⚠️ (Requiere npx) | ✅ | ✅ (CI automatico) |
-| **Skills Playbooks** | ✅ | ✅ | ✅ |
+| Dashboard |  |  |  |
+| SQL Viewer |  |  |  |
+| Git Trainer |  |  |  |
+| CapacitySim |  |  |  |
+| KatasMultiLang |  |  |  |
+| CicdLibrary |  |  |  |
+| AWS Assistant Pro |  |  |  |
+| **Make commands** | � (Requiere install) |  |  |
+| **make lint-md** | � (Requiere npx) |  |  (CI automatico) |
+| **Skills Playbooks** |  |  |  |
 
 > **Nota**: Para entornos de produccion, se recomienda encarecidamente deshabilitar las herramientas de depuracion como *SQL Viewer* o protegerlas tras una VPN.

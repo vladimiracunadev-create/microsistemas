@@ -2,7 +2,7 @@
 
 El **Hub** es la capa de gestion centralizada de Microsistemas que permite interactuar con todas las micro-aplicaciones de forma unificada desde la linea de comandos.
 
-## 🚀 Concepto
+## =� Concepto
 
 A diferencia del Dashboard web, el Hub esta disenado para automatizacion y gestion rapida de infraestructura. Cada aplicacion en `apps/` se registra automaticamente si contiene un archivo `app.manifest.yml`.
 
@@ -11,7 +11,7 @@ A diferencia del Dashboard web, el Hub esta disenado para automatizacion y gesti
 > 1. **Para Productores (Humanos)**: El Hub CLI es la unica herramienta oficial para modificar, levantar y diagnosticar el entorno.
 > 2. **Para Asistentes (IA)**: El Servidor MCP (`/mcp`) provee una API de contexto ("sidecar" pasivo) que expone comandos de `Solo Lectura` (`make hub-list`, `make hub-doctor`) y manifiestos para que agentes de Inteligencia Artificial puedan auditar la arquitectura e infraestructura instalada sin riesgo a romper o mutar nada.
 
-## 🛠️ Comandos Principales
+## =� Comandos Principales
 
 ### 1. Listar Aplicaciones
 
@@ -72,7 +72,7 @@ Verifica la salud integral del entorno de desarrollo. Ahora incluye validaciones
 make hub-doctor
 ```
 
-## 📝 Manifiesto de Aplicacion (`app.manifest.yml`)
+## =� Manifiesto de Aplicacion (`app.manifest.yml`)
 
 Para que una aplicacion sea reconocida por el Hub, debe tener un manifiesto con la siguiente estructura:
 

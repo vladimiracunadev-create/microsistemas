@@ -42,7 +42,7 @@ Cierra la conexion activa si existe.
 
 ---
 
-## 🛠️ Como Extender la API
+## =� Como Extender la API
 
 Si deseas anadir una nueva utilidad global (ej: un sistema de manejo de archivos), sigue estos pasos:
 

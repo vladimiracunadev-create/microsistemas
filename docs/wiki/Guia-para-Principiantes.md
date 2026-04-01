@@ -1,10 +1,10 @@
-# Guia Detallada para Principiantes: Recorrido por el Taller 🐣
+# Guia Detallada para Principiantes: Recorrido por el Taller =#
 
 Si quieres entender exactamente que hay dentro de cada "cajon" de este proyecto, este manual es para ti. Vamos a abrir cada carpeta y explicar que piezas tiene dentro y por que son importantes.
 
 ---
 
-## 📂 1. La carpeta `apps/` (Las Herramientas)
+## =� 1. La carpeta `apps/` (Las Herramientas)
 
 Esta es la zona de trabajo. Aqui es donde estan los programas que tu abres y usas.
 
@@ -16,7 +16,7 @@ Esta es la zona de trabajo. Aqui es donde estan los programas que tu abres y usa
 
 ---
 
-## 📂 2. La carpeta `src/` (El Motor Central)
+## =� 2. La carpeta `src/` (El Motor Central)
 
 Aqui es donde vive el "ingenio" que hace que todo funcione de forma moderna.
 
@@ -27,7 +27,7 @@ Aqui es donde vive el "ingenio" que hace que todo funcione de forma moderna.
 
 ---
 
-## 📂 3. La carpeta `docs/` (La Biblioteca)
+## =� 3. La carpeta `docs/` (La Biblioteca)
 
 Aqui guardamos el conocimiento del proyecto para que no se pierda.
 
@@ -39,7 +39,7 @@ Aqui guardamos el conocimiento del proyecto para que no se pierda.
 
 ---
 
-## 📂 4. La carpeta `vendor/` (Piezas de Fabrica)
+## =� 4. La carpeta `vendor/` (Piezas de Fabrica)
 
 Esta carpeta es automatica. La crea un programa llamado *Composer*.
 
@@ -48,7 +48,7 @@ Esta carpeta es automatica. La crea un programa llamado *Composer*.
 
 ---
 
-## 📂 5. La carpeta `.github/` (La Automatizacion)
+## =� 5. La carpeta `.github/` (La Automatizacion)
 
 Esta carpeta conecta tu codigo con los servidores de GitHub.
 
@@ -60,7 +60,7 @@ Esta carpeta conecta tu codigo con los servidores de GitHub.
 
 ---
 
-## 📄 Archivos clave en la raiz (Los Controles)
+## =� Archivos clave en la raiz (Los Controles)
 
 * **`index.php`**: El menu principal que ves al principio.
 * **`.env`**: Donde escribes los datos de tu base de datos.
@@ -70,8 +70,8 @@ Esta carpeta conecta tu codigo con los servidores de GitHub.
 
 ---
 
-## 💡 Consejo para el Principiante
+## =� Consejo para el Principiante
 
 Si quieres aprender, empieza explorando las carpetas dentro de **`apps/`**. Ahi veras como se hace una pagina web sencilla. Luego, cuando te sientas valiente, asomate a **`src/Core/`** para ver como la magia de PHP conecta todo.
 
-**Diviertete explorando! El orden es tu mejor amigo.** 🚀✨
+**Diviertete explorando! El orden es tu mejor amigo.** =�(

@@ -2,7 +2,7 @@
 
 Este documento detalla la arquitectura, tecnologias y estandares utilizados en el proyecto para asegurar su escalabilidad y mantenibilidad.
 
-## 🛠️ Stack Tecnologico
+## =� Stack Tecnologico
 
 ### Backend
 
@@ -18,7 +18,7 @@ Este documento detalla la arquitectura, tecnologias y estandares utilizados en e
 
 ---
 
-## 📐 Diseno y Arquitectura
+## =� Diseno y Arquitectura
 
 El sistema sigue una **Arquitectura de Modulos Independientes (Micro-Apps)**.
 
@@ -30,7 +30,7 @@ El sistema sigue una **Arquitectura de Modulos Independientes (Micro-Apps)**.
 
 ---
 
-## 🛠️ Estandares de Codigo
+## =� Estandares de Codigo
 
 Para mantener la calidad profesional, el repositorio implementa:
 
@@ -41,7 +41,7 @@ Para mantener la calidad profesional, el repositorio implementa:
 
 ---
 
-## 🏥 Estandar de Salud y Monitoreo
+## <� Estandar de Salud y Monitoreo
 
 Para garantizar la **Resiliencia Operativa**, todas las micro-apps deben implementar el siguiente contrato de diagnostico:
 
@@ -57,7 +57,7 @@ Para garantizar la **Resiliencia Operativa**, todas las micro-apps deben impleme
 
 ---
 
-## 🔄 Proceso de Mantenimiento
+## = Proceso de Mantenimiento
 
 Para anadir un microsistema, usa el **Skill de Integracion**:
 
@@ -65,12 +65,12 @@ Para anadir un microsistema, usa el **Skill de Integracion**:
 cat skills/integrar-microsistema/skill.md
 ```
 
-Pasos: Preflight → Carpeta → Dashboard → Docs → Chequeos → Evidencia.
+Pasos: Preflight � Carpeta � Dashboard � Docs � Chequeos � Evidencia.
 Plantillas disponibles en `skills/integrar-microsistema/templates/`.
 
 ---
 
-## 🔐 Seguridad CI/CD
+## = Seguridad CI/CD
 
 - **Trivy**: Instalado via `apt-get` desde repositorio oficial de Aqua Security. Genera reporte SARIF subido al Security Tab de GitHub.
 - **TruffleHog**: Detecta credenciales expuestas en cada push.

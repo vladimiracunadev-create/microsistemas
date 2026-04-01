@@ -37,11 +37,11 @@ Resumen de para que sirve cada opcion del simulador, cuando conviene y riesgos t
 
 ## Perfil de carga
 
-CPU-bound · I/O-bound · DB-bound · Red-bound
+CPU-bound � I/O-bound � DB-bound � Red-bound
 
 ## Patron de arquitectura
 
-Monolito · 3 capas · Microservicios · Serverless
+Monolito � 3 capas � Microservicios � Serverless
 
 ## Estrategia de escalado
 

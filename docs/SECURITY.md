@@ -4,7 +4,7 @@ La seguridad es el pilar fundamental de **Microsistemas Suite**. Este documento 
 
 ---
 
-## 🛡️ Protocolos de Proteccion de Datos
+## =� Protocolos de Proteccion de Datos
 
 ### 1. Gestion de Secretos (12-Factor App)
 
@@ -29,7 +29,7 @@ El repositorio esta protegido por Dependabot, un agente que escanea ininterrumpi
 
 El servidor MCP integrado en este repositorio (`/mcp`) esta restringido por diseno (Hardcoded) a **solo lectura**. Implementa protecciones Anti-Path-Traversal mediante Regex estandarizadas y Whitelists absolutas, imposibilitando que un asistente de IA exfiltre variables del `.env` o ejecute comandos mutacionales sobre el host.
 
-## 📝 Reporte de Vulnerabilidades
+## =� Reporte de Vulnerabilidades
 
 Valoramos enormemente el trabajo de los investigadores de seguridad. Si descubre un fallo:
 
@@ -44,7 +44,7 @@ Nos comprometemos a:
 
 ---
 
-## 🚫 Despliegue en Entornos Publicos
+## =� Despliegue en Entornos Publicos
 
 **ADVERTENCIA**: Esta suite no incluye por defecto un sistema de gestion de usuarios complejo (RBAC).
 

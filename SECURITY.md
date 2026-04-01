@@ -16,7 +16,7 @@ Si encuentras una vulnerabilidad, por favor **no la publiques como issue**.
 - Indica el microsistema afectado y el archivo.
 - Adjunta evidencia minima (capturas, logs) sin exponer datos sensibles.
 
-**Canal sugerido:** crear un issue marcado como “security” **sin datos sensibles** y solicitar contacto privado, o comunicarlo por el canal directo que definas en tu perfil.
+**Canal sugerido:** crear un issue marcado como security **sin datos sensibles** y solicitar contacto privado, o comunicarlo por el canal directo que definas en tu perfil.
 
 ## Guia de uso seguro (recomendaciones)
 
@@ -24,10 +24,10 @@ Si encuentras una vulnerabilidad, por favor **no la publiques como issue**.
 
 Estos microsistemas estan pensados para uso local (XAMPP/MAMP/LAMP) o redes controladas.
 
-✅ Recomendado: `http://localhost/...`
-❌ Evitar: servidor publico accesible desde Internet.
+ Recomendado: `http://localhost/...`
+L Evitar: servidor publico accesible desde Internet.
 
-### 2) Principio de “minimo privilegio”
+### 2) Principio de minimo privilegio
 
 - Si un microsistema requiere credenciales de BD, usar un usuario con permisos minimos (idealmente solo `SELECT`).
 - Evitar credenciales de produccion.
@@ -56,36 +56,36 @@ Usar variables de entorno y archivos fuera del repo si aplica.
 
 Este repositorio ha pasado por un proceso de hardening para mitigar riesgos:
 
-### 🛡️ Docker & Contenedores
+### =� Docker & Contenedores
 
 - **Imagenes Especificas**: No se usan tags `latest`, se fijan versiones estables.
 - **No-Root**: Los procesos principales corren bajo usuarios con privilegios limitados (`www-data`).
 - **Healthchecks**: Monitoreo nativo del estado de salud de los servicios.
 - **Capas Minimas**: Limpieza de cache de apt y archivos temporales.
 
-### 🛡️ Kubernetes (K8s)
+### =� Kubernetes (K8s)
 
 - **SecurityContext**: Se obliga a la ejecucion como no-root y se deshabilitan escaladas de privilegios.
 - **Resource Limits**: Configuracion de cuotas de CPU y Memoria para evitar DoS por agotamiento de recursos.
 - **NetworkPolicies**: Aislamiento de red para trafico este-oeste (demo).
 
-### 🛡️ HUB CLI & Aplicaciones
+### =� HUB CLI & Aplicaciones
 
 - **Input Sanitization**: Validacion estricta de IDs de aplicacion.
 - **Path Traversal Prevention**: Validacion de rutas usando `abspath` para asegurar el scope en `apps/`.
 
-### 🛡️ Servidor MCP (IA Context Layer)
+### =� Servidor MCP (IA Context Layer)
 
 - **Solo Lectura V1**: El servidor expone explicitamente herramientas que imitan un "Sidecar" pasivo (`read_doc`, `read_manifest`, `run_hub_list`). Todo esta restringido por diseno para evitar "Prompt Injections" sobre comandos destructables.
 - **Prevencion de Path Traversal**: La lectura de documentos/skills se restringe via Whitelists estrictas (ej. arreglo de nombres permitidos en configuracion). Se prohibe explicitamente la lectura de archivos confidenciales ocultos, credenciales, la DB local o tokens.
 - **Sanitizacion Nativa**: Los sub-comandos ejecutados (hub doctor o listeo) estan harcodeados y no aceptan secuencias de terminal arbitrarias provenientes de un LLM.
 
-### 🛡️ CI/CD & Automatizacion
+### =� CI/CD & Automatizacion
 
 - **CicdLibrary**: Los patrones generados siguen el estandar de "minimo privilegio" (ej: uso de OIDC o llaves SSH acotadas).
 - **Hardened Templates**: Las plantillas de GitHub/GitLab incluyen pasos de validacion de seguridad por defecto.
 
-### 🛡️ Desarrollo & CI/CD
+### =� Desarrollo & CI/CD
 
 - **Secret Scanning**: Integracion de TruffleHog y pre-commit (detect-secrets).
 - **Dependency Scanning (Dependabot)**: Flujo autonomo de CI configurado en `.github/dependabot.yml` para auditar paquetes de Composer, contenedores Docker y flujos de GitHub Actions. Ante vulnerabilidades (CVEs), el bot crea silenciosamente ramas `dependabot/*` y propone Pull Requests aislados que no rompen `main` hasta que los Tests (Status Checks) validen su idoneidad, garantizando una postura de seguridad proactiva.

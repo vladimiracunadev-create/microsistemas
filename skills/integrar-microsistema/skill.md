@@ -4,13 +4,13 @@
 
 Integrar un microsistema nuevo en `apps/<Nombre>/` de forma **limpia, minima, coherente y verificable**, actualizando:
 
-- Dashboard (`index.php`) → tarjeta nueva
-- Manifest (`apps/<Nombre>/app.manifest.yml`) → detectable por Hub
+- Dashboard (`index.php`) � tarjeta nueva
+- Manifest (`apps/<Nombre>/app.manifest.yml`) � detectable por Hub
 - Documentacion del repo (README + docs/*)
-- Wiki (docs/wiki/*) → preparado para sync
+- Wiki (docs/wiki/*) � preparado para sync
 - Chequeos (make validate/test/catalog/hub-list)
 
-> **💡 IA Context Layer**: Si un Asistente de IA esta liderando la integracion, puede consultar esta skill con la Tool `read_skill("integrar-microsistema")` y automatizar tareas de redaccion con el Prompt `integrar-microapp`.
+> **=� IA Context Layer**: Si un Asistente de IA esta liderando la integracion, puede consultar esta skill con la Tool `read_skill("integrar-microsistema")` y automatizar tareas de redaccion con el Prompt `integrar-microapp`.
 
 ## Entrada (Inputs)
 
@@ -43,7 +43,7 @@ Integrar un microsistema nuevo en `apps/<Nombre>/` de forma **limpia, minima, co
 
 ## Flujo paso a paso
 
-### Paso 0 — Preflight (no tocar nada todavia)
+### Paso 0  Preflight (no tocar nada todavia)
 
 - Confirmar que existe repo `microsistemas/` y su estructura base.
 - Buscar archivos clave:
@@ -54,7 +54,7 @@ Integrar un microsistema nuevo en `apps/<Nombre>/` de forma **limpia, minima, co
   - `docs/wiki/`
 - Registrar si existen (si/no). Si no existen, NO inventar jerarquias; usar minimo viable.
 
-### Paso 1 — Integrar carpeta del microsistema
+### Paso 1  Integrar carpeta del microsistema
 
 1. Si `ZIP_SOURCE` existe, extraer y verificar que queda en:
    - `apps/<APP_NAME>/...`
@@ -62,7 +62,7 @@ Integrar un microsistema nuevo en `apps/<Nombre>/` de forma **limpia, minima, co
    - Si `APP_TYPE=static`, debe existir `apps/<APP_NAME>/index.html`.
 3. Si falta `app.manifest.yml`, crear uno usando plantilla.
 
-### Paso 2 — Dashboard (`index.php`) (Punto 2)
+### Paso 2  Dashboard (`index.php`) (Punto 2)
 
 1. Encontrar el grid/listado de tarjetas:
    - Buscar `class="card"` o patron repetido de tarjetas.
@@ -76,7 +76,7 @@ Integrar un microsistema nuevo en `apps/<Nombre>/` de forma **limpia, minima, co
    - Cerca de apps similares (JS/estaticas o "referencia/estudio").
 4. No reordenar otras tarjetas.
 
-### Paso 3 — Hub detecta la app
+### Paso 3  Hub detecta la app
 
 1. Ejecutar `make hub-list`.
 2. Confirmar que aparece `APP_NAME`.
@@ -84,7 +84,7 @@ Integrar un microsistema nuevo en `apps/<Nombre>/` de forma **limpia, minima, co
    - revisar `app.manifest.yml` (key fields)
    - revisar carpeta y nombre (case-sensitive)
 
-### Paso 4 — Documentacion "TOTAL" (segun existan archivos)
+### Paso 4  Documentacion "TOTAL" (segun existan archivos)
 
 #### 4.1 README principal
 
@@ -97,23 +97,23 @@ Integrar un microsistema nuevo en `apps/<Nombre>/` de forma **limpia, minima, co
 
 Actualizar solo si existen:
 
-- `docs/SYSTEMS_CATALOG.md` → entrada nueva
-- `docs/USER_MANUAL.md` → como usar (modo, copiar, nota file://)
-- `docs/RECRUITER.md` → valor para reclutadores (3 bullets)
-- `docs/FILES_REFERENCE.md` (si aplica) → estructura menciona app
+- `docs/SYSTEMS_CATALOG.md` � entrada nueva
+- `docs/USER_MANUAL.md` � como usar (modo, copiar, nota file://)
+- `docs/RECRUITER.md` � valor para reclutadores (3 bullets)
+- `docs/FILES_REFERENCE.md` (si aplica) � estructura menciona app
 
 #### 4.3 docs/wiki/*
 
 Actualizar solo si existe `docs/wiki/`:
 
-- `docs/wiki/Home.md` → referencia de la app + version/nota
-- `docs/wiki/Catalogo-de-Sistemas.md` → entrada
-- `docs/wiki/Manual-de-Usuario.md` → guia breve
-- `docs/wiki/_Sidebar.md` → link a la pagina si corresponde
+- `docs/wiki/Home.md` � referencia de la app + version/nota
+- `docs/wiki/Catalogo-de-Sistemas.md` � entrada
+- `docs/wiki/Manual-de-Usuario.md` � guia breve
+- `docs/wiki/_Sidebar.md` � link a la pagina si corresponde
 
 > Regla: docs/ y docs/wiki deben contar "lo mismo", con distinta profundidad.
 
-### Paso 5 — Chequeos
+### Paso 5  Chequeos
 
 Ejecutar en orden:
 
@@ -127,7 +127,7 @@ Si falla algo:
 - corregir con cambios minimos
 - documentar en el commit/PR que se corrigio
 
-### Paso 6 — Evidencia y cierre
+### Paso 6  Evidencia y cierre
 
 Entregar:
 
@@ -139,7 +139,7 @@ Entregar:
 - confirmacion manual:
   - dashboard muestra tarjeta
   - click abre `apps/<APP_NAME>/`
-  - si `file://` bloquea fetch → recomendar servidor local
+  - si `file://` bloquea fetch � recomendar servidor local
 
 ---
 

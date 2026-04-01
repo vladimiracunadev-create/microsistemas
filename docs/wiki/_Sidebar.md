@@ -1,26 +1,26 @@
-### 📖 Documentacion
+### =� Documentacion
 
 - **[Inicio](Home)**
 - **[Guia para Principiantes](Guia-para-Principiantes)**
 
-### 🚀 Instalacion
+### =� Instalacion
 
 - **[Guia de Instalacion](Guia-de-Instalacion)**
 - **[Requisitos del Sistema](Requisitos-del-Sistema)**
 
-### 🛠️ Uso y Guias
+### =� Uso y Guias
 
 - **[Manual de Usuario](Manual-de-Usuario)**
 - **[Hub CLI](Hub-CLI)**
 - **[Catalogo de Sistemas](Catalogo-de-Sistemas)**
 
-### 🏗️ Tecnico
+### <� Tecnico
 
 - **[Arquitectura](Arquitectura)**
 - **[Especificaciones Tecnicas](Especificaciones-Tecnicas)**
 - **[Referencia de API](Referencia-de-API)**
 
-### 🤝 Comunidad
+### > Comunidad
 
 - **[Guia de Contribucion](Guia-de-Contribucion)**
 - **[Seguridad](Seguridad)**

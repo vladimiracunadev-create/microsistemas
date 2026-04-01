@@ -8,10 +8,10 @@ A continuacion se detalla el nivel de compatibilidad documentado y evidenciado a
 
 | Modo | Nivel de Soporte | Descripcion |
 | :--- | :--- | :--- |
-| **Docker Engine (Local/Nube)** | 🟢 Primario / Probado | El metodo oficial de operacion inmutable (mediante `docker-compose.yml` incluido).|
-| **XAMPP / Servidores Legacy** | 🟡 Esperado / Testeado Parcial | Capaz de correr como carpeta dentro de `htdocs` en setups Apache clasicos (Windows/Linux/Mac). |
-| **PHP Built-in Server** | 🟡 Local Dev / Probado | Lanzado a traves de `make serve` para pruebas UI locales super rapidas sin base de datos compleja. |
-| **Kubernetes** | 🟡 Experimental | Despliegue mediante los manifiestos `k8s/`. Esta preparado arquitectonicamente, pero requiere ajustes de ingress del usuario. |
+| **Docker Engine (Local/Nube)** | =� Primario / Probado | El metodo oficial de operacion inmutable (mediante `docker-compose.yml` incluido).|
+| **XAMPP / Servidores Legacy** | =� Esperado / Testeado Parcial | Capaz de correr como carpeta dentro de `htdocs` en setups Apache clasicos (Windows/Linux/Mac). |
+| **PHP Built-in Server** | =� Local Dev / Probado | Lanzado a traves de `make serve` para pruebas UI locales super rapidas sin base de datos compleja. |
+| **Kubernetes** | =� Experimental | Despliegue mediante los manifiestos `k8s/`. Esta preparado arquitectonicamente, pero requiere ajustes de ingress del usuario. |
 
 ## 2. Lenguajes y Runtimes Base
 

@@ -24,10 +24,10 @@ Por consiguiente, el autor mantiene la plataforma en la medida en que el tiempo 
 
 Si tienes un problema, solicitud o duda y tras haber leido exhaustivamente los documentos de la carpeta `docs/` no hallaste tu respuesta, comunicate mediante:
 
-### 🐛 Para Errores (Bugs)
+### = Para Errores (Bugs)
 
 Registra el fallo directamente a traves del gestor de Issues Oficial de Github:
-👉 **[Abrir un Issue por Bug](https://github.com/vladimiracunadev-create/microsistemas/issues/new?template=bug_report.md)**
+=I **[Abrir un Issue por Bug](https://github.com/vladimiracunadev-create/microsistemas/issues/new?template=bug_report.md)**
 
 *Informacion requerida minima:*
 
@@ -36,11 +36,11 @@ Registra el fallo directamente a traves del gestor de Issues Oficial de Github:
 - Adjunta las lineas de log arrojadas (puedes sacarlas con `docker-compose logs web`).
 - En que micro-app detectaste el bug (ej: CapacitySim o Conversor).
 
-### 💡 Para Sugerencias e Ideas de Modulos
+### =� Para Sugerencias e Ideas de Modulos
 
 Si quieres proponer una nueva micro-aplicacion o refactor a una existente:
-👉 **[Sugerir una Funcionalidad](https://github.com/vladimiracunadev-create/microsistemas/issues/new?template=feature_request.md)**
+=I **[Sugerir una Funcionalidad](https://github.com/vladimiracunadev-create/microsistemas/issues/new?template=feature_request.md)**
 
-### 🤔 Consultas Estructurales o de Reclutamiento
+### > Consultas Estructurales o de Reclutamiento
 
 Si evaluas el repositorio en calidad de Head Hunter, Tech Recruiter, o ingeniero de plataforma revisando metodologias y deseas charlar sobre la arquitectura general del proyecto, el contacto debe ser directo a traves de los enlaces personales estipulados en el `README.md` (LinkedIn / Redes Directas del Desarrollador).

@@ -1,4 +1,4 @@
-﻿# Landing Page de Microsistemas
+�# Landing Page de Microsistemas
 
 Esta landing se agrego para presentar **Microsistemas** como producto, sin reemplazar ni modificar el dashboard PHP principal del repositorio.
 

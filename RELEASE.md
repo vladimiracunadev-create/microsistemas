@@ -61,4 +61,4 @@ Antes de aprobar la publicacion o crear un Tag:
 
 ## 4. Breaking Changes
 
-Si un cambio requiere la reconstruccion manual de la base de datos o modificar comandos fundamentales de Makefile, se catalogara inmediatamente como **MAJOR** y dicho cambio debera anunciarse en mayusculas bajo un bloque de `🚨 BREAKING CHANGES` al inicio de las notas del release en GitHub Releases y el `CHANGELOG.md`.
+Si un cambio requiere la reconstruccion manual de la base de datos o modificar comandos fundamentales de Makefile, se catalogara inmediatamente como **MAJOR** y dicho cambio debera anunciarse en mayusculas bajo un bloque de `=� BREAKING CHANGES` al inicio de las notas del release en GitHub Releases y el `CHANGELOG.md`.

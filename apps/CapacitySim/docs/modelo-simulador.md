@@ -12,10 +12,10 @@ Para una combinacion (stack) calcula tres limites:
 
 Luego:
 
-- **`RPS_cap = min(RPS_cpu, RPS_db, RPS_red) × safety_factor`**
-- **Usuarios concurrentes ≈ `RPS_cap × latencia_endpoint`** (en segundos)
+- **`RPS_cap = min(RPS_cpu, RPS_db, RPS_red) � safety_factor`**
+- **Usuarios concurrentes H `RPS_cap � latencia_endpoint`** (en segundos)
 
-> No representa “usuarios totales del dia”, sino simultaneidad aproximada bajo la latencia elegida.
+> No representa usuarios totales del dia, sino simultaneidad aproximada bajo la latencia elegida.
 
 ## 2) Que modela cada selector
 
@@ -69,7 +69,7 @@ Cambia **una variable a la vez** y observa cuando el cuello de botella cambia (C
 
 - Modo `read_replicas` aumenta **capacidad de lectura**.
 - La capacidad total queda limitada por el mix: **lecturas (%)** y **escrituras (%)**.
-- Formula usada: si total RPS = X, reads=X·r, writes=X·(1-r)
+- Formula usada: si total RPS = X, reads=X�r, writes=X�(1-r)
   - reads <= readCap (primaria + replicas)
   - writes <= writeCap (primaria)
   - X_max = min(readCap/r, writeCap/(1-r))
@@ -85,7 +85,7 @@ Este es un cuello de botella muy comun:
 
 - Cada instancia tiene un `pool_per_instance` de conexiones a DB.
 - La DB tiene un `db_conn_hard_limit`.
-- Con varias replicas de app, el total es `pool_per_instance × replicas_app`.
+- Con varias replicas de app, el total es `pool_per_instance � replicas_app`.
 - Conns efectivas = min(pool_total_app, hard_limit_db)
 - Limite por pool: `RPS_pool_limit = conns_efectivas / lat_db`.
 - La capacidad DB final es `RPS_db = min(cap_consultas, cap_pool_limit)`.

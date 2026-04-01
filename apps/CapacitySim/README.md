@@ -1,25 +1,25 @@
-# Ambiente Inteligente de Metricas · Planificacion de Capacidad
+# Ambiente Inteligente de Metricas � Planificacion de Capacidad
 
 **Objetivo:** Estimar, comparar y validar la **capacidad de usuarios concurrentes** y **limite de RPS** (requests per second) de una arquitectura dada, mediante selectores (OS, servidor web, runtime backend, base de datos, contenedor, orquestador, cache, CDN, TLS) y parametros operativos (nucleos CPU, RAM, ancho de banda, payload promedio, complejidad del endpoint, etc.).
 
-## ✨ Caracteristicas Pro (v1.1.0)
+## ( Caracteristicas Pro (v1.1.0)
 
-- 💰 **Simulacion de Costos**: Estimacion de costos mensuales aproximados segun proveedor cloud (AWS, GCP, Azure, On-Premise).
-- 🔄 **Modo Comparativo**: Guarda y compara dos escenarios (A vs B) para analisis de decisiones.
-- 📄 **Exportacion Avanzada**: Genera reportes tecnicos en JSON y PDF para documentacion profesional.
-- ☁️ **Multi-Cloud**: Soporte para diferentes proveedores con pricing actualizado.
+- =� **Simulacion de Costos**: Estimacion de costos mensuales aproximados segun proveedor cloud (AWS, GCP, Azure, On-Premise).
+- = **Modo Comparativo**: Guarda y compara dos escenarios (A vs B) para analisis de decisiones.
+- =� **Exportacion Avanzada**: Genera reportes tecnicos en JSON y PDF para documentacion profesional.
+-  **Multi-Cloud**: Soporte para diferentes proveedores con pricing actualizado.
 
-## 🎯 Capacidades Core
+## <� Capacidades Core
 
-- 🧮 **Calculo rapido:** Formulas heuristicas reproducibles (CPU/DB/Red) → `RPS_cap` y `Usuarios_concurrentes`.
-- 🧪 **Validacion:** Scripts de carga (k6, Locust) y guias de estres/spike/soak.
-- 📊 **Observabilidad:** Dashboards base (Prometheus/Grafana) y alertas de saturacion.
-- 🧰 **DevOps:** Dockerfile, ejemplo Kubernetes, CI de validacion, presets listos.
-- ⚠️ **Nota:** Los valores son **heuristicos**; valide siempre con pruebas en su entorno.
+- >� **Calculo rapido:** Formulas heuristicas reproducibles (CPU/DB/Red) � `RPS_cap` y `Usuarios_concurrentes`.
+- >� **Validacion:** Scripts de carga (k6, Locust) y guias de estres/spike/soak.
+- =� **Observabilidad:** Dashboards base (Prometheus/Grafana) y alertas de saturacion.
+- >� **DevOps:** Dockerfile, ejemplo Kubernetes, CI de validacion, presets listos.
+- � **Nota:** Los valores son **heuristicos**; valide siempre con pruebas en su entorno.
 
 > Ultima actualizacion: 2026-01-19
 
-## 🔎 Importante: esto es un **SIMULADOR** (no instala tecnologias)
+## = Importante: esto es un **SIMULADOR** (no instala tecnologias)
 
 Este repositorio **no instala** Nginx, Kubernetes, Postgres, etc.
 
@@ -30,7 +30,7 @@ Su proposito es **didactico**: modelar combinaciones de tecnologias (por SELECT)
 - Cuello de botella probable
 - Supuestos y multiplicadores usados
 
-Para llevarlo “a la vida real”, debes **calibrar** con pruebas de carga y metricas (se incluye guia).
+Para llevarlo a la vida real, debes **calibrar** con pruebas de carga y metricas (se incluye guia).
 
 ---
 
@@ -41,7 +41,7 @@ Para llevarlo “a la vida real”, debes **calibrar** con pruebas de carga y me
 1. Abra `index.html` en un navegador (o sirva la carpeta raiz del microsistema con cualquier servidor estatico).
 2. Seleccione **stack** y parametros; obtendra:
    - `RPS_cpu`, `RPS_db`, `RPS_red`, `RPS_cap` (minimo entre limites).
-   - `Usuarios_concurrentes ≈ RPS_cap × latencia_promedio (s)`.
+   - `Usuarios_concurrentes H RPS_cap � latencia_promedio (s)`.
    - Detalle de multiplicadores por componente y supuestos.
 
 ### Opcion B: CLI (Python)
@@ -60,7 +60,7 @@ python3 scripts/capacity_calc.py --os linux --web nginx --runtime node --db post
 
 ## 2) Caracteristicas Pro (v1.1.0)
 
-### 💰 Simulacion de Costos
+### =� Simulacion de Costos
 
 Selecciona un proveedor cloud en el selector **"Proveedor de Nube (Costos)"** para obtener:
 
@@ -73,12 +73,12 @@ Selecciona un proveedor cloud en el selector **"Proveedor de Nube (Costos)"** pa
 
 **Uso**: Ideal para presupuestos iniciales y comparacion de TCO entre proveedores.
 
-### 🔄 Modo Comparativo (Escenarios A/B)
+### = Modo Comparativo (Escenarios A/B)
 
 Compara dos configuraciones diferentes guardando escenarios:
 
-1. **Configurar Escenario A**: Ajusta selectores y parametros → Click **"Guardar A"**
-2. **Configurar Escenario B**: Modifica configuracion → Click **"Guardar B"**
+1. **Configurar Escenario A**: Ajusta selectores y parametros � Click **"Guardar A"**
+2. **Configurar Escenario B**: Modifica configuracion � Click **"Guardar B"**
 3. **Comparar**: Alterna entre **"Cargar A"** y **"Cargar B"** para ver diferencias en:
    - RPS y usuarios concurrentes
    - Costos estimados
@@ -91,7 +91,7 @@ Compara dos configuraciones diferentes guardando escenarios:
 - Evaluar proveedores cloud (AWS vs GCP vs Azure)
 - Analizar estrategias de escalado (vertical vs horizontal)
 
-### 📄 Exportacion de Reportes
+### =� Exportacion de Reportes
 
 Genera documentacion profesional para stakeholders:
 

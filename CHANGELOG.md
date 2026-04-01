@@ -18,14 +18,14 @@ Todos los cambios notables en este proyecto seran documentados en este archivo. 
 - **Escaneo de Dependencias (SecOps)**: Activacion oficial de **Dependabot** (`.github/dependabot.yml`) para auditar proactivamente el ecosistema. Creacion automatizada de Pull Requests para vulnerabilidades en Composer, Docker y GitHub Actions.
 - **Plantillas de Issues (YAML)**: Modernizacion de los canales de reporte (`bug_report.yml`, `feature_request.yml`, `question.yml`, `config.yml`) para asegurar metricas y entornos consistentes en cada ticket.
 - **Skills System (`skills/`)**: Sistema de playbooks reutilizables para automatizar tareas complejas de desarrollo.
-  - `skills/integrar-microsistema/` → Skill de 6 pasos para integrar cualquier app nueva con coherencia total (dashboard, manifest, docs, wiki, chequeos).
+  - `skills/integrar-microsistema/` � Skill de 6 pasos para integrar cualquier app nueva con coherencia total (dashboard, manifest, docs, wiki, chequeos).
   - Plantillas incluidas: `app.manifest.yml.tpl`, `dashboard-card.html.tpl`, `wiki-entry.md.tpl`.
   - Archivo `referencia.txt` con ejemplo de inputs para rapida invocacion.
 
 ### Corregido
 
 - **CI/CD Seguridad (Trivy)**: El scanner de vulnerabilidades Trivy se reemplazo por instalacion directa via `apt-get` desde el repositorio oficial de Aqua Security, resolviendo el fallo persistente de descarga del binario en el runner Ubuntu.
-- **Markdown Lint**: Corregidos 31 errores de formato (MD022/MD032 — espacios en encabezados y listas) en `apps/KatasMultiLang/README.md`, `README-INTEGRACION.md`, `scripts/notes.md` y `VERSIONS_AUDIT.md`.
+- **Markdown Lint**: Corregidos 31 errores de formato (MD022/MD032  espacios en encabezados y listas) en `apps/KatasMultiLang/README.md`, `README-INTEGRACION.md`, `scripts/notes.md` y `VERSIONS_AUDIT.md`.
 
 ## [2.2.0] - 2026-03-05
 
@@ -49,7 +49,7 @@ Todos los cambios notables en este proyecto seran documentados en este archivo. 
 - **Selector de Intenciones (Guided Flow)**: Nueva navegacion basada en objetivos de negocio que simplifica la seleccion de recetas entre mas de 500 opciones.
 - **GlassCode Syntax Highlighting**: Resaltado de sintaxis dinamico y colorido para comandos de AWS CLI en tiempo real.
 - **Semaforo de Impacto Operativo**: Indicadores visuales dinamicos de riesgo (Rojo/Amarillo/Verde) con explicaciones en lenguaje natural.
-- **EduIcons (Tooltips Contextuales)**: Ayuda tecnica integrada (`ⓘ`) en parametros para facilitar el aprendizaje de la arquitectura cloud.
+- **EduIcons (Tooltips Contextuales)**: Ayuda tecnica integrada (`�`) en parametros para facilitar el aprendizaje de la arquitectura cloud.
 - **Onboarding Premium v2.0**: Nuevo modal de bienvenida con estetica Glassmorphic y tutorial interactivo de 3 pasos.
 
 ### Mejorado
