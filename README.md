@@ -16,11 +16,11 @@ Se agrego una landing page estatica y aislada para presentar Microsistemas como 
 - **Preview local**: `http://localhost/microsistemas/landing/` o `http://localhost:8080/landing/`
 - **GitHub Pages esperada**: `https://vladimiracunadev-create.github.io/microsistemas/`
 
-## " Requisitos del Sistema
+## Requisitos del Sistema
 
 Para ver el detalle completo de hardware y software (PHP, extensiones, etc.), consulta:
 
-' **[Requisitos del Sistema (REQUIREMENTS.md)](docs/REQUIREMENTS.md)**
+**[Requisitos del Sistema (REQUIREMENTS.md)](docs/REQUIREMENTS.md)**
 
 ## Inicio Rapido con Makefile
 
@@ -42,7 +42,7 @@ make help
 
 ---
 
-##  i Microsistemas Hub (CLI)
+## Microsistemas Hub (CLI)
 
 Hemos anadido una capa de gestion centralizada llamada **Hub**. Esta herramienta permite listar, ejecutar y diagnosticar todas las micro-apps de forma estandarizada.
 
@@ -69,7 +69,7 @@ Para mas detalles, consulta la "- **[Guia del Hub (docs/HUB.md)](docs/HUB.md)**.
 
 ---
 
-## - Servidor MCP Local (Para IA)
+## Servidor MCP Local (Para IA)
 
 Microsistemas integra un **Servidor Model Context Protocol (MCP)** en Python (`mcp/`) disenado para exponer de forma local, estandarizada y segura todos los manifiestos, configuraciones y documentaciones del Hub a asistentes de Inteligencia Artificial (ej: Claude Desktop).
 
@@ -80,9 +80,9 @@ Para conectar tu cliente MCP preferido, revisa la configuracion en:
 
 ---
 
-## a Inicio Inmediato
+## Inicio Inmediato
 
-###  Con Docker (Recomendado)
+### Con Docker (Recomendado)
 
 Levanta todo el ecosistema en menos de 30 segundos:
 
@@ -92,7 +92,7 @@ docker-compose up -d
 
  Dashboard: `http://localhost:8080`
 
-###  Con XAMPP
+### Con XAMPP
 
 1. Clona en `htdocs/microsistemas`.
 2. Renombra `.env.example` a `.env`.
@@ -100,7 +100,7 @@ docker-compose up -d
 
 ---
 
-##  Caracteristicas Principales
+## Caracteristicas Principales
 
 <table align="center">
   <tr>
@@ -126,7 +126,7 @@ Estas evaluando este proyecto como parte de un proceso de seleccion? Consulta nu
 
 ---
 
-## " Catalogo de Herramientas
+## Catalogo de Herramientas
 
 <!-- CATALOG_START -->
 
@@ -148,39 +148,39 @@ Estas evaluando este proyecto como parte de un proceso de seleccion? Consulta nu
 
 ---
 
-## "- Documentacion Avanzada
+## Documentacion Avanzada
 
 Explora nuestras guias detalladas para convertirte en un experto de la suite:
 
-- " **[Referencia de Archivos](docs/FILES_REFERENCE.md)**: Explicacion detallada de cada archivo del sistema con su importancia.
-- - **[Skills / Playbooks](skills/integrar-microsistema/skill.md)**: Flujos reutilizables para automatizar tareas complejas (integracion de apps, actualizacion de docs, CI checks).
-- 🌐 **[Landing del Producto](docs/LANDING_PAGE.md)**: Resumen visual y documental de Microsistemas como suite, con implementacion aislada en `landing/` y despliegue preparado para GitHub Pages.
--   **[Servidor MCP Local (V1)](mcp/README.md)**: Integracion segura y de solo lectura de Model Context Protocol para proveer contexto instantaneo a Asistentes de Inteligencia Artificial.
-- "- **[Guia para Principiantes](docs/BEGINNERS_GUIDE.md)**: Eres nuevo? Empieza aqui para entender las carpetas.
-- "- **[Manual de Usuario](docs/USER_MANUAL.md)**: Como sacar el maximo provecho a cada herramienta.
--  **[Guia de Instalacion](docs/INSTALL.md)**: Despliegue en Docker, Linux y XAMPP.
+- **[Referencia de Archivos](docs/FILES_REFERENCE.md)**: Explicacion detallada de cada archivo del sistema con su importancia.
+- **[Skills / Playbooks](skills/integrar-microsistema/skill.md)**: Flujos reutilizables para automatizar tareas complejas (integracion de apps, actualizacion de docs, CI checks).
+- **[Landing del Producto](docs/LANDING_PAGE.md)**: Resumen visual y documental de Microsistemas como suite, con implementacion aislada en `landing/` y despliegue preparado para GitHub Pages.
+- **[Servidor MCP Local (V1)](mcp/README.md)**: Integracion segura y de solo lectura de Model Context Protocol para proveer contexto instantaneo a Asistentes de Inteligencia Artificial.
+- **[Guia para Principiantes](docs/BEGINNERS_GUIDE.md)**: Eres nuevo? Empieza aqui para entender las carpetas.
+- **[Manual de Usuario](docs/USER_MANUAL.md)**: Como sacar el maximo provecho a cada herramienta.
+- **[Guia de Instalacion](docs/INSTALL.md)**: Despliegue en Docker, Linux y XAMPP.
 - -i **[Arquitectura](docs/ARCHITECTURE.md)**: Diagramas Mermaid y detalles del Core.
-- " **[Catalogo de Sistemas](docs/SYSTEMS_CATALOG.md)**: Detalles tecnicos de cada micro-app.
-- " **[Referencia de API](docs/API.md)**: Como interactuar con el core y extensiones.
+- **[Catalogo de Sistemas](docs/SYSTEMS_CATALOG.md)**: Detalles tecnicos de cada micro-app.
+- **[Referencia de API](docs/API.md)**: Como interactuar con el core y extensiones.
 - i **[Seguridad](docs/SECURITY.md)**: Politicas de proteccion y reporte.
--  i **[Specs Tecnicas](docs/TECHNICAL_SPECS.md)**: Stack, estandares y normas de mantencion.
+- **[Specs Tecnicas](docs/TECHNICAL_SPECS.md)**: Stack, estandares y normas de mantencion.
 - 'a'" **[Guia de Mantenedores](docs/MAINTAINERS.md)**: Informacion critica para administradores del proyecto.
 - a-i **[Codigo de Conducta](CODE_OF_CONDUCT.md)**: Normas para una comunidad saludable.
-- ' **[Historial de Cambios](CHANGELOG.md)**: Registro detallado de versiones y mejoras.
+- **[Historial de Cambios](CHANGELOG.md)**: Registro detallado de versiones y mejoras.
 
 ---
 
-##  Comunidad y Colaboracion
+## Comunidad y Colaboracion
 
 Este proyecto esta abierto a **Cooperacion Real**! Queremos que contribuir sea lo mas facil y seguro posible.
 
-###  Como ayudar?
+### Como ayudar?
 
 - **Reporta Errores**: Usa nuestra [plantilla de errores](https://github.com/vladimiracunadev-create/microsistemas/issues/new?template=bug_report.md) para ayudarnos a mejorar.
 - **Sugiere Funciones**: Tenemos una [plantilla para nuevas ideas](https://github.com/vladimiracunadev-create/microsistemas/issues/new?template=feature_request.md).
 - **Resuelve Issues**: Busca etiquetas como `good first issue` o `help wanted` para empezar.
 
-### i Contribuciones Seguras
+### Contribuciones Seguras
 
 Para mantener la calidad y estabilidad, implementamos:
 
@@ -191,37 +191,37 @@ Para mantener la calidad y estabilidad, implementamos:
 
 ---
 
-## a-i Licencia
+## Licencia
 
 Este proyecto esta bajo la **Licencia MIT**. Consulta el archivo [LICENSE](LICENSE) para mas detalles.
 
 ---
 
-Desarrollado con ai por **[Vladimir Acuna Valdebenito](https://www.linkedin.com/in/vladimir-acu%C3%B1a-valdebenito-11924a29/)** para la comunidad de desarrolladores.
+Desarrollado por **[Vladimir Acuna Valdebenito](https://www.linkedin.com/in/vladimir-acu%C3%B1a-valdebenito-11924a29/)** para la comunidad de desarrolladores.
 
-## " Centro de Documentacion y Gobernanza
+## Centro de Documentacion y Gobernanza
 
 El proyecto adopta un enfoque de **documentacion como codigo** orientado a mantener estandares y facilitar la vida de desarrolladores, operadores y evaluadores de talento. Toda la documentacion tecnica esta categorizada para su rapido acceso.
 
-### " Operaciones, Arquitectura y Configuracion
+### Operaciones, Arquitectura y Configuracion
 
 - [-i Arquitectura Inicial y Contexto (ADR-0001)](docs/adr/0001-contexto-y-decisiones-iniciales.md)
 - [" Manual de Operacion y Diagnostico (RUNBOOK)](RUNBOOK.md)
-- [ Matriz de Compatibilidad y Ambientes (COMPATIBILITY)](COMPATIBILITY.md)
+- [Matriz de Compatibilidad y Ambientes (COMPATIBILITY)](COMPATIBILITY.md)
 - [" Casos y Modos de Ejecucion (OPERATING-MODES)](OPERATING-MODES.md)
-- [ Estrategia de Versionado y Entrega (RELEASE)](RELEASE.md)
+- [Estrategia de Versionado y Entrega (RELEASE)](RELEASE.md)
 - [" Historial de Cambios (CHANGELOG)](CHANGELOG.md)
 - [" Guia Rapida de Instalacion (INSTALL)](docs/INSTALL.md)
 
-###  Soporte, Comunidad y Gobernanza
+### Soporte, Comunidad y Gobernanza
 
 - [' Politicas de Asistencia y Soporte (SUPPORT)](SUPPORT.md)
 - ['" Guia Directa para Reclutadores Tecnicos](docs/RECRUITER.md)
-- [ Guia Oficial de Contribucion](CONTRIBUTING.md)
+- [Guia Oficial de Contribucion](CONTRIBUTING.md)
 - [i Politica de Seguridad y Reportes](SECURITY.md)
 - [a-i Codigo de Conducta de la Comunidad](CODE_OF_CONDUCT.md)
 
-### ai Configuracion Estrategica (Metadata / No-MD)
+### Configuracion Estrategica (Metadata / No-MD)
 
 Ademas del contenido legible, el repositorio contiene archivos de gobernanza ocultos que definen su calidad profesional para ser auditados:
 
