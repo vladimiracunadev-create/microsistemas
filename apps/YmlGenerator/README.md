@@ -1,25 +1,25 @@
 # YAML Studio - Micro-App
 
-## Descripcion
+## Descripción
 
-Generador visual de archivos YAML orientado a la creacion acelerada de configuraciones para Docker, Nginx y flujos de CI/CD.
+Generador visual de archivos YAML orientado a la creación acelerada de configuraciones para Docker, Nginx y flujos de CI/CD.
 
 ## Funcionalidades
 
 - **Editor en Tiempo Real**: Ve el resultado YAML mientras completas el formulario.
 - **Plantillas Predefinidas**: Bases para servicios comunes.
-- **Validacion de Sintaxis**: Evita errores de indentacion tipicos del formato YAML.
+- **Validación de Sintaxis**: Evita errores de indentación típicos del formato YAML.
 
-## Detalles Tecnicos
+## Detalles Técnicos
 
-- **Tecnologia**: JavaScript, CSS Flexbox.
-- **Componentes**: `ymlstudio.templates.js` (Logica de plantillas), `ymlstudio.app.js` (Logica de UI).
+- **Tecnología**: JavaScript, CSS Flexbox.
+- **Componentes**: `ymlstudio.templates.js` (Lógica de plantillas), `ymlstudio.app.js` (Lógica de UI).
 
 ## Endpoints de Monitoreo
 
-Esta aplicacion implementa los siguientes endpoints de diagnostico:
+Esta aplicación implementa los siguientes endpoints de diagnóstico:
 
-- **/health**: Verifica que la aplicacion esta corriendo (liveness check). Retorna JSON con estado `ok`.
-- **/ready**: Verifica que la aplicacion esta lista para recibir trafico (readiness check). Retorna JSON con estado de dependencias.
+- **/health**: Verifica que la aplicación está corriendo (liveness check). Retorna JSON con estado `ok`.
+- **/ready**: Verifica que la aplicación está lista para recibir tráfico (readiness check). Retorna JSON con estado de dependencias.
 
-Para mas informacion, consulta [TECHNICAL_SPECS.md](../../docs/TECHNICAL_SPECS.md).
+Para más información, consulta [TECHNICAL_SPECS.md](../../docs/TECHNICAL_SPECS.md).

@@ -1,22 +1,22 @@
 # Referencia de la API Core (API.md)
 
-Este documento detalla los metodos y clases disponibles en el paquete `Microsistemas\Core` para desarrolladores que deseen extender la suite.
+Este documento detalla los métodos y clases disponibles en el paquete `Microsistemas\Core` para desarrolladores que deseen extender la suite.
 
 ---
 
 ## `Microsistemas\Core\Config`
 
-La clase de configuracion utiliza el patron **Singleton** para asegurar una unica instancia durante la ejecucion.
+La clase de configuración utiliza el patrón **Singleton** para asegurar una única instancia durante la ejecución.
 
-### Metodos
+### Métodos
 
 #### `getInstance(): self`
 
-Obtiene la instancia unica de la clase.
+Obtiene la instancia única de la clase.
 
 #### `get(string $key, mixed $default = null): mixed`
 
-Recupera un valor de configuracion de las variables de entorno o del archivo `.env`.
+Recupera un valor de configuración de las variables de entorno o del archivo `.env`.
 
 - **$key**: Nombre de la variable (ej: `DB_HOST`).
 - **$default**: Valor a retornar si la variable no existe.
@@ -25,30 +25,30 @@ Recupera un valor de configuracion de las variables de entorno o del archivo `.e
 
 ## `Microsistemas\Core\Database`
 
-Gestiona la conexion centralizada a la base de datos MySQL.
+Gestiona la conexión centralizada a la base de datos MySQL.
 
-### Metodos
+### Métodos
 
 #### `getConnection(): mysqli`
 
 Retorna una instancia activa de `mysqli`.
 
-- **Lanza**: `\Exception` si la conexion falla.
-- **Nota**: Las credenciales se inyectan automaticamente desde `Config`.
+- **Lanza**: `\Exception` si la conexión falla.
+- **Nota**: Las credenciales se inyectan automáticamente desde `Config`.
 
 #### `close(): void`
 
-Cierra la conexion activa si existe.
+Cierra la conexión activa si existe.
 
 ---
 
-## 🛠️ Como Extender la API
+## 🛠️ Cómo Extender la API
 
-Si deseas anadir una nueva utilidad global (ej: un sistema de manejo de archivos), sigue estos pasos:
+Si deseas añadir una nueva utilidad global (ej: un sistema de manejo de archivos), sigue estos pasos:
 
 1. Crea la clase en `src/Utils/MiClase.php`.
 2. Asigna el namespace `Microsistemas\Utils`.
-3. Invocala en cualquier modulo mediante:
+3. Invócala en cualquier módulo mediante:
 
    ```php
    use Microsistemas\Utils\MiClase;

@@ -1,30 +1,30 @@
-### 📖 Documentacion
+### 📖 Documentación
 
 - **[Inicio](Home)**
-- **[Guia para Principiantes](Guia-para-Principiantes)**
+- **[Guía para Principiantes](Guia-para-Principiantes)**
 
-### 🚀 Instalacion
+### 🚀 Instalación
 
-- **[Guia de Instalacion](Guia-de-Instalacion)**
+- **[Guía de Instalación](Guia-de-Instalacion)**
 - **[Requisitos del Sistema](Requisitos-del-Sistema)**
 
-### 🛠️ Uso y Guias
+### 🛠️ Uso y Guías
 
 - **[Manual de Usuario](Manual-de-Usuario)**
 - **[Hub CLI](Hub-CLI)**
-- **[Catalogo de Sistemas](Catalogo-de-Sistemas)**
+- **[Catálogo de Sistemas](Catalogo-de-Sistemas)**
 
-### 🏗️ Tecnico
+### 🏗️ Técnico
 
 - **[Arquitectura](Arquitectura)**
-- **[Especificaciones Tecnicas](Especificaciones-Tecnicas)**
+- **[Especificaciones Técnicas](Especificaciones-Tecnicas)**
 - **[Referencia de API](Referencia-de-API)**
 
 ### 🤝 Comunidad
 
-- **[Guia de Contribucion](Guia-de-Contribucion)**
+- **[Guía de Contribución](Guia-de-Contribucion)**
 - **[Seguridad](Seguridad)**
 - **[Roadmap](Roadmap)**
-- **[Codigo de Conducta](Codigo-de-Conducta)**
+- **[Código de Conducta](Codigo-de-Conducta)**
 
 <!-- Sync: 2026-03-05 16:20 -->

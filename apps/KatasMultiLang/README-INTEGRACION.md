@@ -1,4 +1,4 @@
-# Integracion en tu repo `microsistemas`
+# Integración en tu repo `microsistemas`
 
 ## 1) Copiar carpeta
 
@@ -15,15 +15,15 @@ Busca el grid de tarjetas y agrega algo como:
   <div>
     <span class="badge js">HTML + JS</span>
     <h2>Katas MultiLang</h2>
-    <p>Comparador visual de soluciones por caso en multiples lenguajes y frameworks. Boton copiar + filtros.</p>
+    <p>Comparador visual de soluciones por caso en múltiples lenguajes y frameworks. Botón copiar + filtros.</p>
   </div>
   <a href="apps/KatasMultiLang/" class="btn">Abrir Herramienta</a>
 </div>
 ```
 
-## 3) (Opcional) Catalogo
+## 3) (Opcional) Catálogo
 
-- Agrega una linea en `docs/SYSTEMS_CATALOG.md` o en el README principal apuntando a `apps/KatasMultiLang/`.
+- Agrega una línea en `docs/SYSTEMS_CATALOG.md` o en el README principal apuntando a `apps/KatasMultiLang/`.
 
 ## 4) GitHub Pages / fetch()
 

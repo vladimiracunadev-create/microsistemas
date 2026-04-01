@@ -1,30 +1,30 @@
 # Log Viewer - Micro-App
 
-## Descripcion
+## Descripción
 
-Visor de registros (logs) del servidor disenado para diagnosticos rapidos de errores de Apache, PHP o de la propia aplicacion.
+Visor de registros (logs) del servidor diseñado para diagnósticos rápidos de errores de Apache, PHP o de la propia aplicación.
 
 ## Seguridad
 
-- **Whitelist**: Solo se pueden leer archivos definidos explicitamente en el codigo o via variables de entorno.
+- **Whitelist**: Solo se pueden leer archivos definidos explícitamente en el código o vía variables de entorno.
 - **Solo Lectura**: No permite modificar ni borrar archivos.
 
-## Configuracion de Rutas
+## Configuración de Rutas
 
-Puedes anadir rutas personalizadas mediante variables de entorno siguiendo el patron:
+Puedes añadir rutas personalizadas mediante variables de entorno siguiendo el patrón:
 
 `LOG_PATH_[NOMBRE_LOG]=/ruta/al/archivo.log`
 
-## Detalles Tecnicos
+## Detalles Técnicos
 
-- **Tecnologia**: PHP 8.x.
-- **UI**: Diseno estilo consola oscura para mayor legibilidad.
+- **Tecnología**: PHP 8.x.
+- **UI**: Diseño estilo consola oscura para mayor legibilidad.
 
 ## Endpoints de Monitoreo
 
-Esta aplicacion implementa los siguientes endpoints de diagnostico:
+Esta aplicación implementa los siguientes endpoints de diagnóstico:
 
-- **/health**: Verifica que la aplicacion esta corriendo (liveness check). Retorna JSON con estado `ok`.
-- **/ready**: Verifica que la aplicacion esta lista para recibir trafico (readiness check). Retorna JSON con estado de dependencias.
+- **/health**: Verifica que la aplicación está corriendo (liveness check). Retorna JSON con estado `ok`.
+- **/ready**: Verifica que la aplicación está lista para recibir tráfico (readiness check). Retorna JSON con estado de dependencias.
 
-Para mas informacion, consulta [TECHNICAL_SPECS.md](../../docs/TECHNICAL_SPECS.md).
+Para más información, consulta [TECHNICAL_SPECS.md](../../docs/TECHNICAL_SPECS.md).

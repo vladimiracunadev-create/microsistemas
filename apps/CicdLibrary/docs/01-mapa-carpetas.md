@@ -1,4 +1,4 @@
-# Mapa de carpetas (diseno del laboratorio)
+# Mapa de carpetas (diseño del laboratorio)
 
 ## Objetivo
 
@@ -7,12 +7,12 @@ Separar:
 - **datos (schema/presets/axes)**,
 - **reglas (requirements/secrets/non-yaml)**,
 - **templates (outputs)**,
-- **engine (generacion)**
+- **engine (generación)**
 
 ## Estructura
 
 - `schemas/axes.json`: dimensiones soportadas (orchestrator/stack/cdStrategy/runner/envModel)
-- `schemas/param-schema.json`: catalogo de parametros (descripcion + defaults)
+- `schemas/param-schema.json`: catálogo de parámetros (descripción + defaults)
 - `presets/presets.json`: escenarios recomendados
 - `templates/`: plantillas Mustache por orquestador
 - `engine/`:

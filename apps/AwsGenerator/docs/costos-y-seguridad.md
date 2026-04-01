@@ -1,18 +1,18 @@
 # Seguridad y Control de Impacto (AWS Assistant Pro)
 
-## El Semaforo de Impacto 🚦
+## El Semáforo de Impacto 🚦
 
-La herramienta clasifica cada accion segun su riesgo operativo potencial:
+La herramienta clasifica cada acción según su riesgo operativo potencial:
 
-- 🔴 **Riesgo Alto (Critico)**: Acciones destructivas (`delete`, `terminate`), cambios en IAM o politicas publicas. Requieren doble confirmacion.
-- 🟡 **Riesgo Medio (Modificacion)**: Actualizaciones de codigo, cambios de configuracion en servicios activos o despliegues.
+- 🔴 **Riesgo Alto (Crítico)**: Acciones destructivas (`delete`, `terminate`), cambios en IAM o políticas públicas. Requieren doble confirmación.
+- 🟡 **Riesgo Medio (Modificación)**: Actualizaciones de código, cambios de configuración en servicios activos o despliegues.
 - 🟢 **Riesgo Bajo (Consulta)**: Comandos de lectura como `list`, `describe` o `get-metrics`.
 
 ## Regla de Oro
 
-Si un comando crea recursos de computo (EC2/ECS/RDS), asume que generara costos inmediatamente si queda activo. Usa la seccion de **Cost Hint** integrada en la receta.
+Si un comando crea recursos de cómputo (EC2/ECS/RDS), asume que generará costos inmediatamente si queda activo. Usa la sección de **Cost Hint** integrada en la receta.
 
-## Recomendaciones para tu caso (free tier + creditos)
+## Recomendaciones para tu caso (free tier + créditos)
 
 - Usa perfiles separados: `dev` y `prod`.
 - Activa alertas: Budgets + Cost Explorer.

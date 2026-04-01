@@ -1,24 +1,24 @@
 # Requisitos del Sistema (System Requirements)
 
-Este documento define las especificaciones tecnicas de hardware y software necesarias para ejecutar **Microsistemas** de manera optima.
+Este documento define las especificaciones técnicas de hardware y software necesarias para ejecutar **Microsistemas** de manera óptima.
 
 ---
 
 ## 🖥️ Hardware
 
-### Minimo (Entorno Local / Pruebas)
+### Mínimo (Entorno Local / Pruebas)
 
 - **CPU**: 1 Core (2.0 GHz+)
-- **RAM**: 512 MB (XAMPP Clasico) / 2 GB (Docker Desktop)
-- **Almacenamiento**: 100 MB libres para el codigo base.
-- **Pantalla**: Resolucion 1024x768.
+- **RAM**: 512 MB (XAMPP Clásico) / 2 GB (Docker Desktop)
+- **Almacenamiento**: 100 MB libres para el código base.
+- **Pantalla**: Resolución 1024x768.
 
-### Recomendado (Produccion / AWS)
+### Recomendado (Producción / AWS)
 
 - **CPU**: 2 Cores
 - **RAM**: 2 GB+
 - **Almacenamiento**: 5 GB+ (dependiendo del volumen de logs y bases de datos).
-- **Red**: Conexion estable para descarga de dependencias y tiempos de respuesta bajos (<100ms).
+- **Red**: Conexión estable para descarga de dependencias y tiempos de respuesta bajos (<100ms).
 
 ---
 
@@ -32,14 +32,14 @@ Este documento define las especificaciones tecnicas de hardware y software neces
 
 ### Stack de Servidor (Backend)
 
-- **PHP**: Version **8.0** o superior (Probado hasta 8.3).
+- **PHP**: Versión **8.0** o superior (Probado hasta 8.3).
   - Extensiones requeridas: `bcmath`, `ctype`, `fileinfo`, `json`, `mbstring`, `pdo`, `xml`.
 - **Servidor Web**:
   - **Apache 2.4+** (con `mod_rewrite` habilitado).
   - **Nginx 1.18+**.
 - **Base de Datos**:
   - **MySQL 8.0+** o **MariaDB 10.5+**.
-- **Composer**: Version **2.0+**.
+- **Composer**: Versión **2.0+**.
 
 ### Herramientas de Desarrollo (Opcionales)
 
@@ -53,7 +53,7 @@ Este documento define las especificaciones tecnicas de hardware y software neces
 
 El sistema utiliza *Vanilla JS* y CSS moderno, compatible con:
 
-| Navegador | Version Minima | Estado |
+| Navegador | Versión Mínima | Estado |
 | :--- | :--- | :--- |
 | **Google Chrome** | 90+ | ✅ Soportado |
 | **Mozilla Firefox** | 88+ | ✅ Soportado |
@@ -65,11 +65,11 @@ El sistema utiliza *Vanilla JS* y CSS moderno, compatible con:
 
 ## 📡 Red y Puertos
 
-Si despliega en un entorno con firewall restringido, asegurese de liberar los siguientes puertos:
+Si despliega en un entorno con firewall restringido, asegúrese de liberar los siguientes puertos:
 
 | Puerto | Protocolo | Uso | Notas |
 | :--- | :--- | :--- | :--- |
-| **80 / 443** | TCP | Trafico Web HTTP/HTTPS | Estandar para acceso de usuarios. |
+| **80 / 443** | TCP | Tráfico Web HTTP/HTTPS | Estándar para acceso de usuarios. |
 | **8080** | TCP | Contenedor Web Alternativo | Puerto por defecto en `docker-compose`. |
 | **3306** | TCP | MySQL Database | Solo si se requiere acceso externo a la DB. |
 
@@ -77,7 +77,7 @@ Si despliega en un entorno con firewall restringido, asegurese de liberar los si
 
 ## 📋 Matriz de Compatibilidad
 
-| Caracteristica | Local (XAMPP) | Docker | Cloud (AWS/GCP) |
+| Característica | Local (XAMPP) | Docker | Cloud (AWS/GCP) |
 | :--- | :---: | :---: | :---: |
 | Dashboard | ✅ | ✅ | ✅ |
 | SQL Viewer | ✅ | ✅ | ✅ |
@@ -87,7 +87,7 @@ Si despliega en un entorno con firewall restringido, asegurese de liberar los si
 | CicdLibrary | ✅ | ✅ | ✅ |
 | AWS Assistant Pro | ✅ | ✅ | ✅ |
 | **Make commands** | ⚠️ (Requiere install) | ✅ | ✅ |
-| **make lint-md** | ⚠️ (Requiere npx) | ✅ | ✅ (CI automatico) |
+| **make lint-md** | ⚠️ (Requiere npx) | ✅ | ✅ (CI automático) |
 | **Skills Playbooks** | ✅ | ✅ | ✅ |
 
-> **Nota**: Para entornos de produccion, se recomienda encarecidamente deshabilitar las herramientas de depuracion como *SQL Viewer* o protegerlas tras una VPN.
+> **Nota**: Para entornos de producción, se recomienda encarecidamente deshabilitar las herramientas de depuración como *SQL Viewer* o protegerlas tras una VPN.

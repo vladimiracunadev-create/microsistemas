@@ -1,36 +1,36 @@
 # SQL Viewer - Micro-App Multi-Motor
 
-## Descripcion
+## Descripción
 
-Un cliente ligero de base de datos multiplataforma disenado para inspeccion rapida y ejecucion de consultas SQL. Soporta multiples motores de base de datos populares.
+Un cliente ligero de base de datos multiplataforma diseñado para inspección rápida y ejecución de consultas SQL. Soporta múltiples motores de base de datos populares.
 
 ## Funcionalidades
 
 - **Soporte Multi-Motor**: Compatible con MySQL, MariaDB, PostgreSQL y SQLite.
-- **Explorador de Esquemas**: Visualiza tablas y vistas segun el motor seleccionado.
-- **Consola de Consultas**: Ejecucion directa de SQL con resaltado de resultados.
-- **Conectividad Dinamica**: Cambia de servidor o base de datos directamente desde la interfaz.
+- **Explorador de Esquemas**: Visualiza tablas y vistas según el motor seleccionado.
+- **Consola de Consultas**: Ejecución directa de SQL con resaltado de resultados.
+- **Conectividad Dinámica**: Cambia de servidor o base de datos directamente desde la interfaz.
 
-## Configuracion
+## Configuración
 
-Utiliza las variables de entorno por defecto definidas en el nucleo (`.env`), pero permite personalizacion en tiempo de ejecucion:
+Utiliza las variables de entorno por defecto definidas en el núcleo (`.env`), pero permite personalización en tiempo de ejecución:
 
 - `DB_DRIVER`: Motor por defecto (`mysql`, `pgsql`, `sqlite`).
 - `DB_HOST`: Host o ruta del archivo de base de datos.
 - `DB_USER`: Usuario (si aplica).
-- `DB_PASS`: Contrasena (si aplica).
+- `DB_PASS`: Contraseña (si aplica).
 
-## Detalles Tecnicos
+## Detalles Técnicos
 
-- **Tecnologia**: PHP 8.x, PDO (PHP Data Objects).
-- **Core**: Utiliza `Microsistemas\Core\Database::getPDO()` para una gestion unificada y segura de conexiones.
-- **Seguridad**: Prevencion de inyeccion SQL mediante el uso de PDO y sanitizacion de salida.
+- **Tecnología**: PHP 8.x, PDO (PHP Data Objects).
+- **Core**: Utiliza `Microsistemas\Core\Database::getPDO()` para una gestión unificada y segura de conexiones.
+- **Seguridad**: Prevención de inyección SQL mediante el uso de PDO y sanitización de salida.
 
 ## Endpoints de Monitoreo
 
-Esta aplicacion implementa los siguientes endpoints de diagnostico:
+Esta aplicación implementa los siguientes endpoints de diagnóstico:
 
-- **/health**: Verifica que la aplicacion esta corriendo (liveness check). Retorna JSON con estado `ok`.
-- **/ready**: Verifica que la aplicacion esta lista para recibir trafico (readiness check). Retorna JSON con estado de dependencias.
+- **/health**: Verifica que la aplicación está corriendo (liveness check). Retorna JSON con estado `ok`.
+- **/ready**: Verifica que la aplicación está lista para recibir tráfico (readiness check). Retorna JSON con estado de dependencias.
 
-Para mas informacion, consulta [TECHNICAL_SPECS.md](../../docs/TECHNICAL_SPECS.md).
+Para más información, consulta [TECHNICAL_SPECS.md](../../docs/TECHNICAL_SPECS.md).

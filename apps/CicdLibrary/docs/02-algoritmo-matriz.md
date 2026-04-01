@@ -3,7 +3,7 @@
 ## Entradas
 
 - `axes.json`: espacio de combinaciones
-- `param-schema.json`: defaults y significado de parametros
+- `param-schema.json`: defaults y significado de parámetros
 - `presets.json`: baseline realista (ej: private-ssh)
 - `templates/`: plantillas por orquestador
 
@@ -12,12 +12,12 @@
 1) Recorrer producto cartesiano de ejes.
 2) Crear config con defaults + preset.
 3) Aplicar overrides del combo.
-4) Normalizar parametros por estrategia (ssh/docker/s3).
+4) Normalizar parámetros por estrategia (ssh/docker/s3).
 5) Evaluar:
    - requirements (inputs obligatorios)
    - requiredSecrets
    - nonYamlSettings
-6) Guardar key, descripcion, outputs esperados.
+6) Guardar key, descripción, outputs esperados.
 
 ## Matriz full (matrix-full.json)
 
