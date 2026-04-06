@@ -5,14 +5,21 @@ services:
     build: .
     container_name: microsistemas-web
     ports:
-      - "8080:80"
+      # SEGURIDAD: bind a loopback para evitar exposicion en red local o Internet.
+      # Solo cambia a "0.0.0.0:8080:80" si necesitas acceso desde otra maquina
+      # en una red de confianza controlada. Nunca en produccion publica.
+      - "127.0.0.1:8080:80"
     volumes:
+      # Montaje completo para desarrollo local. Este stack no esta disenado
+      # para exposicion publica — ver SECURITY.md para el modelo de amenaza.
       - ./:/var/www/html
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html
       - DB_HOST=db
       - DB_USER=${DB_USER:-root}
-      - DB_PASS=${DB_PASS:-root}
+      # Sin fallback hardcodeado: si DB_PASS no esta en .env el contenedor
+      # falla con mensaje claro en lugar de usar una contrasena conocida.
+      - DB_PASS=${DB_PASS:?Copia .env.example a .env y define DB_PASS antes de levantar}
     depends_on:
       db:
         condition: service_healthy
@@ -34,16 +41,18 @@ services:
     image: mysql:8.0.40
     container_name: microsistemas-db
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASS:-root}
+      MYSQL_ROOT_PASSWORD: ${DB_PASS:?Copia .env.example a .env y define DB_PASS antes de levantar}
       MYSQL_DATABASE: ${DB_NAME:-portal_portafolio}
     ports:
-      - "3306:3306"
+      # SEGURIDAD: MySQL solo accesible desde loopback del host.
+      # Nunca exponer 0.0.0.0:3306 — permite conexion directa desde la red.
+      - "127.0.0.1:3306:3306"
     volumes:
       - db-data:/var/lib/mysql
     networks:
       - microsistemas-net
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASS:-root}"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASS}"]
       interval: 10s
       timeout: 5s
       retries: 5

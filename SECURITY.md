@@ -1,22 +1,112 @@
 # Seguridad (SECURITY)
 
-Este repositorio contiene microsistemas orientados a productividad y soporte tecnico.  
-Algunos de ellos (por diseno) trabajan con **archivos locales**, **logs** y/o **consultas a base de datos**, por lo que deben usarse con criterios de seguridad.
+Este repositorio contiene microsistemas orientados a productividad y soporte tecnico.
+Algunos de ellos (por diseno) trabajan con **archivos locales**, **logs** y/o
+**consultas a base de datos**, por lo que deben usarse con criterios de seguridad.
+
+---
+
+## ADVERTENCIA: Solo para uso local
+
+> **Este stack NO esta disenado para exposicion publica a Internet.**
+> Usarlo en un servidor accesible desde Internet sin un proxy inverso, HTTPS y
+> autenticacion es un riesgo de seguridad real. Ver seccion "Modelo de amenaza".
+
+---
+
+## Modelo de amenaza
+
+### Que esta en scope (lo que este stack protege)
+
+- Acceso no autorizado a la base de datos MySQL desde la red local o Internet.
+- Lectura de credenciales a traves del servidor MCP por un asistente de IA.
+- Inyeccion de comandos a traves del Hub CLI o el servidor MCP.
+- Inclusion de secretos (tokens, passwords) en el historial de git.
+- Vulnerabilidades conocidas en dependencias PHP, Docker o GitHub Actions.
+
+### Que esta fuera de scope (lo que este stack NO protege sin configuracion adicional)
+
+- Autenticacion de usuarios (no hay login en el dashboard).
+- Cifrado en transito (no hay HTTPS por defecto en modo local).
+- Control de acceso por rol (RBAC) — no implementado.
+- Proteccion contra ataques desde Internet si los puertos estan expuestos publicamente.
+- Aislamiento de datos entre sesiones o usuarios multiples.
+
+### Perfil de uso seguro
+
+```
+[Desarrollador local] --> [localhost:8080] --> [Docker web container]
+                                                     |
+                                              [Docker db container]
+                                              127.0.0.1:3306 (solo loopback)
+```
+
+El trafico nunca debe cruzar una red publica sin capa de autenticacion y HTTPS.
+
+---
+
+## Como ejecutar de forma local segura
+
+1. **Copia `.env.example` a `.env`** y define `DB_PASS` con un valor propio.
+   El contenedor Docker falla de forma explicita si `DB_PASS` no esta definida.
+
+2. **No cambies los puertos** de `127.0.0.1:8080` ni `127.0.0.1:3306`.
+   Si necesitas acceso desde otra maquina en tu red local, usa una VPN o
+   tunel SSH en lugar de exponer los puertos a `0.0.0.0`.
+
+3. **Usa credenciales de base de datos con permisos minimos.**
+   Crea un usuario MySQL con solo `SELECT, INSERT, UPDATE` en vez de `root`.
+   Root solo es necesario para el setup inicial.
+
+4. **No expongas el stack a Internet** sin:
+   - Proxy inverso (Nginx/Traefik) con HTTPS
+   - Autenticacion (Basic Auth, OAuth, Authelia)
+   - Firewall que bloquee acceso externo a los puertos 8080 y 3306
+
+5. **Revisa `.gitignore`** antes de hacer commit. El archivo `.env` esta excluido,
+   pero archivos como `docker-compose.override.yml` o configs locales tambien
+   pueden contener secretos.
+
+---
+
+## Que esta protegido / que no
+
+| Componente | Estado | Detalle |
+|---|---|---|
+| Puerto MySQL (3306) | Protegido | Bind a `127.0.0.1` — no accesible desde red |
+| Puerto Web (8080) | Protegido | Bind a `127.0.0.1` — no accesible desde red |
+| Credenciales en git | Protegido | `.env` en `.gitignore` + TruffleHog en CI |
+| Secret scanning | Protegido | TruffleHog + pre-commit detect-secrets |
+| Dependencias | Protegido | Dependabot + Trivy en CI |
+| MCP server | Protegido | Solo lectura, whitelist estricta, sin .env accesible |
+| Hub CLI | Protegido | Sanitizacion de input, comandos hardcodeados |
+| Path traversal | Protegido | Validacion con `abspath` en MCP y Hub |
+| Autenticacion web | SIN proteccion | No hay login — solo uso local |
+| HTTPS | SIN proteccion | No configurado por defecto — solo local |
+| RBAC | SIN proteccion | No implementado — herramienta personal/demo |
+| Multi-usuario | SIN proteccion | No disenado para multiples usuarios |
+
+---
 
 ## Versiones soportadas
 
-Este repositorio se mantiene como laboratorio/portafolio.  
+Este repositorio se mantiene como laboratorio/portafolio.
 Se recomienda usar siempre la version mas reciente disponible en la rama principal.
+
+---
 
 ## Reporte responsable de vulnerabilidades
 
-Si encuentras una vulnerabilidad, por favor **no la publiques como issue**.
+Si encuentras una vulnerabilidad, por favor **no la publiques como issue publico**.
 
 - Describe el problema con pasos para reproducir.
 - Indica el microsistema afectado y el archivo.
 - Adjunta evidencia minima (capturas, logs) sin exponer datos sensibles.
 
-**Canal sugerido:** crear un issue marcado como "security" **sin datos sensibles** y solicitar contacto privado, o comunicarlo por el canal directo que definas en tu perfil.
+**Canal sugerido:** crear un issue marcado como "security" **sin datos sensibles**
+y solicitar contacto privado, o comunicarlo directamente.
+
+---
 
 ## Guia de uso seguro (recomendaciones)
 
@@ -24,20 +114,22 @@ Si encuentras una vulnerabilidad, por favor **no la publiques como issue**.
 
 Estos microsistemas estan pensados para uso local (XAMPP/MAMP/LAMP) o redes controladas.
 
-✅ Recomendado: `http://localhost/...`
-❌ Evitar: servidor publico accesible desde Internet.
+- Recomendado: `http://localhost/...`
+- Evitar: servidor publico accesible desde Internet sin proxy + auth.
 
-### 2) Principio de "minimo privilegio"
+### 2) Principio de minimo privilegio
 
-- Si un microsistema requiere credenciales de BD, usar un usuario con permisos minimos (idealmente solo `SELECT`).
-- Evitar credenciales de produccion.
+- Si un microsistema requiere credenciales de BD, usar un usuario con permisos minimos
+  (idealmente solo `SELECT` para SqlViewer, `SELECT, INSERT, UPDATE` para otros).
+- Evitar credenciales de produccion en entornos de desarrollo.
 
-### 3) Microsistema 2 (PhpMyAdmin Acotado)
+### 3) SqlViewer y acceso a base de datos
 
 - Mantener `SELECT` como modo por defecto.
-- Si se habilitan `INSERT/UPDATE/DELETE`, hacerlo solo con confirmaciones explicitas y en entornos controlados.
+- Si se habilitan `INSERT/UPDATE/DELETE`, hacerlo solo con confirmaciones
+  explicitas y en entornos controlados.
 
-### 4) Microsistema 3 (Visor de Logs y Configuracion)
+### 4) LogViewer
 
 - Debe operar en modo **solo lectura**.
 - Usar whitelist de rutas/archivos permitidos.
@@ -45,47 +137,65 @@ Estos microsistemas estan pensados para uso local (XAMPP/MAMP/LAMP) o redes cont
 
 ### 5) Datos sensibles
 
-Nunca guardar:
+Nunca guardar en el repositorio:
 
-- Passwords, tokens, keys, secrets en el repositorio.
+- Passwords, tokens, keys, secrets.
 - Dumps productivos o logs con datos personales.
 
-Usar variables de entorno y archivos fuera del repo si aplica.
+Usar variables de entorno (`.env`) y archivos fuera del repo.
 
-## Hardening Aplicado
+---
 
-Este repositorio ha pasado por un proceso de hardening para mitigar riesgos:
+## Hardening aplicado
 
-### 🛡️ Docker & Contenedores
+### Docker y contenedores
 
-- **Imagenes Especificas**: No se usan tags `latest`, se fijan versiones estables.
-- **No-Root**: Los procesos principales corren bajo usuarios con privilegios limitados (`www-data`).
+- **Versiones fijas**: No se usan tags `latest`, se fijan versiones estables.
+- **Puertos restringidos**: MySQL y web vinculados a `127.0.0.1` (loopback).
+- **Sin fallback de contrasena**: El contenedor falla si `DB_PASS` no esta en `.env`.
 - **Healthchecks**: Monitoreo nativo del estado de salud de los servicios.
-- **Capas Minimas**: Limpieza de cache de apt y archivos temporales.
+- **Resource limits**: CPU y memoria acotados para evitar DoS por agotamiento.
+- **Capas minimas**: Limpieza de cache de apt y archivos temporales en build.
 
-### 🛡️ Kubernetes (K8s)
+### Kubernetes (demo)
 
-- **SecurityContext**: Se obliga a la ejecucion como no-root y se deshabilitan escaladas de privilegios.
-- **Resource Limits**: Configuracion de cuotas de CPU y Memoria para evitar DoS por agotamiento de recursos.
-- **NetworkPolicies**: Aislamiento de red para trafico este-oeste (demo).
+- **SecurityContext**: Ejecucion como no-root, escalada de privilegios deshabilitada.
+- **Resource Limits**: Cuotas de CPU y memoria.
+- **NetworkPolicies**: Aislamiento de red para trafico este-oeste.
 
-### 🛡️ HUB CLI & Aplicaciones
+### Hub CLI y aplicaciones
 
-- **Input Sanitization**: Validacion estricta de IDs de aplicacion.
-- **Path Traversal Prevention**: Validacion de rutas usando `abspath` para asegurar el scope en `apps/`.
+- **Input sanitization**: Validacion estricta de IDs de aplicacion.
+- **Path traversal prevention**: Validacion con `abspath` restringida a `apps/`.
 
-### 🛡️ Servidor MCP (IA Context Layer)
+### Servidor MCP (capa de contexto para IA)
 
-- **Solo Lectura V1**: El servidor expone explicitamente herramientas que imitan un "Sidecar" pasivo (`read_doc`, `read_manifest`, `run_hub_list`). Todo esta restringido por diseno para evitar "Prompt Injections" sobre comandos destructables.
-- **Prevencion de Path Traversal**: La lectura de documentos/skills se restringe via Whitelists estrictas (ej. arreglo de nombres permitidos en configuracion). Se prohibe explicitamente la lectura de archivos confidenciales ocultos, credenciales, la DB local o tokens.
-- **Sanitizacion Nativa**: Los sub-comandos ejecutados (hub doctor o listeo) estan harcodeados y no aceptan secuencias de terminal arbitrarias provenientes de un LLM.
+- **Solo lectura V1**: Herramientas restringidas por diseno (`read_doc`, `read_manifest`,
+  `run_hub_list`). Imposibilita "Prompt Injections" sobre comandos destructivos.
+- **Whitelist estricta**: Lectura de documentos restringida a lista fija. El `.env`,
+  credenciales y archivos sensibles estan explicitamente excluidos.
+- **Sanitizacion nativa**: Sub-comandos hardcodeados, no aceptan secuencias arbitrarias.
 
-### 🛡️ CI/CD & Automatizacion
+### CI/CD y automatizacion
 
-- **CicdLibrary**: Los patrones generados siguen el estandar de "minimo privilegio" (ej: uso de OIDC o llaves SSH acotadas).
-- **Hardened Templates**: Las plantillas de GitHub/GitLab incluyen pasos de validacion de seguridad por defecto.
+- **Secret scanning**: TruffleHog y pre-commit (detect-secrets).
+- **Vulnerability scanning**: Trivy sobre imagenes Docker en cada build.
+- **Dependabot**: Actualizaciones automaticas de Composer, Docker y GitHub Actions.
+- **SBOM**: Generacion de Software Bill of Materials en cada release.
 
-### 🛡️ Desarrollo & CI/CD
+---
 
-- **Secret Scanning**: Integracion de TruffleHog y pre-commit (detect-secrets).
-- **Dependency Scanning (Dependabot)**: Flujo autonomo de CI configurado en `.github/dependabot.yml` para auditar paquetes de Composer, contenedores Docker y flujos de GitHub Actions. Ante vulnerabilidades (CVEs), el bot crea silenciosamente ramas `dependabot/*` y propone Pull Requests aislados que no rompen `main` hasta que los Tests (Status Checks) validen su idoneidad, garantizando una postura de seguridad proactiva.
+## Fase 2 — Mejoras pendientes (no implementadas)
+
+Estas mejoras requieren evaluacion adicional antes de aplicar:
+
+1. **Usuario MySQL no-root por defecto**: crear usuario `microsistemas_user` con permisos
+   minimos en lugar de `root` en `.env.example`.
+2. **Apache con usuario menos privilegiado**: usar puerto 8080 internamente para no
+   requerir root en el contenedor (requiere ajuste de VirtualHost).
+3. **Headers de seguridad HTTP**: agregar `X-Frame-Options`, `X-Content-Type-Options`,
+   `Content-Security-Policy` en `.htaccess` o configuracion Apache.
+4. **Modo read-only para LogViewer y SqlViewer**: reforzar a nivel de codigo PHP
+   que las operaciones de escritura requieran confirmacion explicita.
+5. **Autenticacion basica opcional**: agregar `.htpasswd` como capa de proteccion
+   opcional para quienes quieran exponer el stack en red local controlada.
