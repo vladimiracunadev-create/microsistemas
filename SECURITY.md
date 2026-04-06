@@ -232,3 +232,33 @@ Las siguientes mejoras fueron implementadas como segunda iteracion de seguridad:
 
 5. **Autenticacion basica opcional**: pendiente de evaluacion para casos donde
    se necesite exponer el stack en red local controlada con `.htpasswd`.
+
+---
+
+## Fase 3 — Mejoras pendientes (identificadas, no implementadas)
+
+Vulnerabilidades conocidas de baja severidad en el contexto de uso local,
+pero que deben resolverse antes de cualquier exposicion en red compartida.
+
+1. **CSRF en SqlViewer**: El formulario POST de ejecucion de queries no incluye
+   token CSRF. Una pagina local maliciosa podria enviar queries a
+   `http://localhost:8080/apps/SqlViewer/` si el navegador no bloquea el origen.
+   Solucion: agregar token sincronizado por sesion PHP.
+
+2. **`composer audit` en CI**: El pipeline no ejecuta `composer audit` para
+   detectar CVEs en dependencias PHP. Dependabot cubre actualizaciones pero
+   no auditoria en tiempo de build. Solucion: agregar paso en el workflow de CI.
+
+3. **Rate limiting en SqlViewer**: No existe limite de peticiones por unidad de
+   tiempo. Un bucle de queries pesadas puede agotar CPU/memoria del contenedor.
+   Solucion: contador por sesion o middleware de throttling en PHP.
+
+4. **Validacion de host en SqlViewer**: El parametro `host` recibido via GET
+   no esta restringido a una whitelist. Podria usarse para apuntar a hosts
+   externos o internos de red. Solucion: validar contra lista de hosts permitidos
+   definida en `.env` o limitar a `localhost`/`db` por defecto.
+
+5. **Autenticacion basica (.htpasswd)**: No hay capa de autenticacion web.
+   Cualquier usuario con acceso a la red (si se cambia el bind a `0.0.0.0`)
+   puede usar el dashboard sin credenciales.
+   Solucion: agregar `.htpasswd` como capa opcional configurable via `.env`.
