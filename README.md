@@ -168,15 +168,23 @@ make help                      # Todos los comandos disponibles
 | Apache no-root | ✅ | Puerto 8080 interno, proceso corre como `www-data` |
 | Usuario MySQL minimo | ✅ | `docker/init-db.sh` crea usuario con permisos minimos (opcional) |
 
-### Fase 3 — Pendiente
+### Fase 3 — CI / cadena de suministro
 
 | Control | Estado | Detalle |
 | :--- | :---: | :--- |
-| CSRF en SqlViewer | ⏳ | Formulario POST sin token CSRF — pendiente en entornos expuestos |
-| `composer audit` en CI | ⏳ | Auditoria de dependencias PHP no incluida en el pipeline aun |
+| `composer audit` en CI | ✅ | Escanea `composer.lock` contra PHP Security Advisories + GitHub Advisory DB |
+| Supply chain scan — Trojan Source | ✅ | Detecta Unicode bidi (CVE-2021-42574) en todo el codigo fuente |
+| Supply chain scan — ofuscacion | ✅ | Detecta `eval/base64`, `shell_exec($_`, `system($_REQUEST` y similares |
+| Integridad de `composer.lock` | ✅ | Valida que el archivo de bloqueo este presente en cada build |
+
+### Pendiente (documentado, no implementado)
+
+| Control | Estado | Detalle |
+| :--- | :---: | :--- |
+| CSRF en SqlViewer | ⏳ | Formulario POST sin token — riesgo si se expone en red |
 | Rate limiting | ⏳ | Sin limite de peticiones en ejecucion de queries |
-| Validacion de host (SqlViewer) | ⏳ | Parametro `host` acepta cualquier valor — podria apuntar a hosts externos |
-| Autenticacion basica | ⏳ | `.htpasswd` opcional para exponer en red local controlada |
+| Validacion de host (SqlViewer) | ⏳ | Campo `host` sin whitelist — podria apuntar a hosts externos |
+| Autenticacion basica | ⏳ | Sin login — `.htpasswd` pendiente para red local controlada |
 
 **Variables de entorno relevantes**
 

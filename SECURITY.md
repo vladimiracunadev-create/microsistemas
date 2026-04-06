@@ -235,30 +235,50 @@ Las siguientes mejoras fueron implementadas como segunda iteracion de seguridad:
 
 ---
 
-## Fase 3 — Mejoras pendientes (identificadas, no implementadas)
+## Fase 3 — Hardening aplicado
 
-Vulnerabilidades conocidas de baja severidad en el contexto de uso local,
-pero que deben resolverse antes de cualquier exposicion en red compartida.
+Las siguientes mejoras fueron implementadas como tercera iteracion de seguridad
+en el pipeline CI (`.github/workflows/ci.yml`):
+
+1. **`composer audit` en CI**: Paso agregado al job `lint-php`. Compara
+   `composer.lock` contra PHP Security Advisories DB, GitHub Advisory DB y
+   FriendsOfPHP DB. Falla el build si detecta CVEs en dependencias de produccion.
+
+2. **Escaneo de cadena de suministro (supply-chain-scan)**: Job dedicado con
+   tres controles:
+   - **Integridad de `composer.lock`**: Valida que el archivo de bloqueo este
+     presente (sin el, las versiones no estan fijadas ni sus hashes verificados).
+   - **Trojan Source (CVE-2021-42574)**: Detecta caracteres Unicode
+     bidireccionales (LRE, RLE, RLO, LRI, etc.) en archivos `.php`, `.js`,
+     `.py`, `.sh` y `.yml`. Estos caracteres invierten el orden visual del texto
+     para camuflar codigo malicioso en editores.
+   - **Patrones de ofuscacion**: Detecta `eval(base64_decode`, `shell_exec($_`,
+     `system($_REQUEST`, `preg_replace/e` y otras tecnicas clasicas de inyeccion
+     de codigo PHP oculto.
+
+---
+
+## Fase 3 — Pendiente (identificado, no implementado)
+
+Vulnerabilidades de baja severidad en contexto local. Deben resolverse antes
+de cualquier exposicion en red compartida o Internet.
 
 1. **CSRF en SqlViewer**: El formulario POST de ejecucion de queries no incluye
    token CSRF. Una pagina local maliciosa podria enviar queries a
    `http://localhost:8080/apps/SqlViewer/` si el navegador no bloquea el origen.
-   Solucion: agregar token sincronizado por sesion PHP.
+   Solucion: agregar token sincronizado por sesion PHP en el formulario.
 
-2. **`composer audit` en CI**: El pipeline no ejecuta `composer audit` para
-   detectar CVEs en dependencias PHP. Dependabot cubre actualizaciones pero
-   no auditoria en tiempo de build. Solucion: agregar paso en el workflow de CI.
-
-3. **Rate limiting en SqlViewer**: No existe limite de peticiones por unidad de
+2. **Rate limiting en SqlViewer**: No existe limite de peticiones por unidad de
    tiempo. Un bucle de queries pesadas puede agotar CPU/memoria del contenedor.
-   Solucion: contador por sesion o middleware de throttling en PHP.
+   Solucion: contador por sesion PHP o middleware de throttling.
 
-4. **Validacion de host en SqlViewer**: El parametro `host` recibido via GET
+3. **Validacion de host en SqlViewer**: El parametro `host` recibido via GET
    no esta restringido a una whitelist. Podria usarse para apuntar a hosts
-   externos o internos de red. Solucion: validar contra lista de hosts permitidos
-   definida en `.env` o limitar a `localhost`/`db` por defecto.
+   externos o internos de red.
+   Solucion: validar contra `SQLVIEWER_ALLOWED_HOSTS` en `.env` (default:
+   `localhost,db`).
 
-5. **Autenticacion basica (.htpasswd)**: No hay capa de autenticacion web.
+4. **Autenticacion basica (.htpasswd)**: No hay capa de autenticacion web.
    Cualquier usuario con acceso a la red (si se cambia el bind a `0.0.0.0`)
    puede usar el dashboard sin credenciales.
    Solucion: agregar `.htpasswd` como capa opcional configurable via `.env`.
