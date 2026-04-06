@@ -134,7 +134,7 @@ jobs:
           'shell_exec\s*\(\s*\$_'
           'passthru\s*\(\s*\$_'
           'system\s*\(\s*\$_REQUEST'
-          'preg_replace.*\/e'
+          'preg_replace\s*\(\s*["\x27][^"]*\/e[imsu]*["\x27]'
           'assert\s*\(\s*\$_'
         )
         for pattern in "${PATTERNS[@]}"; do
