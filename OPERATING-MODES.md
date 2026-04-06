@@ -7,11 +7,18 @@ El ecosistema **Microsistemas** ha sido disenado con pragmatismo para poder ejec
 **Este es el modo oficial y recomendado para la evaluacion del proyecto o despliegue en un VPS.**
 
 - **El Como:** Funciona a traves de los archivos `Dockerfile` y `docker-compose.yml`. Se ejecuta de forma abstracta usando el binario Make (`make up`) o directamente con `docker-compose up -d`.
+- **URL de acceso:** `http://localhost:8080` (Apache corre en puerto interno 8080,
+  mapeado a loopback del host. Solo accesible desde la misma maquina.)
+- **Seguridad aplicada en este modo:**
+  - Apache corre como usuario `www-data` (no-root) en puerto no privilegiado.
+  - HTTP security headers activos via `.htaccess` (`mod_headers`).
+  - Puertos vinculados a `127.0.0.1` — no accesibles desde la red local.
+  - SqlViewer en modo solo lectura, con CSRF, rate limiting y whitelist de hosts.
 - **Ventajas:**
-  - Infraestructura inmutable. Garantiza las versiones de PHP (8.1) y Base de Datos.
-  - El enrutamiento local y el healthcheck vienen auto-configurados.
-  - Reduccion total de friccion en la instalacion (No importa Windows, Mac o Linux, el contexto de ejecucion sera identico dentro del contenedor).
-- **Limites:** Consumo de recursos un poco mas elevado (requiere la maquina virtual o demonio local de Docker).
+  - Infraestructura inmutable. Garantiza las versiones de PHP y base de datos.
+  - El enrutamiento local y los healthchecks vienen auto-configurados.
+  - Sin friccion en la instalacion: mismo contexto en Windows, Mac y Linux.
+- **Limites:** Requiere Docker instalado. Consumo de recursos ligeramente mayor.
 
 ## 2. Modo Desarrollo Veloz (PHP Built-in Web Server)
 
@@ -29,11 +36,17 @@ El ecosistema **Microsistemas** ha sido disenado con pragmatismo para poder ejec
 **Ideal para flujos de despliegue sobre sistemas compartidos de hace 10 anos, demostrando resiliencia y fuerte compatibilidad hacia atras.**
 
 - **El Como:** Se clona el contenido del repositorio directamente en el sub-directorio publico por defecto (ej. `C:\xampp\htdocs\microsistemas\`).
+- **URL de acceso:** `http://localhost/microsistemas/` (Apache en puerto 80, el
+  predeterminado de XAMPP. Diferente al modo Docker que usa el 8080.)
+- **Seguridad en este modo:**
+  - Los HTTP security headers del `.htaccess` funcionan igual (Apache lee `.htaccess` por defecto en XAMPP).
+  - SqlViewer con CSRF, rate limiting y whitelist activos.
+  - Los puertos NO estan restringidos a loopback como en Docker — todo el trafico de XAMPP es local por configuracion del sistema operativo.
 - **Ventajas:**
-  - Permite levantar sistemas que asumen las rutas con la raiz del nombre de carpeta (`http://localhost/microsistemas/`).
-  - Uso extendido en academias o empresas tradicionales sin acceso a arquitecturas efimeras o Docker.
+  - Sin necesidad de Docker. Levanta en segundos con XAMPP ya instalado.
+  - Acceso en `http://localhost/microsistemas/` sin configuracion adicional.
 - **Limites:**
-  - Podrian surgir problemas de resolucion de rutas relativas o variables de entorno `DOCUMENT_ROOT` si el sistema no esta configurado como host virtual independiente (VirtualHost en Apache). Sin embargo, el "Core" de microsistemas esta codificado para adaptarse en la medida de lo posible a los subdirectorios.
+  - Podrian surgir problemas de resolucion de rutas si el sistema no tiene VirtualHost configurado. El Core esta codificado para adaptarse a subdirectorios.
 
 ## 4. Modo Desacoplado por Aplicacion Individual (Hub Local)
 

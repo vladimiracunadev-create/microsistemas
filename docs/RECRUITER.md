@@ -265,16 +265,31 @@ Una suite unificada de micro-aplicaciones que:
 
 ## 🛡️ Seguridad y Mejores Practicas
 
-### Medidas Implementadas
+El proyecto aplica tres fases de hardening progresivo documentadas en
+[SECURITY.md](../SECURITY.md):
 
-- ✅ **Variables de Entorno**: Credenciales nunca en codigo fuente
-- ✅ **Prepared Statements**: Prevencion de SQL Injection
-- ✅ **CSRF Tokens**: Proteccion contra ataques cross-site
-- ✅ **Input Validation**: Sanitizacion exhaustiva de datos de entrada
-- ✅ **Secret Scanning**: GitHub Actions detecta credenciales expuestas
-- ✅ **Dependency Audit (Dependabot)**: Analisis autonomo que previene vulnerabilidades (CVEs) generando Pull Requests y aislando el impacto hasta revision manual.
-- ✅ **Rate Limiting**: Proteccion contra abuso de APIs
-- ✅ **Allowlist de Apps**: Control de aplicaciones ejecutables
+### Fase 1 — Infraestructura
+
+- ✅ **Puertos en loopback**: MySQL y Apache vinculados a `127.0.0.1`
+- ✅ **Credenciales obligatorias**: Fail-fast si `DB_PASS` no esta en `.env`
+- ✅ **Secret scanning**: TruffleHog en CI + `detect-secrets` pre-commit
+- ✅ **Dependency audit**: Dependabot + Trivy en cada build Docker
+
+### Fase 2 — Aplicacion
+
+- ✅ **HTTP security headers**: X-Frame-Options, CSP, nosniff, Referrer-Policy via `.htaccess`
+- ✅ **SqlViewer modo solo lectura**: `SQLVIEWER_READONLY=true` bloquea escritura por defecto
+- ✅ **Apache no-root**: Puerto 8080 interno, proceso como `www-data`
+- ✅ **Usuario MySQL minimo**: Script opcional `docker/init-db.sh`
+
+### Fase 3 — CI y aplicacion avanzada
+
+- ✅ **CSRF tokens**: Token por sesion con `random_bytes` + `hash_equals` en SqlViewer
+- ✅ **Rate limiting**: Maximo queries/min por sesion, configurable via `.env`
+- ✅ **Whitelist de hosts**: SqlViewer solo conecta a hosts autorizados en `.env`
+- ✅ **`composer audit`**: Escanea CVEs en dependencias PHP en cada push
+- ✅ **Supply-chain scan**: Detecta Unicode bidi (CVE-2021-42574) y ofuscacion en codigo fuente
+- ✅ **`composer.lock` en repo**: Fija hashes SHA de dependencias para detectar tamperado
 
 ### Cumplimiento de Estandares
 
@@ -463,4 +478,4 @@ Si estas evaluando este proyecto como parte de un proceso de seleccion, te recom
 
 ---
 
-*Ultima actualizacion: 18 de Febrero, 2026 (v1.3.0)*
+*Ultima actualizacion: 6 de Abril, 2026 (v3.0.0)*

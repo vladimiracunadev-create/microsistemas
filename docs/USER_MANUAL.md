@@ -16,9 +16,20 @@ La suite se organiza en un **Dashboard Central** que actua como puerta de enlace
 
 #### SQL Viewer
 
-* **Proposito**: Inspeccion agil y depuracion de bases de datos.
-* **Workflow Pro**: Use la columna izquierda para explorar esquemas; el resaltado de sintaxis le ayudara a escribir consultas complejas.
-* **Seguridad**: El sistema bloquea ejecuciones accidentales mediante dialogos de confirmacion persistentes.
+* **Proposito**: Inspeccion agil y depuracion de bases de datos sin instalar clientes pesados.
+* **Workflow Pro**: Use la columna izquierda para explorar esquemas y tablas; haga clic en una tabla para autocompletar `SELECT * FROM tabla LIMIT 100` en el editor.
+* **Controles de seguridad activos por defecto:**
+  * **Modo solo lectura** (`SQLVIEWER_READONLY=true`): Bloquea INSERT, UPDATE,
+    DELETE, DROP, ALTER y TRUNCATE. Un badge amarillo en la UI indica el modo activo.
+    Para desactivarlo temporalmente en local, cambia a `false` en tu `.env`.
+  * **Rate limiting**: Maximo 30 queries por minuto por sesion (configurable con
+    `SQLVIEWER_RATE_LIMIT` en `.env`). La UI muestra un aviso cuando quedan 5 o
+    menos consultas en la ventana actual.
+  * **Whitelist de hosts**: Solo puede conectarse a hosts definidos en
+    `SQLVIEWER_ALLOWED_HOSTS` (default: `localhost,db,127.0.0.1`). Para agregar
+    un host adicional, editalo en tu `.env`.
+  * **Proteccion CSRF**: Cada formulario lleva un token de sesion unico. Protege
+    contra envios maliciosos desde otras pestanas o paginas locales.
 
 #### Log Viewer
 
@@ -96,7 +107,12 @@ Consulta tambien la [Guia de Contribucion](../CONTRIBUTING.md#como-anadir-un-nue
 
 ### Es seguro habilitar el SQL Viewer en servidores de produccion?
 
-**Solo si** el acceso esta protegido por un VPN o un archivo `.htpasswd`. Por defecto, esta disenado para ser usado en entornos de red protegidos.
+El SqlViewer corre en modo solo lectura por defecto y tiene CSRF, rate limiting y
+whitelist de hosts activos. Aun asi, **no esta disenado para exposicion publica**.
+Si necesitas acceso desde otra maquina en tu red local, activa la autenticacion
+basica descomentando el bloque `.htpasswd` en `.htaccess` y generando el archivo
+de usuarios con `htpasswd -c /ruta/fuera/del/repo/.htpasswd tu_usuario`.
+Ver [SECURITY.md](../SECURITY.md) para el modelo de amenaza completo.
 
 ### He perdido la conexion con la base de datos.
 

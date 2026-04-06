@@ -4,11 +4,84 @@ Todos los cambios notables en este proyecto seran documentados en este archivo. 
 
 ## [Unreleased]
 
-### Anadido
+## [3.0.0] - 2026-04-06
 
-- **Servidor MCP Local (AI Context Layer)**: Integracion "sidecar" de *Model Context Protocol* escrita en `FastMCP` de Python, orquestando una API de Solo Lectura exclusiva para clientes de Inteligencia Artificial locales (Claude Desktop, Cursor).
-- **Tools MCP**: Inclusion de herramientas diagnosticas harcodeadas (`run_hub_list`, `run_hub_doctor`, `run_smoke`, `find_ports`, `read_manifest`, `read_doc`, `read_skill`) para analizar la infraestructura dockerizada, puertos o componentes del "Hub CLI", prohibiendo inyecciones con Whitelists rigurosas y mitigacion de Path Traversals.
-- **Resources & Prompts MCP**: Rutas pre-cocidas (`repo://`) y asistentes sistemicos (`integrar-microapp`, `auditar-manifest`, `diagnosticar-entorno`, `preparar-release-docs`) que otorgan "Memoria Institucional" estandarizada sobre la arquitectura `Microsistemas` sin sacrificar la inmutabilidad de los repositorios.
+### Anadido — Seguridad Fase 2 y Fase 3 (hardening completo)
+
+**Infraestructura Docker:**
+
+- **Apache no-root**: Dockerfile configura Apache en puerto interno 8080
+  (`Listen 8080`). El proceso corre como `www-data` sin necesitar root.
+  Mapeo externo sin cambios: `http://localhost:8080`.
+- **`docker/init-db.sh`**: Script de inicializacion opcional que crea un
+  usuario MySQL con permisos minimos (`SELECT/INSERT/UPDATE/DELETE`) si se
+  definen `DB_APP_USER` y `DB_APP_PASS` en `.env`.
+- **`composer.lock` en repositorio**: Fija versiones exactas y hashes SHA
+  de dependencias PHP, garantizando reproducibilidad y detectabilidad de
+  tamperado en cadena de suministro.
+
+**Seguridad HTTP:**
+
+- **`.htaccess` con security headers**: `X-Frame-Options SAMEORIGIN`,
+  `X-Content-Type-Options nosniff`, `Referrer-Policy`, `Permissions-Policy`
+  y `Content-Security-Policy` aplicados en todas las rutas via `mod_headers`.
+- **`AllowOverride All`**: Habilitado en VirtualHost del Dockerfile para que
+  `.htaccess` sea procesado correctamente en Docker.
+- **Autenticacion basica opcional**: Bloque `.htpasswd` comentado en
+  `.htaccess` con instrucciones paso a paso para activarlo.
+
+**SqlViewer — controles de aplicacion:**
+
+- **CSRF**: Token por sesion generado con `bin2hex(random_bytes(32))`,
+  validado con `hash_equals()` en cada POST.
+- **Rate limiting**: Maximo `SQLVIEWER_RATE_LIMIT` queries por minuto por
+  sesion (default: 30). Reinicio automatico del contador cada 60 segundos.
+  La UI avisa cuando quedan 5 o menos consultas disponibles.
+- **Modo solo lectura**: `SQLVIEWER_READONLY=true` bloquea INSERT, UPDATE,
+  DELETE, DROP, ALTER, TRUNCATE y CREATE. Badge visible en la UI.
+- **Whitelist de hosts**: Parametro `host` validado contra
+  `SQLVIEWER_ALLOWED_HOSTS` en `.env` (default: `localhost,db,127.0.0.1`).
+
+**CI/CD — cadena de suministro:**
+
+- **`composer audit`**: Paso en el job `lint-php` que escanea `composer.lock`
+  contra PHP Security Advisories DB y GitHub Advisory DB. Falla el build ante
+  CVEs en dependencias de produccion.
+- **`supply-chain-scan` (job nuevo)**: Tres controles en cada push:
+  validacion de `composer.lock`, deteccion de Unicode bidi (Trojan Source,
+  CVE-2021-42574) y deteccion de patrones de ofuscacion PHP/JS.
+
+**Variables de entorno nuevas:**
+
+- `SQLVIEWER_READONLY` (default `true`)
+- `SQLVIEWER_ALLOWED_HOSTS` (default `localhost,db,127.0.0.1`)
+- `SQLVIEWER_RATE_LIMIT` (default `30`)
+- `DB_APP_USER` / `DB_APP_PASS` (opcionales, usuario MySQL minimo)
+
+### Anadido — Servidor MCP Local
+
+- **Servidor MCP Local (AI Context Layer)**: Integracion "sidecar" de
+  *Model Context Protocol* escrita en `FastMCP` de Python, orquestando una
+  API de Solo Lectura exclusiva para clientes de IA locales (Claude Desktop,
+  Cursor). Tools: `run_hub_list`, `run_hub_doctor`, `run_smoke`,
+  `find_ports`, `read_manifest`, `read_doc`, `read_skill`.
+- **Resources & Prompts MCP**: Rutas pre-cocidas (`repo://`) y asistentes
+  sistemicos para contexto institucional sin sacrificar inmutabilidad.
+
+### Corregido
+
+- **`.gitignore`**: Removidas exclusiones incorrectas de `composer.lock`
+  (debe estar en repo para aplicaciones) y `.env.example` (es plantilla publica).
+- **`AllowOverride None`** (default Apache): El `.htaccess` era ignorado
+  completamente en Docker. Corregido via `sed` en Dockerfile.
+- **`curl` ausente en imagen**: Agregado a `apt-get install` para que el
+  HEALTHCHECK no falle silenciosamente.
+- **`/var/lock/apache2`**: Removido del `chown` (directorio inexistente en
+  imagen base). Reemplazado por `mkdir -p` sobre rutas seguras.
+- **`init-db.sh` CRLF**: Agregado `*.sh text eol=lf` en `.gitattributes`
+  para evitar error `bad interpreter: /bin/bash^M` en contenedores Linux.
+- **MD029 en SECURITY.md**: Renumeradas listas ordenadas para cumplir
+  regla de markdownlint (cada lista reinicia desde 1).
 
 ## [2.3.0] - 2026-03-05
 
