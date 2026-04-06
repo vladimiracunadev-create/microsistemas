@@ -24,6 +24,10 @@ services:
       # SqlViewer: modo solo lectura activo por defecto. Cambiar a false solo si
       # se necesitan INSERT/UPDATE/DELETE desde el visor (uso local controlado).
       - SQLVIEWER_READONLY=${SQLVIEWER_READONLY:-true}
+      # Whitelist de hosts a los que SqlViewer puede conectarse.
+      - SQLVIEWER_ALLOWED_HOSTS=${SQLVIEWER_ALLOWED_HOSTS:-localhost,db,127.0.0.1}
+      # Limite de queries por minuto por sesion (rate limiting).
+      - SQLVIEWER_RATE_LIMIT=${SQLVIEWER_RATE_LIMIT:-30}
     depends_on:
       db:
         condition: service_healthy

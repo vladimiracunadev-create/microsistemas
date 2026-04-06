@@ -1,4 +1,31 @@
 <?php
+// =============================================================================
+// Seguridad: session, CSRF token, rate limiting
+// Debe ejecutarse ANTES de cualquier output HTML
+// =============================================================================
+session_start();
+
+// --- Token CSRF --------------------------------------------------------------
+// Generado una vez por sesion. Se valida en cada POST para evitar que paginas
+// externas envien queries en nombre del usuario (Cross-Site Request Forgery).
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+$csrfToken = $_SESSION['csrf_token'];
+
+// --- Rate limiting -----------------------------------------------------------
+// Maximo SQLVIEWER_RATE_LIMIT queries por minuto por sesion (default: 30).
+// Reinicia el contador cada 60 segundos.
+$rateLimitMax = max(1, (int)(getenv('SQLVIEWER_RATE_LIMIT') ?: 30));
+if (empty($_SESSION['rl_reset']) || time() - $_SESSION['rl_reset'] > 60) {
+    $_SESSION['rl_count'] = 0;
+    $_SESSION['rl_reset'] = time();
+}
+$rateLimitHit    = false;
+$rateLimitRemain = $rateLimitMax - (int)($_SESSION['rl_count'] ?? 0);
+
+// =============================================================================
+
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Microsistemas\Core\Database;
@@ -20,7 +47,24 @@ $drivers = [
 ];
 
 $driver = $_REQUEST['driver'] ?? $config->get('DB_DRIVER', 'mysql');
-$host = $_REQUEST['host'] ?? $config->get('DB_HOST', 'localhost');
+
+// --- Whitelist de hosts ------------------------------------------------------
+// Solo se permiten conexiones a hosts definidos en SQLVIEWER_ALLOWED_HOSTS.
+// Evita que un atacante redirija el conector a servidores externos o internos
+// de red que no deben ser accesibles desde esta herramienta.
+$allowedHosts = array_map(
+    'trim',
+    explode(',', getenv('SQLVIEWER_ALLOWED_HOSTS') ?: 'localhost,db,127.0.0.1')
+);
+$hostRequested = $_REQUEST['host'] ?? $config->get('DB_HOST', 'localhost');
+if (!in_array($hostRequested, $allowedHosts, true)) {
+    $hostError = "Host '<strong>" . htmlspecialchars($hostRequested) . "</strong>' no permitido. "
+        . "Hosts autorizados: <code>" . htmlspecialchars(implode(', ', $allowedHosts)) . "</code>. "
+        . "Agrega el host en <code>SQLVIEWER_ALLOWED_HOSTS</code> en tu <code>.env</code>.";
+    $hostRequested = $allowedHosts[0];
+}
+$host = $hostRequested;
+
 $user = $_REQUEST['user'] ?? $config->get('DB_USER', 'root');
 $pass = $_REQUEST['pass'] ?? $config->get('DB_PASS', '');
 $db_selected = $_REQUEST['db'] ?? $config->get('DB_NAME', '');
@@ -116,6 +160,20 @@ $readOnlyPattern = '/^\s*(INSERT|UPDATE|DELETE|DROP|TRUNCATE|ALTER|CREATE|REPLAC
 
 $queryResultHtml = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query']) && $conn) {
+
+    // --- Validar token CSRF --------------------------------------------------
+    $submittedToken = $_POST['csrf_token'] ?? '';
+    if (!hash_equals($csrfToken, $submittedToken)) {
+        $queryResultHtml = "<div class='error'><strong>Token de seguridad invalido.</strong> "
+            . "Recarga la pagina e intenta de nuevo.</div>";
+    }
+    // --- Validar rate limit --------------------------------------------------
+    elseif ($rateLimitRemain <= 0) {
+        $rateLimitHit    = true;
+        $queryResultHtml = "<div class='error'><strong>Limite de consultas alcanzado.</strong> "
+            . "Maximo {$rateLimitMax} queries por minuto. Espera unos segundos.</div>";
+    }
+    else {
     $query = trim($_POST['query']);
     if ($query !== '') {
         if ($readOnly && preg_match($readOnlyPattern, $query)) {
@@ -152,6 +210,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query']) && $conn) {
         }
         } // end read-only check
     }
+    $_SESSION['rl_count'] = ($_SESSION['rl_count'] ?? 0) + 1;
+    $rateLimitRemain = $rateLimitMax - (int)$_SESSION['rl_count'];
+    } // end rate limit + csrf check
 }
 ?>
 <!DOCTYPE html>
@@ -310,6 +371,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query']) && $conn) {
         </div>
         <h3><i class="fas fa-database"></i> SqlViewer</h3>
 
+        <?php if (!empty($hostError)): ?>
+            <div class="error"><?php echo $hostError; ?></div>
+        <?php endif; ?>
         <?php if ($error): ?>
             <div class="error">
                 <?php echo htmlspecialchars($error); ?>
@@ -390,6 +454,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query']) && $conn) {
 
     <div id="content">
         <form method="POST">
+            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
             <input type="hidden" name="driver" value="<?php echo htmlspecialchars($driver); ?>">
             <input type="hidden" name="host" value="<?php echo htmlspecialchars($host); ?>">
             <input type="hidden" name="user" value="<?php echo htmlspecialchars($user); ?>">
@@ -408,6 +473,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query']) && $conn) {
                 placeholder="SELECT * FROM ..."><?php echo isset($_POST['query']) ? htmlspecialchars($_POST['query']) : ''; ?></textarea>
             <br><br>
             <button type="submit"><i class="fas fa-play"></i> Ejecutar Consulta</button>
+            <?php if ($rateLimitRemain <= 5 && !$rateLimitHit): ?>
+                <small style="color:#856404;margin-left:10px;">
+                    Consultas restantes este minuto: <?php echo max(0, $rateLimitRemain); ?>
+                </small>
+            <?php endif; ?>
         </form>
 
         <div id="results">

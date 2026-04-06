@@ -177,14 +177,14 @@ make help                      # Todos los comandos disponibles
 | Supply chain scan — ofuscacion | ✅ | Detecta `eval/base64`, `shell_exec($_`, `system($_REQUEST` y similares |
 | Integridad de `composer.lock` | ✅ | Valida que el archivo de bloqueo este presente en cada build |
 
-### Pendiente (documentado, no implementado)
+### Fase 3 — Aplicacion (SqlViewer)
 
 | Control | Estado | Detalle |
 | :--- | :---: | :--- |
-| CSRF en SqlViewer | ⏳ | Formulario POST sin token — riesgo si se expone en red |
-| Rate limiting | ⏳ | Sin limite de peticiones en ejecucion de queries |
-| Validacion de host (SqlViewer) | ⏳ | Campo `host` sin whitelist — podria apuntar a hosts externos |
-| Autenticacion basica | ⏳ | Sin login — `.htpasswd` pendiente para red local controlada |
+| CSRF en SqlViewer | ✅ | Token por sesion (`random_bytes`) validado con `hash_equals` en cada POST |
+| Rate limiting | ✅ | Max `SQLVIEWER_RATE_LIMIT` queries/min por sesion (default: 30) |
+| Whitelist de host | ✅ | `SQLVIEWER_ALLOWED_HOSTS` en `.env` — rechaza hosts no autorizados |
+| Autenticacion basica | ✅ | Bloque `.htpasswd` listo en `.htaccess` — activar descomentando 3 lineas |
 
 **Variables de entorno relevantes**
 

@@ -258,27 +258,27 @@ en el pipeline CI (`.github/workflows/ci.yml`):
 
 ---
 
-## Fase 3 — Pendiente (identificado, no implementado)
+## Fase 3 — Hardening aplicado (aplicacion)
 
-Vulnerabilidades de baja severidad en contexto local. Deben resolverse antes
-de cualquier exposicion en red compartida o Internet.
+Las siguientes mejoras fueron implementadas en `apps/SqlViewer/index.php`,
+`.htaccess`, `.env.example` y `docker-compose.yml`:
 
-1. **CSRF en SqlViewer**: El formulario POST de ejecucion de queries no incluye
-   token CSRF. Una pagina local maliciosa podria enviar queries a
-   `http://localhost:8080/apps/SqlViewer/` si el navegador no bloquea el origen.
-   Solucion: agregar token sincronizado por sesion PHP en el formulario.
+5. **CSRF en SqlViewer**: Se agrego `session_start()` y generacion de token con
+   `bin2hex(random_bytes(32))`. El token se inserta como campo oculto en el
+   formulario POST y se valida con `hash_equals()` antes de ejecutar cualquier
+   query. Un token invalido devuelve error sin ejecutar nada.
 
-2. **Rate limiting en SqlViewer**: No existe limite de peticiones por unidad de
-   tiempo. Un bucle de queries pesadas puede agotar CPU/memoria del contenedor.
-   Solucion: contador por sesion PHP o middleware de throttling.
+6. **Rate limiting en SqlViewer**: Contador de queries por sesion almacenado en
+   `$_SESSION['rl_count']`. Se reinicia cada 60 segundos. El limite es
+   configurable via `SQLVIEWER_RATE_LIMIT` en `.env` (default: 30 queries/min).
+   La UI muestra un aviso cuando quedan 5 o menos consultas disponibles.
 
-3. **Validacion de host en SqlViewer**: El parametro `host` recibido via GET
-   no esta restringido a una whitelist. Podria usarse para apuntar a hosts
-   externos o internos de red.
-   Solucion: validar contra `SQLVIEWER_ALLOWED_HOSTS` en `.env` (default:
-   `localhost,db`).
+7. **Whitelist de hosts en SqlViewer**: El parametro `host` se valida contra
+   `SQLVIEWER_ALLOWED_HOSTS` en `.env` (default: `localhost,db,127.0.0.1`).
+   Si el host solicitado no esta en la lista, se rechaza con mensaje claro y
+   se usa el primer host autorizado como fallback seguro.
 
-4. **Autenticacion basica (.htpasswd)**: No hay capa de autenticacion web.
-   Cualquier usuario con acceso a la red (si se cambia el bind a `0.0.0.0`)
-   puede usar el dashboard sin credenciales.
-   Solucion: agregar `.htpasswd` como capa opcional configurable via `.env`.
+8. **Autenticacion basica opcional (.htpasswd)**: Bloque comentado agregado en
+   `.htaccess` con instrucciones paso a paso para activar `AuthType Basic`.
+   El archivo `.htpasswd` debe generarse con `htpasswd` y guardarse **fuera
+   del repositorio**. No activo por defecto (solo uso local sin autenticacion).

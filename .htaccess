@@ -39,3 +39,18 @@ frame-ancestors 'self'"
 # --- PHP error display (production) ------------------------------------------
 php_flag display_errors Off
 php_flag log_errors On
+
+# --- Autenticacion basica opcional -------------------------------------------
+# Activa este bloque si necesitas exponer el dashboard en red local controlada.
+# Pasos para habilitar:
+#   1. Genera el archivo de usuarios:
+#      htpasswd -c /ruta/segura/fuera/del/repo/.htpasswd tu_usuario
+#   2. Descomenta las lineas de abajo y ajusta la ruta a AuthUserFile.
+#   3. Nunca guardes .htpasswd dentro del repositorio.
+#
+# <RequireAll>
+#     Require valid-user
+# </RequireAll>
+# AuthType Basic
+# AuthName "Microsistemas - Acceso Restringido"
+# AuthUserFile /ruta/absoluta/fuera/del/repo/.htpasswd
