@@ -263,22 +263,22 @@ en el pipeline CI (`.github/workflows/ci.yml`):
 Las siguientes mejoras fueron implementadas en `apps/SqlViewer/index.php`,
 `.htaccess`, `.env.example` y `docker-compose.yml`:
 
-5. **CSRF en SqlViewer**: Se agrego `session_start()` y generacion de token con
+1. **CSRF en SqlViewer**: Se agrego `session_start()` y generacion de token con
    `bin2hex(random_bytes(32))`. El token se inserta como campo oculto en el
    formulario POST y se valida con `hash_equals()` antes de ejecutar cualquier
    query. Un token invalido devuelve error sin ejecutar nada.
 
-6. **Rate limiting en SqlViewer**: Contador de queries por sesion almacenado en
+2. **Rate limiting en SqlViewer**: Contador de queries por sesion almacenado en
    `$_SESSION['rl_count']`. Se reinicia cada 60 segundos. El limite es
    configurable via `SQLVIEWER_RATE_LIMIT` en `.env` (default: 30 queries/min).
    La UI muestra un aviso cuando quedan 5 o menos consultas disponibles.
 
-7. **Whitelist de hosts en SqlViewer**: El parametro `host` se valida contra
+3. **Whitelist de hosts en SqlViewer**: El parametro `host` se valida contra
    `SQLVIEWER_ALLOWED_HOSTS` en `.env` (default: `localhost,db,127.0.0.1`).
    Si el host solicitado no esta en la lista, se rechaza con mensaje claro y
    se usa el primer host autorizado como fallback seguro.
 
-8. **Autenticacion basica opcional (.htpasswd)**: Bloque comentado agregado en
+4. **Autenticacion basica opcional (.htpasswd)**: Bloque comentado agregado en
    `.htaccess` con instrucciones paso a paso para activar `AuthType Basic`.
    El archivo `.htpasswd` debe generarse con `htpasswd` y guardarse **fuera
    del repositorio**. No activo por defecto (solo uso local sin autenticacion).

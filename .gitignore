@@ -3,9 +3,10 @@
 Thumbs.db
 
 # Environments
+# .env contiene secretos reales -- NUNCA al repositorio
 .env
 .env.local
-.env.example
+# .env.example es la plantilla publica -- debe estar en el repo
 
 # Docker
 docker-compose.override.yml
@@ -16,7 +17,8 @@ docker-compose.override.yml
 
 # PHP
 vendor/
-composer.lock
+# composer.lock debe estar en el repo para aplicaciones (fija versiones exactas y hashes).
+# Solo se excluye en librerias/paquetes reutilizables, no en aplicaciones.
 
 # Security and Secrets
 *.pem
