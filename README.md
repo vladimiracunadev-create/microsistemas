@@ -55,8 +55,8 @@ Dos modos de uso: contenedor aislado listo en 30 segundos o servidor local sin c
 <tr>
 <td>
 
-**🔐 Hardening en dos fases**<br>
-Puertos loopback, headers HTTP, modo solo lectura en SqlViewer, Apache no-root.
+**🔐 Hardening en tres fases**<br>
+Infraestructura, aplicacion y cadena de suministro. CSRF, rate limiting, supply-chain scan.
 
 </td>
 <td>
@@ -217,43 +217,61 @@ Pagina estatica en `landing/` publicada en GitHub Pages.
 
 ---
 
-## 📚 Documentacion
-
-<details>
-<summary><strong>Operacion y arquitectura</strong></summary>
+## 📚 Documentacion de Usuario
 
 | Documento | Descripcion |
 | :--- | :--- |
-| [INSTALL.md](docs/INSTALL.md) | Guia de instalacion detallada (Docker, XAMPP, Linux) |
-| [RUNBOOK.md](RUNBOOK.md) | Manual de operacion y diagnostico |
-| [HUB.md](docs/HUB.md) | Referencia completa del Hub CLI |
-| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | Diagramas Mermaid y detalles del Core |
-| [OPERATING-MODES.md](OPERATING-MODES.md) | Casos y modos de ejecucion |
-| [REQUIREMENTS.md](docs/REQUIREMENTS.md) | Requisitos de hardware y software |
-| [COMPATIBILITY.md](COMPATIBILITY.md) | Matriz de compatibilidad y ambientes |
-| [CHANGELOG.md](CHANGELOG.md) | Historial de cambios |
-| [RELEASE.md](RELEASE.md) | Estrategia de versionado y entrega |
+| [Guia de Instalacion](docs/INSTALL.md) | Instalacion detallada en Docker, XAMPP y Linux |
+| [Manual de Usuario](docs/USER_MANUAL.md) | Como sacar el maximo provecho a cada herramienta |
+| [Guia del Hub CLI](docs/HUB.md) | Referencia completa de comandos del Hub |
+| [Guia para Principiantes](docs/BEGINNERS_GUIDE.md) | Estructura del proyecto explicada desde cero |
+| [Guia para Reclutadores](docs/RECRUITER.md) | Tour tecnico guiado: decisiones, stack y demos |
+| [Catalogo de Sistemas](docs/SYSTEMS_CATALOG.md) | Detalles tecnicos de cada micro-app |
+| [Referencia de Archivos](docs/FILES_REFERENCE.md) | Explicacion de cada archivo del repositorio |
+| [Referencia de API](docs/API.md) | Como interactuar con el Core y extensiones |
+| [Skills / Playbooks](skills/integrar-microsistema/skill.md) | Flujos reutilizables para automatizar tareas |
+| [Servidor MCP Local](mcp/README.md) | Configuracion del servidor de contexto para IA |
+| [Landing del Producto](docs/LANDING_PAGE.md) | Documentacion de la pagina de presentacion |
 
-</details>
+---
 
-<details>
-<summary><strong>Para desarrolladores y reclutadores</strong></summary>
+## 🗂️ Centro de Documentacion y Gobernanza
+
+### Operaciones, Arquitectura y Configuracion
 
 | Documento | Descripcion |
 | :--- | :--- |
-| [SECURITY.md](SECURITY.md) | Politica de seguridad y modelo de amenaza completo |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Guia de contribucion |
-| [RECRUITER.md](docs/RECRUITER.md) | Tour guiado para reclutadores tecnicos |
-| [BEGINNERS_GUIDE.md](docs/BEGINNERS_GUIDE.md) | Guia para nuevos colaboradores |
-| [USER_MANUAL.md](docs/USER_MANUAL.md) | Manual de usuario |
-| [SYSTEMS_CATALOG.md](docs/SYSTEMS_CATALOG.md) | Catalogo tecnico de cada micro-app |
-| [API.md](docs/API.md) | Referencia de la API del core |
-| [TECHNICAL_SPECS.md](docs/TECHNICAL_SPECS.md) | Stack y estandares tecnicos |
-| [MAINTAINERS.md](docs/MAINTAINERS.md) | Guia para mantenedores |
-| [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) | Codigo de conducta |
-| [ADR-0001](docs/adr/0001-contexto-y-decisiones-iniciales.md) | Decisiones arquitectonicas iniciales |
+| [ADR-0001](docs/adr/0001-contexto-y-decisiones-iniciales.md) | Arquitectura inicial y decisiones de diseno |
+| [Arquitectura](docs/ARCHITECTURE.md) | Diagramas Mermaid y detalles del Core |
+| [Specs Tecnicas](docs/TECHNICAL_SPECS.md) | Stack, estandares y normas de mantencion |
+| [Requisitos del Sistema](docs/REQUIREMENTS.md) | Hardware, software y dependencias |
+| [Modos de Ejecucion](OPERATING-MODES.md) | Docker, XAMPP, PHP built-in y Hub local |
+| [Matriz de Compatibilidad](COMPATIBILITY.md) | Entornos y versiones soportadas |
+| [Manual de Operacion](RUNBOOK.md) | Diagnostico, arranque y recuperacion |
+| [Estrategia de Versionado](RELEASE.md) | Proceso de release y Semantic Versioning |
+| [Historial de Cambios](CHANGELOG.md) | Registro completo de versiones y mejoras |
 
-</details>
+### Soporte, Comunidad y Gobernanza
+
+| Documento | Descripcion |
+| :--- | :--- |
+| [Politica de Soporte](SUPPORT.md) | Canales de asistencia y niveles de soporte |
+| [Guia de Contribucion](CONTRIBUTING.md) | Como contribuir al proyecto |
+| [Seguridad](SECURITY.md) | Modelo de amenaza, hardening Fase 1/2/3 y reporte de vulnerabilidades |
+| [Guia de Mantenedores](docs/MAINTAINERS.md) | Informacion critica para administradores |
+| [Codigo de Conducta](CODE_OF_CONDUCT.md) | Normas para una comunidad saludable |
+
+### Configuracion Estrategica
+
+Archivos de gobernanza que definen la calidad profesional del repositorio:
+
+| Archivo | Descripcion |
+| :--- | :--- |
+| [CITATION.cff](CITATION.cff) | Metadatos de citacion academica del software |
+| [CODEOWNERS](.github/CODEOWNERS) | Asignacion de responsabilidades por area |
+| [dependabot.yml](.github/dependabot.yml) | Auditoria automatica de dependencias |
+| [Plantillas de Issues](.github/ISSUE_TEMPLATE/) | Formularios estandar para bugs y features |
+| [.editorconfig](.editorconfig) | Reglas globales de formateo para editores |
 
 ---
 
