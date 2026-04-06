@@ -1,5 +1,8 @@
-# Normalización universal de fin de línea
+# Normalizacion universal de fin de linea
 * text=auto
+
+# Shell scripts MUST use LF -- CRLF breaks bash inside Linux containers
+*.sh text eol=lf
 
 # Archivos y directorios que no deberían incluirse en los .zip Release (export-ignore)
 /.github/           export-ignore

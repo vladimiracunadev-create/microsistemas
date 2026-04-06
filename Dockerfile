@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zip \
     unzip \
     git \
+    curl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd mysqli pdo pdo_mysql \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -42,10 +43,14 @@ RUN find /var/www/html -type d -exec chmod 755 {} \; \
     && find /var/www/html -type f -exec chmod 644 {} \; \
     && chown -R www-data:www-data /var/www/html/vendor
 
-# Switch Apache to non-privileged port 8080 so it can run as www-data (no root needed)
+# Switch Apache to non-privileged port 8080 so it can run as www-data (no root needed).
+# Also enable AllowOverride All so .htaccess security headers are applied.
 RUN sed -i 's/^Listen 80$/Listen 8080/' /etc/apache2/ports.conf \
     && sed -i 's/<VirtualHost \*:80>/<VirtualHost *:8080>/' /etc/apache2/sites-available/000-default.conf \
-    && chown -R www-data:www-data /var/log/apache2 /var/run/apache2 /var/lock/apache2
+    && sed -i 's|</VirtualHost>|    <Directory /var/www/html>\n        AllowOverride All\n        Require all granted\n    </Directory>\n</VirtualHost>|' \
+        /etc/apache2/sites-available/000-default.conf \
+    && mkdir -p /var/run/apache2 /var/log/apache2 \
+    && chown -R www-data:www-data /var/run/apache2 /var/log/apache2
 
 # Run as non-root
 USER www-data
