@@ -205,7 +205,7 @@ Pagina estatica en `landing/` publicada en GitHub Pages.
 | Entorno | URL |
 | :--- | :--- |
 | Local | `http://localhost:8080/landing/` |
-| GitHub Pages | https://vladimiracunadev-create.github.io/microsistemas/ |
+| GitHub Pages | [vladimiracunadev-create.github.io/microsistemas](https://vladimiracunadev-create.github.io/microsistemas/) |
 
 ---
 

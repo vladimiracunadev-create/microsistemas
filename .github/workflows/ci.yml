@@ -63,6 +63,93 @@ jobs:
       continue-on-error: true
     - name: PHPStan
       run: phpstan analyze
+    # --- Seguridad de dependencias PHP ----------------------------------------
+    - name: Composer Audit (CVE scan de dependencias PHP)
+      run: composer audit --no-interaction
+      # Falla el job si encuentra vulnerabilidades conocidas en composer.lock.
+      # Cubre: PHP Security Advisories DB, GitHub Advisory DB, FriendsOfPHP DB.
+
+  # ---------------------------------------------------------------------------
+  # Escaneo de codigo malicioso oculto (supply chain / Trojan Source)
+  # Detecta caracteres Unicode bidireccionales usados para camuflar codigo
+  # malicioso haciendolo ver inofensivo en editores (CVE-2021-42574).
+  # Tambien valida integridad de composer.lock y busca patrones sospechosos.
+  # ---------------------------------------------------------------------------
+  supply-chain-scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Verificar integridad de composer.lock
+      run: |
+        if [ ! -f composer.lock ]; then
+          echo "ERROR: composer.lock ausente -- las dependencias no estan fijadas"
+          exit 1
+        fi
+        echo "OK: composer.lock presente"
+
+    - name: Scan Trojan Source -- Unicode bidi en codigo fuente
+      run: |
+        python3 - <<'PYEOF'
+        import glob, sys
+        # Caracteres bidi usados para invertir el orden visual del texto
+        # y camuflar codigo malicioso (CVE-2021-42574 "Trojan Source")
+        BIDI = [
+            '\u202a', '\u202b', '\u202c', '\u202d', '\u202e',  # LRE/RLE/PDF/LRO/RLO
+            '\u2066', '\u2067', '\u2068', '\u2069',            # LRI/RLI/FSI/PDI
+            '\u200f', '\u200e',                                # RLM/LRM
+        ]
+        EXTENSIONS = ['**/*.php','**/*.js','**/*.py','**/*.sh','**/*.yml','**/*.ts']
+        SKIP = ['vendor/', 'node_modules/', '.git/']
+        found = []
+        for pat in EXTENSIONS:
+            for f in glob.glob(pat, recursive=True):
+                if any(s in f for s in SKIP):
+                    continue
+                try:
+                    txt = open(f, encoding='utf-8', errors='ignore').read()
+                    hits = [hex(ord(c)) for c in BIDI if c in txt]
+                    if hits:
+                        found.append(f'{f} ({", ".join(hits)})')
+                except Exception:
+                    pass
+        if found:
+            print('ALERTA -- Unicode bidi detectado en:')
+            for f in found:
+                print(f'  {f}')
+            sys.exit(1)
+        print('OK: sin Unicode bidi sospechoso en codigo fuente')
+        PYEOF
+
+    - name: Scan patrones de codigo sospechoso (eval/base64/exec ocultos)
+      run: |
+        # Detecta tecnicas comunes de ofuscacion en PHP y JS:
+        # eval(base64_decode), shell_exec, system() con variables, etc.
+        # Solo fuera de vendor/ para no generar falsos positivos en libs.
+        FOUND=0
+        PATTERNS=(
+          'eval\s*\(\s*base64_decode'
+          'eval\s*\(\s*gzinflate'
+          'eval\s*\(\s*str_rot13'
+          'shell_exec\s*\(\s*\$_'
+          'passthru\s*\(\s*\$_'
+          'system\s*\(\s*\$_REQUEST'
+          'preg_replace.*\/e'
+          'assert\s*\(\s*\$_'
+        )
+        for pattern in "${PATTERNS[@]}"; do
+          matches=$(grep -rP "$pattern" --include="*.php" --include="*.js" \
+            --exclude-dir=vendor --exclude-dir=node_modules . 2>/dev/null || true)
+          if [ -n "$matches" ]; then
+            echo "ALERTA patron sospechoso ($pattern):"
+            echo "$matches"
+            FOUND=1
+          fi
+        done
+        if [ "$FOUND" -eq 1 ]; then
+          exit 1
+        fi
+        echo "OK: sin patrones de ofuscacion detectados"
 
   lint-python:
     needs: [changes]
