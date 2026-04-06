@@ -108,12 +108,21 @@ if ($conn) {
 
 /**
  * 4) EJECUCIÓN DE CONSULTA
- * Si se envía una query por POST, se ejecuta y se renderiza el resultado en una tabla HTML
+ * Si se envía una query por POST, se ejecuta y se renderiza el resultado en una tabla HTML.
+ * En modo solo lectura (SQLVIEWER_READONLY=true) se bloquean operaciones de escritura.
  */
+$readOnly = filter_var(getenv('SQLVIEWER_READONLY') ?: 'true', FILTER_VALIDATE_BOOLEAN);
+$readOnlyPattern = '/^\s*(INSERT|UPDATE|DELETE|DROP|TRUNCATE|ALTER|CREATE|REPLACE|RENAME|GRANT|REVOKE)\b/i';
+
 $queryResultHtml = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query']) && $conn) {
     $query = trim($_POST['query']);
     if ($query !== '') {
+        if ($readOnly && preg_match($readOnlyPattern, $query)) {
+            $queryResultHtml = "<div class='error'><strong>Modo solo lectura activo.</strong> "
+                . "Solo se permiten consultas SELECT. "
+                . "Para habilitar escritura establece <code>SQLVIEWER_READONLY=false</code> en el entorno.</div>";
+        } else {
         try {
             $stmt = $conn->query($query);
             if ($stmt->columnCount() > 0) {
@@ -141,6 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query']) && $conn) {
         } catch (\PDOException $e) {
             $queryResultHtml = "<div class='error'>Error en la consulta: " . htmlspecialchars($e->getMessage()) . "</div>";
         }
+        } // end read-only check
     }
 }
 ?>
@@ -388,6 +398,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query']) && $conn) {
 
             <h3>Ejecutar SQL (
                 <?php echo strtoupper($driver); ?>)
+                <?php if ($readOnly): ?>
+                    <span class="badge" style="background:#fff3cd;color:#856404;font-size:.75rem;margin-left:8px;">
+                        Solo lectura
+                    </span>
+                <?php endif; ?>
             </h3>
             <textarea name="query"
                 placeholder="SELECT * FROM ..."><?php echo isset($_POST['query']) ? htmlspecialchars($_POST['query']) : ''; ?></textarea>

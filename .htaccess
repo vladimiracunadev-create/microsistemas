@@ -1,0 +1,41 @@
+# =============================================================================
+# Microsistemas - Apache configuration and HTTP security headers
+# =============================================================================
+
+# --- Rewrite engine ----------------------------------------------------------
+Options -Indexes
+RewriteEngine On
+
+# --- HTTP Security Headers ---------------------------------------------------
+# Requires mod_headers (enabled in Dockerfile via a2enmod headers)
+<IfModule mod_headers.c>
+    # Prevent clickjacking
+    Header always set X-Frame-Options "SAMEORIGIN"
+
+    # Prevent MIME-type sniffing
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Control referrer information sent to other origins
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Restrict browser features
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=()"
+
+    # Content Security Policy
+    # - 'unsafe-inline' needed: apps use inline <script> and <style> blocks
+    # - cdnjs.cloudflare.com: Font Awesome icons used by SqlViewer
+    # - fonts.googleapis.com + fonts.gstatic.com: Google Fonts in landing
+    # - img.shields.io: badges in landing and README previews
+    Header always set Content-Security-Policy "\
+default-src 'self'; \
+script-src 'self' 'unsafe-inline'; \
+style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; \
+font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; \
+img-src 'self' https://img.shields.io data:; \
+connect-src 'self'; \
+frame-ancestors 'self'"
+</IfModule>
+
+# --- PHP error display (production) ------------------------------------------
+php_flag display_errors Off
+php_flag log_errors On

@@ -81,6 +81,9 @@ El trafico nunca debe cruzar una red publica sin capa de autenticacion y HTTPS.
 | MCP server | Protegido | Solo lectura, whitelist estricta, sin .env accesible |
 | Hub CLI | Protegido | Sanitizacion de input, comandos hardcodeados |
 | Path traversal | Protegido | Validacion con `abspath` en MCP y Hub |
+| Headers HTTP | Protegido | X-Frame-Options, CSP, nosniff, Referrer-Policy via .htaccess |
+| SqlViewer escritura | Protegido | SQLVIEWER_READONLY=true bloquea INSERT/UPDATE/DELETE/DROP |
+| Apache no-root | Protegido | Puerto 8080, proceso corre como www-data |
 | Autenticacion web | SIN proteccion | No hay login — solo uso local |
 | HTTPS | SIN proteccion | No configurado por defecto — solo local |
 | RBAC | SIN proteccion | No implementado — herramienta personal/demo |
@@ -163,6 +166,26 @@ Usar variables de entorno (`.env`) y archivos fuera del repo.
 - **Resource Limits**: Cuotas de CPU y memoria.
 - **NetworkPolicies**: Aislamiento de red para trafico este-oeste.
 
+### Headers HTTP (Fase 2)
+
+- **X-Frame-Options SAMEORIGIN**: Proteccion contra clickjacking.
+- **X-Content-Type-Options nosniff**: Evita MIME sniffing.
+- **Referrer-Policy**: Solo envia referrer a mismo origen.
+- **Permissions-Policy**: Deshabilita geolocation, mic, camara y pagos.
+- **Content-Security-Policy**: Restringe carga de recursos a origenes conocidos.
+
+### SqlViewer (Fase 2)
+
+- **Modo solo lectura por defecto**: `SQLVIEWER_READONLY=true` bloquea
+  operaciones de escritura (INSERT/UPDATE/DELETE/DROP/ALTER/TRUNCATE).
+- **Configurable via `.env`**: Se puede desactivar para uso local controlado.
+
+### Apache (Fase 2)
+
+- **Puerto no privilegiado**: Apache escucha en 8080 dentro del contenedor,
+  no requiere root para el binding.
+- **Ejecucion como www-data**: `apache2-foreground` corre como usuario no-root.
+
 ### Hub CLI y aplicaciones
 
 - **Input sanitization**: Validacion estricta de IDs de aplicacion.
@@ -185,17 +208,27 @@ Usar variables de entorno (`.env`) y archivos fuera del repo.
 
 ---
 
-## Fase 2 — Mejoras pendientes (no implementadas)
+## Fase 2 — Hardening aplicado
 
-Estas mejoras requieren evaluacion adicional antes de aplicar:
+Las siguientes mejoras fueron implementadas como segunda iteracion de seguridad:
 
-1. **Usuario MySQL no-root por defecto**: crear usuario `microsistemas_user` con permisos
-   minimos en lugar de `root` en `.env.example`.
-2. **Apache con usuario menos privilegiado**: usar puerto 8080 internamente para no
-   requerir root en el contenedor (requiere ajuste de VirtualHost).
-3. **Headers de seguridad HTTP**: agregar `X-Frame-Options`, `X-Content-Type-Options`,
-   `Content-Security-Policy` en `.htaccess` o configuracion Apache.
-4. **Modo read-only para LogViewer y SqlViewer**: reforzar a nivel de codigo PHP
-   que las operaciones de escritura requieran confirmacion explicita.
-5. **Autenticacion basica opcional**: agregar `.htpasswd` como capa de proteccion
-   opcional para quienes quieran exponer el stack en red local controlada.
+1. **Usuario MySQL no-root (opcional)**: `docker/init-db.sh` montado en
+   `/docker-entrypoint-initdb.d/`. Si se definen `DB_APP_USER` y `DB_APP_PASS`
+   en `.env`, crea un usuario con solo `SELECT/INSERT/UPDATE/DELETE`.
+   Ver `.env.example` para configuracion.
+
+2. **Apache como no-root en puerto 8080**: Dockerfile cambia `Listen 80` a `Listen 8080`
+   y ejecuta `apache2-foreground` como `www-data`. Elimina la necesidad de root
+   para el binding de puerto. Mapeo Docker: `127.0.0.1:8080:8080`.
+
+3. **Headers de seguridad HTTP**: `.htaccess` en la raiz del proyecto establece:
+   `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`,
+   `Permissions-Policy` y `Content-Security-Policy`.
+   Requiere `mod_headers` (habilitado en Dockerfile via `a2enmod headers`).
+
+4. **SqlViewer modo solo lectura**: variable de entorno `SQLVIEWER_READONLY=true`
+   (activa por defecto) bloquea `INSERT/UPDATE/DELETE/DROP/ALTER/TRUNCATE/CREATE`.
+   La UI muestra el modo activo. Configurable en `.env` y `docker-compose.yml`.
+
+5. **Autenticacion basica opcional**: pendiente de evaluacion para casos donde
+   se necesite exponer el stack en red local controlada con `.htpasswd`.

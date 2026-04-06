@@ -6,9 +6,10 @@ services:
     container_name: microsistemas-web
     ports:
       # SEGURIDAD: bind a loopback para evitar exposicion en red local o Internet.
-      # Solo cambia a "0.0.0.0:8080:80" si necesitas acceso desde otra maquina
-      # en una red de confianza controlada. Nunca en produccion publica.
-      - "127.0.0.1:8080:80"
+      # Apache corre en puerto interno 8080 (no-root). Solo cambia a
+      # "0.0.0.0:8080:8080" si necesitas acceso desde otra maquina en red
+      # de confianza controlada. Nunca en produccion publica.
+      - "127.0.0.1:8080:8080"
     volumes:
       # Montaje completo para desarrollo local. Este stack no esta disenado
       # para exposicion publica — ver SECURITY.md para el modelo de amenaza.
@@ -20,13 +21,16 @@ services:
       # Sin fallback hardcodeado: si DB_PASS no esta en .env el contenedor
       # falla con mensaje claro en lugar de usar una contrasena conocida.
       - DB_PASS=${DB_PASS:?Copia .env.example a .env y define DB_PASS antes de levantar}
+      # SqlViewer: modo solo lectura activo por defecto. Cambiar a false solo si
+      # se necesitan INSERT/UPDATE/DELETE desde el visor (uso local controlado).
+      - SQLVIEWER_READONLY=${SQLVIEWER_READONLY:-true}
     depends_on:
       db:
         condition: service_healthy
     networks:
       - microsistemas-net
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/apps/CapacitySim/health/"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080/apps/CapacitySim/health/"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -43,12 +47,19 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASS:?Copia .env.example a .env y define DB_PASS antes de levantar}
       MYSQL_DATABASE: ${DB_NAME:-portal_portafolio}
+      # Opcionales: si se definen, el script init-db.sh crea un usuario con
+      # permisos minimos (SELECT/INSERT/UPDATE/DELETE) en lugar de root.
+      DB_APP_USER: ${DB_APP_USER:-}
+      DB_APP_PASS: ${DB_APP_PASS:-}
+    volumes:
+      - db-data:/var/lib/mysql
+      # Init script: crea usuario no-root si DB_APP_USER/DB_APP_PASS estan definidos.
+      # Solo se ejecuta cuando el volumen esta vacio (primer arranque).
+      - ./docker/init-db.sh:/docker-entrypoint-initdb.d/01-init.sh:ro
     ports:
       # SEGURIDAD: MySQL solo accesible desde loopback del host.
       # Nunca exponer 0.0.0.0:3306 — permite conexion directa desde la red.
       - "127.0.0.1:3306:3306"
-    volumes:
-      - db-data:/var/lib/mysql
     networks:
       - microsistemas-net
     healthcheck:
