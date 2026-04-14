@@ -25,7 +25,7 @@ Es la **pagina principal** de la suite. Cuando un usuario accede a `http://local
 **Como funciona internamente?**
 
 1. Carga el autoloader de Composer (`vendor/autoload.php`) para habilitar las clases del Core.
-2. Renderiza un **grid responsivo** con tarjetas (cards) para cada una de las 10 micro-aplicaciones.
+2. Renderiza un **grid responsivo** con tarjetas (cards) para cada una de las 12 micro-aplicaciones.
 3. Usa un **diseno Dark Mode** con variables CSS personalizadas (`--bg-color`, `--card-bg`, `--accent`).
 4. Cada tarjeta muestra: badge de tecnologia (PHP/JS/DevOps), nombre, descripcion y un boton "Abrir Herramienta".
 5. Incluye enlaces en el header a la documentacion del usuario y la guia de instalacion via `doc.php`.
@@ -489,11 +489,12 @@ Cada subdirectorio dentro de `apps/` es una **micro-aplicacion independiente** c
 | `Conversor/`       | PHP        | Sanitizacion y codificacion segura de texto.                     |
 | `GitTrainer/`      | JS         | Biblioteca interactiva de comandos Git con 1000+ ejemplos.       |
 | `JsTools/`         | JS         | Suite de utilidades JavaScript (minificador, linter, formatter). |
+| `KatasMultiLang/`  | JS         | Comparador visual premium de codigo con 195 katas (Glassmorphism).|
 | `LogViewer/`       | PHP        | Visualizacion segura de logs del sistema en tiempo real.         |
 | `PhpMigrator/`     | PHP        | Guia de migracion de PHP 5.x a 8.x con deteccion de obsoletos.  |
+| `PythonEval3000/`  | JS         | Evaluador y explorador de 3000 preguntas de Python y Data Science. |
 | `SqlViewer/`       | PHP        | Inspector de bases de datos desde el navegador.                  |
 | `YmlGenerator/`    | JS         | Generador visual de YAML para Docker y Kubernetes.               |
-| `KatasMultiLang/`  | JS         | Comparador visual premium de codigo con 195 katas (Glassmorphism).|
 
 ---
 
@@ -514,15 +515,17 @@ Microsistemas/
 │   ├── 🔴 Config.php         ← Singleton de configuracion
 │   └── 🔴 Database.php       ← Singleton de conexion a BD
 │
-├── apps/                      ← 10 micro-aplicaciones
+├── apps/                      ← 12 micro-aplicaciones
 │   ├── AwsGenerator/
 │   ├── CapacitySim/
 │   ├── CicdLibrary/
 │   ├── Conversor/
 │   ├── GitTrainer/
 │   ├── JsTools/
+│   ├── KatasMultiLang/
 │   ├── LogViewer/
 │   ├── PhpMigrator/
+│   ├── PythonEval3000/
 │   ├── SqlViewer/
 │   └── YmlGenerator/
 │

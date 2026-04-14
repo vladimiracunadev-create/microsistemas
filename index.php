@@ -197,6 +197,16 @@
             <a href="apps/KatasMultiLang/" class="btn">Abrir Herramienta</a>
         </div>
 
+        <!-- Tarjeta PythonEval3000 -->
+        <div class="card">
+            <div>
+                <span class="badge js">HTML + JS</span>
+                <h2>Python Eval 3000</h2>
+                <p>Evaluador y explorador de 3000 preguntas de Python y Data Science con 4 alternativas, bloques de código y respuestas.</p>
+            </div>
+            <a href="apps/PythonEval3000/" class="btn">Abrir Herramienta</a>
+        </div>
+
         <!-- Tarjeta 5 -->
         <div class="card">
             <div>

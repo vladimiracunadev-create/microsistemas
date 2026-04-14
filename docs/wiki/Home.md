@@ -6,7 +6,9 @@
 
 ## 🕒 Historial de Versiones
 
-- **v2.3.0** (Actual): **Skills System** - playbooks de integracion + fix CI/CD Trivy + validacion Markdown pre-push.
+- **v3.1.0** (Actual): **PythonEval3000** - Evaluador de 3000 preguntas Python/DataScience, modo quiz + explorador + filtros + localStorage.
+- **v3.0.0**: **Hardening Fase 2/3** - Apache no-root, CSRF SqlViewer, rate limiting, supply-chain scan, Servidor MCP Local.
+- **v2.3.0**: **Skills System** - playbooks de integracion + fix CI/CD Trivy + validacion Markdown pre-push.
 - **v2.2.0**: **Katas MultiLang** - UI Glassmorphism Premium, 195 casos curados, 67 tecnologias side-by-side.
 - **v2.1.0**: **AWS Assistant Pro** - Guided Flow, semaforo de riesgo, EduIcons.
 - **v1.2.2**: Integracion de **CicdLibrary** y mejoras en el visor de documentacion.

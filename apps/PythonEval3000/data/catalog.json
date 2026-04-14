@@ -1,0 +1,57 @@
+{
+  "sections": [
+    "Calidad, debugging, typing, concurrencia y rendimiento",
+    "Control de flujo, funciones y comprehensions",
+    "Excepciones, archivos, módulos y entorno",
+    "Fundamentos del lenguaje Python",
+    "Integración, debugging de código y decisiones de diseño",
+    "Machine Learning y evaluación rigurosa",
+    "NLP, series temporales, deep learning y ecosistema extendido",
+    "NumPy y cálculo vectorizado",
+    "POO, iteradores, generadores y Python idiomático",
+    "SQL, APIs y adquisición de datos",
+    "Visualización, EDA y estadística aplicada",
+    "pandas: carga, limpieza y transformación"
+  ],
+  "levels": [
+    "Todas",
+    "Básica",
+    "Intermedia",
+    "Avanzada"
+  ],
+  "kinds": [
+    "Todos",
+    "Comparación",
+    "Concepto",
+    "Confusión frecuente",
+    "Criterio",
+    "Código / error",
+    "Código / revisión",
+    "Código / salida",
+    "Diagnóstico",
+    "Elección",
+    "Error común",
+    "Mini caso",
+    "Rol",
+    "Señal",
+    "Uso"
+  ],
+  "counts": {
+    "total": 3000,
+    "with_code": 292,
+    "sections": {
+      "Calidad, debugging, typing, concurrencia y rendimiento": 246,
+      "Control de flujo, funciones y comprehensions": 222,
+      "Excepciones, archivos, módulos y entorno": 254,
+      "Fundamentos del lenguaje Python": 222,
+      "Integración, debugging de código y decisiones de diseño": 235,
+      "Machine Learning y evaluación rigurosa": 263,
+      "NLP, series temporales, deep learning y ecosistema extendido": 279,
+      "NumPy y cálculo vectorizado": 262,
+      "POO, iteradores, generadores y Python idiomático": 246,
+      "SQL, APIs y adquisición de datos": 263,
+      "Visualización, EDA y estadística aplicada": 254,
+      "pandas: carga, limpieza y transformación": 254
+    }
+  }
+}

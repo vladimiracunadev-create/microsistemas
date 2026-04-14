@@ -81,6 +81,16 @@ La suite se organiza en un **Dashboard Central** que actua como puerta de enlace
 * **Proposito**: Comparador visual de 195 katas de codigo en 67 lenguajes/frameworks.
 * **Workflow Pro**: Seleccione dos lenguajes en el panel lateral y active el modo "Comparar Caso" para ver la solucion lado a lado. Use el boton copiar para transferir snippets al instante.
 
+#### Python Eval 3000
+
+* **Proposito**: Evaluacion y estudio de Python y Data Science con banco de 3000 preguntas JSON.
+* **Workflow Pro**:
+  1. Use los **filtros de Seccion, Nivel y Tipo** para acotar a un tema especifico (ej: `pandas`, nivel `Avanzada`).
+  2. **Modo Evaluacion**: preguntas aleatorias con 4 alternativas y retroalimentacion inmediata.
+  3. **Modo Explorador**: revision paginada con revelar-respuesta y boton "Llevar a evaluacion".
+  4. Teclas **1-4** responden, **Enter** avanza, **/** enfoca la busqueda.
+* **Nota tecnica**: Requiere ser abierta desde un servidor web (`http://`). No funciona con `file://`. Accede via `http://localhost/microsistemas/apps/PythonEval3000/`.
+
 ---
 
 ## ❓ Preguntas Frecuentes (FAQ)

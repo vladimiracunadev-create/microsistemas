@@ -1,0 +1,7 @@
+name: PythonEval3000
+type: static
+description: Evaluación aleatoria y explorador de 3000 preguntas de Python y Data Science con 4 alternativas, JSON local y estudio por filtros.
+ports:
+  - 80
+healthcheck: /
+run_cmd: null

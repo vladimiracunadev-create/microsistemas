@@ -102,11 +102,11 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 - **Para que?**: Para facilitar la administracion de infraestructura AWS (S3, ECR, ECS, IAM) mediante una navegacion guiada y segura.
 - **Importancia**: Es la herramienta de "seguridad primero". Incluye un **Semaforo de Impacto** visual, **Syntax Highlighting** (GlassCode) y **EduIcons** (ⓘ) que ensenan arquitectura mientras se opera, garantizando ejecuciones precisas en entornos locales y CI/CD.
 
-### 🧩 Katas MultiLang (El Comparador Visual Premium)
+### 🐍 Python Eval 3000 (El Evaluador de Conocimiento)
 
-- **Que hace?**: Compara visualmente 195 soluciones de codigo en 67 lenguajes/frameworks a traves de una interfaz Glassmorphism Premium.
-- **Para que?**: Para encontrar la sintaxis correcta de un patron en distintos lenguajes, con filtrado, copiado instantaneo y modo paralelo (lado a lado).
-- **Importancia**: Acelera el desarrollo en entornos poliglotas. Funciona como referencia unificada con diseno inmersivo antifatiga.
+- **Que hace?**: Microsistema estatico de evaluacion y estudio para Python y Data Science basado en un banco local de 3000 preguntas en JSON con 4 alternativas, modo quiz aleatorio y explorador de preguntas.
+- **Para que?**: Para autoevaluar el dominio de Python, pandas, NumPy, ML y Data Science con preguntas organizadas por seccion, nivel (Basica/Intermedia/Avanzada) y tipo, sin necesidad de backend ni registro.
+- **Importancia**: Acelera el ciclo de preparacion tecnica. Al funcionar 100% en el navegador con JSON local, puede usarse sin conexion desde un servidor XAMPP o Docker, persiste el progreso en `localStorage` y permite reemplazar el dataset sin tocar la UI.
 
 ---
 

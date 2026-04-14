@@ -15,7 +15,7 @@
 
 <br>
 
-Suite modular de **11 herramientas web** para diagnostico, soporte, DevOps, aprendizaje y modernizacion PHP.<br>
+Suite modular de **12 herramientas web** para diagnostico, soporte, DevOps, aprendizaje y modernizacion PHP.<br>
 Unifica microapps, Hub CLI, Docker, XAMPP y servidor MCP local en una sola base de codigo.
 
 <br>
@@ -35,7 +35,7 @@ Unifica microapps, Hub CLI, Docker, XAMPP y servidor MCP local en una sola base 
 <tr>
 <td width="33%">
 
-**🧩 11 microapps**<br>
+**🧩 12 microapps**<br>
 Soporte, DevOps, aprendizaje y modernizacion PHP agrupadas por capa funcional.
 
 </td>
@@ -142,6 +142,7 @@ make help                      # Todos los comandos disponibles
 | [KatasMultiLang](apps/KatasMultiLang) | `Aprendizaje` | Comparador side-by-side de 195 katas en 67 tecnologias |
 | [JsTools](apps/JsTools) | `Aprendizaje` | Coleccion de utilidades JavaScript para productividad |
 | [YmlGenerator](apps/YmlGenerator) | `Aprendizaje` | Generador visual de configuraciones YAML para Docker y Kubernetes |
+| [PythonEval3000](apps/PythonEval3000) | `Aprendizaje` | Evaluador y explorador de 3000 preguntas de Python y Data Science con modo quiz y explorador filtrable |
 
 ---
 

@@ -4,7 +4,33 @@ Todos los cambios notables en este proyecto seran documentados en este archivo. 
 
 ## [Unreleased]
 
-## [3.0.0] - 2026-04-06
+## [3.1.0] - 2026-04-14
+
+### Anadido — PythonEval3000 (Nuevo Microsistema)
+
+- **PythonEval3000**: Microsistema estatico de evaluacion y estudio para Python y Data Science.
+  - Banco local de **3000 preguntas** en `data/questions.quiz.json` con 4 alternativas por pregunta.
+  - **Modo Evaluacion**: Lanza preguntas en orden aleatorio (seeded shuffle), marca la correcta al responder y muestra retroalimentacion contextual.
+  - **Modo Explorador**: Vista paginada (15/25/50 por pagina) con revelar-respuesta, bloque de codigo y boton "Llevar a evaluacion".
+  - **Filtros combinables**: Seccion, Nivel (Basica/Intermedia/Avanzada), Tipo y busqueda libre por texto normalizando acentos.
+  - **Atajos de teclado**: 1–4 responden alternativa, Enter avanza, / enfoca busqueda.
+  - **Persistencia**: Progreso (aciertos, errores, deck) almacenado en `localStorage` entre sesiones.
+  - Tecnologia: HTML + CSS + JavaScript ES6 + JSON local. Sin framework ni backend adicional.
+  - Endpoints de diagnostico: `health/` (liveness) y `ready/` (readiness).
+- **Snippet de dashboard**: `snippets/dashboard-card-python-eval-3000.html` movido a la raiz del repo (ruta canonica correcta segun `INTEGRACION.md`).
+
+### Actualizado
+
+- `index.php`: Tarjeta de PythonEval3000 agregada al dashboard principal (capa Aprendizaje).
+- `README.md`: Contador de herramientas 11 → 12; PythonEval3000 en la tabla de apps.
+- `docs/SYSTEMS_CATALOG.md`: Ficha tecnica de PythonEval3000; eliminada entrada duplicada de KatasMultiLang.
+- `docs/FILES_REFERENCE.md`: Tabla de apps y mapa visual actualizados (12 apps).
+- `docs/USER_MANUAL.md`: Seccion de uso de PythonEval3000 con nota sobre `file://` vs servidor web.
+- `docs/wiki/Catalogo-de-Sistemas.md`: Entrada nueva de PythonEval3000.
+- `docs/wiki/Manual-de-Usuario.md`: Guia de uso de PythonEval3000.
+- `docs/wiki/Home.md`: Version v3.1.0 en historial de la Wiki.
+
+
 
 ### Anadido — Seguridad Fase 2 y Fase 3 (hardening completo)
 

@@ -93,6 +93,16 @@ La suite se organiza en un **Dashboard Central** que actua como puerta de enlace
   4. Valide con el **Modo Simulado** antes de ejecutar acciones reales.
 * **Seguridad**: Bloqueo automatico en perfiles de produccion y alertas visuales para comandos criticos.
 
+#### Python Eval 3000
+
+* **Proposito**: Evaluacion y estudio de Python y Data Science con banco de 3000 preguntas JSON.
+* **Workflow Pro**:
+  1. Use los **filtros de Seccion, Nivel y Tipo** en la barra superior para acotar a un tema especifico (ej: `pandas`, nivel `Avanzada`).
+  2. Alterne entre **modo Evaluacion** (preguntas aleatorias con 4 alternativas) y **modo Explorador** (revision paginada con respuestas).
+  3. Use las teclas **1–4** para responder y **Enter** para avanzar sin usar el raton.
+  4. El progreso (aciertos, errores) se guarda en `localStorage` — persiste entre sesiones.
+* **Nota tecnica**: Esta app usa `fetch()` para cargar el JSON local. **Debe abrirse desde un servidor web** (`http://`) — no funcionara con el protocolo `file://` del sistema de archivos. Con Docker o XAMPP, accede via `http://localhost/microsistemas/apps/PythonEval3000/`.
+
 ---
 
 ## ❓ Preguntas Frecuentes (FAQ)

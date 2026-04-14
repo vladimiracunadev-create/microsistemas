@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Python Eval 3000</title>
+  <meta name="description" content="Evaluación aleatoria y explorador de 3000 preguntas de Python y Data Science.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="python-eval.css">
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <a class="back-link" href="../../index.php">← Volver al Dashboard</a>
+      <div class="hero-top">
+        <span class="badge">HTML + JS + JSON</span>
+        <span class="badge subtle" id="totalBadge">3000 preguntas</span>
+      </div>
+      <h1>Python Eval 3000</h1>
+      <p class="hero-copy">
+        Microsistema liviano de evaluación y estudio. Lanza preguntas al azar con 4 alternativas,
+        indica la correcta al responder y permite explorar el banco completo con filtros, código y respuestas.
+      </p>
+      <div class="hero-actions">
+        <button class="primary-btn" id="goQuizBtn" type="button">Entrar en evaluación</button>
+        <button class="secondary-btn" id="goExplorerBtn" type="button">Explorar preguntas</button>
+      </div>
+    </header>
+
+    <section class="toolbar">
+      <div class="filters">
+        <label>
+          <span>Sección</span>
+          <select id="sectionFilter"></select>
+        </label>
+        <label>
+          <span>Nivel</span>
+          <select id="levelFilter">
+            <option value="Todas">Todas</option>
+            <option value="Básica">Básica</option>
+            <option value="Intermedia">Intermedia</option>
+            <option value="Avanzada">Avanzada</option>
+          </select>
+        </label>
+        <label>
+          <span>Tipo</span>
+          <select id="kindFilter"></select>
+        </label>
+        <label>
+          <span>Buscar</span>
+          <input id="searchInput" type="search" placeholder="texto, error, pandas, decorators...">
+        </label>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-label">Disponibles</span>
+          <strong id="filteredCount">0</strong>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Aciertos</span>
+          <strong id="correctCount">0</strong>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Errores</span>
+          <strong id="wrongCount">0</strong>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Progreso</span>
+          <strong id="progressCount">0 / 0</strong>
+        </div>
+      </div>
+    </section>
+
+    <nav class="tabs" aria-label="modos">
+      <button class="tab is-active" data-tab="quiz" type="button">Evaluación</button>
+      <button class="tab" data-tab="explorer" type="button">Explorador</button>
+      <button class="tab" data-tab="help" type="button">Ayuda</button>
+    </nav>
+
+    <main>
+      <section class="panel is-active" id="quizPanel">
+        <div class="quiz-card">
+          <div class="question-meta">
+            <span class="pill" id="qSection">Sección</span>
+            <span class="pill" id="qLevel">Nivel</span>
+            <span class="pill" id="qKind">Tipo</span>
+            <span class="pill subtle" id="qId">ID</span>
+          </div>
+
+          <h2 class="question-title" id="questionPrompt">Cargando pregunta...</h2>
+
+          <pre class="code-box hidden" id="questionCode"><code></code></pre>
+
+          <div class="options" id="optionsWrap"></div>
+
+          <div class="quiz-actions">
+            <button class="secondary-btn" id="randomBtn" type="button">Otra aleatoria</button>
+            <button class="secondary-btn" id="revealBtn" type="button">Mostrar respuesta</button>
+            <button class="primary-btn" id="nextBtn" type="button" disabled>Siguiente</button>
+          </div>
+
+          <div class="feedback hidden" id="feedbackBox"></div>
+        </div>
+      </section>
+
+      <section class="panel" id="explorerPanel">
+        <div class="explorer-toolbar">
+          <div class="pager">
+            <button class="secondary-btn small" id="prevPageBtn" type="button">← Anterior</button>
+            <span id="pageInfo">Página 1</span>
+            <button class="secondary-btn small" id="nextPageBtn" type="button">Siguiente →</button>
+          </div>
+          <label class="small-label">
+            <span>Por página</span>
+            <select id="pageSizeSelect">
+              <option value="15">15</option>
+              <option value="25" selected>25</option>
+              <option value="50">50</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="explorerList" class="explorer-list"></div>
+      </section>
+
+      <section class="panel" id="helpPanel">
+        <div class="help-grid">
+          <article class="info-card">
+            <h3>Cómo funciona</h3>
+            <p>
+              El modo evaluación toma preguntas del JSON local y arma una sesión aleatoria según filtros.
+              Al pulsar una alternativa, el sistema marca la correcta, muestra retroalimentación y deja avanzar.
+            </p>
+          </article>
+          <article class="info-card">
+            <h3>Explorador</h3>
+            <p>
+              Permite revisar preguntas, respuestas y bloques de código sin salir de la interfaz.
+              Puedes filtrar por sección, nivel, tipo y texto.
+            </p>
+          </article>
+          <article class="info-card">
+            <h3>Atajos</h3>
+            <ul>
+              <li><strong>1–4</strong> eligen alternativa.</li>
+              <li><strong>Enter</strong> avanza a la siguiente cuando ya hay respuesta.</li>
+              <li><strong>/</strong> enfoca la búsqueda.</li>
+            </ul>
+          </article>
+          <article class="info-card">
+            <h3>Integración limpia</h3>
+            <p>
+              Este paquete está preparado para copiarse dentro de <code>apps/PythonEval3000/</code>.
+              Incluye manifest, README, endpoints simples de salud y snippets para agregar la tarjeta al dashboard.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="python-eval-app.js"></script>
+</body>
+</html>

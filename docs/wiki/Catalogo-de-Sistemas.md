@@ -96,6 +96,12 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 - **Para que?**: Para encontrar la sintaxis correcta de un patron en distintos lenguajes, con filtrado, copiado instantaneo y modo paralelo (lado a lado).
 - **Importancia**: Acelera el desarrollo poliglota. Funciona como referencia unificada con diseno inmersivo antifatiga.
 
+### 🐍 Python Eval 3000 (El Evaluador de Conocimiento)
+
+- **Que hace?**: Microsistema estatico de evaluacion y estudio para Python y Data Science basado en un banco local de 3000 preguntas en JSON con 4 alternativas, modo quiz aleatorio y explorador de preguntas.
+- **Para que?**: Para autoevaluar el dominio de Python, pandas, NumPy, ML y Data Science con preguntas organizadas por seccion, nivel (Basica/Intermedia/Avanzada) y tipo, sin necesidad de backend ni registro.
+- **Importancia**: Acelera el ciclo de preparacion tecnica. Funciona 100% en el navegador con JSON local, persiste el progreso en `localStorage` y permite reemplazar el dataset sin tocar la UI.
+
 ---
 
 ## 🚀 Conclusion: Por que creamos todo esto?
