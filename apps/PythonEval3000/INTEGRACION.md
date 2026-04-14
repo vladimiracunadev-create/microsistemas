@@ -1,11 +1,13 @@
 # Integración sugerida en Microsistemas
 
 ## Carpeta objetivo
+
 Copia esta carpeta completa dentro de:
 
 `apps/PythonEval3000/`
 
 ## Tarjeta sugerida para el dashboard
+
 Usa el archivo ubicado en la raiz del repositorio:
 
 `snippets/dashboard-card-python-eval-3000.html`
@@ -26,12 +28,14 @@ o copia este bloque dentro del dashboard principal:
 ```
 
 ## Razón de esta integración
+
 - Mantiene el patrón actual de microsistemas con carpeta autocontenida.
 - No rompe apps existentes.
 - Permite reemplazar el JSON sin tocar la UI.
 - Sigue un enfoque `static app` similar a GitTrainer y KatasMultiLang.
 
 ## Qué puedes cambiar después
+
 - nombre visible,
 - badge de la tarjeta,
 - cantidad de preguntas por página,

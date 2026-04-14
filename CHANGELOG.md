@@ -30,7 +30,7 @@ Todos los cambios notables en este proyecto seran documentados en este archivo. 
 - `docs/wiki/Manual-de-Usuario.md`: Guia de uso de PythonEval3000.
 - `docs/wiki/Home.md`: Version v3.1.0 en historial de la Wiki.
 
-
+## [3.0.0] - 2026-04-06
 
 ### Anadido — Seguridad Fase 2 y Fase 3 (hardening completo)
 
