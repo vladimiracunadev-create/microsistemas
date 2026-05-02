@@ -8,7 +8,7 @@
 [![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4?logo=php&logoColor=white)](https://php.net)
 [![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)](https://docker.com)
 [![Terraform](https://img.shields.io/badge/IaC-Terraform-7B42BC?logo=terraform&logoColor=white)](https://terraform.io)
-[![Status](https://img.shields.io/badge/status-reference%20guide-0ea5e9)](#)
+[![Status](https://img.shields.io/badge/status-reference%20guide-0ea5e9)](https://aws.amazon.com/architecture/well-architected/)
 
 <br>
 
@@ -30,10 +30,10 @@ Incluye **3 estrategias** de despliegue, comparativas de costos, diagramas de ar
 
 1. [Resumen ejecutivo](#-resumen-ejecutivo)
 2. [Stack actual y requisitos a cubrir](#-stack-actual-y-requisitos-a-cubrir)
-3. [Estrategias de migración (3 opciones)](#-estrategias-de-migración-3-opciones)
-4. [Estrategia A — Lift & Shift con EC2 + RDS](#-estrategia-a--lift--shift-ec2--rds)
-5. [Estrategia B — Contenedores con ECS Fargate + RDS](#-estrategia-b--contenedores-ecs-fargate--rds)
-6. [Estrategia C — Serverless con Lambda + Aurora Serverless v2](#-estrategia-c--serverless-lambda--aurora-serverless-v2)
+3. [Estrategias de migración](#-estrategias-de-migración)
+4. [Estrategia A — Lift and Shift](#-estrategia-a--lift-and-shift)
+5. [Estrategia B — Contenedores ECS Fargate](#-estrategia-b--contenedores-ecs-fargate)
+6. [Estrategia C — Serverless con Lambda](#-estrategia-c--serverless-con-lambda)
 7. [Servicios AWS transversales](#-servicios-aws-transversales)
 8. [Comparativa de costos](#-comparativa-de-costos-mensual-estimado)
 9. [Seguridad y cumplimiento en AWS](#-seguridad-y-cumplimiento-en-aws)
@@ -52,6 +52,7 @@ landing estática, servidor MCP local y un stack Docker reproducible. La arquite
 limpia entre `apps/`, `src/Core` y assets estáticos lo hacen **altamente portable a la nube**.
 
 > **TL;DR**
+>
 > - **Mejor relación costo / esfuerzo** → **ECS Fargate + RDS MySQL + CloudFront + S3** (Estrategia B)
 > - **Más rápido para validar** → **Elastic Beanstalk** o **App Runner** (subset de Estrategia A/B)
 > - **Costo mínimo en idle** → **Aurora Serverless v2 + Lambda + API Gateway** (Estrategia C, requiere refactor)
@@ -109,7 +110,9 @@ graph TB
 
 ---
 
-## 🛣️ Estrategias de migración (3 opciones)
+## 🛣 Estrategias de migración
+
+Existen tres rutas principales para llevar el stack a AWS, con distintos niveles de refactor:
 
 | # | Estrategia | Esfuerzo | Costo idle | Costo escala | Refactor |
 | :-: | :--- | :-: | :-: | :-: | :-: |
@@ -118,12 +121,13 @@ graph TB
 | **C** | **Serverless** — Lambda + Aurora Serverless | 🔴 Alto | 🟢 Mínimo | 🟢 Excelente | Profundo (Bref / API Gateway) |
 
 > Existen además dos **atajos PaaS** que envuelven A y B:
+>
 > - **AWS Elastic Beanstalk** (envuelve EC2 + RDS + ALB con un comando)
 > - **AWS App Runner** (envuelve un contenedor con TLS y autoscaling sin gestionar VPC)
 
 ---
 
-## 🅰️ Estrategia A — Lift & Shift (EC2 + RDS)
+## 🅰 Estrategia A — Lift and Shift
 
 > **Filosofía:** mover lo mínimo. Replicar XAMPP en una VM administrada y mover la BD a un servicio gestionado.
 
@@ -204,23 +208,25 @@ curl https://microsistemas.tu-dominio.com/
 ```
 
 ### ✅ Ventajas
+
 - Cero refactor: el código corre tal cual.
 - Familiar: cualquier sysadmin lo entiende.
 - Apto para Hub CLI vía SSH/Session Manager.
 
 ### ⚠️ Desventajas
+
 - Pagas la EC2 24/7 aunque no haya tráfico.
 - Tú parchas el SO y PHP.
 - Escalado horizontal requiere AMI + Auto Scaling Group.
 
 ---
 
-## 🅱️ Estrategia B — Contenedores (ECS Fargate + RDS)
+## 🅱 Estrategia B — Contenedores ECS Fargate
 
 > **Filosofía:** aprovechar el `Dockerfile` existente. AWS corre el contenedor; tú no gestionas servidores.
 > **Es la opción recomendada** para Microsistemas.
 
-### 🧩 Componentes
+### 🧩 Componentes principales
 
 | Servicio | Rol |
 | :--- | :--- |
@@ -234,7 +240,7 @@ curl https://microsistemas.tu-dominio.com/
 | **CloudWatch Container Insights** | Métricas y logs por tarea |
 | **AWS WAF** *(opcional)* | Reglas OWASP delante del ALB |
 
-### 🗺️ Diagrama
+### 🗺️ Diagrama de arquitectura
 
 ```mermaid
 graph TB
@@ -260,7 +266,7 @@ graph TB
     style RDS fill:#3B48CC,color:#fff
 ```
 
-### 🔧 Paso a paso
+### 🔧 Pasos de despliegue
 
 ```bash
 # 1. Crear repositorio en ECR
@@ -292,13 +298,15 @@ aws secretsmanager create-secret --name microsistemas/db --secret-string \
 # 8. CloudFront frente a ALB + S3 de landing
 ```
 
-### ✅ Ventajas
+### ✅ Ventajas Fargate
+
 - Reutiliza el `Dockerfile` 1:1.
 - Sin servidores que parchar.
 - Autoscaling fino y rolling updates nativos.
 - Coste detenido cuando `desiredCount=0`.
 
-### ⚠️ Desventajas
+### ⚠️ Desventajas Fargate
+
 - Requiere familiaridad con ECS/IAM.
 - Apache + PHP no es ideal para *cold scale* extremo (mejor Estrategia C en ese caso).
 
@@ -317,11 +325,11 @@ App Runner provisiona TLS, dominio, autoscaling y healthchecks por ti. **Costo a
 
 ---
 
-## 🅲 Estrategia C — Serverless (Lambda + Aurora Serverless v2)
+## 🅲 Estrategia C — Serverless con Lambda
 
 > **Filosofía:** pagar solo por request. Requiere **refactor profundo**.
 
-### 🧩 Componentes
+### 🧩 Componentes serverless
 
 | Servicio | Rol |
 | :--- | :--- |
@@ -333,7 +341,7 @@ App Runner provisiona TLS, dominio, autoscaling y healthchecks por ti. **Costo a
 | **EFS for Lambda** *(si se necesita FS compartido)* | Almacenamiento persistente |
 | **EventBridge** | Cron jobs (sustituye a `make` schedules) |
 
-### 🗺️ Diagrama
+### 🗺️ Diagrama serverless
 
 ```mermaid
 graph LR
@@ -358,12 +366,14 @@ graph LR
 # 5. Deploy:  serverless deploy
 ```
 
-### ✅ Ventajas
+### ✅ Ventajas serverless
+
 - Coste casi 0 sin tráfico.
 - Escala automática a miles de requests/seg.
 - Sin servidores ni parches.
 
-### ⚠️ Desventajas
+### ⚠️ Desventajas serverless
+
 - **Refactor importante:** sesiones PHP, archivos temporales, `.htaccess`, MCP local.
 - Cold starts (mitigables con Provisioned Concurrency).
 - 12 microapps → 12 Lambdas → más complejidad operativa.
@@ -545,7 +555,7 @@ jobs:
 | Errores PHP | CloudWatch + alarms | Apache error log |
 | Healthchecks | ALB + Route 53 | Healthcheck Docker |
 | Alertas | SNS → email/Slack | Manual |
-| Runbooks | AWS Systems Manager | [RUNBOOK.md](../../RUNBOOK.md) |
+| Runbooks | AWS Systems Manager | [RUNBOOK.md](../RUNBOOK.md) |
 
 ### Alarmas mínimas sugeridas
 
@@ -557,7 +567,7 @@ jobs:
 
 ---
 
-## 🗺️ Plan de migración paso a paso
+## 🗺 Plan de migración paso a paso
 
 Ruta recomendada para llevar Microsistemas a AWS de forma segura, **en ~2 semanas a tiempo parcial**.
 
@@ -588,6 +598,7 @@ gantt
 ### Checklist por fase
 
 #### ✅ Fase 1 — Preparación de cuenta
+
 - [ ] Cuenta AWS creada con MFA en root.
 - [ ] **IAM Identity Center** (SSO) habilitado para usuarios.
 - [ ] **AWS Organizations** si vas a separar dev/prod.
@@ -596,6 +607,7 @@ gantt
 - [ ] Terraform (o CDK) inicializado en `infra/`.
 
 #### ✅ Fase 2 — Datos
+
 - [ ] Dump local: `mysqldump portal_portafolio > backup.sql`.
 - [ ] RDS MySQL 8.0.40 creado en subnet privada.
 - [ ] Restore: `mysql -h <rds> < backup.sql`.
@@ -603,6 +615,7 @@ gantt
 - [ ] Secrets Manager con `DB_PASS` y `DB_APP_PASS`.
 
 #### ✅ Fase 3 — Aplicación
+
 - [ ] ECR repo creado y primera imagen `1.0.0` subida.
 - [ ] Task Definition: 0.5 vCPU / 1 GB, env vars + secrets enlazados.
 - [ ] ECS service con 2 tareas detrás de ALB.
@@ -610,12 +623,14 @@ gantt
 - [ ] Route 53 → ALB con alias A.
 
 #### ✅ Fase 4 — Edge
+
 - [ ] Bucket S3 con landing/ subido (con OAC).
 - [ ] CloudFront distribution: `/` → S3, `/apps/*` y `/index.php` → ALB.
 - [ ] Response Headers Policy con CSP y X-Frame-Options.
 - [ ] AWS WAF asociado a CloudFront con managed rules.
 
 #### ✅ Fase 5 — Observabilidad y CI/CD
+
 - [ ] Container Insights habilitado.
 - [ ] Dashboard CloudWatch con CPU, RAM, 5xx, latencia.
 - [ ] 4 alarmas críticas en SNS → email.
@@ -636,6 +651,7 @@ gantt
 | **Migración relámpago en un día** | Estrategia A vía Beanstalk |
 
 > **Mi voto:** **Estrategia B (ECS Fargate)** porque:
+>
 > 1. Reutiliza el `Dockerfile` existente sin cambios.
 > 2. Mantiene los principios 12-Factor del repo.
 > 3. Escala horizontalmente cuando agregues más microapps.
