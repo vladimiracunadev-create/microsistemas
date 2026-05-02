@@ -247,6 +247,7 @@ Pagina estatica en `landing/` publicada en GitHub Pages.
 | [Specs Tecnicas](docs/TECHNICAL_SPECS.md) | Stack, estandares y normas de mantencion |
 | [Requisitos del Sistema](docs/REQUIREMENTS.md) | Hardware, software y dependencias |
 | [Modos de Ejecucion](OPERATING-MODES.md) | Docker, XAMPP, PHP built-in y Hub local |
+| [Migracion a AWS ☁️](docs/AWS_MIGRATION.md) | Guia completa de despliegue en la nube AWS: 3 estrategias, costos, diagramas y paso a paso |
 | [Matriz de Compatibilidad](COMPATIBILITY.md) | Entornos y versiones soportadas |
 | [Manual de Operacion](RUNBOOK.md) | Diagnostico, arranque y recuperacion |
 | [Estrategia de Versionado](RELEASE.md) | Proceso de release y Semantic Versioning |
