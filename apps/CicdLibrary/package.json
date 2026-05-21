@@ -10,5 +10,9 @@
   },
   "dependencies": {
     "mustache": "^4.2.0"
+  },
+  "packageManager": "pnpm@11.0.0",
+  "pnpm": {
+    "onlyBuiltDependencies": []
   }
 }
