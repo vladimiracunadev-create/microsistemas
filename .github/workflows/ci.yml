@@ -14,8 +14,8 @@ jobs:
       any_app: ${{ steps.filter.outputs.apps }}
       docs: ${{ steps.filter.outputs.docs }}
     steps:
-    - uses: actions/checkout@v4
-    - uses: dorny/paths-filter@v3
+    - uses: actions/checkout@v7
+    - uses: dorny/paths-filter@v4
       id: filter
       with:
         filters: |
@@ -38,7 +38,7 @@ jobs:
     if: ${{ needs.changes.outputs.docs == 'true' }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: Markdown Lint
       uses: davidanson/markdownlint-cli2-action@v23
       with:
@@ -50,7 +50,7 @@ jobs:
     if: ${{ needs.changes.outputs.any_app == 'true' }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
@@ -78,7 +78,7 @@ jobs:
   supply-chain-scan:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
     - name: Verificar integridad de composer.lock
       run: |
@@ -156,7 +156,7 @@ jobs:
     if: contains(needs.changes.outputs.apps, 'CapacitySim')
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: Setup Python
       uses: actions/setup-python@v6
       with:
@@ -175,7 +175,7 @@ jobs:
       packages: write
       security-events: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
@@ -237,7 +237,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Detect and build app images
         run: |
           for app_dir in apps/*; do
