@@ -38,6 +38,9 @@ Todos los cambios notables en este proyecto seran documentados en este archivo. 
   configuracion Ruff reproducible para los scripts Python existentes.
 - El visor de documentacion mantiene el contenido y las capturas visibles sin
   depender de que el CDN de Marked este disponible.
+- JsTools separa la interfaz canonica en `herramientas_javascript.html`,
+  `hj.css` y `hj.js`, conserva la ruta historica, elimina dependencias CDN y
+  restablece todas las acciones y la captura de logs/errores del sandbox.
 
 ## [3.1.0] - 2026-04-14
 

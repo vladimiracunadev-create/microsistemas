@@ -488,7 +488,7 @@ Cada subdirectorio dentro de `apps/` es una **micro-aplicacion independiente** c
 | `CicdLibrary/`     | DevOps     | Biblioteca de 192 combinaciones CI/CD (GitHub, GitLab, Jenkins). |
 | `Conversor/`       | PHP        | Sanitizacion y codificacion segura de texto.                     |
 | `GitTrainer/`      | JS         | Biblioteca interactiva de comandos Git con 1000+ ejemplos.       |
-| `JsTools/`         | JS         | Suite de utilidades JavaScript (minificador, linter, formatter). |
+| `JsTools/`         | JS         | Utilidades locales de transformacion, lint, descarga y sandbox.  |
 | `KatasMultiLang/`  | JS         | Comparador visual premium de codigo con 195 katas (Glassmorphism).|
 | `LogViewer/`       | PHP        | Visualizacion segura de logs del sistema en tiempo real.         |
 | `PhpMigrator/`     | PHP        | Guia de migracion de PHP 5.x a 8.x con deteccion de obsoletos.  |

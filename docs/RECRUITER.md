@@ -244,6 +244,7 @@ Una suite unificada de micro-aplicaciones que:
 - Suite de utilidades JavaScript Vanilla.
 - Algoritmos de optimizacion de assets.
 - Herramientas de diagnostico de performance en el cliente.
+- Operacion sin CDN y ejecucion aislada con captura de logs y errores.
 
 **Complejidad**: Media | **Impacto**: Medio-Alto
 

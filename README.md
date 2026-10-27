@@ -149,7 +149,7 @@ make help                      # Todos los comandos disponibles
 | [PhpMigrator](apps/PhpMigrator) | `Legacy` | Modernizacion de codigo PHP 5.x a estandares 8.x |
 | [GitTrainer](apps/GitTrainer) | `Aprendizaje` | Biblioteca interactiva de comandos Git con guia visual |
 | [KatasMultiLang](apps/KatasMultiLang) | `Aprendizaje` | Comparador side-by-side de 195 katas en 67 tecnologias |
-| [JsTools](apps/JsTools) | `Aprendizaje` | Coleccion de utilidades JavaScript para productividad |
+| [JsTools](apps/JsTools) | `Aprendizaje` | Utilidades JavaScript locales, sin CDN, con descarga y sandbox aislado |
 | [YmlGenerator](apps/YmlGenerator) | `Aprendizaje` | Generador visual de configuraciones YAML para Docker y Kubernetes |
 | [PythonEval3000](apps/PythonEval3000) | `Aprendizaje` | Evaluador y explorador de 3000 preguntas de Python y Data Science con modo quiz y explorador filtrable |
 

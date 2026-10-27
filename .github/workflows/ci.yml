@@ -166,6 +166,17 @@ jobs:
     - name: Run Ruff
       run: ruff check .
 
+  test-jstools:
+    needs: [changes]
+    if: contains(needs.changes.outputs.apps, 'JsTools')
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+    - name: Validar sintaxis de JsTools
+      run: node --check apps/JsTools/hj.js
+    - name: Ejecutar regresion de JsTools
+      run: node tests/jstools_regression.js
+
   build-docker:
     needs: [changes]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'

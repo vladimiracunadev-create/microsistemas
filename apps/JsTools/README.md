@@ -1,25 +1,67 @@
 # JS Tools - Micro-App
 
-## Descripcion
+Suite local de utilidades para inspeccionar y transformar JavaScript desde el
+navegador. No requiere XAMPP, Node.js ni servicios externos durante el uso.
 
-Suite de utilidades para procesamiento de archivos JavaScript en tiempo de desarrollo.
+## Estructura
 
-## Funcionalidades
+| Archivo | Responsabilidad |
+| :--- | :--- |
+| `herramientas_javascript.html` | Interfaz canonica y controles accesibles. |
+| `hj.css` | Presentacion responsiva de la herramienta. |
+| `hj.js` | Acciones, descarga y ejecucion aislada. Se carga con `defer`. |
+| `index.html` | Entrada compatible; redirige a la interfaz canonica. |
 
-- **Minificador**: Reduce el tamano del codigo eliminando espacios y comentarios.
-- **Beautifier**: Formatea codigo desordenado para hacerlo legible.
-- **Ofuscador**: Protege la propiedad intelectual complicando la lectura del codigo.
+La separacion evita depender del orden de bloques embebidos y conserva la ruta
+historica `/apps/JsTools/` usada por el dashboard.
 
-## Detalles Tecnicos
+## Funciones
 
-- **Tecnologia**: JavaScript puro.
-- **Rendimiento**: Todo el procesamiento se realiza localmente en el navegador del cliente.
+- Minificar y formatear codigo.
+- Validar delimitadores, strings, comentarios y declaraciones basicas.
+- Ofuscar y transpilar construcciones comunes a sintaxis ES5.
+- Eliminar comentarios sin alterar strings ni plantillas.
+- Escapar y des-escapar strings JSON.
+- Medir bytes y KiB.
+- Ejecutar codigo en un `iframe` con `sandbox="allow-scripts"`, sin acceso al
+  origen del dashboard, y capturar `log`, `warn`, `error`, `info`, errores no
+  controlados y rechazos de promesas.
+- Descargar el resultado con una extension acorde a la accion.
 
-## Endpoints de Monitoreo
+Las operaciones tienen implementacion local y determinista. No se descargan
+librerias desde CDN, por lo que la pagina sigue operativa sin Internet y no
+genera errores de carga ni amplia la politica CSP del proyecto.
 
-Esta aplicacion implementa los siguientes endpoints de diagnostico:
+## Instalacion y uso
 
-- **/health**: Verifica que la aplicacion esta corriendo (liveness check). Retorna JSON con estado `ok`.
-- **/ready**: Verifica que la aplicacion esta lista para recibir trafico (readiness check). Retorna JSON con estado de dependencias.
+Desde la raiz del repositorio, la opcion recomendada es Docker:
 
-Para mas informacion, consulta [TECHNICAL_SPECS.md](../../docs/TECHNICAL_SPECS.md).
+```powershell
+docker compose up --build
+```
+
+Abre `http://127.0.0.1:8080/apps/JsTools/`. Tambien puede usarse el flujo PHP
+CLI oficial documentado en el README principal; XAMPP no forma parte del flujo
+soportado.
+
+Pega o carga un archivo `.js`, selecciona la accion y pulsa **Aplicar**. La
+salida puede copiarse, reutilizarse como entrada o descargarse.
+
+## Verificacion
+
+La regresion local comprueba la separacion HTML/CSS/JS y los respaldos de las
+acciones principales:
+
+```powershell
+node --check apps/JsTools/hj.js
+node tests/jstools_regression.js
+```
+
+CI ejecuta ambas comprobaciones cuando cambia `apps/JsTools/`.
+
+## Endpoints de monitoreo
+
+- `/apps/JsTools/health/`: liveness, responde JSON con estado `ok`.
+- `/apps/JsTools/ready/`: readiness del microsistema.
+
+Consulta tambien [las especificaciones tecnicas](../../docs/TECHNICAL_SPECS.md).
