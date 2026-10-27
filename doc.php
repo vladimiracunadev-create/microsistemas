@@ -6,9 +6,10 @@
 
 $file = $_GET['file'] ?? 'README.md';
 $docPath = __DIR__ . '/docs/' . basename($file);
+$isDocsDocument = file_exists($docPath);
 
 // Si no está en docs, buscar en raíz (como README.md)
-if (!file_exists($docPath)) {
+if (!$isDocsDocument) {
     $docPath = __DIR__ . '/' . basename($file);
 }
 
@@ -17,6 +18,8 @@ if (!file_exists($docPath)) {
 }
 
 $content = file_get_contents($docPath);
+$appBasePath = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/') . '/';
+$documentBasePath = $appBasePath . ($isDocsDocument ? 'docs/' : '');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -24,6 +27,7 @@ $content = file_get_contents($docPath);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="<?php echo htmlspecialchars($documentBasePath); ?>">
     <title>
         <?php echo htmlspecialchars($file); ?> | Documentación Microsistemas
     </title>
@@ -163,7 +167,7 @@ $content = file_get_contents($docPath);
 <body>
     <div class="container">
         <header>
-            <a href="index.php" class="back-link">← Volver al Dashboard</a>
+            <a href="<?php echo htmlspecialchars($appBasePath); ?>index.php" class="back-link">← Volver al Dashboard</a>
             <span style="color: var(--text-muted); font-size: 0.8rem;">
                 <?php echo htmlspecialchars($file); ?>
             </span>

@@ -6,7 +6,8 @@
 # Script de Bash para gestión de aplicaciones en entornos Linux/Mac.
 # Provee funcionalidad equivalente a hub.ps1 para listar y ejecutar apps.
 
-APPS_DIR="$(cd "$(dirname "$0")" && pwd)/apps"
+ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+APPS_DIR="$ROOT_DIR/apps"
 
 # Colores para la salida
 GREEN='\033[0;32m'
@@ -15,6 +16,29 @@ MAGENTA='\033[0;35m'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
+
+function check_php_runtime() {
+    if ! command -v php > /dev/null 2>&1; then
+        echo -e "${RED}[ERR]${NC} PHP no encontrado en PATH."
+        return 1
+    fi
+
+    php "$ROOT_DIR/scripts/check_php_runtime.php"
+}
+
+function serve_local() {
+    check_php_runtime || return 1
+
+    if [ ! -f "$ROOT_DIR/vendor/autoload.php" ]; then
+        echo -e "${RED}[ERR]${NC} Faltan dependencias. Ejecuta 'composer install'."
+        return 1
+    fi
+
+    echo -e "${GREEN}Servidor local:${NC} http://127.0.0.1:8000"
+    echo -e "${YELLOW}Solo desarrollo local. Deten con Ctrl+C.${NC}"
+    cd "$ROOT_DIR" || return 1
+    php -d session.upload_progress.enabled=0 -S 127.0.0.1:8000 -t .
+}
 
 #
 # Lista todas las aplicaciones disponibles en el directorio 'apps'.
@@ -61,6 +85,10 @@ function run_app() {
     # Extraer run_cmd
     local run_cmd=$(grep "run_cmd:" "$manifest" | sed 's/run_cmd: //;s/"//g;s/'\''//g')
     local type=$(grep "type:" "$manifest" | head -n 1 | sed 's/type: //;s/"//g;s/'\''//g')
+
+    if [ "$type" == "php" ]; then
+        check_php_runtime || return 1
+    fi
 
     if [ -z "$run_cmd" ]; then
         if [ "$type" == "static" ]; then
@@ -125,16 +153,20 @@ function doctor() {
 
     check_tool "docker" "Docker"
     check_tool "git" "Git"
-    check_tool "php" "PHP"
+    if check_php_runtime; then
+        echo -e "${GREEN}[OK]${NC} PHP instalado y en una version soportada."
+    else
+        echo -e "${RED}[ERR]${NC} PHP ausente o en una version vulnerable/no soportada."
+    fi
 
     # 2. Configuración
-    if [ -f ".env" ]; then
+    if [ -f "$ROOT_DIR/.env" ]; then
         echo -e "${GREEN}[OK]${NC} Archivo .env encontrado."
     else
         echo -e "${RED}[ERR]${NC} Archivo .env NO encontrado (copia .env.example)."
     fi
 
-    if [ -d "vendor" ]; then
+    if [ -d "$ROOT_DIR/vendor" ]; then
         echo -e "${GREEN}[OK]${NC} Directorio vendor encontrado."
     else
         echo -e "${RED}[ERR]${NC} Directorio vendor NO encontrado (ejecuta 'make install')."
@@ -182,11 +214,14 @@ case "$1" in
     up)
         up_app "$2"
         ;;
+    serve)
+        serve_local
+        ;;
     doctor)
         doctor
         ;;
     *)
-        echo "Uso: $0 {list|run <id>|up <id>|doctor}"
+        echo "Uso: $0 {list|run <id>|up <id>|serve|doctor}"
         exit 1
         ;;
 esac

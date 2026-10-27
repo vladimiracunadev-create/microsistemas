@@ -22,7 +22,7 @@ Si encuentras una vulnerabilidad, por favor **no la publiques como issue**.
 
 ### 1) No exponer estos microsistemas a Internet
 
-Estos microsistemas estan pensados para uso local (XAMPP/MAMP/LAMP) o redes controladas.
+Estos microsistemas estan pensados para loopback local (Docker o PHP CLI) o redes controladas. XAMPP no es un runtime soportado; en Apache/Nginx el operador debe aplicar controles equivalentes.
 
 ✅ Recomendado: `http://localhost/...`  
 ❌ Evitar: servidor publico accesible desde Internet.

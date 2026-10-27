@@ -26,7 +26,16 @@ function setSettings(v) { localStorage.setItem(LS_SETTINGS, JSON.stringify(v)); 
 
 function applyTemplate(str, vars) {
   if (!str) return "";
-  return str.replace(/\{\{(\w+)\}\}/g, (_, k) => (vars[k] ?? ""));
+  return str.replace(/\{\{(\w+)\}\}|\{(\w+)\}/g, (_, doubleKey, singleKey) => {
+    const key = doubleKey || singleKey;
+    return vars[key] ?? "";
+  });
+}
+
+let generateTimer = null;
+function debounceGenerate() {
+  window.clearTimeout(generateTimer);
+  generateTimer = window.setTimeout(() => generate(), 75);
 }
 
 function getGlobalFlags() {
@@ -316,6 +325,8 @@ function renderParams(r) {
 
     const inp = document.createElement(p.type === "select" ? "select" : "input");
     inp.id = `p_${p.key}`;
+    lab.htmlFor = inp.id;
+    inp.required = Boolean(p.required);
     if (p.type !== "select") inp.type = p.type || "text";
     inp.value = p.default ?? "";
     if (p.type === "select" && Array.isArray(p.options)) {
@@ -357,10 +368,15 @@ function wireSelectors() {
     btn.addEventListener("click", () => {
       const intent = btn.getAttribute("data-intent");
       const svc = btn.getAttribute("data-service");
+      const recipeId = btn.getAttribute("data-recipe");
       if (intent) $("taskIntent").value = intent;
       syncFilters();
       if (svc) $("service").value = svc;
       syncFilters();
+      if (recipeId && [...$("recipe").options].some(option => option.value === recipeId)) {
+        $("recipe").value = recipeId;
+        refreshRecipes();
+      }
     });
   });
 

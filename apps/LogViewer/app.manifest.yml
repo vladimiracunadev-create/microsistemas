@@ -2,6 +2,6 @@ name: LogViewer
 type: php
 description: Auditoría segura y visualización de logs del sistema en tiempo real.
 ports:
-  - 80
+  - 8000
 healthcheck: /
-run_cmd: php -S 0.0.0.0:80 index.php
+run_cmd: php -d session.upload_progress.enabled=0 -S 127.0.0.1:8000 -t .

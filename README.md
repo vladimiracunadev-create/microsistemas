@@ -7,7 +7,7 @@
 [![Build](https://img.shields.io/github/actions/workflow/status/vladimiracunadev-create/microsistemas/docker-publish.yml?branch=main&label=build&logo=github&logoColor=white)](https://github.com/vladimiracunadev-create/microsistemas/actions)
 [![Version](https://img.shields.io/github/v/tag/vladimiracunadev-create/microsistemas?label=version&color=0ea5e9)](https://github.com/vladimiracunadev-create/microsistemas/releases)
 [![License](https://img.shields.io/badge/license-MIT-22c55e)](LICENSE)
-[![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4?logo=php&logoColor=white)](https://php.net)
+[![PHP](https://img.shields.io/badge/PHP-patched%20branches-777BB4?logo=php&logoColor=white)](COMPATIBILITY.md)
 [![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)](docker-compose.yml)
 [![Security](https://img.shields.io/badge/security-hardened-brightgreen?logo=shieldsdotio&logoColor=white)](SECURITY.md)
 [![MCP](https://img.shields.io/badge/MCP-local-0ea5e9)](mcp/)
@@ -16,7 +16,7 @@
 <br>
 
 Suite modular de **12 herramientas web** para diagnostico, soporte, DevOps, aprendizaje y modernizacion PHP.<br>
-Unifica microapps, Hub CLI, Docker, XAMPP y servidor MCP local en una sola base de codigo.
+Unifica microapps, Hub CLI, Docker, PHP CLI y servidor MCP local en una sola base de codigo.
 
 <br>
 
@@ -47,8 +47,8 @@ Listar, ejecutar y diagnosticar cualquier app desde una sola entrada operativa.
 </td>
 <td width="33%">
 
-**🐳 Docker + XAMPP**<br>
-Dos modos de uso: contenedor aislado listo en 30 segundos o servidor local sin configuracion extra.
+**🐳 Docker + PHP CLI**<br>
+Dos modos de uso: contenedor reproducible o servidor local oficial de PHP para desarrollo.
 
 </td>
 </tr>
@@ -92,25 +92,33 @@ make up
 #    http://localhost:8080
 ```
 
-### Con XAMPP
+### Con PHP CLI oficial
 
-```bash
-# 1. Clona dentro de htdocs
-git clone https://github.com/vladimiracunadev-create/microsistemas.git htdocs/microsistemas
-cd htdocs/microsistemas
+Requiere PHP `8.2.35+`, `8.3.36+`, `8.4.27+` o `8.5.12+` dentro de la rama elegida.
+XAMPP ya no es una dependencia ni un modo soportado del proyecto.
+
+```powershell
+# 1. Instala PHP oficial y Composer, y confirma que ambos estan en PATH
+php -v
+composer --version
 
 # 2. Configura entorno
 cp .env.example .env
-#    Ajusta DB_HOST=localhost y DB_PASS
 
 # 3. Instala dependencias PHP
 composer install
 
-# Accede: http://localhost/microsistemas/
+# 4. Valida el runtime y levanta el servidor local en Windows
+.\hub.ps1 serve
+# En Linux/macOS: bash hub.sh serve
+
+# Accede: http://127.0.0.1:8000
 ```
 
 > **Nota:** El stack Docker usa el puerto interno 8080 (Apache no-root).
 > La URL externa **no cambia**: `http://localhost:8080`.
+> El servidor PHP CLI se enlaza solo a loopback y es exclusivo para desarrollo;
+> no procesa `.htaccess` ni reemplaza un servidor de produccion.
 > Consulta [SECURITY.md](SECURITY.md) para el modelo de amenaza completo.
 
 ---
@@ -120,6 +128,7 @@ composer install
 ```bash
 make hub-list                  # Lista todas las apps con su estado
 make hub-run APP=SqlViewer     # Ejecuta una app en el navegador
+make serve                     # Suite completa en http://127.0.0.1:8000
 make hub-doctor                # Diagnostico completo del entorno
 make smoke                     # Verificacion rapida (smoke test)
 make help                      # Todos los comandos disponibles
@@ -150,6 +159,32 @@ make help                      # Todos los comandos disponibles
 
 > **Solo uso local.** Este stack no esta disenado para exposicion publica sin proxy inverso, HTTPS y autenticacion. Ver [SECURITY.md](SECURITY.md).
 
+### CVE criticos de PHP corregidos (octubre de 2026)
+
+El 21 de octubre de 2026, PHP publico correcciones para dos vulnerabilidades
+criticas del runtime, ambas capaces de producir ejecucion remota de codigo sin
+autenticacion. El fallo ocurre debajo de la aplicacion, por lo que sanitizar
+inputs, ocultar errores o ejecutar `composer audit` no corrige un interprete
+vulnerable.
+
+| CVE | Riesgo | Correccion aplicada |
+| :--- | :--- | :--- |
+| [CVE-2026-109618](https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w) | Corrupcion durante condiciones de falta de memoria; el cierre de la solicitud puede procesar estado invalido. | PHP `8.5.12` en Docker; pisos corregidos bloqueados por Composer. |
+| [CVE-2026-109619](https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp) | Estado global obsoleto puede sobrevivir entre solicitudes y terminar en RCE. | PHP corregido y `session.upload_progress.enabled=0`. |
+
+Versiones minimas admitidas: `8.2.35`, `8.3.36`, `8.4.27` y `8.5.12`, dentro
+de cada rama. PHP 8.1 y anteriores no estan soportados. El aviso oficial indica
+que Apache `mod_php`, PHP-FPM, CGI y otros SAPI web estaban en alcance, incluso
+antes de ejecutar codigo de la aplicacion:
+[aviso de seguridad de PHP](https://www.php.net/archive/2026.php#2026-10-21-1).
+
+Como parte de la remediacion, XAMPP dejo de ser un runtime soportado. El proyecto
+usa ahora Docker como ruta reproducible y PHP CLI oficial como alternativa de
+desarrollo. `scripts/check_php_runtime.php` impide iniciar el modo local con una
+rama o parche vulnerable. La migracion conserva dashboard, microapps, Composer,
+configuracion `.env` y acceso opcional a MySQL; cambia solamente la forma de
+proveer PHP y el servidor web.
+
 ### Fase 1 — Infraestructura
 
 | Control | Estado | Detalle |
@@ -159,6 +194,7 @@ make help                      # Todos los comandos disponibles
 | Secret scanning | ✅ | TruffleHog en CI + `detect-secrets` pre-commit |
 | Dependency scanning | ✅ | Dependabot + Trivy en cada build |
 | Versiones fijas | ✅ | Sin tags `latest` en imagenes Docker |
+| PHP RCE (octubre 2026) | ✅ | Runtime actualizado contra CVE-2026-109618 y CVE-2026-109619 |
 
 ### Fase 2 — Aplicacion
 
@@ -177,6 +213,9 @@ make help                      # Todos los comandos disponibles
 | Supply chain scan — Trojan Source | ✅ | Detecta Unicode bidi (CVE-2021-42574) en todo el codigo fuente |
 | Supply chain scan — ofuscacion | ✅ | Detecta `eval/base64`, `shell_exec($_`, `system($_REQUEST` y similares |
 | Integridad de `composer.lock` | ✅ | Valida que el archivo de bloqueo este presente en cada build |
+
+La remediacion, versiones minimas y evidencia de verificacion estan en
+[Actualizacion de seguridad PHP — octubre 2026](docs/PHP_SECURITY_2026-10.md).
 
 ### Fase 3 — Aplicacion (SqlViewer)
 
@@ -222,7 +261,7 @@ Pagina estatica en `landing/` publicada en GitHub Pages.
 
 | Documento | Descripcion |
 | :--- | :--- |
-| [Guia de Instalacion](docs/INSTALL.md) | Instalacion detallada en Docker, XAMPP y Linux |
+| [Guia de Instalacion](docs/INSTALL.md) | Instalacion detallada con Docker o PHP CLI oficial |
 | [Manual de Usuario](docs/USER_MANUAL.md) | Como sacar el maximo provecho a cada herramienta |
 | [Guia del Hub CLI](docs/HUB.md) | Referencia completa de comandos del Hub |
 | [Guia para Principiantes](docs/BEGINNERS_GUIDE.md) | Estructura del proyecto explicada desde cero |
@@ -233,6 +272,9 @@ Pagina estatica en `landing/` publicada en GitHub Pages.
 | [Skills / Playbooks](skills/integrar-microsistema/skill.md) | Flujos reutilizables para automatizar tareas |
 | [Servidor MCP Local](mcp/README.md) | Configuracion del servidor de contexto para IA |
 | [Landing del Producto](docs/LANDING_PAGE.md) | Documentacion de la pagina de presentacion |
+| [Remediacion PHP CVE 2026](docs/PHP_SECURITY_2026-10.md) | Versiones afectadas, cambios y referencias oficiales |
+| [Pruebas funcionales PHP CLI](docs/FUNCTIONAL_TEST_REPORT_2026-10-27.md) | Flujos ejecutados y capturas visibles |
+| [Prueba visual de toda la suite](docs/FULL_SUITE_FUNCTIONAL_TEST_2026-10-27.md) | Las 12 microaplicaciones, fallos y evidencia por pantalla |
 
 ---
 
@@ -246,7 +288,8 @@ Pagina estatica en `landing/` publicada en GitHub Pages.
 | [Arquitectura](docs/ARCHITECTURE.md) | Diagramas Mermaid y detalles del Core |
 | [Specs Tecnicas](docs/TECHNICAL_SPECS.md) | Stack, estandares y normas de mantencion |
 | [Requisitos del Sistema](docs/REQUIREMENTS.md) | Hardware, software y dependencias |
-| [Modos de Ejecucion](OPERATING-MODES.md) | Docker, XAMPP, PHP built-in y Hub local |
+| [Modos de Ejecucion](OPERATING-MODES.md) | Docker, PHP CLI, servidor administrado y Hub local |
+| [ADR-0002](docs/adr/0002-retirar-xampp.md) | Retiro de XAMPP y continuidad funcional |
 | [Migracion a AWS ☁️](docs/AWS_MIGRATION.md) | Guia completa de despliegue en la nube AWS: 3 estrategias, costos, diagramas y paso a paso |
 | [Matriz de Compatibilidad](COMPATIBILITY.md) | Entornos y versiones soportadas |
 | [Manual de Operacion](RUNBOOK.md) | Diagnostico, arranque y recuperacion |

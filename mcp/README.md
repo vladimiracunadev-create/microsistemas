@@ -55,7 +55,7 @@ Anade esto a tu archivo `claude_desktop_config.json`:
     "microsistemas_hub": {
       "command": "python",
       "args": ["-m", "mcp.server"],
-      "cwd": "C:\\xampp\\htdocs\\microsistemas\\Microsistemas"
+      "cwd": "C:\\dev\\microsistemas"
     }
   }
 }

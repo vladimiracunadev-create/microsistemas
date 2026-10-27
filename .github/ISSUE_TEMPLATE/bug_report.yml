@@ -42,7 +42,7 @@ body:
       options:
         - Docker local (docker-compose)
         - PHP Embebido (make serve)
-        - Servidor Externo / XAMPP / LAMP
+        - Servidor Externo (Apache/Nginx)
         - Kubernetes (k8s manifests)
     validations:
       required: true

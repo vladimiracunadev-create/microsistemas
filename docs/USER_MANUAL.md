@@ -101,7 +101,7 @@ La suite se organiza en un **Dashboard Central** que actua como puerta de enlace
   2. Alterne entre **modo Evaluacion** (preguntas aleatorias con 4 alternativas) y **modo Explorador** (revision paginada con respuestas).
   3. Use las teclas **1–4** para responder y **Enter** para avanzar sin usar el raton.
   4. El progreso (aciertos, errores) se guarda en `localStorage` — persiste entre sesiones.
-* **Nota tecnica**: Esta app usa `fetch()` para cargar el JSON local. **Debe abrirse desde un servidor web** (`http://`) — no funcionara con el protocolo `file://` del sistema de archivos. Con Docker o XAMPP, accede via `http://localhost/microsistemas/apps/PythonEval3000/`.
+* **Nota tecnica**: Esta app usa `fetch()` para cargar el JSON local. **Debe abrirse desde un servidor web** (`http://`) — no funcionara con el protocolo `file://` del sistema de archivos. Con PHP CLI use `http://127.0.0.1:8000/apps/PythonEval3000/`; con Docker use `http://localhost:8080/apps/PythonEval3000/`.
 
 ---
 

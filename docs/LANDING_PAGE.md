@@ -20,7 +20,7 @@ Esta landing se agrego para presentar **Microsistemas** como producto, sin reemp
 
 Si estas usando el proyecto en local, la landing queda disponible en la carpeta `landing/`.
 
-- XAMPP: `http://localhost/microsistemas/landing/`
+- PHP CLI: `http://127.0.0.1:8000/landing/`
 - Docker Compose: `http://localhost:8080/landing/`
 - PHP embebido: `http://localhost:8000/landing/`
 

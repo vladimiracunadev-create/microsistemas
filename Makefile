@@ -46,7 +46,8 @@ down:
 	docker-compose down
 
 serve:
-	php -S localhost:8000 -t .
+	php scripts/check_php_runtime.php
+	php -d session.upload_progress.enabled=0 -S 127.0.0.1:8000 -t .
 
 git-push:
 	@$(MAKE) lint-md || (echo "\nFix Markdown errors before pushing!" && exit 1)
@@ -68,7 +69,7 @@ install-hooks:
 ifeq ($(OS),Windows_NT)
     HUB_CLI := powershell -ExecutionPolicy Bypass -File .\hub.ps1
 else
-    HUB_CLI := ./hub.sh
+    HUB_CLI := bash hub.sh
 endif
 
 hub-list:

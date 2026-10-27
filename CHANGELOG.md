@@ -4,6 +4,37 @@ Todos los cambios notables en este proyecto seran documentados en este archivo. 
 
 ## [Unreleased]
 
+### Seguridad
+
+- Actualizado el runtime Docker de PHP `8.5.7` a `8.5.12` y la demo Kubernetes
+  de `8.2.27` a `8.2.35` para corregir CVE-2026-109618 y CVE-2026-109619.
+- Composer ahora acepta solo niveles de parche corregidos en las ramas PHP
+  8.2, 8.3, 8.4 y 8.5; CI valida el piso `8.2.35`.
+- Eliminado el campo manual `version` de `composer.json`: Composer deriva la
+  version desde Git y `composer validate --strict` deja de advertir sobre un
+  valor que podia desincronizarse del tag y del changelog.
+- Deshabilitado `session.upload_progress` en la imagen de produccion como
+  defensa adicional para el vector de sesiones documentado por PHP.
+- Agregada la bitacora tecnica `docs/PHP_SECURITY_2026-10.md` con alcance,
+  cambios, verificacion y referencias oficiales.
+- Retirado XAMPP como runtime soportado. PHP CLI oficial conserva el flujo de
+  desarrollo local mediante `hub serve`, con validacion de version previa y
+  escucha exclusiva en loopback.
+- Documentada la migracion sin perdida de `.env`, extensiones ni bases de datos
+  y registrada la decision en `docs/adr/0002-retirar-xampp.md`.
+
+### Corregido
+
+- Git Trainer ahora filtra por identificador, titulo, etiquetas y comando sin
+  incluir texto generico que hacia coincidir todos los casos.
+- PHP Migrator genera un `foreach` valido para el patron legado con `each()` y
+  no sustituye `mysql_*` por `mysqli_*` sin una conexion explicita; se agrego
+  una regresion que valida la sintaxis PHP de la salida.
+- CapacitySim vuelve a calcular el reporte completo tras corregir referencias
+  obsoletas a variables renombradas.
+- AWS Generator actualiza el comando al editar parametros y la accion rapida
+  para listar buckets selecciona la receta `s3api list-buckets` correcta.
+
 ## [3.1.0] - 2026-04-14
 
 ### Anadido — PythonEval3000 (Nuevo Microsistema)

@@ -6,6 +6,38 @@
 
 $APPS_DIR = Join-Path $PSScriptRoot "apps"
 
+function Test-PhpRuntime {
+    if (-not (Get-Command php -ErrorAction SilentlyContinue)) {
+        Write-Host "[ERR] PHP no encontrado en PATH." -ForegroundColor Red
+        return $false
+    }
+
+    $runtimeOutput = & php (Join-Path $PSScriptRoot "scripts\check_php_runtime.php") 2>&1
+    $runtimeExitCode = $LASTEXITCODE
+    $runtimeOutput | ForEach-Object { Write-Host $_ }
+    return ($runtimeExitCode -eq 0)
+}
+
+function Start-LocalServer {
+    if (-not (Test-PhpRuntime)) {
+        throw "No se inicia el servidor con un runtime PHP vulnerable o no soportado."
+    }
+
+    if (-not (Test-Path (Join-Path $PSScriptRoot "vendor\autoload.php"))) {
+        Write-Host "[ERR] Faltan dependencias. Ejecuta 'composer install'." -ForegroundColor Red
+        return
+    }
+
+    Write-Host "Servidor local: http://127.0.0.1:8000" -ForegroundColor Green
+    Write-Host "Solo desarrollo local. Deten con Ctrl+C." -ForegroundColor Yellow
+    Push-Location $PSScriptRoot
+    try {
+        & php "-d" "session.upload_progress.enabled=0" "-S" "127.0.0.1:8000" "-t" "."
+    } finally {
+        Pop-Location
+    }
+}
+
 <#
 .SYNOPSIS
     Lista todas las aplicaciones disponibles en el directorio 'apps'.
@@ -72,6 +104,10 @@ function Run-App {
     $runCmd = if ($content -match 'run_cmd:\s*["'']?([^"''\n\r]+)["'']?') { $Matches[1] } else { $null }
     $type = if ($content -match 'type:\s*["'']?([^"''\n\r]+)["'']?') { $Matches[1] } else { "N/A" }
 
+    if ($type -eq "php" -and -not (Test-PhpRuntime)) {
+        throw "No se inicia '$appId' con un runtime PHP vulnerable o no soportado."
+    }
+
     if (-not $runCmd) {
         if ($type -eq "static") {
             Write-Host "Info: La aplicación '$appId' es estática. Ábrela en tu navegador." -ForegroundColor Yellow
@@ -82,8 +118,12 @@ function Run-App {
     }
 
     Write-Host "Iniciando $appId..." -ForegroundColor Green
-    Set-Location $appPath
-    Invoke-Expression $runCmd
+    Push-Location $appPath
+    try {
+        Invoke-Expression $runCmd
+    } finally {
+        Pop-Location
+    }
 }
 
 <#
@@ -140,7 +180,6 @@ function Invoke-Doctor {
     $tools = @{
         "Docker" = "docker --version";
         "Git"    = "git --version";
-        "PHP"    = "php --version"
     }
 
     foreach ($tool in $tools.Keys) {
@@ -150,6 +189,12 @@ function Invoke-Doctor {
         } catch {
             Write-Host "[ERR] $tool no encontrado." -ForegroundColor Red
         }
+    }
+
+    if (Test-PhpRuntime) {
+        Write-Host "[OK] PHP instalado y en una version soportada." -ForegroundColor Green
+    } else {
+        Write-Host "[ERR] PHP ausente o en una version vulnerable/no soportada." -ForegroundColor Red
     }
 
     # 2. Configuración
@@ -201,9 +246,10 @@ switch ($command) {
     "list" { Get-Apps }
     "run"  { Run-App $subArg }
     "up"   { Up-App $subArg }
+    "serve" { Start-LocalServer }
     "doctor" { Invoke-Doctor }
     default {
-        Write-Host "Uso: .\hub.ps1 {list|run <id>|up <id>|doctor}"
+        Write-Host "Uso: .\hub.ps1 {list|run <id>|up <id>|serve|doctor}"
         exit 1
     }
 }

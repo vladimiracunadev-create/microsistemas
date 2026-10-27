@@ -115,10 +115,8 @@ function filteredCases(cat, q) {
   if (!s) return list;
   return list.filter(c => {
     const hay = [
+      c.id,
       c.title,
-      c.category,
-      c.queHace,
-      c.cuandoUsarlo,
       ...(c.tags || []),
       c.cmd
     ].join(" ").toLowerCase();

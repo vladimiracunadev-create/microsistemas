@@ -61,12 +61,14 @@ graph TD
 
 ## 🐳 Capas del Contenedor (Dockerfile)
 
-La imagen oficial se basa en `php:8.2-apache` para maximizar la compatibilidad:
+La imagen oficial se basa en `php:8.5.12-apache-bookworm`, corregida contra
+CVE-2026-109618 y CVE-2026-109619:
 
-1. **Base**: Debian Slim + Apache.
+1. **Base**: Debian Bookworm + Apache.
 2. **Ext**: Instalacion de `mysqli`, `pdo_mysql` y `gd`.
 3. **App**: Copia del codigo y limpieza de rutas.
-4. **Security**: Configuracion de permisos `www-data` y deshabilitacion de navegacion por carpetas.
+4. **Security**: Configuracion de permisos `www-data`, deshabilitacion de
+   navegacion por carpetas y progreso de carga de sesion deshabilitado.
 
 ---
 

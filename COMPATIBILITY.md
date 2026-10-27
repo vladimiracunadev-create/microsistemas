@@ -9,7 +9,8 @@ A continuacion se detalla el nivel de compatibilidad documentado y evidenciado a
 | Modo | Nivel de Soporte | Descripcion |
 | :--- | :--- | :--- |
 | **Docker Engine (Local/Nube)** | 🟢 Primario / Probado | El metodo oficial de operacion inmutable (mediante `docker-compose.yml` incluido).|
-| **XAMPP / Servidores Legacy** | 🟡 Esperado / Testeado Parcial | Capaz de correr como carpeta dentro de `htdocs` en setups Apache clasicos (Windows/Linux/Mac). |
+| **PHP CLI oficial** | ✅ Soportado | Desarrollo local en `127.0.0.1:8000`; valida la version antes de iniciar. |
+| **Apache/Nginx administrado** | 🟡 Compatible | El operador debe replicar headers, TLS y restricciones de acceso. |
 | **PHP Built-in Server** | 🟡 Local Dev / Probado | Lanzado a traves de `make serve` para pruebas UI locales super rapidas sin base de datos compleja. |
 | **Kubernetes** | 🟡 Experimental | Despliegue mediante los manifiestos `k8s/`. Esta preparado arquitectonicamente, pero requiere ajustes de ingress del usuario. |
 
@@ -17,7 +18,7 @@ A continuacion se detalla el nivel de compatibilidad documentado y evidenciado a
 
 | Componente | Versiones Soportadas | Notas |
 | :--- | :--- | :--- |
-| **PHP** | `8.1`, `8.2`, `8.3` | Requerido al menos `8.1` (uso de features de tipado robusto, enums, etc). PHP 7.x esta **No Soportado**. |
+| **PHP** | `8.2.35+`, `8.3.36+`, `8.4.27+`, `8.5.12+` (dentro de cada rama) | Niveles minimos corregidos para CVE-2026-109618 y CVE-2026-109619. PHP 8.1 y anteriores estan **No Soportados**. |
 | **Node.js / npm** | N/A | Frontends operan mediante Vanilla JS, eliminando Node.js del runtime list. |
 | **Base de Datos** | MySQL `8.0+`, MariaDB `10.5+` | Para las tools que persistan estado. Las herramientas *stateless* (ej. Conversor) funcionan sin conectividad SQL. |
 

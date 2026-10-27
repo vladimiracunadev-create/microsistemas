@@ -96,6 +96,21 @@ El trafico nunca debe cruzar una red publica sin capa de autenticacion y HTTPS.
 Este repositorio se mantiene como laboratorio/portafolio.
 Se recomienda usar siempre la version mas reciente disponible en la rama principal.
 
+El runtime debe cumplir uno de estos pisos de seguridad:
+
+| Rama PHP | Version minima |
+| :--- | :--- |
+| 8.2 | `8.2.35` |
+| 8.3 | `8.3.36` |
+| 8.4 | `8.4.27` |
+| 8.5 | `8.5.12` |
+
+PHP 8.1 y anteriores no tienen soporte regular del proyecto PHP y no estan
+soportados por esta aplicacion. La restriccion de `composer.json` impide instalar
+el proyecto con versiones afectadas por CVE-2026-109618 o CVE-2026-109619.
+El detalle de la remediacion se mantiene en
+[`docs/PHP_SECURITY_2026-10.md`](docs/PHP_SECURITY_2026-10.md).
+
 ---
 
 ## Reporte responsable de vulnerabilidades
@@ -115,7 +130,7 @@ y solicitar contacto privado, o comunicarlo directamente.
 
 ### 1) No exponer estos microsistemas a Internet
 
-Estos microsistemas estan pensados para uso local (XAMPP/MAMP/LAMP) o redes controladas.
+Estos microsistemas estan pensados para loopback local (Docker o PHP CLI) o redes controladas. XAMPP no es un runtime soportado; en Apache/Nginx el operador debe aplicar controles equivalentes.
 
 - Recomendado: `http://localhost/...`
 - Evitar: servidor publico accesible desde Internet sin proxy + auth.
@@ -153,7 +168,13 @@ Usar variables de entorno (`.env`) y archivos fuera del repo.
 
 ### Docker y contenedores
 
-- **Versiones fijas**: No se usan tags `latest`, se fijan versiones estables.
+- **Versiones fijas**: No se usan tags `latest`; produccion fija
+  `php:8.5.12-apache-bookworm` y la demo Kubernetes fija
+  `php:8.2.35-apache-bookworm`.
+- **PHP RCE octubre 2026**: Las imagenes base estan en versiones corregidas para
+  CVE-2026-109618 y CVE-2026-109619.
+- **Sesiones**: `session.upload_progress.enabled=0` se carga desde
+  `docker/php-security.ini` antes de procesar solicitudes.
 - **Puertos restringidos**: MySQL y web vinculados a `127.0.0.1` (loopback).
 - **Sin fallback de contrasena**: El contenedor falla si `DB_PASS` no esta en `.env`.
 - **Healthchecks**: Monitoreo nativo del estado de salud de los servicios.

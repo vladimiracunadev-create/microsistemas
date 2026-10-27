@@ -1,5 +1,5 @@
 # Use a specific version for supply chain security
-FROM php:8.5.7-apache-bookworm
+FROM php:8.5.12-apache-bookworm
 
 # Security: Set working directory
 WORKDIR /var/www/html
@@ -22,6 +22,11 @@ RUN a2enmod rewrite headers
 
 # Production configuration
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+# PHP security hardening: disable session upload progress before request parsing.
+# This complements the patched runtime for CVE-2026-109619 and mitigates the
+# related session upload-progress vector documented by the PHP security team.
+COPY docker/php-security.ini "$PHP_INI_DIR/conf.d/zz-security.ini"
 
 # Copy application source
 COPY --chown=www-data:www-data . /var/www/html/

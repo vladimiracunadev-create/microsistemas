@@ -2,6 +2,11 @@
 
 La seguridad es el pilar fundamental de **Microsistemas Suite**. Este documento define nuestra postura oficial y los protocolos de proteccion de datos.
 
+La matriz vigente de versiones PHP y la remediacion de CVE-2026-109618 y
+CVE-2026-109619 se documentan en
+[`PHP_SECURITY_2026-10.md`](PHP_SECURITY_2026-10.md). La politica tecnica
+completa esta en [`../SECURITY.md`](../SECURITY.md).
+
 ---
 
 ## 🛡️ Protocolos de Proteccion de Datos

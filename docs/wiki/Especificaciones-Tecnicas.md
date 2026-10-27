@@ -6,7 +6,7 @@ Este documento detalla la arquitectura, tecnologias y estandares utilizados en e
 
 ### Backend
 
-- **PHP 8.2+**: Lenguaje principal para el dashboard y utilidades de servidor.
+- **PHP 8.2.35+ por rama soportada**: Lenguaje principal para el dashboard y utilidades de servidor; ver los pisos de parche en `COMPATIBILITY.md`.
 - **MySQL 8.0**: Motor de base de datos para el SQL Viewer (soporta MariaDB).
 - **Composer**: Gestion de dependencias y Autoloading (PSR-4 compatible).
 

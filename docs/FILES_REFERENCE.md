@@ -120,7 +120,7 @@ Es la puerta de entrada a cualquier operacion de base de datos en las micro-apps
 | Atributo       | Valor                            |
 | :------------- | :------------------------------- |
 | **Ubicacion**  | `/Dockerfile`                    |
-| **Base**       | `php:8.2.27-apache-bookworm`     |
+| **Base**       | `php:8.5.12-apache-bookworm`     |
 | **Importancia**| 🔴 Critico                       |
 
 **Que hace?**
@@ -131,10 +131,10 @@ Define la imagen Docker que empaqueta toda la suite para despliegue inmutable.
 1. Parte de la imagen oficial PHP con Apache sobre Debian Bookworm.
 2. Instala extensiones: `gd` (imagenes), `mysqli`, `pdo`, `pdo_mysql`.
 3. Habilita `mod_rewrite` de Apache para URLs limpias.
-4. Usa la config `php.ini-production` para rendimiento y seguridad.
+4. Usa la config `php.ini-production` y carga `docker/php-security.ini`.
 5. Instala Composer y ejecuta `composer install --no-dev` como usuario `www-data` (no-root).
 6. Aplica permisos granulares: directorios `755`, archivos `644`.
-7. Incluye un **HEALTHCHECK** que verifica `curl -f http://localhost/` cada 30 segundos.
+7. Incluye un **HEALTHCHECK** que verifica `http://localhost:8080/` cada 30 segundos.
 
 **Por que es critico?**
 Sin este archivo no es posible el despliegue con Docker, que es el metodo recomendado de produccion.
@@ -154,11 +154,11 @@ Levanta el ecosistema completo (web + base de datos) con un solo comando `docker
 
 **Detalles tecnicos:**
 
-- **Servicio `web`**: Mapea puerto `8080:80`, monta el codigo fuente como volumen, depende de `db` con `service_healthy`.
+- **Servicio `web`**: Mapea `127.0.0.1:8080:8080`, monta el codigo fuente como volumen y depende de `db` con `service_healthy`.
 - **Servicio `db`**: MySQL 8.0.40, con volumen persistente `db-data`, healthcheck con `mysqladmin ping`.
 - **Limites de recursos**: Cada servicio esta limitado a 1 CPU y 512MB RAM.
 - **Red**: Red bridge aislada `microsistemas-net`.
-- **Variables**: Lee credenciales desde `.env` con fallback a valores por defecto.
+- **Variables**: Lee credenciales desde `.env`; `DB_PASS` es obligatoria y no tiene fallback.
 
 ---
 
@@ -310,9 +310,9 @@ Script PowerShell auxiliar para mantener los README individuales de cada micro-a
 **Contenido clave:**
 
 - **Nombre**: `vladimir/microsistemas`
-- **PHP requerido**: `>=8.0`
+- **PHP requerido**: `~8.2.35 || ~8.3.36 || ~8.4.27 || ~8.5.12`
 - **Dependencias de produccion**: `vlucas/phpdotenv ^5.6` (carga de `.env`).
-- **Dependencias de desarrollo**: `php-cs-fixer ^3.0` (formateo), `phpstan ^1.0` (analisis estatico).
+- **Dependencias de desarrollo**: `php-cs-fixer ^3.0` (formateo), `phpstan ^2.1` (analisis estatico).
 - **Autoloading PSR-4**: Mapea `Microsistemas\` al directorio `src/`.
 - **Optimizaciones**: `optimize-autoloader: true`, `sort-packages: true`.
 
@@ -446,7 +446,7 @@ Contiene 4 archivos (`.md` y `.yml`) con formularios predefinidos para reportar 
 | `API.md`                 | Referencia de la API interna del Core y puntos de extension.            | 🟡          |
 | `BEGINNERS_GUIDE.md`     | Guia de onboarding para desarrolladores nuevos.                         | 🟢          |
 | `HUB.md`                 | Documentacion completa del Hub CLI.                                     | 🟡          |
-| `INSTALL.md`             | Guia paso a paso de instalacion (Docker, XAMPP, Linux).                 | 🔴          |
+| `INSTALL.md`             | Guia de instalacion (Docker, PHP CLI y servidor administrado).         | 🔴          |
 | `MAINTAINERS.md`         | Informacion para administradores del proyecto.                          | 🟢          |
 | `RECRUITER.md`           | Guia ejecutiva para reclutadores y evaluadores tecnicos.                | 🟢          |
 | `REQUIREMENTS.md`        | Requisitos de hardware y software (PHP, extensiones, etc.).             | 🟡          |

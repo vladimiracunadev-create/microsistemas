@@ -50,7 +50,7 @@ Una suite unificada de micro-aplicaciones que:
 
 | Capa | Tecnologia | Justificacion |
 | :--- | :--- | :--- |
-| **Backend** | PHP 8.1+ | Compatibilidad con infraestructura existente, rendimiento mejorado |
+| **Backend** | PHP 8.2.35+ por rama soportada | Compatibilidad con infraestructura existente y pisos de parche seguros |
 | **Frontend** | HTML5, CSS3, JavaScript Vanilla | Cero dependencias, carga ultrarrapida |
 | **Gestion de Dependencias** | Composer (PSR-4) | Autoloading estandar, facil mantenimiento |
 | **Containerizacion** | Docker, Docker Compose | Portabilidad, reproducibilidad de entornos |
@@ -86,7 +86,7 @@ Una suite unificada de micro-aplicaciones que:
 
 #### ✅ Por que PHP en lugar de Node.js/Python
 
-- **Compatibilidad**: Infraestructura LAMP/XAMPP ampliamente disponible
+- **Compatibilidad**: Docker, PHP CLI y servidores Apache/Nginx administrados
 - **Rendimiento**: PHP 8.x con JIT compiler es competitivo
 - **Ecosistema**: Composer y PSR-4 ofrecen estandares maduros
 - **Curva de aprendizaje**: Menor barrera de entrada para equipos existentes
@@ -387,12 +387,12 @@ def list():
 
 ```dockerfile
 # Stage 1: Build
-FROM php:8.1-apache AS builder
+FROM php:8.5.12-apache-bookworm AS builder
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader
 
 # Stage 2: Production
-FROM php:8.1-apache
+FROM php:8.5.12-apache-bookworm
 COPY --from=builder /var/www/html/vendor ./vendor
 ```
 
