@@ -1,7 +1,7 @@
 import subprocess
-from pathlib import Path
 
 from mcp.config import REPO_ROOT
+
 
 def _run_make_command(command: str, app_name: str | None = None) -> str:
     """Ejecuta un comando make predefinido de forma segura"""
@@ -12,11 +12,12 @@ def _run_make_command(command: str, app_name: str | None = None) -> str:
     try:
         # cwd ensures we run it from the repo root
         result = subprocess.run(
-            cmd, 
+            cmd,
+            check=False,
             cwd=str(REPO_ROOT),
-            capture_output=True, 
-            text=True, 
-            timeout=15
+            capture_output=True,
+            text=True,
+            timeout=15,
         )
         if result.returncode != 0:
             return f"Hub Error ({result.returncode}):\n{result.stderr}\n{result.stdout}"
@@ -24,7 +25,7 @@ def _run_make_command(command: str, app_name: str | None = None) -> str:
     except subprocess.TimeoutExpired:
         return "Error: Command timed out after 15 seconds."
     except Exception as e:
-        return f"Error executing hub command: {str(e)}"
+        return f"Error executing hub command: {e!s}"
 
 def run_hub_list() -> str:
     """

@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 import argparse
-import os
 import csv
 import itertools
+import os
+
 from capacity_calc import calculate, load_baselines
+
 
 def main():
     """

@@ -1,17 +1,14 @@
+
 from fastmcp import FastMCP
-from pathlib import Path
 
 # Configuracion y whitelists
 from mcp.config import REPO_ROOT
 
-# Importar tools
-from mcp.tools import hub_tools
-from mcp.tools import docs_tools
-from mcp.tools import manifest_tools
-from mcp.tools import skill_tools
-
 # Importar resources
 from mcp.resources import resource_map
+
+# Importar tools
+from mcp.tools import docs_tools, hub_tools, manifest_tools, skill_tools
 
 # Inicializar FastMCP Server
 mcp = FastMCP("Microsistemas Hub MCP", dependencies=["pydantic"])

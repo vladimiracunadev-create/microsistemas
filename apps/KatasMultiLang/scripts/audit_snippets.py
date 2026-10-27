@@ -1,6 +1,6 @@
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Get the directory of the script to resolve paths correctly
 ROOT = Path(__file__).resolve().parents[1]

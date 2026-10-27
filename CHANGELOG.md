@@ -34,6 +34,8 @@ Todos los cambios notables en este proyecto seran documentados en este archivo. 
   obsoletas a variables renombradas.
 - AWS Generator actualiza el comando al editar parametros y la accion rapida
   para listar buckets selecciona la receta `s3api list-buckets` correcta.
+- CI usa la accion oficial de Trivy compatible con Ubuntu 26 y aplica una
+  configuracion Ruff reproducible para los scripts Python existentes.
 
 ## [3.1.0] - 2026-04-14
 
