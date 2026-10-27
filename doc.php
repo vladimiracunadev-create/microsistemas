@@ -67,6 +67,8 @@ $documentBasePath = $appBasePath . ($isDocsDocument ? 'docs/' : '');
         header {
             margin-bottom: 40px;
             display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border);
@@ -145,6 +147,16 @@ $documentBasePath = $appBasePath . ($isDocsDocument ? 'docs/' : '');
             border-radius: 8px;
         }
 
+        #content .fallback-line,
+        #content .fallback-table {
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        #content .fallback-table {
+            overflow-x: auto;
+        }
+
         #content table {
             width: 100%;
             border-collapse: collapse;
@@ -178,7 +190,62 @@ $documentBasePath = $appBasePath . ($isDocsDocument ? 'docs/' : '');
 
     <script>
         const markdown = <?php echo json_encode($content); ?>;
-        document.getElementById('content').innerHTML = marked.parse(markdown);
+        const target = document.getElementById('content');
+
+        function renderMarkdownFallback(source, container) {
+            let list = null;
+
+            source.split(/\r?\n/).forEach((line) => {
+                if (!line.trim()) {
+                    list = null;
+                    return;
+                }
+
+                const heading = line.match(/^(#{1,3})\s+(.+)$/);
+                const image = line.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+
+                if (heading) {
+                    list = null;
+                    const element = document.createElement(`h${heading[1].length}`);
+                    element.textContent = heading[2];
+                    container.appendChild(element);
+                    return;
+                }
+
+                if (image) {
+                    list = null;
+                    const element = document.createElement('img');
+                    element.alt = image[1];
+                    element.src = image[2];
+                    element.loading = 'lazy';
+                    container.appendChild(element);
+                    return;
+                }
+
+                if (line.startsWith('- ')) {
+                    if (!list) {
+                        list = document.createElement('ul');
+                        container.appendChild(list);
+                    }
+                    const item = document.createElement('li');
+                    item.textContent = line.slice(2);
+                    list.appendChild(item);
+                    return;
+                }
+
+                list = null;
+                const element = document.createElement(line.startsWith('|') ? 'pre' : 'p');
+                element.className = line.startsWith('|') ? 'fallback-table' : 'fallback-line';
+                element.textContent = line;
+                container.appendChild(element);
+            });
+        }
+
+        if (window.marked && typeof window.marked.parse === 'function') {
+            target.innerHTML = window.marked.parse(markdown);
+        } else {
+            renderMarkdownFallback(markdown, target);
+        }
     </script>
 </body>
 

@@ -36,6 +36,8 @@ Todos los cambios notables en este proyecto seran documentados en este archivo. 
   para listar buckets selecciona la receta `s3api list-buckets` correcta.
 - CI usa la accion oficial de Trivy compatible con Ubuntu 26 y aplica una
   configuracion Ruff reproducible para los scripts Python existentes.
+- El visor de documentacion mantiene el contenido y las capturas visibles sin
+  depender de que el CDN de Marked este disponible.
 
 ## [3.1.0] - 2026-04-14
 
