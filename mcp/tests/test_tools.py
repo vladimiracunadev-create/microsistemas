@@ -1,6 +1,5 @@
-import pytest
-from pathlib import Path
-from mcp.config import sanitize_doc_name, get_app_path, get_skill_path
+from mcp.config import get_app_path, get_skill_path, sanitize_doc_name
+
 
 def test_sanitize_doc_name_success():
     """Prueba que documentos en la whitelist sean resueltos correctamente"""

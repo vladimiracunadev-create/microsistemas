@@ -1,4 +1,5 @@
-from mcp.config import sanitize_doc_name, get_skill_path, get_app_path, REPO_ROOT
+from mcp.config import REPO_ROOT, get_skill_path, sanitize_doc_name
+
 
 def get_resource_readme() -> str:
     return sanitize_doc_name("README.md").read_text(encoding="utf-8")

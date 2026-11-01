@@ -1,5 +1,7 @@
 import json
-from mcp.config import get_app_path, REPO_ROOT, VALID_APP_NAME_PATTERN
+
+from mcp.config import REPO_ROOT, VALID_APP_NAME_PATTERN, get_app_path
+
 
 def list_apps() -> str:
     """
@@ -38,4 +40,4 @@ def read_manifest(app_name: str) -> str:
         content = manifest_path.read_text(encoding="utf-8")
         return f"=== Manifest of {app_name} ===\n{content}"
     except Exception as e:
-        return f"Error reading manifest: {str(e)}"
+        return f"Error reading manifest: {e!s}"

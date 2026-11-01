@@ -1,149 +1,124 @@
-# Guia de Instalacion y Despliegue
+# Guia de instalacion y uso
 
-Este documento detalla los pasos para instalar y ejecutar la suite **Microsistemas** en diferentes entornos.
+Microsistemas se ejecuta con Docker o con el binario oficial de PHP. XAMPP se
+retiro como dependencia soportada para impedir que un paquete desactualizado
+mantenga activo un PHP afectado por CVE criticos.
 
----
+## Versiones PHP admitidas
 
-## Requisitos Previos
+Use una de estas ramas con, al menos, la version indicada:
 
-- **Navegador Web Moderno**: Chrome, Firefox, Edge o Safari.
-- **Entorno de Ejecucion**:
-  - **Opcion A (Moderna)**: Docker Desktop.
-  - **Opcion B (Clasica)**: Servidor Web (Apache/Nginx) con PHP 8.x instalado (ej: XAMPP, WAMP, MAMP).
+| Rama | Version minima segura |
+|---|---:|
+| PHP 8.2 | 8.2.35 |
+| PHP 8.3 | 8.3.36 |
+| PHP 8.4 | 8.4.27 |
+| PHP 8.5 | 8.5.12 |
 
-- **Herramientas de Consola (Opcional - Hub CLI)**:
+El comando `scripts/check_php_runtime.php` impide iniciar el servidor local con
+una version anterior. Consulte el detalle en [PHP_SECURITY_2026-10.md](PHP_SECURITY_2026-10.md).
 
-  - **Bash o PowerShell**: Requerido para ejecutar el Hub CLI (`hub.sh` o `hub.ps1`).
-  - **Make (opcional)**: Para usar los comandos abreviados del Makefile.
+## Opcion 1: Docker (recomendada)
 
----
+Requiere Docker Desktop o Docker Engine con Compose.
 
-## 🐳 Opcion 1: Docker (Recomendada)
-
-La forma mas rapida y limpia de ejecutar el sistema sin instalar dependencias en su maquina.
-
-### Pasos
-
-1. **Instalar Docker**: Descargue e instale [Docker Desktop](https://www.docker.com/products/docker-desktop/).
-2. **Abrir Terminal**: Navegue a la carpeta del proyecto.
-
-   ```powershell
-   cd camino/a/microsistemas/Microsistemas
-   ```
-
-3. **Levantar Entorno**:
-
-   ```bash
-   docker-compose up -d
-   # O use el atajo: make up
-   ```
-
-   *El flag `-d` ejecuta el proceso en segundo plano.*
-
-4. **Acceder**: Abra su navegador en [http://localhost:8080](http://localhost:8080).
-
-5. **Verificar Salud** (Opcional):
-
-   ```bash
-   # Verificar diagnostico del sistema
-   make hub-doctor
-   
-   # O directamente con PowerShell
-   powershell -ExecutionPolicy Bypass -File hub.ps1 doctor
-   ```
-
-### Gestion
-
-- **Detener servidor**: `docker-compose down`
-- **Ver logs**: `docker-compose logs -f`
-
----
-
-## 🐘 Opcion 2: Windows con XAMPP
-
-Para usuarios que prefieren un entorno local tradicional.
-
-### Pasos
-
-1. **Instalar XAMPP**: Descargue desde [apachefriends.org](https://www.apachefriends.org/es/index.html).
-2. **Ubicar Archivos**:
-
-- Vaya a la carpeta de instalacion (usualmente `C:\xampp`).
-- Entre en la carpeta `htdocs`.
-- Cree una carpeta llamada `microsistemas`.
-- Copie todo el contenido de este repositorio dentro de `C:\xampp\htdocs\microsistemas`.
-
-1. **Iniciar Servicios**:
-
-   - Abra el **XAMPP Control Panel**.
-   - Inicie **Apache** (Start).
-   - Inicie **MySQL** (Start) *solo si usara el SQL Viewer*.
-
-1. **Acceder**: Abra su navegador en [http://localhost/microsistemas](http://localhost/microsistemas).
-
----
-
-## 🐧 Opcion 3: Linux (Ubuntu/Debian)
-
-### Pasos
-
-1. **Instalar Apache y PHP**:
-
-```bash
-sudo apt update
-sudo apt install apache2 php libapache2-mod-php php-mysql
+```powershell
+git clone https://github.com/vladimiracunadev-create/microsistemas.git
+cd microsistemas
+Copy-Item .env.example .env
+docker compose up -d --build
 ```
 
-1. **Clonar Repositorio**:
+En Linux o macOS, sustituya `Copy-Item` por `cp`. Abra
+[http://localhost:8080](http://localhost:8080). Para detener el entorno:
 
-   ```bash
-   cd /var/www/html
-   sudo git clone https://github.com/tu-usuario/microsistemas.git
+```bash
+docker compose down
+```
+
+## Opcion 2: PHP CLI oficial (desarrollo local)
+
+Este modo conserva las rutas y microaplicaciones PHP sin Apache. Es para
+desarrollo y pruebas locales; el servidor integrado de PHP no debe exponerse a
+Internet.
+
+### Windows
+
+1. Descargue un paquete PHP soportado desde
+   [windows.php.net](https://windows.php.net/download/). Agregue su directorio a
+   `PATH` y compruebe que `php --version` cumple la tabla anterior.
+2. Instale Composer desde [getcomposer.org](https://getcomposer.org/download/).
+3. Desde la raiz del repositorio, ejecute:
+
+   ```powershell
+   Copy-Item .env.example .env
+   composer install
+   .\hub.ps1 doctor
+   .\hub.ps1 serve
    ```
 
-1. **Permisos**:
+4. Abra [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
-   Asegurese de que Apache pueda leer los archivos.
+### Linux o macOS
 
-   ```bash
-   sudo chown -R www-data:www-data /var/www/html/microsistemas
-   ```
+Instale desde un repositorio que entregue una version admitida de PHP y las
+extensiones `pdo`, `pdo_mysql`, `json` y `mbstring` cuando correspondan. Luego:
 
-1. **Acceder**: [http://localhost/microsistemas](http://localhost/microsistemas).
+```bash
+cp .env.example .env
+composer install
+bash hub.sh doctor
+bash hub.sh serve
+```
 
----
+Abra [http://127.0.0.1:8000](http://127.0.0.1:8000). `make serve` es un atajo
+equivalente.
 
-## ⚠️ Solucion de Problemas Comunes
+El servidor escucha solo en loopback y arranca con
+`session.upload_progress.enabled=0`. En este modo `.htaccess` no se procesa;
+para produccion use la imagen Docker o configure Apache/Nginx con reglas
+equivalentes.
 
-### Error: "No se encuentra `cases.json`" en Git Trainer
+## Migracion desde XAMPP sin romper la instalacion
 
-- **Causa**: Esta intentando abrir el archivo `.html` directamente con doble clic (`file://`).
-- **Solucion**: Debe acceder siempre a traves de `http://localhost/...`. Los navegadores bloquean la carga de archivos JSON locales por seguridad (CORS).
+El repositorio no desinstala XAMPP ni borra bases de datos. Migre primero y
+retire el paquete anterior solo despues de validar:
 
-### Error: "500 Internal Server Error" en Docker
+1. Copie fuera del directorio del paquete cualquier `.env`, log o archivo local
+   que no este versionado.
+2. Si usaba MySQL/MariaDB, exporte cada base con `mysqldump` y conserve usuarios,
+   permisos y puertos. Docker puede importar ese respaldo; PHP CLI tambien puede
+   conectarse al servicio de base de datos que decida mantener.
+3. Anote las extensiones habilitadas en el `php.ini` anterior. Active sus
+   equivalentes en el PHP nuevo, en especial `pdo_mysql` para SQL Viewer.
+4. Clone o mueva el repositorio a una ruta normal, por ejemplo
+   `C:\dev\microsistemas`; ya no necesita una carpeta publica especial.
+5. Ejecute `composer install`, `hub.ps1 doctor` y `hub.ps1 serve`. La URL cambia
+   de una subruta del servidor anterior a `http://127.0.0.1:8000/`, pero las
+   rutas internas `apps/...` se conservan.
+6. Compruebe las aplicaciones y la conexion de base de datos. Solo entonces
+   desinstale manualmente el paquete anterior si ya no aloja otros proyectos.
 
-- **Causa**: El archivo `.env` no existe o tiene permisos incorrectos.
-- **Solucion**: Ejecute `cp .env.example .env` y asegurese de que el archivo es legible por el contenedor.
+La decision y sus consecuencias estan registradas en
+[ADR-0002](adr/0002-retirar-xampp.md).
 
-### Error: Credenciales de Base de Datos
+## Servidor administrado de produccion
 
-- Las herramientas estan configuradas por defecto para usar los valores del archivo `.env`.
-- Si usas Docker, el host **DEBE** ser `db`, no `localhost`.
+Puede publicar la raiz del repositorio con Apache o Nginx y PHP-FPM, siempre que
+el PHP cumpla la version minima. Restrinja el acceso a herramientas operativas,
+traslade las reglas de `.htaccess` si usa Nginx y ejecute:
 
----
+```bash
+composer install --no-dev --optimize-autoloader
+php scripts/check_php_runtime.php
+```
 
-## 💡 Tips de Rendimiento y Produccion
+## Solucion de problemas
 
-1. **Optimizacion de Composer**: En tu servidor final, ejecuta `composer install --no-dev --optimize-autoloader` para una carga de clases ultra-rapida.
-2. **Cache de Apache**: Habilita `mod_expires` en Apache para que los archivos estaticos de herramientas como *Git Trainer* se carguen instantaneamente desde la cache del navegador.
-3. **Seguridad**: Si despliegas en un servidor publico, utiliza un archivo `.htpasswd` para proteger el acceso a la carpeta `microsistemas`.
-
----
-
-## Preguntas Frecuentes (FAQ)
-
-**Puedo anadir mis propios archivos de log al Log Viewer?**
-Si, edita el array `$logFiles` en `apps/LogViewer/index.php` o utiliza una variable de entorno `LOG_PATH_[NOMBRE]`.
-
-**El SQL Viewer es seguro para PHPMyAdmin?**
-Es una alternativa ligera. Para gestion masiva, PHPMyAdmin es superior. Para consultas rapidas de depuracion, SQL Viewer es mas agil.
+- Si una aplicacion que usa `fetch()` falla desde `file://`, inicie `hub serve`
+  y acceda por HTTP.
+- Si el verificador rechaza PHP, no lo omita: actualice el binario o use Docker.
+- Si SQL Viewer informa que falta el controlador, revise `php --ini` y habilite
+  `pdo_mysql` en el archivo cargado.
+- En Docker, el host de base de datos es `db`; fuera de Docker normalmente sera
+  `127.0.0.1` o el host configurado por usted.

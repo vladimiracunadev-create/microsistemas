@@ -15,7 +15,7 @@ function mostrar_ayuda() {
 
 case "$1" in
     listar)
-        ./hub.sh list
+        bash hub.sh list
         ;;
     revisar)
         echo "--- Revisando PHP (CS-Fixer) ---"

@@ -69,7 +69,7 @@ El proyecto sigue los principios de la metodologia [12-Factor App](https://12fac
 
 | Factor                     | Implementacion en Microsistemas                              |
 | :------------------------- | :------------------------------------------------------------ |
-| **I. Codebase**            | Un repositorio Git, multiples despliegues (Docker, XAMPP).    |
+| **I. Codebase**            | Un repositorio Git, multiples despliegues (Docker, PHP CLI o servidor administrado). |
 | **II. Dependencies**       | Explicitas en `composer.json`, instaladas via `composer install`. |
 | **III. Config**            | En variables de entorno (`.env`), nunca hardcodeada.          |
 | **IV. Backing Services**   | MySQL como recurso adjunto, configurable por `.env`.          |
@@ -102,7 +102,7 @@ Toda la infraestructura esta definida como codigo versionado:
 
 | Archivo/Directorio    | Que define                                             |
 | :-------------------- | :----------------------------------------------------- |
-| `Dockerfile`          | Imagen de produccion (PHP 8.2 + Apache + extensiones). |
+| `Dockerfile`          | Imagen de produccion (PHP 8.5.12 + Apache + extensiones). |
 | `docker-compose.yml`  | Orquestacion local (web + MySQL + red + volumenes).    |
 | `k8s/demo/`           | Manifiestos Kubernetes (Deployment, Service, NetworkPolicy). |
 | `.github/workflows/`  | Pipelines CI/CD (build, test, publish, scan).          |
@@ -195,12 +195,14 @@ Gestiona el ciclo de vida de las conexiones a base de datos.
 
 ## 🐳 Imagen Docker de Produccion
 
-La imagen oficial se basa en `php:8.2-apache` para maximizar la compatibilidad:
+La imagen oficial se basa en `php:8.5.12-apache-bookworm`, corregida contra
+CVE-2026-109618 y CVE-2026-109619:
 
 1. **Base**: Debian Bookworm + Apache.
 2. **Extensiones**: Instalacion de `mysqli`, `pdo_mysql` y `gd`.
-3. **Seguridad**: Composer como usuario `www-data`, permisos granulares (755/644).
-4. **Healthcheck**: `curl -f http://localhost/` cada 30 segundos.
+3. **Seguridad**: Composer como usuario `www-data`, permisos granulares (755/644)
+   y progreso de carga de sesion deshabilitado antes de procesar requests.
+4. **Healthcheck**: `curl -f http://localhost:8080/` cada 30 segundos.
 5. **Limites**: 1 CPU, 512MB RAM por servicio.
 
 ---

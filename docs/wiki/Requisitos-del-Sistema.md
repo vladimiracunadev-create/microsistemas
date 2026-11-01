@@ -9,7 +9,7 @@ Este documento define las especificaciones tecnicas de hardware y software neces
 ### Minimo (Entorno Local / Pruebas)
 
 - **CPU**: 1 Core (2.0 GHz+)
-- **RAM**: 512 MB (XAMPP Clasico) / 2 GB (Docker Desktop)
+- **RAM**: 512 MB (PHP CLI) / 2 GB (Docker Desktop)
 - **Almacenamiento**: 100 MB libres para el codigo base.
 - **Pantalla**: Resolucion 1024x768.
 
@@ -32,7 +32,9 @@ Este documento define las especificaciones tecnicas de hardware y software neces
 
 ### Stack de Servidor (Backend)
 
-- **PHP**: Version **8.0** o superior (Probado hasta 8.3).
+- **PHP**: Una rama corregida: **8.2.35+**, **8.3.36+**, **8.4.27+** o **8.5.12+**.
+  Versiones inferiores quedan bloqueadas por Composer debido a
+  CVE-2026-109618 y CVE-2026-109619.
   - Extensiones requeridas: `bcmath`, `ctype`, `fileinfo`, `json`, `mbstring`, `pdo`, `xml`.
 - **Servidor Web**:
   - **Apache 2.4+** (con `mod_rewrite` habilitado).
@@ -77,7 +79,7 @@ Si despliega en un entorno con firewall restringido, asegurese de liberar los si
 
 ## 📋 Matriz de Compatibilidad
 
-| Caracteristica | Local (XAMPP) | Docker | Cloud (AWS/GCP) |
+| Caracteristica | Local (PHP CLI) | Docker | Cloud (AWS/GCP) |
 | :--- | :---: | :---: | :---: |
 | Dashboard | ✅ | ✅ | ✅ |
 | SQL Viewer | ✅ | ✅ | ✅ |

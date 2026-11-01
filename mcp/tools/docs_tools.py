@@ -1,5 +1,6 @@
 from mcp.config import sanitize_doc_name
 
+
 def read_doc(doc_name: str) -> str:
     """
     Lee un documento Markdown oficial del repositorio para obtener contexto.
@@ -13,4 +14,4 @@ def read_doc(doc_name: str) -> str:
     try:
         return doc_path.read_text(encoding="utf-8")
     except Exception as e:
-        return f"Error reading document: {str(e)}"
+        return f"Error reading document: {e!s}"

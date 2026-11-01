@@ -1,0 +1,4 @@
+[lint]
+# Los scripts CLI convierten errores de entrada/IO en mensajes para el usuario.
+# El bit ejecutable se gestiona de forma distinta entre Windows y Linux.
+ignore = ["BLE001", "EXE001", "EXE002"]

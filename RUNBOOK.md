@@ -14,7 +14,7 @@ Asegurate de tener instalado:
 - **Make** (para uso de comandos simplificados).
 - Opcionalmente, dependiendo del Modo de Operacion (`OPERATING-MODES.md`):
   - **Docker Desktop / Docker Engine + Compose** (Recomendado).
-  - **PHP 8.1+** y **XAMPP/LAMP** (Para ejecucion nativa legacy).
+  - **PHP 8.2.35+, 8.3.36+, 8.4.27+ u 8.5.12+** para PHP CLI o servidor administrado (ver `COMPATIBILITY.md`).
 
 ---
 

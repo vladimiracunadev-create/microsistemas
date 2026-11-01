@@ -5,14 +5,14 @@
 ### Guía completa de despliegue en la nube de Amazon Web Services
 
 [![AWS](https://img.shields.io/badge/AWS-Cloud-FF9900?logo=amazonaws&logoColor=white)](https://aws.amazon.com)
-[![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4?logo=php&logoColor=white)](https://php.net)
+[![PHP](https://img.shields.io/badge/PHP-8.5.12-777BB4?logo=php&logoColor=white)](https://php.net)
 [![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)](https://docker.com)
 [![Terraform](https://img.shields.io/badge/IaC-Terraform-7B42BC?logo=terraform&logoColor=white)](https://terraform.io)
 [![Status](https://img.shields.io/badge/status-reference%20guide-0ea5e9)](https://aws.amazon.com/architecture/well-architected/)
 
 <br>
 
-Análisis profundo y plan paso a paso para llevar **Microsistemas Suite** desde XAMPP/Docker local hasta una infraestructura productiva en AWS.<br>
+Análisis profundo y plan paso a paso para llevar **Microsistemas Suite** desde PHP CLI/Docker local hasta una infraestructura productiva en AWS.<br>
 Incluye **3 estrategias** de despliegue, comparativas de costos, diagramas de arquitectura y guías ejecutables.
 
 <br>
@@ -47,7 +47,7 @@ Incluye **3 estrategias** de despliegue, comparativas de costos, diagramas de ar
 
 ## 🎯 Resumen ejecutivo
 
-**Microsistemas Suite** es un monolito modular PHP 8.1 + MySQL 8.0 servido por Apache, con 12 microapps independientes,
+**Microsistemas Suite** es un monolito modular PHP 8.5.12 + MySQL 8.0 servido por Apache, con 12 microapps independientes,
 landing estática, servidor MCP local y un stack Docker reproducible. La arquitectura *12-Factor* y la separación
 limpia entre `apps/`, `src/Core` y assets estáticos lo hacen **altamente portable a la nube**.
 
@@ -59,7 +59,7 @@ limpia entre `apps/`, `src/Core` y assets estáticos lo hacen **altamente portab
 
 ```mermaid
 graph LR
-    Local["💻 XAMPP / Docker local"] --> Dec{Decisión<br/>arquitectónica}
+    Local["💻 PHP CLI / Docker local"] --> Dec{Decisión<br/>arquitectónica}
     Dec -->|Mismo Dockerfile| B["☁️ ECS Fargate<br/>+ RDS"]
     Dec -->|Mínimo cambio| A["🖥️ EC2 + RDS<br/>Lift & Shift"]
     Dec -->|Refactor profundo| C["⚡ Lambda + Aurora<br/>Serverless"]
@@ -76,7 +76,7 @@ graph LR
 
 | Componente local | Tecnología | Equivalente AWS sugerido |
 | :--- | :--- | :--- |
-| Apache 2.4 + PHP 8.1 (FPM) | Imagen Docker `php:8.1-apache` | EC2 / Fargate / Beanstalk / App Runner |
+| Apache 2.4 + PHP 8.5.12 | Imagen Docker `php:8.5.12-apache-bookworm` | EC2 / Fargate / Beanstalk / App Runner |
 | MySQL 8.0.40 | Contenedor Docker | **RDS for MySQL** o **Aurora MySQL** |
 | Volumen `db-data` | Docker volume local | **EBS gp3** (EC2) o **RDS storage** |
 | Landing estática (`landing/`) | HTML/CSS/JS plano | **S3 + CloudFront** |
@@ -97,7 +97,7 @@ graph TB
         MCP["🤖 MCP server<br/>(stdio)"]
     end
     subgraph Docker["🐳 Docker Compose"]
-        Apache["Apache + PHP 8.1<br/>:8080"]
+        Apache["Apache + PHP 8.5.12<br/>:8080"]
         MySQL["MySQL 8.0<br/>:3306"]
         Vol[("📦 db-data")]
     end
@@ -129,13 +129,13 @@ Existen tres rutas principales para llevar el stack a AWS, con distintos niveles
 
 ## 🅰 Estrategia A — Lift and Shift
 
-> **Filosofía:** mover lo mínimo. Replicar XAMPP en una VM administrada y mover la BD a un servicio gestionado.
+> **Filosofía:** mover lo mínimo. Ejecutar la imagen Docker en una VM administrada y mover la BD a un servicio gestionado.
 
 ### 🧩 Componentes
 
 | Servicio | Rol |
 | :--- | :--- |
-| **Amazon EC2** (t3.small / t3.medium) | Servidor Apache + PHP 8.1 |
+| **Amazon EC2** (t3.small / t3.medium) | Servidor Apache + PHP 8.5.12 |
 | **Amazon RDS for MySQL 8.0** | Base de datos gestionada con backups automáticos |
 | **Application Load Balancer (ALB)** | TLS, healthchecks, routing |
 | **Amazon Route 53** | DNS público |
@@ -159,7 +159,7 @@ graph TB
             NAT["NAT Gateway"]
         end
         subgraph Priv["Subnet privada"]
-            EC2["EC2<br/>Apache + PHP 8.1"]
+            EC2["EC2<br/>Apache + PHP 8.5.12"]
             RDS[("RDS<br/>MySQL 8.0")]
         end
         ALB --> EC2
@@ -193,7 +193,7 @@ aws rds create-db-instance \
   --backup-retention-period 7 --deletion-protection
 
 # 3. Lanzar EC2 t3.small con Amazon Linux 2023
-#    user-data: instala Apache, PHP 8.1, composer, clona repo y arranca
+#    user-data: instala Apache, PHP 8.5.12, composer, clona repo y arranca
 
 # 4. Asociar IAM Role con permisos a Secrets Manager + CloudWatch
 
@@ -333,7 +333,7 @@ App Runner provisiona TLS, dominio, autoscaling y healthchecks por ti. **Costo a
 
 | Servicio | Rol |
 | :--- | :--- |
-| **AWS Lambda** + capa **Bref** | Ejecuta PHP 8.1 sin servidor |
+| **AWS Lambda** + capa **Bref** | Ejecuta una rama PHP soportada en un parche corregido |
 | **API Gateway HTTP API** | Frontend HTTP, ruteo a Lambda |
 | **Amazon Aurora Serverless v2 MySQL** | BD que escala a 0.5 ACU mínima |
 | **RDS Proxy** | Pool de conexiones (crítico con Lambda) |

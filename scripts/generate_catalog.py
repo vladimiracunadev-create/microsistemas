@@ -1,5 +1,7 @@
 import os
+
 import yaml
+
 
 def generate_catalog():
     apps_dir = "apps"

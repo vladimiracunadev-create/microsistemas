@@ -77,11 +77,11 @@ try {
 } catch (\Exception $e) {
     $error = $e->getMessage();
     if (strpos($error, 'could not find driver') !== false) {
-        $error = "🚨 El motor <strong>" . strtoupper($driver) . "</strong> no está habilitado en tu servidor PHP. <br><br> 
+        $error = "🚨 El motor <strong>" . strtoupper($driver) . "</strong> no está habilitado en tu runtime PHP. <br><br>
                   Para arreglarlo: <br>
-                  1. Abre tu archivo <code>php.ini</code> (en XAMPP suele estar en C:\\xampp\\php\\php.ini). <br>
-                  2. Busca la línea <code>;extension=pdo_$driver</code> y quítale el punto y coma inicial. <br>
-                  3. Reinicia Apache desde el Panel de Control de XAMPP.";
+                  1. Ejecuta <code>php --ini</code> para localizar el archivo <code>php.ini</code> activo. <br>
+                  2. Habilita o instala la extensión <code>pdo_$driver</code> correspondiente. <br>
+                  3. Detén y vuelve a iniciar <code>hub.ps1 serve</code>, <code>hub.sh serve</code> o el servicio web.";
     }
 }
 /**

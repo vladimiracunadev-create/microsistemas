@@ -25,7 +25,7 @@ Usa el **Sidebar** lateral para navegar por las guias detalladas:
 
 1. **[Guia para Principiantes](Guia-para-Principiantes)**: Si es tu primera vez aqui.
 2. **[Manual de Usuario](Manual-de-Usuario)**: Como usar cada micro-app.
-3. **[Guia de Instalacion](Guia-de-Instalacion)**: Docker, XAMPP y Linux.
+3. **[Guia de Instalacion](Guia-de-Instalacion)**: Docker, PHP CLI y servidores administrados.
 4. **[Catalogo de Sistemas](Catalogo-de-Sistemas)**: Detalles tecnicos de cada herramienta.
 5. **[Arquitectura](Arquitectura)**: Como funciona el "core" bajo el capo.
 6. **[Seguridad](Seguridad)**: Nuestras politicas de proteccion.

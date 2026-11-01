@@ -178,13 +178,15 @@ function calc() {
   //      El tráfico de escritura siempre va al Primary.
   //      La capacidad efectiva es el menor valor entre el límite de escrituras y el límite de lecturas expandido.
   let rpsDbEffective = rpsDbPrimary;
+  let readCap = rpsDbPrimary;
+  let writeCap = rpsDbPrimary;
   // readRatio and writeRatio are already defined above
   // const readRatio = clamp(readRatioPct, 0, 100) / 100.0;
   // const writeRatio = 1.0 - readRatio;
 
   if (dbReplMode === "read_replicas" && dbReadReplicas > 0) {
-    const readCap = rpsDbPrimary * (1 + dbReadReplicas);
-    const writeCap = rpsDbPrimary;
+    readCap = rpsDbPrimary * (1 + dbReadReplicas);
+    writeCap = rpsDbPrimary;
 
     // Capacidad limitada por lectura o escritura según el ratio
     const limRead = (readRatio > 0) ? (readCap / readRatio) : Infinity;
@@ -210,13 +212,15 @@ function calc() {
 
   const payloadBits = bitsFromKB(payloadKB);
   const bw = bitsPerSecond(bwMbps);
-  const RPS_red = (payloadBits > 0) ? ((bw / payloadBits) * lp.net_mult) : Infinity;
+  const rpsRed = (payloadBits > 0) ? ((bw / payloadBits) * lp.net_mult) : Infinity;
 
-  const RPS_cap_raw = Math.min(rpsCpu, rpsDb, RPS_red);
-  const RPS_cap = RPS_cap_raw * safety;
-  const usuarios_conc = RPS_cap * (lat_ms_endpoint / 1000.0);
+  const rpsCapRaw = Math.min(rpsCpu, rpsDb, rpsRed);
+  const rpsCap = rpsCapRaw * safety;
+  const usuariosConc = rpsCap * (latEndpoint / 1000.0);
 
-  const bottleneck = (RPS_cap_raw === RPS_cpu) ? "CPU/App" : (RPS_cap_raw === RPS_db) ? "Base de Datos/Conexiones" : "Red";
+  const bottleneck = (rpsCapRaw === rpsCpu)
+    ? "CPU/App"
+    : (rpsCapRaw === rpsDb) ? "Base de Datos/Conexiones" : "Red";
 
   const cloud = BASELINES.cloud_providers[cloudKey];
   const totalCores = totalCoresApp + coresDbPrimary + (dbReadReplicas * coresDbPrimary * 0.8);
@@ -224,30 +228,30 @@ function calc() {
 
   const out = `
 <div class="kv">
-  <div><strong>Latencia endpoint</strong></div><div>${lat_ms_endpoint.toFixed(0)} ms</div>
+  <div><strong>Latencia endpoint</strong></div><div>${latEndpoint.toFixed(0)} ms</div>
   <div><strong>Cores App totales</strong></div><div>${totalCoresApp.toFixed(1)}</div>
   <div><strong>Pool total App→DB</strong></div><div>${maxAppConn.toFixed(0)}</div>
-  <div><strong>RPS CPU</strong></div><div>${RPS_cpu.toFixed(2)}</div>
-  <div><strong>RPS DB</strong></div><div>${RPS_db.toFixed(2)}</div>
-  <div><strong>RPS Red</strong></div><div>${isFinite(RPS_red) ? RPS_red.toFixed(2) : "∞"}</div>
+  <div><strong>RPS CPU</strong></div><div>${rpsCpu.toFixed(2)}</div>
+  <div><strong>RPS DB</strong></div><div>${rpsDb.toFixed(2)}</div>
+  <div><strong>RPS Red</strong></div><div>${isFinite(rpsRed) ? rpsRed.toFixed(2) : "∞"}</div>
   <div><strong>Saturación por</strong></div><div>${bottleneck}</div>
-  <div><strong>RPS límite (Cap)</strong></div><div>${RPS_cap.toFixed(2)}</div>
+  <div><strong>RPS límite (Cap)</strong></div><div>${rpsCap.toFixed(2)}</div>
   <div><strong>Costo Est. Mensual</strong></div><div style="color:var(--success)">$ ${costMonth.toFixed(2)} USD</div>
-  <div><strong>Usuarios concurrentes ≈</strong></div><div>${usuarios_conc.toFixed(0)}</div>
+  <div><strong>Usuarios concurrentes ≈</strong></div><div>${usuariosConc.toFixed(0)}</div>
 </div>`;
 
   byId("out").innerHTML = out;
-  updateCharts(RPS_cpu, RPS_db, RPS_red, RPS_cap);
-  updateSugerencias(bottleneck, RPS_cap, RPS_cpu, RPS_db);
+  updateCharts(rpsCpu, rpsDb, rpsRed, rpsCap);
+  updateSugerencias(bottleneck, rpsCap, rpsCpu, rpsDb);
 
   const replExplain = (dbReplMode === "read_replicas" && dbReadReplicas > 0)
-    ? `readCap=${readCap.toFixed(2)}; writeCap=${writeCap.toFixed(2)}; mixLecturas=${readRatioPct}% ⇒ cap_consultas=min(readCap/readRatio, writeCap/writeRatio)=${RPS_db_effective.toFixed(2)}`
-    : `sin read replicas ⇒ cap_consultas=RPS_db_primary=${RPS_db_primary.toFixed(2)}`;
+    ? `readCap=${readCap.toFixed(2)}; writeCap=${writeCap.toFixed(2)}; mixLecturas=${readRatioPct}% ⇒ cap_consultas=min(readCap/readRatio, writeCap/writeRatio)=${rpsDbEffective.toFixed(2)}`
+    : `sin read replicas ⇒ cap_consultas=RPS_db_primary=${rpsDbPrimary.toFixed(2)}`;
 
   const explain = `
 <p><strong>Perfil:</strong> ${lp.label} | <strong>Arquitectura:</strong> ${arch.label} | <strong>DB:</strong> ${dbReplMode}</p>
 <p><span class="code">
-RPS_cpu=${RPS_cpu.toFixed(2)} | RPS_db=${RPS_db.toFixed(2)} | RPS_red=${isFinite(RPS_red) ? RPS_red.toFixed(2) : "∞"}<br>
+RPS_cpu=${rpsCpu.toFixed(2)} | RPS_db=${rpsDb.toFixed(2)} | RPS_red=${isFinite(rpsRed) ? rpsRed.toFixed(2) : "∞"}<br>
 ${replExplain}<br>
 Costo basado en ${totalCores.toFixed(1)} cores en ${cloud.label}.
 </span></p>`;

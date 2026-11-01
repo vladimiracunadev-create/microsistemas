@@ -20,7 +20,7 @@ spec:
         fsGroup: 2000
       containers:
       - name: web
-        image: php:8.2.27-apache-bookworm
+        image: php:8.2.35-apache-bookworm
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: false # Apache needs to write to some logs/dirs normally

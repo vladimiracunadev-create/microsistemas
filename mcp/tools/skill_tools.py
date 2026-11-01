@@ -1,5 +1,6 @@
 from mcp.config import get_skill_path
 
+
 def read_skill(skill_name: str) -> str:
     """
     Lee la documentación o directivas de un playbook/skill específico.
@@ -19,4 +20,4 @@ def read_skill(skill_name: str) -> str:
     try:
         return skill_doc.read_text(encoding="utf-8")
     except Exception as e:
-        return f"Error reading skill doc: {str(e)}"
+        return f"Error reading skill doc: {e!s}"

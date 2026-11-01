@@ -205,6 +205,173 @@
     return out.trim();
   }
 
+  /**
+   * Implementaciones locales y deterministas. Los adaptadores conservan
+   * compatibilidad con librerias inyectadas por una integracion existente,
+   * pero la micro-app no las necesita ni las descarga desde CDN.
+   */
+  function beautifyLocally(code) {
+    let out = "";
+    let indent = 0;
+    let inString = false;
+    let stringChar = "";
+    let escaped = false;
+    let parenDepth = 0;
+    let lineStart = true;
+
+    const write = (value) => {
+      if (lineStart) {
+        out += "  ".repeat(indent);
+        lineStart = false;
+      }
+      out += value;
+    };
+
+    const newLine = () => {
+      out = out.trimEnd();
+      if (!out.endsWith("\n")) out += "\n";
+      lineStart = true;
+    };
+
+    for (let i = 0; i < code.length; i += 1) {
+      const ch = code[i];
+      const next = code[i + 1] || "";
+
+      if (inString) {
+        write(ch);
+        if (escaped) escaped = false;
+        else if (ch === "\\") escaped = true;
+        else if (ch === stringChar) inString = false;
+        continue;
+      }
+
+      if (ch === '"' || ch === "'" || ch === "`") {
+        inString = true;
+        stringChar = ch;
+        write(ch);
+      } else if (/\s/.test(ch)) {
+        if (!lineStart && !out.endsWith(" ") && !out.endsWith("\n")) out += " ";
+      } else if (ch === "(") {
+        parenDepth += 1;
+        write(ch);
+      } else if (ch === ")") {
+        parenDepth = Math.max(0, parenDepth - 1);
+        write(ch);
+      } else if (ch === "{") {
+        if (!lineStart && !out.endsWith(" ")) out += " ";
+        write(ch);
+        indent += 1;
+        newLine();
+      } else if (ch === "}") {
+        if (!lineStart) newLine();
+        indent = Math.max(0, indent - 1);
+        write(ch);
+        if (next !== ";" && next !== "," && next !== ")") newLine();
+      } else if (ch === ";") {
+        write(ch);
+        if (parenDepth === 0) newLine();
+        else write(" ");
+      } else {
+        write(ch);
+      }
+    }
+
+    return out.trim();
+  }
+
+  function lintLocally(code) {
+    const errors = [];
+    const pairs = { ")": "(", "]": "[", "}": "{" };
+    const stack = [];
+    let stringChar = "";
+    let escaped = false;
+    let lineComment = false;
+    let blockComment = false;
+
+    for (let i = 0; i < code.length; i += 1) {
+      const ch = code[i];
+      const next = code[i + 1] || "";
+
+      if (lineComment) {
+        if (ch === "\n") lineComment = false;
+        continue;
+      }
+      if (blockComment) {
+        if (ch === "*" && next === "/") {
+          blockComment = false;
+          i += 1;
+        }
+        continue;
+      }
+      if (stringChar) {
+        if (escaped) escaped = false;
+        else if (ch === "\\") escaped = true;
+        else if (ch === stringChar) stringChar = "";
+        continue;
+      }
+      if (ch === "/" && next === "/") {
+        lineComment = true;
+        i += 1;
+      } else if (ch === "/" && next === "*") {
+        blockComment = true;
+        i += 1;
+      } else if (ch === '"' || ch === "'" || ch === "`") {
+        stringChar = ch;
+      } else if (ch === "(" || ch === "[" || ch === "{") {
+        stack.push(ch);
+      } else if (pairs[ch]) {
+        if (stack.pop() !== pairs[ch]) errors.push(`Delimitador inesperado: ${ch}.`);
+      }
+    }
+
+    if (stringChar) errors.push("String sin cierre.");
+    if (blockComment) errors.push("Comentario de bloque sin cierre.");
+    if (stack.length) errors.push(`Delimitador sin cierre: ${stack[stack.length - 1]}.`);
+    if (/\b(?:const|let|var)\s*(?:[=;,]|$)/m.test(code)) {
+      errors.push("Declaracion de variable sin identificador.");
+    }
+
+    const warnings = [];
+    if (/\bvar\s+[A-Za-z_$]/.test(code)) {
+      warnings.push("WARN local prefer-const Usa let/const cuando sea posible.");
+    }
+    if (/(^|[^=!])==([^=]|$)/m.test(code)) {
+      warnings.push("WARN local eqeqeq Prefiere === para evitar conversion implicita.");
+    }
+
+    return [
+      `Resumen: ${errors.length} error(es), ${warnings.length} advertencia(s).`,
+      "",
+      ...errors.map((message) => `ERROR local sintaxis ${message}`),
+      ...warnings,
+      ...(!errors.length && !warnings.length ? ["Sin hallazgos."] : [])
+    ].join("\n");
+  }
+
+  function obfuscateLocally(code) {
+    const bytes = new TextEncoder().encode(code);
+    let binary = "";
+    for (const byte of bytes) binary += String.fromCharCode(byte);
+    const encoded = btoa(binary);
+
+    return [
+      "(() => {",
+      `  const _payload = "${encoded}";`,
+      "  const _bytes = Uint8Array.from(atob(_payload), (c) => c.charCodeAt(0));",
+      "  return Function(new TextDecoder().decode(_bytes))();",
+      "})();"
+    ].join("\n");
+  }
+
+  function transpileLocally(code) {
+    return code
+      .replace(/\b(?:const|let)\b/g, "var")
+      .replace(/\(([^()]*)\)\s*=>\s*\{([^{}]*)\}/g, "function($1) {$2}")
+      .replace(/([A-Za-z_$][\w$]*)\s*=>\s*\{([^{}]*)\}/g, "function($1) {$2}")
+      .replace(/\(([^()]*)\)\s*=>\s*([^;\n]+)/g, "function($1) { return $2; }")
+      .replace(/([A-Za-z_$][\w$]*)\s*=>\s*([^;\n]+)/g, "function($1) { return $2; }");
+  }
+
   async function doMinify(code) {
     if (window.Terser && typeof window.Terser.minify === "function") {
       const result = await window.Terser.minify(code, {
@@ -226,7 +393,7 @@
         end_with_newline: true
       });
     }
-    return code;
+    return beautifyLocally(code);
   }
 
   function doObfuscate(code) {
@@ -240,7 +407,7 @@
       });
       return obf.getObfuscatedCode();
     }
-    return code;
+    return obfuscateLocally(code);
   }
 
   function doTranspile(code) {
@@ -250,12 +417,12 @@
       });
       return out && out.code ? out.code : code;
     }
-    return code;
+    return transpileLocally(code);
   }
 
   async function doLint(code) {
     const ESLintClass = window.ESLint && window.ESLint.ESLint ? window.ESLint.ESLint : null;
-    if (!ESLintClass) return "ESLint no est\u00E1 disponible (fall\u00F3 la carga desde CDN).";
+    if (!ESLintClass) return lintLocally(code);
 
     const eslint = new ESLintClass({
       baseConfig: {
@@ -299,42 +466,50 @@
     return lines.join("\n");
   }
 
-  async function doRunSandbox(code, captureMs) {
-    const safeCode = String(code).split("</").join("<\\/");
+  function buildSandboxHtml(code, token) {
+    const safeCode = String(code).replace(/<\/script/gi, "<\\/script");
+    return [
+      "<!doctype html><html><head><meta charset=\"utf-8\"></head><body>",
+      "<script>(function(){",
+      `const token=${JSON.stringify(token)};`,
+      "const send=(type,payload)=>parent.postMessage({__jsTool:true,token,type,payload},'*');",
+      "const format=(value)=>{if(typeof value==='string')return value;try{return JSON.stringify(value)}catch(_){return String(value)}};",
+      "['log','warn','error','info'].forEach((name)=>{console[name]=(...values)=>send(name,values.map(format).join(' '));});",
+      "window.onerror=(message,source,line,column)=>{send('onerror',String(message)+' (L'+line+':C'+column+')');return true;};",
+      "window.onunhandledrejection=(event)=>send('rejection',format(event.reason||event));",
+      "})();</script>",
+      `<script>${safeCode}</script>`,
+      `<script>parent.postMessage({__jsTool:true,token:${JSON.stringify(token)},type:'done',payload:''},'*');</script>`,
+      "</body></html>"
+    ].join("");
+  }
 
-    const sandboxHtml =
-      "<!doctype html><html><head><meta charset=\"utf-8\"></head><body>" +
-      "<script>(function(){" +
-      "const send=function(type,payload){parent.postMessage({__jsTool:true,type:type,payload:payload},\"*\")};" +
-      "const hook=function(name){const orig=console[name];console[name]=function(){" +
-      "try{send(name,Array.from(arguments).map(function(a){try{return typeof a===\"string\"?a:JSON.stringify(a)}catch(e){return String(a)}}).join(\" \"))}catch(e){}" +
-      "return orig.apply(console,arguments)};};" +
-      "hook(\"log\");hook(\"warn\");hook(\"error\");hook(\"info\");" +
-      "window.onerror=function(msg,src,line,col){send(\"onerror\",String(msg)+\" (L\"+line+\":C\"+col+\")\")};" +
-      "window.onunhandledrejection=function(e){try{send(\"rejection\",String(e.reason||e))}catch(_){}};" +
-      "})();<\\/script>" +
-      "<script>" + safeCode + "<\\/script>" +
-      "</body></html>";
+  async function doRunSandbox(code, captureMs) {
+    const token = `jstools-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    const sandboxHtml = buildSandboxHtml(code, token);
 
     return new Promise((resolve) => {
       const iframe = document.createElement("iframe");
-      iframe.setAttribute("sandbox", "allow-scripts");
-      iframe.style.display = "none";
-
       const logs = [];
-      const handler = (ev) => {
-        const d = ev.data;
-        if (!d || !d.__jsTool) return;
-        logs.push({ type: d.type, payload: d.payload });
+
+      iframe.setAttribute("sandbox", "allow-scripts");
+      iframe.setAttribute("aria-hidden", "true");
+      iframe.style.display = "none";
+      iframe.srcdoc = sandboxHtml;
+
+      const handler = (event) => {
+        const data = event.data;
+        if (event.source !== iframe.contentWindow) return;
+        if (!data || !data.__jsTool || data.token !== token || data.type === "done") return;
+        logs.push({ type: data.type, payload: data.payload });
       };
 
       window.addEventListener("message", handler);
       document.body.appendChild(iframe);
-      iframe.srcdoc = sandboxHtml;
 
       setTimeout(() => {
         window.removeEventListener("message", handler);
-        document.body.removeChild(iframe);
+        iframe.remove();
 
         const out = [];
         out.push("Sandbox:");
@@ -613,6 +788,21 @@
 
     refreshStats();
     setStatus("Listo.");
+  }
+
+  // Superficie cerrada de prueba: no se crea en produccion y evita exponer
+  // helpers en window salvo cuando la regresion automatizada lo solicita.
+  if (window.__JSTOOLS_TEST__) {
+    Object.assign(window.__JSTOOLS_TEST__, {
+      beautifyLocally,
+      lintLocally,
+      obfuscateLocally,
+      transpileLocally,
+      stripComments,
+      collapseWhitespace,
+      doMinify,
+      buildSandboxHtml
+    });
   }
 
   if (document.readyState === "loading") {

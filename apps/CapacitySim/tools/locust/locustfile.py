@@ -2,7 +2,8 @@
 Script de prueba de carga para Locust.
 Simula usuarios navegando por el índice y realizando búsquedas.
 """
-from locust import HttpUser, task, between
+from locust import HttpUser, between, task
+
 
 class WebsiteUser(HttpUser):
     """

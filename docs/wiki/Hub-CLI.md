@@ -14,7 +14,7 @@ Muestra un resumen de todas las herramientas instaladas, su tipo y puertos.
 
 ```bash
 # En Linux/macOS/Git Bash
-./hub.sh list
+bash hub.sh list
 
 # En Windows (PowerShell)
 .\hub.ps1 list

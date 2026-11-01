@@ -1,129 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="refresh" content="0; url=herramientas_javascript.html" />
   <title>Herramientas JavaScript</title>
-
-  <link rel="stylesheet" href="hj.css" />
-
-  <script src="https://unpkg.com/terser@5.31.3/dist/bundle.min.js" defer></script>
-  <script src="https://unpkg.com/js-beautify@1.15.1/js/lib/beautify.js" defer></script>
-  <script src="https://unpkg.com/javascript-obfuscator@4.1.0/dist/index.browser.js" defer></script>
-  <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js" defer></script>
-  <script src="https://unpkg.com/eslint@8.57.0/dist/eslint.min.js" defer></script>
-
-  <script src="hj.js" defer></script>
+  <script>
+    window.location.replace("herramientas_javascript.html" + window.location.search + window.location.hash);
+  </script>
 </head>
-
 <body>
-  <div class="wrap">
-    <a href="../../index.php"
-      style="text-decoration: none; color: #666; font-size: 0.8rem; display: block; padding: 10px 0;">&larr; Volver al
-      Dashboard</a>
-    <header>
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <h1>Herramientas JavaScript</h1>
-          <p class="subtitle">
-            Pega c&oacute;digo JavaScript (o c&aacute;rgalo desde un archivo <span class="mono">.js</span> / URL) y
-            aplica acciones:
-            minificar, formatear, validar, ofuscar, transpilar, medir tama&ntilde;o, limpiar comentarios, escapar y
-            ejecutar en sandbox.
-          </p>
-        </div>
-      </div>
-      <div class="pillbar">
-        <span class="badge">Dise&ntilde;o moderno</span>
-        <span class="badge">HTML + CSS + JS</span>
-        <span class="badge">Descarga lista</span>
-      </div>
-    </header>
-
-    <div class="card toolbar">
-      <div class="left">
-        <label class="btn" for="fileInput" title="Cargar un archivo .js">Cargar .js</label>
-        <input id="fileInput" type="file" accept=".js,text/javascript" style="display:none" />
-
-        <input id="urlInput" class="input" type="url" placeholder="Pegar URL a un .js (https://...)" size="34" />
-        <button id="loadUrlBtn" class="btn" type="button">Cargar desde URL</button>
-
-        <button id="pasteBtn" class="btn" type="button">Pegar desde portapapeles</button>
-      </div>
-
-      <div class="right">
-        <select id="actionSelect" class="select" aria-label="Acci&oacute;n">
-          <option value="minify">Minificar (Terser)</option>
-          <option value="beautify">Formatear / Beautify</option>
-          <option value="lint">Validar / Lint (ESLint)</option>
-          <option value="obfuscate">Ofuscar</option>
-          <option value="transpile">Transpilar (Babel) a ES5</option>
-          <option value="stripComments">Eliminar comentarios</option>
-          <option value="escapeJson">Escapar como JSON string</option>
-          <option value="unescapeJson">Des-escapar JSON string</option>
-          <option value="size">Analizar tama&ntilde;o</option>
-          <option value="run">Ejecutar (sandbox)</option>
-        </select>
-
-        <select id="captureSelect" class="select" aria-label="Tiempo de captura del sandbox">
-          <option value="300">Sandbox: 300 ms</option>
-          <option value="1000" selected>Sandbox: 1 s</option>
-          <option value="3000">Sandbox: 3 s</option>
-          <option value="5000">Sandbox: 5 s</option>
-        </select>
-
-        <button id="applyBtn" class="btn primary" type="button">Aplicar</button>
-        <button id="swapBtn" class="btn" type="button" title="Pasa el resultado a la entrada">Usar salida como
-          entrada</button>
-        <button id="clearBtn" class="btn danger" type="button">Limpiar</button>
-      </div>
-    </div>
-
-    <div class="grid">
-      <section class="card panel">
-        <h2>
-          <span>Entrada</span>
-          <span class="meta">
-            <span class="badge">Caracteres: <span id="inChars" class="kpi">0</span></span>
-            <span class="badge">KB: <span id="inKb" class="kpi">0</span></span>
-            <button id="copyInBtn" class="btn" type="button">Copiar</button>
-          </span>
-        </h2>
-        <textarea id="inputCode" placeholder="Pega aqu&iacute; tu c&oacute;digo JavaScript..."></textarea>
-        <p class="hint">
-          Puedes cargar un <span class="mono">.js</span> local, pegar desde portapapeles o traer un JS desde URL.
-          Luego selecciona una acci&oacute;n y presiona <b>Aplicar</b>.
-        </p>
-      </section>
-
-      <section class="card panel">
-        <h2>
-          <span>Salida</span>
-          <span class="meta">
-            <span class="badge">Caracteres: <span id="outChars" class="kpi">0</span></span>
-            <span class="badge">KB: <span id="outKb" class="kpi">0</span></span>
-            <button id="copyOutBtn" class="btn" type="button">Copiar</button>
-            <button id="downloadBtn" class="btn good" type="button">Descargar</button>
-          </span>
-        </h2>
-        <textarea id="outputCode" placeholder="Aqu&iacute; aparecer&aacute; el resultado..." readonly></textarea>
-        <p class="hint">
-          Lint entrega un reporte. Sandbox ejecuta de forma aislada y captura <span
-            class="mono">log/warn/error/info</span>.
-        </p>
-      </section>
-    </div>
-
-    <div id="status" class="status card" role="status" aria-live="polite">
-      <div>
-        <span class="badge">Estado</span>
-        <span id="statusText">Listo.</span>
-      </div>
-      <div class="small" id="statusMeta"></div>
-    </div>
-  </div>
+  <p><a href="herramientas_javascript.html">Abrir Herramientas JavaScript</a></p>
 </body>
-
 </html>

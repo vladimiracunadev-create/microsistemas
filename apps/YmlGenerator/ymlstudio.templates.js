@@ -107,7 +107,7 @@ const TEMPLATES = [
       { id: "file", label: "Nombre del workflow (archivo)", type: "string", default: "ci-php" },
       { id: "name", label: "Nombre visible", type: "string", default: "CI PHP" },
       { id: "branch", label: "Rama principal", type: "string", default: "main" },
-      { id: "php", label: "Versión PHP", type: "string", default: "8.3" },
+      { id: "php", label: "Versión PHP", type: "string", default: "8.3.36" },
       { id: "composer_install", label: "Comando composer install", type: "string", default: "composer install --no-interaction --prefer-dist" },
       { id: "test", label: "Comando tests", type: "string", default: "vendor/bin/phpunit" }
     ],
@@ -414,7 +414,7 @@ const TEMPLATES = [
     description: "Stack típico PHP: Nginx proxy -> php-fpm + MySQL. Base sólida para migraciones.",
     fields: [
       { id: "project", label: "Nombre proyecto", type: "string", default: "manzana-php" },
-      { id: "php_image", label: "Imagen PHP-FPM", type: "string", default: "php:8.3-fpm" },
+      { id: "php_image", label: "Imagen PHP-FPM", type: "string", default: "php:8.3.36-fpm" },
       { id: "nginx_image", label: "Imagen Nginx", type: "string", default: "nginx:alpine" },
       { id: "db_image", label: "Imagen MySQL", type: "string", default: "mysql:8.0" },
       { id: "port", label: "Puerto HTTP host", type: "string", default: "8080" }

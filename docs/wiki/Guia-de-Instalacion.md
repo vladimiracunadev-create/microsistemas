@@ -1,15 +1,27 @@
-# Guia de Instalacion y Despliegue
+# Guia de instalacion y despliegue
 
-Este documento detalla los pasos para instalar y ejecutar la suite **Microsistemas** en diferentes entornos.
+La guia vigente esta en [`docs/INSTALL.md`](../INSTALL.md). Los modos soportados
+son Docker y PHP CLI oficial para desarrollo local; para produccion se admite un
+servidor Apache/Nginx administrado con una version segura de PHP.
 
----
+XAMPP fue retirado como dependencia soportada. Antes de eliminar una instalacion
+existente, exporte bases de datos y copie configuracion/archivos locales siguiendo
+la seccion **Migracion desde XAMPP sin romper la instalacion** de la guia canonica.
 
-## Requisitos Previos
+## Inicio rapido
 
-- **Navegador Web Moderno**: Chrome, Firefox, Edge o Safari.
-- **Entorno de Ejecucion**:
-  - **Opcion A (Moderna)**: Docker Desktop.
-  - **Opcion B (Clasica)**: Servidor Web (Apache/Nginx) con PHP 8.x instalado (ej: XAMPP, WAMP, MAMP).
+```powershell
+Copy-Item .env.example .env
+composer install
+.\hub.ps1 doctor
+.\hub.ps1 serve
+```
+
+Abra `http://127.0.0.1:8000`. En Linux o macOS use `cp`, `bash hub.sh doctor` y
+`bash hub.sh serve`. Para Docker use `docker compose up -d --build` y abra
+`http://localhost:8080`.
+
+<!-- Contenido historico retirado: la guia canonica mantiene todos los pasos. -->
 
 - **Herramientas de Consola (Opcional - Hub CLI)**:
   - **Bash o PowerShell**: Requerido para ejecutar el Hub CLI (`hub.sh` o `hub.ps1`).
@@ -66,23 +78,17 @@ Una vez instalado, puede verificar la integridad del sistema:
 
 ---
 
-## 🐘 Opcion 2: Windows con XAMPP
+## Opcion 2: Windows con PHP CLI
 
-Para usuarios que prefieren un entorno local tradicional.
+Para desarrollo local sin Docker.
 
 ### Pasos
 
-1. **Instalar XAMPP**: Descargue desde [apachefriends.org](https://www.apachefriends.org/es/index.html).
-2. **Ubicar Archivos**:
-   - Vaya a la carpeta de instalacion (usualmente `C:\xampp`).
-   - Entre en la carpeta `htdocs`.
-   - Cree una carpeta llamada `microsistemas`.
-   - Copie todo el contenido de este repositorio dentro de `C:\xampp\htdocs\microsistemas`.
-3. **Iniciar Servicios**:
-   - Abra el **XAMPP Control Panel**.
-   - Inicie **Apache** (Start).
-   - Inicie **MySQL** (Start) *solo si usara el SQL Viewer*.
-4. **Acceder**: Abra su navegador en [http://localhost/microsistemas](http://localhost/microsistemas).
+1. Instale una version PHP admitida desde
+   [windows.php.net](https://windows.php.net/download/) y agreguela a `PATH`.
+2. Ejecute `composer install` desde la raiz del repositorio.
+3. Ejecute `.\hub.ps1 doctor` y `.\hub.ps1 serve`.
+4. Acceda a [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 ---
 

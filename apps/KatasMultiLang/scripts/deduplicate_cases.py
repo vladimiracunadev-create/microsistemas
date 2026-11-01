@@ -1,8 +1,7 @@
 import json
-from pathlib import Path
-from collections import defaultdict
-import sys
 import re
+from collections import defaultdict
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 meta_file = ROOT / "data" / "meta.json"
