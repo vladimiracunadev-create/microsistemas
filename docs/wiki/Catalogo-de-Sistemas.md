@@ -102,6 +102,12 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 - **Para que?**: Para autoevaluar el dominio de Python, pandas, NumPy, ML y Data Science con preguntas organizadas por seccion, nivel (Basica/Intermedia/Avanzada) y tipo, sin necesidad de backend ni registro.
 - **Importancia**: Acelera el ciclo de preparacion tecnica. Funciona 100% en el navegador con JSON local, persiste el progreso en `localStorage` y permite reemplazar el dataset sin tocar la UI.
 
+### 🏛️ System Architect Studio (El Taller de Arquitectura)
+
+- **Que hace?**: Plataforma de ingenieria que clasifica, dimensiona, especifica y proyecta la evolucion de sistemas informaticos, con un catalogo de 127 tipos en 12 familias, 9 dimensiones de clasificacion y 39 reglas de compatibilidad.
+- **Para que?**: Para pasar de una idea a una especificacion estructurada, y de ahi a prompts por disciplina, planes de escalabilidad, hojas de ruta y planes de prueba.
+- **Importancia**: Cada cifra declara su formula y sus supuestos, las proyecciones son escenarios y no predicciones, y la generacion es determinista: sin Internet y sin consumo de tokens.
+
 ---
 
 ## 🚀 Conclusion: Por que creamos todo esto?

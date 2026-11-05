@@ -1,0 +1,144 @@
+{
+  "schemaVersion": "sas.config.v1",
+  "meta": { "title": "Ampliación de un sistema existente", "configVersion": "0.1.0" },
+  "identity": {
+    "name": "Microsistemas — nuevo microsistema integrado",
+    "purpose": "Incorporar una herramienta nueva a una suite modular ya en operación, sin alterar el comportamiento de las aplicaciones existentes ni sus rutas.",
+    "mode": "existing",
+    "audience": "Personas que desarrollan y mantienen la suite, y quienes usan sus herramientas",
+    "owner": "Mantenedor del repositorio",
+    "existingSystem": {
+      "repository": "vladimiracunadev-create/microsistemas",
+      "currentStack": "PHP para el dashboard y varias aplicaciones, JavaScript sin dependencias para las herramientas estáticas, Python para los scripts de catálogo y el servidor MCP, Docker y Kubernetes para el despliegue, Makefile y Hub CLI para la operación",
+      "knownConstraints": "No eliminar aplicaciones ni renombrar productos; no reordenar las tarjetas existentes del dashboard; no agregar dependencias globales sin necesidad; el servidor MCP conserva su política de solo lectura; la documentación de docs/ y docs/wiki debe contar lo mismo con distinta profundidad",
+      "hasTests": true,
+      "hasDocs": true
+    }
+  },
+  "classification": {
+    "systemTypes": ["test-management", "itsm", "cms"],
+    "sectors": ["software"],
+    "serviceModel": ["self-hosted-oss"],
+    "architecture": ["modular-monolith", "plugin"],
+    "deployment": ["local", "on-premise"],
+    "tenancy": "single-user",
+    "platforms": ["web", "cli"],
+    "licensing": "mit",
+    "monetization": ["none"],
+    "dataSensitivity": ["public", "internal"],
+    "integrationStyle": ["rest", "mcp"]
+  },
+  "functional": {
+    "capabilities": [
+      "Registrar la aplicación nueva mediante su manifiesto para que el Hub la detecte",
+      "Agregar una tarjeta al dashboard sin alterar las existentes",
+      "Mantener la documentación del repositorio sincronizada con lo implementado",
+      "Ejecutar las verificaciones disponibles del repositorio"
+    ],
+    "processes": [
+      "Auditoría previa de la estructura y las convenciones del repositorio",
+      "Integración de la aplicación con sus archivos propios",
+      "Actualización mínima de los archivos compartidos",
+      "Verificación de ausencia de regresiones"
+    ],
+    "roles": [
+      { "name": "Mantenedor", "permissions": ["revisar y aprobar la integración", "ejecutar las verificaciones"] },
+      { "name": "Persona usuaria", "permissions": ["abrir las herramientas desde el dashboard"] }
+    ],
+    "organizations": { "model": "single", "count": 1, "usersPerOrg": 1 },
+    "integrations": [
+      { "name": "Hub CLI del repositorio", "direction": "entrante", "style": "file-batch", "criticality": "alta", "notes": "Detecta la aplicación por su manifiesto; si el manifiesto está mal formado, la aplicación no aparece y la integración falla de forma visible." },
+      { "name": "Generador de catálogo del README", "direction": "entrante", "style": "file-batch", "criticality": "media", "notes": "Regenera la tabla de herramientas a partir de los manifiestos." },
+      { "name": "Servidor MCP existente", "direction": "bidireccional", "style": "mcp", "criticality": "baja", "notes": "Conserva su política de solo lectura; no se amplían permisos." }
+    ]
+  },
+  "technology": {
+    "languages": ["JavaScript", "PHP", "Python"],
+    "frameworks": ["Módulos ES sin dependencias externas"],
+    "databases": [],
+    "infrastructure": ["Docker", "Servidor HTTP estático o PHP integrado"],
+    "offlineSupport": true,
+    "transactionalIntegrity": false,
+    "consistencyStrategy": "No aplica: la aplicación no mantiene estado compartido"
+  },
+  "security": {
+    "mfa": false,
+    "encryptionAtRest": false,
+    "encryptionInTransit": true,
+    "rowLevelAuthorization": false,
+    "auditTrail": false,
+    "secretsManagement": true,
+    "threatModel": true
+  },
+  "compliance": {
+    "jurisdictions": [],
+    "regulations": [],
+    "standards": ["ISO/IEC 25010", "WCAG 2.2 AA", "Keep a Changelog", "Versionado semántico"],
+    "dataResidency": "",
+    "auditRequirements": "Registro de los archivos modificados y de la justificación de cada cambio en archivos compartidos."
+  },
+  "capacity": {
+    "registeredUsers": 1,
+    "dau": 1,
+    "mau": 1,
+    "peakConcurrentUsers": 1,
+    "sessionsPerUserPerDay": 2,
+    "requestsPerSession": 25,
+    "avgSessionMinutes": 20,
+    "readWriteRatio": 20,
+    "avgRecordKb": 2,
+    "organizations": 1,
+    "regions": [],
+    "peakFactor": 1,
+    "retentionMonths": 1,
+    "slaAvailability": 0,
+    "latencyTargetMs": 150,
+    "latencyPercentile": 95,
+    "criticalResource": "",
+    "egressPerRequestKb": 20
+  },
+  "evolution": {
+    "horizon": { "unit": "months", "value": 18, "openEnded": false },
+    "growthModel": "stagnation",
+    "growthRatePercent": 0,
+    "scenarios": {
+      "conservative": { "ratePercent": 0, "note": "Uso local individual." },
+      "expected": { "ratePercent": 0, "note": "Uso local individual, con más herramientas en la suite." },
+      "demanding": { "ratePercent": 50, "note": "La suite se publica y la usan varias personas simultáneamente." }
+    },
+    "milestones": [
+      { "id": "m1", "name": "La aplicación aparece en el Hub y en el catálogo del README", "kind": "condition", "condition": "Las verificaciones del repositorio la reconocen" },
+      { "id": "m2", "name": "Revisión de la integración", "kind": "time", "atMonth": 6 }
+    ],
+    "plannedChanges": ["Adaptador MCP sobre el núcleo", "Más comandos del adaptador de línea de comandos"],
+    "reviewFrequencyMonths": 6
+  },
+  "quality": {
+    "priorities": { "maintainability": 5, "evolvability": 5, "testability": 5, "usability": 4, "accessibility": 4, "portability": 4, "security": 3 },
+    "accessibilityTarget": "WCAG 2.2 nivel AA",
+    "rpoMinutes": 0,
+    "rtoMinutes": 0,
+    "testStrategy": [
+      "pruebas automatizadas de la aplicación nueva",
+      "regresión de las aplicaciones existentes",
+      "verificación de que el Hub detecta la aplicación",
+      "verificación de integridad documental"
+    ]
+  },
+  "operations": {
+    "teamSize": 1,
+    "onCall": false,
+    "observability": false,
+    "loadTesting": false,
+    "environments": ["local", "contenedor"],
+    "supportHours": "A demanda",
+    "monthlyBudgetUsd": 0,
+    "unitCosts": { "vcpuMonthUsd": 0, "gbRamMonthUsd": 0, "gbStorageMonthUsd": 0, "gbEgressUsd": 0, "perMillionTokensUsd": 0 }
+  },
+  "deliverables": { "prompts": ["legacy-integration", "testing", "documentation"], "includeSkill": false, "includeAgents": false, "includeHarness": false, "includeMcp": true },
+  "decisions": {
+    "assumptions": ["Las verificaciones del repositorio que dependen de PHP pueden no ejecutarse si ese entorno no está disponible, y en ese caso se informa."],
+    "pending": ["Decidir si el adaptador MCP se integra al servidor existente o se publica como servidor propio."]
+  },
+  "notes": "Escenario de aceptación H."
+}

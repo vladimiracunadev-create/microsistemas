@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "sas.config.v1",
+  "meta": { "title": "ERP corporativo multiárea", "configVersion": "0.1.0" },
+  "identity": {
+    "name": "ERP Corporativo Austral",
+    "purpose": "Unificar finanzas, compras, inventarios, producción y personal de una empresa con 5.000 usuarios y varias plantas.",
+    "mode": "new",
+    "audience": "Finanzas, compras, bodega, producción, recursos humanos y contraloría",
+    "owner": "Dirección de Administración y Finanzas"
+  },
+  "classification": {
+    "systemTypes": ["erp", "wms", "hcm", "bi", "ledger"],
+    "sectors": ["enterprise"],
+    "serviceModel": ["on-premise-product"],
+    "architecture": ["modular-monolith", "event-driven"],
+    "deployment": ["hybrid"],
+    "tenancy": "single-tenant",
+    "platforms": ["web", "windows", "android"],
+    "licensing": "proprietary",
+    "monetization": ["perpetual", "support-contract"],
+    "dataSensitivity": ["internal", "personal", "financial"],
+    "integrationStyle": ["rest", "message-queue", "file-batch", "etl"]
+  },
+  "functional": {
+    "capabilities": [
+      "Contabilidad general con cierre mensual auditable",
+      "Cuentas por pagar y por cobrar con conciliación",
+      "Compras con aprobación por monto y centro de costo",
+      "Inventarios multialmacén con conteos cíclicos",
+      "Planificación de producción y consumo de materiales",
+      "Remuneraciones con normativa laboral local",
+      "Facturación electrónica"
+    ],
+    "processes": [
+      "Orden de compra a pago",
+      "Pedido a cobro",
+      "Requerimiento de material a producción",
+      "Cierre contable mensual",
+      "Liquidación de remuneraciones"
+    ],
+    "roles": [
+      { "name": "Contador", "permissions": ["registrar asientos", "cerrar periodos", "emitir informes financieros"] },
+      { "name": "Comprador", "permissions": ["crear órdenes de compra", "evaluar proveedores"] },
+      { "name": "Bodeguero", "permissions": ["recibir y despachar mercadería", "ejecutar conteos"] },
+      { "name": "Jefe de planta", "permissions": ["planificar producción", "autorizar consumos"] },
+      { "name": "Contralor", "permissions": ["acceso de solo lectura a todo", "exportar evidencia de auditoría"] }
+    ],
+    "organizations": { "model": "multi", "count": 6, "usersPerOrg": 830 },
+    "integrations": [
+      { "name": "Servicio de impuestos (factura electrónica)", "direction": "bidireccional", "style": "soap", "criticality": "crítica", "notes": "Si no responde, los documentos quedan en cola de emisión con folio reservado." },
+      { "name": "Bancos (cartola y pagos)", "direction": "bidireccional", "style": "file-batch", "criticality": "alta", "notes": "Intercambio en ventanas diarias; la conciliación se reintenta al día siguiente." },
+      { "name": "Marcación de asistencia", "direction": "entrante", "style": "message-queue", "criticality": "media", "notes": "Tolerante a retraso; se consolida antes del cierre de nómina." }
+    ]
+  },
+  "technology": {
+    "languages": ["Java", "TypeScript"],
+    "frameworks": ["Spring Boot", "React"],
+    "databases": [
+      { "engine": "PostgreSQL", "purpose": "transaccional y libro contable" },
+      { "engine": "Redis", "purpose": "caché de catálogos y sesiones" },
+      { "engine": "ClickHouse", "purpose": "analítica y reportes históricos" }
+    ],
+    "infrastructure": ["Kubernetes", "RabbitMQ", "Nginx"],
+    "offlineSupport": true,
+    "transactionalIntegrity": true,
+    "consistencyStrategy": "Consistencia fuerte en el núcleo contable; consistencia eventual hacia analítica"
+  },
+  "security": {
+    "mfa": true,
+    "encryptionAtRest": true,
+    "encryptionInTransit": true,
+    "rowLevelAuthorization": true,
+    "auditTrail": true,
+    "secretsManagement": true,
+    "threatModel": true
+  },
+  "compliance": {
+    "jurisdictions": ["Chile"],
+    "regulations": [
+      "Normativa tributaria de documentos electrónicos",
+      "Normativa laboral para el cálculo de remuneraciones",
+      "Protección de datos personales de los trabajadores"
+    ],
+    "standards": ["IFRS", "ISO/IEC 27001", "ISO 8601"],
+    "dataResidency": "Territorio nacional para los libros contables",
+    "auditRequirements": "Inmutabilidad de asientos en periodos cerrados y trazabilidad completa de aprobaciones."
+  },
+  "capacity": {
+    "registeredUsers": 5000,
+    "dau": 3200,
+    "mau": 4800,
+    "peakConcurrentUsers": 600,
+    "sessionsPerUserPerDay": 2,
+    "requestsPerSession": 120,
+    "avgSessionMinutes": 90,
+    "readWriteRatio": 6,
+    "avgRecordKb": 4,
+    "filesPerUserPerMonth": 6,
+    "avgFileMb": 0.5,
+    "organizations": 6,
+    "regions": ["sa-east"],
+    "peakFactor": 4,
+    "seasonalPeakFactor": 2.5,
+    "backgroundJobsPerDay": 150000,
+    "retentionMonths": 120,
+    "slaAvailability": 99.9,
+    "latencyTargetMs": 500,
+    "latencyPercentile": 95,
+    "criticalResource": "Folio de documento tributario y numeración de asientos",
+    "egressPerRequestKb": 60
+  },
+  "evolution": {
+    "horizon": { "unit": "years", "value": 7, "openEnded": false },
+    "growthModel": "seasonal",
+    "growthRatePercent": 12,
+    "scenarios": {
+      "conservative": { "ratePercent": 5, "note": "Sin nuevas plantas." },
+      "expected": { "ratePercent": 12, "note": "Una planta nueva cada dos años." },
+      "demanding": { "ratePercent": 30, "note": "Adquisición de otra empresa con 3.000 usuarios adicionales." }
+    },
+    "milestones": [
+      { "id": "m1", "name": "Cierre contable del primer año completo en el sistema", "kind": "time", "atMonth": 12 },
+      { "id": "m2", "name": "Incorporación de nueva planta", "kind": "condition", "condition": "Se incorpora una unidad productiva con más de 500 usuarios" },
+      { "id": "m3", "name": "Separación del módulo analítico", "kind": "condition", "condition": "Las consultas de reportes degradan la latencia del núcleo transaccional" }
+    ],
+    "plannedChanges": [
+      "Separar la analítica del núcleo transaccional",
+      "Incorporar módulo de mantenimiento de activos",
+      "Extender la operación a una segunda jurisdicción tributaria"
+    ],
+    "reviewFrequencyMonths": 6
+  },
+  "quality": {
+    "priorities": { "reliability": 5, "security": 5, "availability": 4, "performance": 4, "maintainability": 4, "observability": 4, "evolvability": 4, "costEfficiency": 3 },
+    "accessibilityTarget": "WCAG 2.2 nivel AA en los módulos de uso masivo",
+    "rpoMinutes": 15,
+    "rtoMinutes": 120,
+    "testStrategy": ["unitarias", "integración", "contrato con el servicio de impuestos", "carga del cierre mensual", "migración de saldos iniciales"]
+  },
+  "operations": {
+    "teamSize": 18,
+    "onCall": true,
+    "observability": true,
+    "loadTesting": true,
+    "environments": ["desarrollo", "integración", "preproducción", "producción"],
+    "supportHours": "Lunes a sábado de 07:00 a 22:00, con guardia en cierre contable",
+    "monthlyBudgetUsd": 9000,
+    "unitCosts": { "vcpuMonthUsd": 20, "gbRamMonthUsd": 4.5, "gbStorageMonthUsd": 0.1, "gbEgressUsd": 0.08, "perMillionTokensUsd": 0 }
+  },
+  "deliverables": { "prompts": [], "includeSkill": false, "includeAgents": false, "includeHarness": false, "includeMcp": false },
+  "decisions": {
+    "assumptions": ["La migración de saldos iniciales se hará en una ventana de fin de semana."],
+    "pending": [
+      "Definir si las remuneraciones se mantienen en el ERP o en un sistema especializado.",
+      "Confirmar el alcance de la segunda jurisdicción tributaria antes de diseñar el motor de impuestos."
+    ]
+  },
+  "notes": "Escenario de aceptación B."
+}

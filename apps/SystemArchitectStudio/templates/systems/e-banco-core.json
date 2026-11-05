@@ -1,0 +1,157 @@
+{
+  "schemaVersion": "sas.config.v1",
+  "meta": { "title": "Núcleo bancario con conciliación y auditoría", "configVersion": "0.1.0" },
+  "identity": {
+    "name": "Núcleo Bancario Cordillera",
+    "purpose": "Registrar cuentas, saldos y movimientos con integridad contable, conciliación diaria, auditoría completa y disponibilidad elevada.",
+    "mode": "new",
+    "audience": "Clientes, ejecutivos de sucursal, operaciones, contabilidad, cumplimiento y auditoría interna",
+    "owner": "Gerencia de Operaciones y Tecnología"
+  },
+  "classification": {
+    "systemTypes": ["core-banking", "ledger", "payment-systems", "aml", "kyc", "fraud-detection", "grc"],
+    "sectors": ["finance"],
+    "serviceModel": ["on-premise-product"],
+    "architecture": ["modular-monolith", "event-driven"],
+    "deployment": ["private-cloud", "on-premise"],
+    "tenancy": "single-tenant",
+    "platforms": ["web", "api-only", "android", "ios"],
+    "licensing": "proprietary",
+    "monetization": ["none"],
+    "dataSensitivity": ["personal", "financial", "cardholder"],
+    "integrationStyle": ["rest", "financial-protocol", "message-queue", "file-batch"]
+  },
+  "functional": {
+    "capabilities": [
+      "Maestro de clientes y cuentas",
+      "Movimientos con asiento contable balanceado e inmutable",
+      "Transferencias internas y a otras instituciones",
+      "Cierre diario con conciliación de posiciones",
+      "Monitoreo transaccional para prevención de lavado",
+      "Decisión antifraude en línea",
+      "Informes regulatorios"
+    ],
+    "processes": ["Apertura de cuenta con debida diligencia", "Transferencia con autorización reforzada", "Cierre diario y conciliación", "Investigación de alerta"],
+    "roles": [
+      { "name": "Cliente", "permissions": ["consultar sus cuentas", "transferir dentro de sus límites"] },
+      { "name": "Ejecutivo de sucursal", "permissions": ["abrir cuentas", "consultar con registro de acceso"] },
+      { "name": "Operaciones", "permissions": ["ejecutar cierre diario", "regularizar partidas conciliatorias"] },
+      { "name": "Cumplimiento", "permissions": ["investigar alertas", "emitir reportes a la autoridad"] },
+      { "name": "Auditoría interna", "permissions": ["solo lectura total", "exportar evidencia"] }
+    ],
+    "organizations": { "model": "single", "count": 1, "usersPerOrg": 0 },
+    "integrations": [
+      { "name": "Cámara de compensación", "direction": "bidireccional", "style": "financial-protocol", "criticality": "crítica", "notes": "Ventanas horarias fijas; si falla, las órdenes quedan en cola con estado explícito y se reintentan en la ventana siguiente." },
+      { "name": "Listas de sanciones y personas expuestas", "direction": "entrante", "style": "file-batch", "criticality": "alta", "notes": "Si la lista no se actualiza, se bloquean altas nuevas antes que operar con datos vencidos." },
+      { "name": "Procesador de tarjetas", "direction": "bidireccional", "style": "financial-protocol", "criticality": "crítica", "notes": "Idempotencia por identificador de operación; toda respuesta ambigua se concilia, nunca se reintenta a ciegas." }
+    ]
+  },
+  "technology": {
+    "languages": ["Java", "TypeScript"],
+    "frameworks": ["Spring Boot", "React"],
+    "databases": [
+      { "engine": "PostgreSQL", "purpose": "libro contable y cuentas, con réplica sincrónica" },
+      { "engine": "Kafka", "purpose": "flujo de eventos de movimiento para monitoreo y analítica" },
+      { "engine": "Redis", "purpose": "límites, bloqueos y caché de consulta" }
+    ],
+    "infrastructure": ["Kubernetes", "Balanceador con dos zonas", "Centro alterno"],
+    "offlineSupport": false,
+    "transactionalIntegrity": true,
+    "consistencyStrategy": "Consistencia fuerte con réplica sincrónica en el camino de registro; eventual hacia monitoreo y analítica"
+  },
+  "security": {
+    "mfa": true,
+    "encryptionAtRest": true,
+    "encryptionInTransit": true,
+    "rowLevelAuthorization": true,
+    "auditTrail": true,
+    "consentManagement": true,
+    "secretsManagement": true,
+    "threatModel": true
+  },
+  "compliance": {
+    "jurisdictions": ["Chile"],
+    "regulations": [
+      "Normativa del regulador bancario sobre continuidad operacional y gestión de riesgo",
+      "Obligaciones de prevención de lavado de activos y reporte de operaciones sospechosas",
+      "Protección de datos personales y secreto bancario"
+    ],
+    "standards": ["ISO 20022", "PCI DSS", "ISO/IEC 27001", "IFRS 9", "Basilea (marco prudencial)"],
+    "dataResidency": "Territorio nacional, con centro alterno en el mismo territorio",
+    "auditRequirements": "Inmutabilidad de asientos, trazabilidad de cada consulta a datos de clientes y conservación por el plazo legal."
+  },
+  "capacity": {
+    "registeredUsers": 800000,
+    "dau": 220000,
+    "mau": 650000,
+    "peakConcurrentUsers": 22000,
+    "sessionsPerUserPerDay": 2.2,
+    "requestsPerSession": 45,
+    "avgSessionMinutes": 6,
+    "readWriteRatio": 12,
+    "avgRecordKb": 1.5,
+    "filesPerUserPerMonth": 1,
+    "avgFileMb": 0.2,
+    "organizations": 1,
+    "regions": ["sa-east", "sa-east-alt"],
+    "peakFactor": 4,
+    "seasonalPeakFactor": 2,
+    "backgroundJobsPerDay": 3000000,
+    "retentionMonths": 120,
+    "slaAvailability": 99.99,
+    "latencyTargetMs": 200,
+    "latencyPercentile": 99,
+    "criticalResource": "Saldo de cuenta en operaciones concurrentes",
+    "egressPerRequestKb": 25
+  },
+  "evolution": {
+    "horizon": { "unit": "years", "value": 10, "openEnded": true },
+    "growthModel": "percent",
+    "growthRatePercent": 10,
+    "scenarios": {
+      "conservative": { "ratePercent": 4, "note": "Base de clientes estable." },
+      "expected": { "ratePercent": 10, "note": "Crecimiento orgánico de la base." },
+      "demanding": { "ratePercent": 25, "note": "Incorporación de una cartera adquirida." }
+    },
+    "milestones": [
+      { "id": "m1", "name": "Operación plena en centro alterno verificada", "kind": "time", "atMonth": 12 },
+      { "id": "m2", "name": "Particionado del libro contable", "kind": "condition", "condition": "Las escrituras en el libro superan el 60% de la capacidad medida del nodo primario" },
+      { "id": "m3", "name": "Migración a mensajería ISO 20022 completa", "kind": "condition", "condition": "La cámara retira el soporte del formato anterior" }
+    ],
+    "plannedChanges": ["Pagos inmediatos ampliados", "Apertura de interfaces a terceros autorizados", "Separación del dominio de crédito"],
+    "reviewFrequencyMonths": 3
+  },
+  "quality": {
+    "priorities": { "reliability": 5, "security": 5, "availability": 5, "recoverability": 5, "observability": 5, "performance": 4, "evolvability": 3, "maintainability": 4 },
+    "accessibilityTarget": "WCAG 2.2 nivel AA en los canales de cliente",
+    "rpoMinutes": 0,
+    "rtoMinutes": 15,
+    "testStrategy": [
+      "unitarias del libro contable con verificación del invariante de balance",
+      "pruebas de concurrencia sobre saldo",
+      "idempotencia de operaciones duplicadas",
+      "conciliación diaria automatizada",
+      "conmutación al centro alterno cronometrada",
+      "carga al pico proyectado"
+    ]
+  },
+  "operations": {
+    "teamSize": 35,
+    "onCall": true,
+    "observability": true,
+    "loadTesting": true,
+    "environments": ["desarrollo", "integración", "certificación", "preproducción", "producción"],
+    "supportHours": "Permanente, con turnos de guardia y centro de operaciones",
+    "monthlyBudgetUsd": 60000,
+    "unitCosts": { "vcpuMonthUsd": 25, "gbRamMonthUsd": 5.5, "gbStorageMonthUsd": 0.15, "gbEgressUsd": 0.09, "perMillionTokensUsd": 0 }
+  },
+  "deliverables": { "prompts": [], "includeSkill": false, "includeAgents": false, "includeHarness": false, "includeMcp": false },
+  "decisions": {
+    "assumptions": ["El horizonte se declara sin término conocido: el sistema se gestiona por revisiones periódicas indefinidas."],
+    "pending": [
+      "Confirmar con el regulador el alcance exigido del plan de continuidad.",
+      "Definir si el dominio de crédito se separa en la etapa de expansión o de modernización."
+    ]
+  },
+  "notes": "Escenario de aceptación E."
+}

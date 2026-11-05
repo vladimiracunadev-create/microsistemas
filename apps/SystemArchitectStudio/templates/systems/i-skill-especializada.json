@@ -1,0 +1,135 @@
+{
+  "schemaVersion": "sas.config.v1",
+  "meta": { "title": "Skill especializada reutilizable", "configVersion": "0.1.0" },
+  "identity": {
+    "name": "Asistente de Revisión de Arquitectura",
+    "purpose": "Producir una skill reutilizable que oriente a un agente en la revisión de arquitectura de servicios internos, con carga progresiva de contexto.",
+    "mode": "new",
+    "audience": "Equipos de ingeniería que someten sus diseños a revisión",
+    "owner": "Oficina de Arquitectura"
+  },
+  "classification": {
+    "systemTypes": ["agent-platform", "llmops", "model-evaluation", "test-management"],
+    "sectors": ["ai", "software"],
+    "serviceModel": ["self-hosted-oss"],
+    "architecture": ["plugin", "layered"],
+    "deployment": ["local"],
+    "tenancy": "single-user",
+    "platforms": ["cli", "api-only"],
+    "licensing": "mit",
+    "monetization": ["none"],
+    "dataSensitivity": ["internal"],
+    "integrationStyle": ["mcp", "rest"]
+  },
+  "functional": {
+    "capabilities": [
+      "Clasificar el servicio que se revisa según el catálogo de tipos",
+      "Analizar los requisitos declarados y detectar vacíos",
+      "Evaluar la arquitectura propuesta contra la carga declarada",
+      "Identificar riesgos y restricciones conocidas del dominio",
+      "Emitir una revisión con hallazgos priorizados y su justificación"
+    ],
+    "processes": ["Recepción del diseño a revisar", "Revisión asistida con referencias", "Entrega de hallazgos", "Cierre con el equipo autor"],
+    "roles": [
+      { "name": "Equipo autor", "permissions": ["solicitar la revisión", "responder a los hallazgos"] },
+      { "name": "Arquitecto revisor", "permissions": ["validar o descartar cada hallazgo", "cerrar la revisión"] }
+    ],
+    "organizations": { "model": "single", "count": 1, "usersPerOrg": 40 },
+    "integrations": [
+      { "name": "Repositorios de código internos", "direction": "entrante", "style": "rest", "criticality": "media", "notes": "Solo lectura; si no responde, la revisión se hace sobre el documento entregado." }
+    ]
+  },
+  "technology": {
+    "languages": ["JavaScript"],
+    "frameworks": ["Módulos ES sin dependencias externas"],
+    "databases": [],
+    "infrastructure": ["Ejecución local"],
+    "offlineSupport": true,
+    "transactionalIntegrity": false,
+    "consistencyStrategy": "No aplica",
+    "aiUsage": {
+      "enabled": true,
+      "provider": "local",
+      "purpose": "Redacción de los hallazgos de la revisión a partir del análisis determinista",
+      "automatedDecisions": false,
+      "budgetControls": true,
+      "tokensPerOperation": 20000,
+      "operationsPerDay": 20
+    }
+  },
+  "security": {
+    "mfa": false,
+    "encryptionAtRest": false,
+    "encryptionInTransit": true,
+    "rowLevelAuthorization": false,
+    "auditTrail": true,
+    "secretsManagement": true,
+    "threatModel": true
+  },
+  "compliance": {
+    "jurisdictions": [],
+    "regulations": [],
+    "standards": ["ISO/IEC 25010", "ISO/IEC 42001"],
+    "dataResidency": "",
+    "auditRequirements": "Registro de qué referencias se usaron en cada revisión."
+  },
+  "capacity": {
+    "registeredUsers": 40,
+    "dau": 8,
+    "mau": 35,
+    "peakConcurrentUsers": 3,
+    "sessionsPerUserPerDay": 1,
+    "requestsPerSession": 15,
+    "avgSessionMinutes": 30,
+    "readWriteRatio": 10,
+    "avgRecordKb": 8,
+    "organizations": 1,
+    "regions": [],
+    "peakFactor": 2,
+    "retentionMonths": 24,
+    "slaAvailability": 0,
+    "latencyTargetMs": 0,
+    "latencyPercentile": 95,
+    "criticalResource": "",
+    "egressPerRequestKb": 20
+  },
+  "evolution": {
+    "horizon": { "unit": "months", "value": 12, "openEnded": false },
+    "growthModel": "linear",
+    "growthRatePercent": 30,
+    "scenarios": {
+      "conservative": { "ratePercent": 10, "note": "Solo el equipo de arquitectura." },
+      "expected": { "ratePercent": 30, "note": "Adopción por equipos de ingeniería." },
+      "demanding": { "ratePercent": 70, "note": "Revisión obligatoria en todos los diseños nuevos." }
+    },
+    "milestones": [
+      { "id": "m1", "name": "Primera revisión aceptada por un equipo autor", "kind": "condition", "condition": "Un equipo incorpora los hallazgos a su diseño" },
+      { "id": "m2", "name": "Validación de los criterios de la skill", "kind": "time", "atMonth": 6 }
+    ],
+    "plannedChanges": ["Referencias por dominio específico", "Comparación entre revisiones sucesivas del mismo servicio"],
+    "reviewFrequencyMonths": 3
+  },
+  "quality": {
+    "priorities": { "maintainability": 5, "testability": 5, "evolvability": 4, "usability": 4, "observability": 3 },
+    "accessibilityTarget": "",
+    "rpoMinutes": 0,
+    "rtoMinutes": 0,
+    "testStrategy": ["verificación de los criterios de validación de la skill", "pruebas de que las referencias se cargan por separado", "revisión de que las restricciones están declaradas"]
+  },
+  "operations": {
+    "teamSize": 2,
+    "onCall": false,
+    "observability": false,
+    "loadTesting": false,
+    "environments": ["local"],
+    "supportHours": "A demanda",
+    "monthlyBudgetUsd": 0,
+    "unitCosts": { "vcpuMonthUsd": 0, "gbRamMonthUsd": 0, "gbStorageMonthUsd": 0, "gbEgressUsd": 0, "perMillionTokensUsd": 0 }
+  },
+  "deliverables": { "prompts": ["master", "documentation"], "includeSkill": true, "includeAgents": true, "includeHarness": false, "includeMcp": false },
+  "decisions": {
+    "assumptions": ["La redacción asistida no reemplaza el juicio del arquitecto revisor."],
+    "pending": ["Definir el umbral a partir del cual un hallazgo se considera bloqueante."]
+  },
+  "notes": "Escenario de aceptación I."
+}

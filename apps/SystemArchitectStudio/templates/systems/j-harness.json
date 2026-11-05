@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "sas.config.v1",
+  "meta": { "title": "Harness de ejecución controlada", "configVersion": "0.1.0" },
+  "identity": {
+    "name": "Harness de Ingeniería Controlada",
+    "purpose": "Especificar la capa que organiza y controla la ejecución de agentes y herramientas en tareas de ingeniería: permisos, aprobaciones, aislamiento, puntos de control, presupuesto y condiciones de término.",
+    "mode": "new",
+    "audience": "Equipo de plataforma que opera ejecuciones asistidas",
+    "owner": "Equipo de Plataforma"
+  },
+  "classification": {
+    "systemTypes": ["harness", "agent-platform", "cicd", "observability", "ai-governance", "model-evaluation"],
+    "sectors": ["ai", "software"],
+    "serviceModel": ["self-hosted-oss"],
+    "architecture": ["event-driven", "modular-monolith"],
+    "deployment": ["private-cloud"],
+    "tenancy": "single-tenant",
+    "platforms": ["cli", "api-only", "web"],
+    "licensing": "apache-2.0",
+    "monetization": ["none"],
+    "dataSensitivity": ["internal"],
+    "integrationStyle": ["rest", "mcp", "message-queue", "webhooks"]
+  },
+  "functional": {
+    "capabilities": [
+      "Descomposición de la tarea en pasos con dependencias y criterio de finalización",
+      "Permisos por tarea con mínimo privilegio sobre las herramientas",
+      "Puertas de aprobación humana antes de acciones irreversibles",
+      "Ejecución aislada con sistema de archivos y red restringidos",
+      "Puntos de control reanudables y recuperación tras falla",
+      "Clasificación de errores y reintentos acotados con espera creciente",
+      "Validación de la salida por el motor determinista, no por el propio agente",
+      "Contabilidad de consumo y presupuesto con corte efectivo",
+      "Auditoría inmutable de prompts, herramientas, parámetros y resultados",
+      "Condiciones de término explícitas y evaluaciones de resultado"
+    ],
+    "processes": ["Planificación de la ejecución", "Ejecución con puntos de control", "Aprobación de acciones con efecto", "Cierre con evaluación"],
+    "roles": [
+      { "name": "Solicitante", "permissions": ["iniciar ejecuciones", "ver su traza y su costo"] },
+      { "name": "Aprobador", "permissions": ["autorizar o denegar acciones con efecto externo"] },
+      { "name": "Operador de plataforma", "permissions": ["configurar permisos, presupuestos y condiciones de término"] }
+    ],
+    "organizations": { "model": "single", "count": 1, "usersPerOrg": 60 },
+    "integrations": [
+      { "name": "Servidor MCP de herramientas", "direction": "bidireccional", "style": "mcp", "criticality": "alta", "notes": "El harness decide si una invocación está autorizada en el contexto de la tarea; el protocolo no lo decide por él." },
+      { "name": "Automatización de construcción y despliegue", "direction": "saliente", "style": "webhooks", "criticality": "media", "notes": "Toda acción de despliegue requiere aprobación humana previa." },
+      { "name": "Plataforma de observabilidad", "direction": "saliente", "style": "rest", "criticality": "media", "notes": "Las trazas de ejecución se exportan sin secretos." }
+    ]
+  },
+  "technology": {
+    "languages": ["TypeScript"],
+    "frameworks": ["Node.js"],
+    "databases": [
+      { "engine": "PostgreSQL", "purpose": "tareas, estados, aprobaciones, auditoría y contabilidad de consumo" },
+      { "engine": "Redis", "purpose": "colas de tareas y bloqueos de recursos" },
+      { "engine": "S3 compatible", "purpose": "artefactos producidos y puntos de control" }
+    ],
+    "infrastructure": ["Kubernetes", "Entornos de ejecución efímeros y aislados"],
+    "offlineSupport": false,
+    "transactionalIntegrity": true,
+    "consistencyStrategy": "Consistencia fuerte en estados, aprobaciones y auditoría",
+    "aiUsage": {
+      "enabled": true,
+      "provider": "proveedor externo de inferencia",
+      "purpose": "Ejecución de los agentes que el harness controla",
+      "automatedDecisions": false,
+      "budgetControls": true,
+      "tokensPerOperation": 60000,
+      "operationsPerDay": 150
+    }
+  },
+  "security": {
+    "mfa": true,
+    "encryptionAtRest": true,
+    "encryptionInTransit": true,
+    "rowLevelAuthorization": true,
+    "auditTrail": true,
+    "secretsManagement": true,
+    "threatModel": true
+  },
+  "compliance": {
+    "jurisdictions": [],
+    "regulations": [],
+    "standards": ["ISO/IEC 42001", "ISO/IEC 23894", "ISO/IEC 27001", "SLSA"],
+    "dataResidency": "",
+    "auditRequirements": "Reconstrucción completa de la ejecución: qué se hizo, con qué permisos, con qué aprobación y con qué resultado."
+  },
+  "capacity": {
+    "registeredUsers": 60,
+    "dau": 25,
+    "mau": 55,
+    "peakConcurrentUsers": 10,
+    "sessionsPerUserPerDay": 2,
+    "requestsPerSession": 40,
+    "avgSessionMinutes": 45,
+    "readWriteRatio": 3,
+    "avgRecordKb": 20,
+    "organizations": 1,
+    "regions": ["sa-east"],
+    "peakFactor": 3,
+    "backgroundJobsPerDay": 600,
+    "retentionMonths": 36,
+    "slaAvailability": 99.5,
+    "latencyTargetMs": 0,
+    "latencyPercentile": 95,
+    "criticalResource": "Entorno de ejecución aislado y cuota de inferencia",
+    "egressPerRequestKb": 40
+  },
+  "evolution": {
+    "horizon": { "unit": "months", "value": 24, "openEnded": false },
+    "growthModel": "percent",
+    "growthRatePercent": 45,
+    "scenarios": {
+      "conservative": { "ratePercent": 15, "note": "Uso acotado al equipo de plataforma." },
+      "expected": { "ratePercent": 45, "note": "Adopción progresiva por otros equipos." },
+      "demanding": { "ratePercent": 120, "note": "Ejecuciones programadas de forma continua." }
+    },
+    "milestones": [
+      { "id": "m1", "name": "Primera ejecución reanudada tras falla", "kind": "condition", "condition": "Una ejecución se retoma desde su punto de control sin repetir trabajo validado" },
+      { "id": "m2", "name": "Corte efectivo por presupuesto verificado", "kind": "condition", "condition": "Una ejecución se detiene al alcanzar el presupuesto y persiste su estado" },
+      { "id": "m3", "name": "Primer adaptador de runtime en operación", "kind": "time", "atMonth": 9 }
+    ],
+    "plannedChanges": ["Adaptadores de runtime de agentes", "Evaluaciones automatizadas del propio harness", "Contabilidad de costo en vivo"],
+    "reviewFrequencyMonths": 3
+  },
+  "quality": {
+    "priorities": { "security": 5, "observability": 5, "reliability": 5, "recoverability": 5, "testability": 4, "costEfficiency": 5, "evolvability": 4 },
+    "accessibilityTarget": "WCAG 2.2 nivel AA en la interfaz de aprobación",
+    "rpoMinutes": 5,
+    "rtoMinutes": 60,
+    "testStrategy": [
+      "unitarias de la máquina de estados y de los límites de presupuesto",
+      "pruebas de reanudación desde punto de control",
+      "pruebas de que el aislamiento es efectivo y no solo declarado",
+      "pruebas de que una instrucción encontrada en los datos no amplía permisos",
+      "pruebas de corte por tiempo, por iteraciones y por presupuesto",
+      "verificación de que la auditoría no registra secretos"
+    ]
+  },
+  "operations": {
+    "teamSize": 4,
+    "onCall": false,
+    "observability": true,
+    "loadTesting": false,
+    "environments": ["desarrollo", "pruebas", "producción"],
+    "supportHours": "Horario de oficina",
+    "monthlyBudgetUsd": 5000,
+    "unitCosts": { "vcpuMonthUsd": 20, "gbRamMonthUsd": 4.5, "gbStorageMonthUsd": 0.1, "gbEgressUsd": 0.08, "perMillionTokensUsd": 6 }
+  },
+  "deliverables": { "prompts": ["master", "ai-engineering", "security", "observability", "testing"], "includeSkill": false, "includeAgents": true, "includeHarness": true, "includeMcp": true },
+  "decisions": {
+    "assumptions": ["Esta versión produce la especificación del harness; su ejecución real requiere adaptadores de runtime con sus propias pruebas."],
+    "pending": ["Elegir el mecanismo de aislamiento efectivo (contenedor efímero o entorno restringido equivalente).", "Definir el presupuesto por tipo de tarea."]
+  },
+  "notes": "Escenario de aceptación J."
+}

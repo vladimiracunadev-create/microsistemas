@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "sas.config.v1",
+  "meta": { "title": "CRM comercial para equipo pequeño", "configVersion": "0.1.0" },
+  "identity": {
+    "name": "CRM Comercial Andes",
+    "purpose": "Centralizar cuentas, contactos y oportunidades de un equipo comercial de 50 personas, con posibilidad de ofrecerlo después como servicio a otras empresas.",
+    "mode": "new",
+    "audience": "Ejecutivos comerciales, jefaturas de venta y administración",
+    "owner": "Gerencia Comercial"
+  },
+  "classification": {
+    "systemTypes": ["crm", "helpdesk"],
+    "sectors": ["enterprise"],
+    "serviceModel": ["on-premise-product", "saas"],
+    "architecture": ["modular-monolith"],
+    "deployment": ["cloud"],
+    "tenancy": "single-tenant",
+    "platforms": ["web", "pwa", "android", "ios"],
+    "licensing": "proprietary",
+    "monetization": ["subscription"],
+    "dataSensitivity": ["internal", "personal"],
+    "integrationStyle": ["rest", "webhooks"]
+  },
+  "functional": {
+    "capabilities": [
+      "Registro de cuentas y contactos con deduplicación asistida",
+      "Embudo de oportunidades configurable por línea de negocio",
+      "Bitácora de interacciones con el cliente",
+      "Cotizaciones con aprobación por margen",
+      "Pronóstico de ventas por periodo"
+    ],
+    "processes": [
+      "Prospección y calificación de oportunidad",
+      "Cotización y aprobación comercial",
+      "Cierre y traspaso a postventa"
+    ],
+    "roles": [
+      { "name": "Ejecutivo comercial", "permissions": ["ver y editar sus propias oportunidades", "crear contactos", "emitir cotizaciones"] },
+      { "name": "Jefe de ventas", "permissions": ["ver el equipo completo", "aprobar descuentos hasta el límite declarado", "reasignar cartera"] },
+      { "name": "Administrador", "permissions": ["gestionar usuarios y catálogos", "configurar el embudo"] }
+    ],
+    "organizations": { "model": "single", "count": 1, "usersPerOrg": 50 },
+    "integrations": [
+      { "name": "Correo corporativo", "direction": "bidireccional", "style": "rest", "criticality": "media", "notes": "Si no responde, la actividad se registra manualmente y se sincroniza después." },
+      { "name": "Facturación externa", "direction": "saliente", "style": "rest", "criticality": "alta", "notes": "Si no responde, la cotización queda en estado pendiente de emisión y se reintenta." }
+    ]
+  },
+  "technology": {
+    "languages": ["PHP", "JavaScript"],
+    "frameworks": ["Vanilla JS"],
+    "databases": [{ "engine": "PostgreSQL", "purpose": "datos transaccionales" }],
+    "infrastructure": ["Docker", "Nginx"],
+    "offlineSupport": true,
+    "transactionalIntegrity": true,
+    "consistencyStrategy": "Consistencia fuerte en una sola región"
+  },
+  "security": {
+    "mfa": true,
+    "encryptionAtRest": true,
+    "encryptionInTransit": true,
+    "rowLevelAuthorization": true,
+    "auditTrail": true,
+    "secretsManagement": true,
+    "threatModel": true
+  },
+  "compliance": {
+    "jurisdictions": ["Chile"],
+    "regulations": ["Ley de protección de datos personales aplicable a los contactos registrados"],
+    "standards": ["ISO/IEC 27001", "WCAG 2.2 AA"],
+    "dataResidency": "",
+    "auditRequirements": "Trazabilidad de cambios en oportunidades y descuentos aprobados."
+  },
+  "capacity": {
+    "registeredUsers": 50,
+    "dau": 40,
+    "mau": 50,
+    "peakConcurrentUsers": 15,
+    "sessionsPerUserPerDay": 3,
+    "requestsPerSession": 60,
+    "avgSessionMinutes": 25,
+    "readWriteRatio": 8,
+    "avgRecordKb": 3,
+    "filesPerUserPerMonth": 10,
+    "avgFileMb": 1,
+    "organizations": 1,
+    "regions": ["sa-east"],
+    "peakFactor": 2.5,
+    "backgroundJobsPerDay": 2000,
+    "retentionMonths": 60,
+    "slaAvailability": 99.5,
+    "latencyTargetMs": 400,
+    "latencyPercentile": 95,
+    "criticalResource": "Asignación de cartera de clientes",
+    "egressPerRequestKb": 40
+  },
+  "evolution": {
+    "horizon": { "unit": "months", "value": 36, "openEnded": false },
+    "growthModel": "percent",
+    "growthRatePercent": 40,
+    "scenarios": {
+      "conservative": { "ratePercent": 15, "note": "Solo crece la cartera de clientes, el equipo se mantiene." },
+      "expected": { "ratePercent": 40, "note": "Se incorporan dos equipos comerciales nuevos." },
+      "demanding": { "ratePercent": 90, "note": "Se habilita la venta del producto como servicio a terceros." }
+    },
+    "milestones": [
+      { "id": "m1", "name": "Primera organización externa en modo servicio", "kind": "condition", "condition": "Se firma el primer contrato con una empresa externa" },
+      { "id": "m2", "name": "Revisión del modelo de aislamiento", "kind": "time", "atMonth": 18 }
+    ],
+    "plannedChanges": [
+      "Modo multi-tenant para ofrecer el producto como servicio",
+      "Módulo de marketing y campañas",
+      "Aplicación móvil con operación offline en terreno"
+    ],
+    "reviewFrequencyMonths": 6
+  },
+  "quality": {
+    "priorities": { "usability": 5, "maintainability": 4, "security": 4, "performance": 3, "availability": 3, "evolvability": 5 },
+    "accessibilityTarget": "WCAG 2.2 nivel AA",
+    "rpoMinutes": 60,
+    "rtoMinutes": 240,
+    "testStrategy": ["unitarias", "integración", "extremo a extremo de los flujos comerciales"]
+  },
+  "operations": {
+    "teamSize": 3,
+    "onCall": false,
+    "observability": true,
+    "loadTesting": false,
+    "environments": ["desarrollo", "pruebas", "producción"],
+    "supportHours": "Horario de oficina, de lunes a viernes",
+    "monthlyBudgetUsd": 400,
+    "unitCosts": { "vcpuMonthUsd": 22, "gbRamMonthUsd": 5, "gbStorageMonthUsd": 0.12, "gbEgressUsd": 0.09, "perMillionTokensUsd": 0 }
+  },
+  "deliverables": { "prompts": [], "includeSkill": false, "includeAgents": false, "includeHarness": false, "includeMcp": false },
+  "decisions": {
+    "assumptions": ["El equipo comercial trabaja en una sola zona horaria."],
+    "pending": ["Definir si el modo servicio a terceros requiere aislamiento por esquema o por instancia."]
+  },
+  "notes": "Escenario de aceptación A."
+}

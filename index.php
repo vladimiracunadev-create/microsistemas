@@ -267,6 +267,17 @@
             </div>
             <a href="apps/AwsGenerator/" class="btn">Abrir Herramienta</a>
         </div>
+
+        <!-- Tarjeta 11 -->
+        <div class="card">
+            <div>
+                <span class="badge js">HTML + JS</span>
+                <h2>System Architect Studio</h2>
+                <p>Plataforma de ingeniería para clasificar, dimensionar y especificar sistemas, con generación
+                    determinista de prompts, planes de escalabilidad y evolución temporal.</p>
+            </div>
+            <a href="apps/SystemArchitectStudio/" class="btn">Abrir Plataforma</a>
+        </div>
     </div>
 
 </body>

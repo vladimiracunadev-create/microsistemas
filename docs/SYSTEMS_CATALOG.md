@@ -108,6 +108,12 @@ Antes de detallar las aplicaciones, es fundamental entender los cambios estructu
 - **Para que?**: Para autoevaluar el dominio de Python, pandas, NumPy, ML y Data Science con preguntas organizadas por seccion, nivel (Basica/Intermedia/Avanzada) y tipo, sin necesidad de backend ni registro.
 - **Importancia**: Acelera el ciclo de preparacion tecnica. Al funcionar 100% en el navegador con JSON local, puede usarse sin conexion desde PHP CLI o Docker, persiste el progreso en `localStorage` y permite reemplazar el dataset sin tocar la UI.
 
+### 🏛️ System Architect Studio (El Taller de Arquitectura)
+
+- **Que hace?**: Plataforma de ingenieria que clasifica, dimensiona, especifica y proyecta la evolucion de sistemas informaticos. Combina un catalogo de 127 tipos de sistema en 12 familias, 9 dimensiones de clasificacion independientes y 39 reglas de compatibilidad con un motor determinista que calcula capacidad, evolucion temporal, arquitectura y requisitos.
+- **Para que?**: Para pasar de una idea a una especificacion estructurada, y de esa especificacion a prompts por disciplina, planes de escalabilidad, hojas de ruta y planes de prueba, sin perder por el camino los supuestos ni las decisiones pendientes.
+- **Importancia**: Es la herramienta de "honestidad tecnica" de la suite. Cada cifra de capacidad declara su formula, sus unidades y los supuestos que el motor tuvo que introducir; las proyecciones se presentan como escenarios y no como predicciones; y la generacion es determinista, sin Internet y sin consumo de tokens. Genera ademas skill, definiciones de agentes, especificacion de harness y especificacion de adaptador MCP, diferenciando siempre la especificacion de la implementacion.
+
 ---
 
 ## 🚀 Conclusion: Por que creamos todo esto?

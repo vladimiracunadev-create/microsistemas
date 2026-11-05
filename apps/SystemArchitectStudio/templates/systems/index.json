@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "sas.examples.v1",
+  "catalogVersion": "0.1.0",
+  "updatedAt": "2026-11-04",
+  "note": "Configuraciones de ejemplo que cubren los escenarios de aceptación A–L. Se usan como plantillas en la interfaz y como fixtures en las pruebas automatizadas. Los datos son originales y no reproducen instrumentos ni contenidos protegidos de terceros.",
+  "examples": [
+    { "id": "a-crm", "scenario": "A", "file": "a-crm-50-usuarios.json", "name": "CRM con 50 usuarios, SaaS opcional y crecimiento de clientes" },
+    { "id": "b-erp", "scenario": "B", "file": "b-erp-5000-usuarios.json", "name": "ERP con 5.000 usuarios, múltiples áreas e integraciones" },
+    { "id": "c-psicometrico", "scenario": "C", "file": "c-psicometrico-educativo.json", "name": "Sistema psicométrico educativo para 100.000 estudiantes" },
+    { "id": "d-ecommerce", "scenario": "D", "file": "d-ecommerce-estacional.json", "name": "Comercio electrónico con demanda estacional" },
+    { "id": "e-banco", "scenario": "E", "file": "e-banco-core.json", "name": "Sistema bancario con conciliación, auditoría y alta disponibilidad" },
+    { "id": "f-industrial", "scenario": "F", "file": "f-industrial-telemetria.json", "name": "Sistema industrial con sensores, telemetría y operación continua" },
+    { "id": "g-multiagente", "scenario": "G", "file": "g-multiagente.json", "name": "Sistema multiagente con límites de herramientas y control de tokens" },
+    { "id": "h-existente", "scenario": "H", "file": "h-sistema-existente.json", "name": "Ampliación de un sistema existente sin alterar su comportamiento" },
+    { "id": "i-skill", "scenario": "I", "file": "i-skill-especializada.json", "name": "Skill especializada con archivos e instrucciones reutilizables" },
+    { "id": "j-harness", "scenario": "J", "file": "j-harness.json", "name": "Harness con especificación de ejecución, controles y evaluación" },
+    { "id": "k-evolucion", "scenario": "K", "file": "k-evolucion-temporal.json", "name": "Evolución temporal desde la versión inicial hasta etapas de crecimiento" },
+    { "id": "l-alta-escala", "scenario": "L", "file": "l-alta-escala.json", "name": "Alta escala con millones de usuarios y supuestos explícitos" }
+  ]
+}

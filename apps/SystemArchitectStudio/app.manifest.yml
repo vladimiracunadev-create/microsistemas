@@ -1,0 +1,7 @@
+name: SystemArchitectStudio
+type: static
+description: Plataforma de ingeniería para clasificar, dimensionar, especificar y proyectar la evolución de sistemas informáticos, con generación determinista de prompts y artefactos.
+ports:
+  - 80
+healthcheck: /
+run_cmd: null

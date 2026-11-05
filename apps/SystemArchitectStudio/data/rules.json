@@ -1,0 +1,494 @@
+{
+  "schemaVersion": "sas.rules.v1",
+  "catalogVersion": "0.1.0",
+  "updatedAt": "2026-11-04",
+  "note": "Reglas declarativas de compatibilidad y advertencia. Ninguna regla prohíbe una combinación técnicamente válida: la severidad máxima para una combinación es 'warning' salvo contradicciones lógicas, que son 'error'. Operadores disponibles: includes, includesAny, includesAll, notIncludes, equals, notEquals, gt, gte, lt, lte, truthy, falsy, isEmpty, notEmpty.",
+  "rules": [
+    {
+      "id": "R-LOGIC-001",
+      "severity": "error",
+      "title": "Despliegue local con multi-tenant compartido",
+      "conditions": [
+        { "path": "classification.deployment", "op": "includesAll", "value": ["local"] },
+        { "path": "classification.deployment", "op": "isEmpty", "negate": true },
+        { "path": "classification.tenancy", "op": "includesAny", "value": ["multi-tenant-shared", "multi-tenant-schema"] },
+        { "path": "classification.deployment", "op": "notIncludes", "value": "cloud" },
+        { "path": "classification.deployment", "op": "notIncludes", "value": "on-premise" },
+        { "path": "classification.deployment", "op": "notIncludes", "value": "private-cloud" },
+        { "path": "classification.deployment", "op": "notIncludes", "value": "hybrid" }
+      ],
+      "message": "Se declaró multi-tenancy con despliegue exclusivamente local en la estación del usuario.",
+      "rationale": "La multi-tenencia supone una instancia compartida por varias organizaciones. Si el único despliegue es local, cada instalación es por definición de un solo tenant.",
+      "recommendation": "Elija 'Monousuario' o 'Single-tenant' para el escenario local, o agregue un despliegue servidor (on-premise, nube o híbrido)."
+    },
+    {
+      "id": "R-LOGIC-002",
+      "severity": "error",
+      "title": "SaaS sin despliegue servidor",
+      "conditions": [
+        { "path": "classification.serviceModel", "op": "includes", "value": "saas" },
+        { "path": "classification.deployment", "op": "notEmpty" },
+        { "path": "classification.deployment", "op": "notIncludes", "value": "cloud" },
+        { "path": "classification.deployment", "op": "notIncludes", "value": "private-cloud" },
+        { "path": "classification.deployment", "op": "notIncludes", "value": "hybrid" },
+        { "path": "classification.deployment", "op": "notIncludes", "value": "on-premise" }
+      ],
+      "message": "El modelo de servicio es SaaS pero no hay ningún despliegue de servidor declarado.",
+      "rationale": "En SaaS el proveedor opera la instancia; eso requiere infraestructura servidor (nube, nube privada, on-premise o híbrida).",
+      "recommendation": "Agregue el despliegue donde el proveedor operará el servicio, o cambie el modelo a producto instalable."
+    },
+    {
+      "id": "R-LOGIC-003",
+      "severity": "error",
+      "title": "Horizonte de evolución no definido",
+      "conditions": [
+        { "path": "evolution.horizon.openEnded", "op": "falsy" },
+        { "path": "evolution.horizon.value", "op": "lte", "value": 0 }
+      ],
+      "message": "No se definió horizonte de evolución ni se marcó el escenario como de término desconocido.",
+      "rationale": "El análisis de evolución temporal es obligatorio para todo sistema; el horizonte puede ser cualquiera, pero debe declararse.",
+      "recommendation": "Indique un horizonte en meses o marque explícitamente 'sin fecha de término conocida'."
+    },
+    {
+      "id": "R-CAP-001",
+      "severity": "error",
+      "title": "Usuarios concurrentes mayores que usuarios registrados",
+      "conditions": [
+        { "path": "capacity.registeredUsers", "op": "gt", "value": 0 },
+        { "path": "capacity.peakConcurrentUsers", "op": "gtField", "value": "capacity.registeredUsers" }
+      ],
+      "message": "Los usuarios concurrentes en pico superan a los usuarios registrados.",
+      "rationale": "Usuarios registrados, activos y concurrentes son magnitudes distintas y anidadas: concurrentes ≤ activos diarios ≤ activos mensuales ≤ registrados.",
+      "recommendation": "Revise las cifras: lo habitual es que la concurrencia en pico sea una fracción de los usuarios activos diarios."
+    },
+    {
+      "id": "R-CAP-002",
+      "severity": "warning",
+      "title": "Activos diarios mayores que activos mensuales",
+      "conditions": [
+        { "path": "capacity.mau", "op": "gt", "value": 0 },
+        { "path": "capacity.dau", "op": "gtField", "value": "capacity.mau" }
+      ],
+      "message": "Los usuarios activos diarios superan a los activos mensuales.",
+      "rationale": "Todo usuario activo en un día del mes es también activo del mes.",
+      "recommendation": "Corrija las cifras o aclare si los periodos de medición no son los habituales."
+    },
+    {
+      "id": "R-CAP-003",
+      "severity": "warning",
+      "title": "Concurrencia declarada sin usuarios activos",
+      "conditions": [
+        { "path": "capacity.peakConcurrentUsers", "op": "gt", "value": 0 },
+        { "path": "capacity.dau", "op": "lte", "value": 0 }
+      ],
+      "message": "Se declaró concurrencia en pico sin indicar usuarios activos diarios.",
+      "rationale": "Sin usuarios activos no es posible contrastar la concurrencia ni derivar factores de uso.",
+      "recommendation": "Indique usuarios activos diarios, aunque sea como rango estimado."
+    },
+    {
+      "id": "R-ARCH-001",
+      "severity": "warning",
+      "title": "Microservicios con carga baja",
+      "conditions": [
+        { "path": "classification.architecture", "op": "includes", "value": "microservices" },
+        { "path": "capacity.peakConcurrentUsers", "op": "lt", "value": 200 },
+        { "path": "capacity.peakConcurrentUsers", "op": "gt", "value": 0 },
+        { "path": "operations.teamSize", "op": "lt", "value": 10 }
+      ],
+      "message": "Se eligieron microservicios para una carga baja y un equipo pequeño.",
+      "rationale": "Los microservicios resuelven problemas de autonomía de equipos y escalado independiente. Con carga baja y equipo reducido el costo operacional (despliegues, observabilidad, consistencia distribuida) suele superar el beneficio. La cantidad de usuarios por sí sola no justifica un estilo arquitectónico.",
+      "recommendation": "Considere un monolito modular con límites de módulo explícitos, que permite extraer servicios después sin rediseñar el dominio."
+    },
+    {
+      "id": "R-ARCH-002",
+      "severity": "warning",
+      "title": "Monolito único con concurrencia muy alta",
+      "conditions": [
+        { "path": "classification.architecture", "op": "includesAny", "value": ["monolith"] },
+        { "path": "classification.architecture", "op": "notIncludes", "value": "modular-monolith" },
+        { "path": "capacity.peakConcurrentUsers", "op": "gt", "value": 20000 }
+      ],
+      "message": "Arquitectura monolítica sin modularización declarada para una concurrencia muy alta.",
+      "rationale": "Un monolito puede escalar horizontalmente, pero sin límites de módulo el acoplamiento impide escalar selectivamente las partes calientes y aumenta el radio de impacto de cada despliegue.",
+      "recommendation": "Declare límites de módulo y los puntos de extracción previstos, e identifique qué componentes podrían necesitar escalado independiente."
+    },
+    {
+      "id": "R-ARCH-003",
+      "severity": "warning",
+      "title": "Serverless con requisitos de latencia estricta",
+      "conditions": [
+        { "path": "classification.architecture", "op": "includesAny", "value": ["serverless"] },
+        { "path": "capacity.latencyTargetMs", "op": "lt", "value": 100 },
+        { "path": "capacity.latencyTargetMs", "op": "gt", "value": 0 }
+      ],
+      "message": "Se eligió serverless con un objetivo de latencia por debajo de 100 ms.",
+      "rationale": "El arranque en frío y la latencia de red hacia servicios administrados dificultan sostener percentiles altos muy bajos sin capacidad aprovisionada.",
+      "recommendation": "Verifique el objetivo por percentil (p95/p99), evalúe concurrencia aprovisionada o reserve la ruta crítica para un componente de ejecución permanente."
+    },
+    {
+      "id": "R-ARCH-004",
+      "severity": "warning",
+      "title": "Tiempo real industrial en la nube pública",
+      "conditions": [
+        { "path": "classification.systemTypes", "op": "includesAny", "value": ["scada", "dcs", "wcs", "robotics"] },
+        { "path": "classification.deployment", "op": "includes", "value": "cloud" },
+        { "path": "classification.deployment", "op": "notIncludes", "value": "edge" },
+        { "path": "classification.deployment", "op": "notIncludes", "value": "on-premise" }
+      ],
+      "message": "Un sistema de control o tiempo real quedó desplegado solo en nube pública.",
+      "rationale": "Los lazos de control y la coordinación de equipos físicos requieren determinismo y continuidad local; una interrupción del enlace no puede detener la planta.",
+      "recommendation": "Mantenga el control en planta (on-premise o edge) y use la nube para historización, analítica y supervisión."
+    },
+    {
+      "id": "R-ARCH-005",
+      "severity": "info",
+      "title": "Orientación a eventos sin estilo de integración asincrónico",
+      "conditions": [
+        { "path": "classification.architecture", "op": "includes", "value": "event-driven" },
+        { "path": "classification.integrationStyle", "op": "notEmpty" },
+        { "path": "classification.integrationStyle", "op": "notIncludes", "value": "message-queue" },
+        { "path": "classification.integrationStyle", "op": "notIncludes", "value": "webhooks" },
+        { "path": "classification.integrationStyle", "op": "notIncludes", "value": "cdc" }
+      ],
+      "message": "La arquitectura es orientada a eventos pero no se declaró ningún mecanismo asincrónico de integración.",
+      "rationale": "Una arquitectura de eventos necesita un transporte de eventos explícito para definir contratos, orden y entrega.",
+      "recommendation": "Declare colas o tópicos, webhooks o captura de cambios, y defina el formato de evento y su versionado."
+    },
+    {
+      "id": "R-SEC-001",
+      "severity": "warning",
+      "title": "Datos de tarjeta sin alcance PCI declarado",
+      "conditions": [
+        { "path": "classification.dataSensitivity", "op": "includes", "value": "cardholder" },
+        { "path": "compliance.standards", "op": "notIncludesSubstring", "value": "PCI" }
+      ],
+      "message": "Se tratan datos de titular de tarjeta sin declarar PCI DSS entre los estándares aplicables.",
+      "rationale": "El tratamiento de datos de tarjeta queda dentro del alcance de PCI DSS, con obligaciones técnicas y de auditoría concretas.",
+      "recommendation": "Declare PCI DSS y evalúe reducir el alcance mediante tokenización o campos alojados por el proveedor de pago."
+    },
+    {
+      "id": "R-SEC-002",
+      "severity": "warning",
+      "title": "Datos personales sensibles sin cifrado en reposo",
+      "conditions": [
+        { "path": "classification.dataSensitivity", "op": "includesAny", "value": ["sensitive-personal", "psychometric", "financial", "minors", "classified"] },
+        { "path": "security.encryptionAtRest", "op": "falsy" }
+      ],
+      "message": "Se tratan datos de categoría especial sin declarar cifrado en reposo.",
+      "rationale": "El cifrado en reposo es un control básico esperado para categorías especiales de datos y suele ser exigible por normativa de protección de datos.",
+      "recommendation": "Active el cifrado en reposo y defina la gestión de claves (rotación, custodia y separación de funciones)."
+    },
+    {
+      "id": "R-SEC-003",
+      "severity": "warning",
+      "title": "Datos de menores sin control de consentimiento",
+      "conditions": [
+        { "path": "classification.dataSensitivity", "op": "includes", "value": "minors" },
+        { "path": "security.consentManagement", "op": "falsy" }
+      ],
+      "message": "Se tratan datos de menores de edad sin gestión de consentimiento declarada.",
+      "rationale": "El tratamiento de datos de niños y adolescentes exige autorización del adulto responsable y registro verificable de esa autorización.",
+      "recommendation": "Incorpore gestión de consentimiento con registro de quién autorizó, cuándo, para qué finalidad, y mecanismo de revocación."
+    },
+    {
+      "id": "R-SEC-004",
+      "severity": "warning",
+      "title": "Autenticación sin segundo factor en sistema con acceso privilegiado",
+      "conditions": [
+        { "path": "classification.systemTypes", "op": "includesAny", "value": ["iam", "pam", "core-banking", "payment-systems", "identity-provider", "judicial", "law-enforcement", "ehr", "tax-administration"] },
+        { "path": "security.mfa", "op": "falsy" }
+      ],
+      "message": "Sistema de alto impacto sin autenticación de múltiples factores declarada.",
+      "rationale": "En sistemas con acceso a dinero, identidad, salud o potestades públicas el robo de credenciales es el vector principal.",
+      "recommendation": "Exija múltiples factores, preferentemente resistentes a phishing, al menos para roles administrativos y operaciones sensibles."
+    },
+    {
+      "id": "R-SEC-005",
+      "severity": "warning",
+      "title": "Red aislada con dependencias de servicios externos",
+      "conditions": [
+        { "path": "classification.deployment", "op": "includes", "value": "air-gapped" },
+        { "path": "technology.aiUsage.enabled", "op": "truthy" },
+        { "path": "technology.aiUsage.provider", "op": "notEquals", "value": "local" }
+      ],
+      "message": "Se declaró despliegue en red aislada con uso de servicios de IA no locales.",
+      "rationale": "Un entorno sin conectividad externa no puede consumir servicios de inferencia remotos.",
+      "recommendation": "Use inferencia local dentro del perímetro o elimine la dependencia de IA de la ruta crítica en ese despliegue."
+    },
+    {
+      "id": "R-PRIV-001",
+      "severity": "warning",
+      "title": "Jurisdicción declarada sin requisitos normativos asociados",
+      "conditions": [
+        { "path": "compliance.jurisdictions", "op": "notEmpty" },
+        { "path": "compliance.regulations", "op": "isEmpty" }
+      ],
+      "message": "Se declararon jurisdicciones sin identificar requisitos normativos concretos.",
+      "rationale": "Seleccionar una jurisdicción no otorga cumplimiento ni determina por sí mismo las obligaciones: estas deben identificarse y verificarse caso a caso.",
+      "recommendation": "Liste las obligaciones aplicables y regístrelas como decisiones pendientes de validación legal si aún no están confirmadas."
+    },
+    {
+      "id": "R-PRIV-002",
+      "severity": "warning",
+      "title": "Residencia de datos sin despliegue regional",
+      "conditions": [
+        { "path": "compliance.dataResidency", "op": "notEmpty" },
+        { "path": "capacity.regions", "op": "isEmpty" }
+      ],
+      "message": "Se exige residencia de datos pero no se declararon regiones de despliegue.",
+      "rationale": "La residencia obliga a ubicar el almacenamiento y, en algunos casos, el procesamiento en territorios determinados.",
+      "recommendation": "Declare las regiones y verifique que los servicios administrados elegidos existan en todas ellas."
+    },
+    {
+      "id": "R-PSY-001",
+      "severity": "warning",
+      "title": "Aplicación de pruebas sin motor de puntuación ni baremos",
+      "conditions": [
+        { "path": "classification.systemTypes", "op": "includesAny", "value": ["cbt", "assessment-management"] },
+        { "path": "classification.systemTypes", "op": "notIncludes", "value": "scoring-engine" }
+      ],
+      "message": "Se incluye aplicación o administración de pruebas sin un componente de puntuación declarado.",
+      "rationale": "Las respuestas sin puntuación no producen resultado utilizable, y la puntuación debe ser trazable a una clave versionada.",
+      "recommendation": "Agregue el motor de puntuación y, si habrá interpretación, también la gestión de baremos."
+    },
+    {
+      "id": "R-PSY-002",
+      "severity": "warning",
+      "title": "Puntuación sin análisis psicométrico ni evidencia de validez",
+      "conditions": [
+        { "path": "classification.systemTypes", "op": "includes", "value": "scoring-engine" },
+        { "path": "classification.systemTypes", "op": "notIncludes", "value": "psychometric-analysis" }
+      ],
+      "message": "Hay puntuación sin componente de análisis psicométrico.",
+      "rationale": "Implementar una prueba no equivale a validarla científicamente. Sin análisis de confiabilidad y validez el puntaje no es interpretable como medida.",
+      "recommendation": "Incluya el análisis psicométrico, o declare explícitamente que el sistema solo registra respuestas y que la validación es externa y responsabilidad de un profesional."
+    },
+    {
+      "id": "R-PSY-003",
+      "severity": "warning",
+      "title": "Interpretación de resultados sin baremos versionados",
+      "conditions": [
+        { "path": "classification.systemTypes", "op": "includes", "value": "assessment-reporting" },
+        { "path": "classification.systemTypes", "op": "notIncludes", "value": "norms-management" }
+      ],
+      "message": "Se generarán informes interpretativos sin gestión de baremos.",
+      "rationale": "Un puntaje bruto no es interpretable sin una población de referencia explícita y vigente.",
+      "recommendation": "Incluya gestión de baremos con población de referencia, vigencia y versionado, o limite los informes a puntajes brutos declarando esa limitación."
+    },
+    {
+      "id": "R-PSY-004",
+      "severity": "warning",
+      "title": "Instrumentos psicométricos y licenciamiento",
+      "conditions": [
+        { "path": "classification.dataSensitivity", "op": "includes", "value": "psychometric" }
+      ],
+      "message": "El sistema tratará resultados psicométricos: verifique la titularidad y licencia de cada instrumento.",
+      "rationale": "Muchos instrumentos están protegidos por derechos de autor y su uso, reproducción o digitalización requiere licencia del titular. El contenido de los ítems también es un activo confidencial.",
+      "recommendation": "Use instrumentos propios, de dominio público o con licencia vigente, y registre la evidencia de autorización por instrumento antes de la implementación."
+    },
+    {
+      "id": "R-AI-001",
+      "severity": "warning",
+      "title": "Agentes sin límites de presupuesto ni aprobaciones",
+      "conditions": [
+        { "path": "classification.systemTypes", "op": "includesAny", "value": ["agent-platform", "multi-agent"] },
+        { "path": "technology.aiUsage.budgetControls", "op": "falsy" }
+      ],
+      "message": "Se diseña un sistema de agentes sin controles de presupuesto declarados.",
+      "rationale": "Un agente iterativo puede consumir recursos sin cota si no tiene límite de iteraciones, de tokens y de tiempo, y puede ejecutar acciones de impacto sin supervisión.",
+      "recommendation": "Defina límite de iteraciones, presupuesto de tokens por tarea, condiciones de término y puertas de aprobación humana para acciones con efecto externo."
+    },
+    {
+      "id": "R-AI-002",
+      "severity": "warning",
+      "title": "Recuperación aumentada sin control de permisos en la recuperación",
+      "conditions": [
+        { "path": "classification.systemTypes", "op": "includes", "value": "rag" },
+        { "path": "security.rowLevelAuthorization", "op": "falsy" }
+      ],
+      "message": "Se incluye recuperación aumentada sin autorización a nivel de documento o registro.",
+      "rationale": "Si la recuperación no aplica los permisos del usuario que consulta, el sistema puede exponer contenido al que esa persona no tiene acceso en el repositorio de origen.",
+      "recommendation": "Propague la identidad del usuario a la recuperación y filtre por permisos antes de construir el contexto."
+    },
+    {
+      "id": "R-AI-003",
+      "severity": "warning",
+      "title": "Decisiones automatizadas sin gobierno de IA",
+      "conditions": [
+        { "path": "technology.aiUsage.enabled", "op": "truthy" },
+        { "path": "technology.aiUsage.automatedDecisions", "op": "truthy" },
+        { "path": "classification.systemTypes", "op": "notIncludes", "value": "ai-governance" }
+      ],
+      "message": "Habrá decisiones automatizadas con efectos sobre personas sin componente de gobierno de IA.",
+      "rationale": "Las decisiones automatizadas con efecto jurídico o significativo suelen requerir documentación del modelo, evaluación de impacto, supervisión humana y derecho a explicación.",
+      "recommendation": "Incorpore registro de decisiones, evaluación de impacto, revisión humana y trazabilidad de la versión de modelo aplicada."
+    },
+    {
+      "id": "R-AI-004",
+      "severity": "info",
+      "title": "Uso de IA sin evaluación sistemática",
+      "conditions": [
+        { "path": "technology.aiUsage.enabled", "op": "truthy" },
+        { "path": "classification.systemTypes", "op": "notIncludes", "value": "model-evaluation" }
+      ],
+      "message": "El sistema usará modelos sin un mecanismo de evaluación declarado.",
+      "rationale": "Sin conjuntos de evaluación versionados no es posible afirmar que una versión es mejor que otra ni detectar degradación.",
+      "recommendation": "Defina conjuntos de evaluación, métricas y umbrales de aceptación antes de poner el modelo en la ruta crítica."
+    },
+    {
+      "id": "R-OPS-001",
+      "severity": "warning",
+      "title": "Disponibilidad exigente sin equipo de operación suficiente",
+      "conditions": [
+        { "path": "capacity.slaAvailability", "op": "gte", "value": 99.95 },
+        { "path": "operations.onCall", "op": "falsy" }
+      ],
+      "message": "Se compromete una disponibilidad de 99,95% o superior sin turnos de guardia declarados.",
+      "rationale": "99,95% mensual deja alrededor de 22 minutos de indisponibilidad al mes: ese objetivo es inalcanzable sin detección y respuesta permanentes.",
+      "recommendation": "Declare el modelo de guardia y el tiempo objetivo de detección y restauración, o ajuste el compromiso de disponibilidad."
+    },
+    {
+      "id": "R-OPS-002",
+      "severity": "warning",
+      "title": "Objetivo de disponibilidad sin observabilidad",
+      "conditions": [
+        { "path": "capacity.slaAvailability", "op": "gte", "value": 99.9 },
+        { "path": "operations.observability", "op": "falsy" }
+      ],
+      "message": "Hay un objetivo de disponibilidad formal sin observabilidad declarada.",
+      "rationale": "Un objetivo de nivel de servicio que no se mide no se puede cumplir ni demostrar.",
+      "recommendation": "Defina indicadores de nivel de servicio, su método de medición y el presupuesto de error asociado."
+    },
+    {
+      "id": "R-OPS-003",
+      "severity": "warning",
+      "title": "Multi-región sin estrategia de consistencia",
+      "conditions": [
+        { "path": "capacity.regions", "op": "countGt", "value": 1 },
+        { "path": "technology.consistencyStrategy", "op": "isEmpty" }
+      ],
+      "message": "Se declararon varias regiones sin estrategia de consistencia de datos.",
+      "rationale": "Con datos en más de una región hay que decidir explícitamente entre consistencia fuerte, consistencia eventual o partición por región, y asumir sus consecuencias.",
+      "recommendation": "Defina qué datos son regionales y qué datos son globales, y la estrategia de replicación y resolución de conflictos."
+    },
+    {
+      "id": "R-OPS-004",
+      "severity": "info",
+      "title": "Alta escala sin plan de validación de capacidad",
+      "conditions": [
+        { "path": "capacity.registeredUsers", "op": "gte", "value": 1000000 },
+        { "path": "operations.loadTesting", "op": "falsy" }
+      ],
+      "message": "Se dimensiona un escenario de alta escala sin pruebas de carga previstas.",
+      "rationale": "En escenarios de millones de usuarios los supuestos de dimensionamiento solo se vuelven confiables después de medición empírica; sin pruebas, las cifras son escenarios y no capacidad verificada.",
+      "recommendation": "Incluya pruebas de carga y de resistencia con criterios de aceptación por componente, y trate las estimaciones como hipótesis hasta medirlas."
+    },
+    {
+      "id": "R-INT-001",
+      "severity": "warning",
+      "title": "Sistema existente sin repositorio declarado",
+      "conditions": [
+        { "path": "identity.mode", "op": "equals", "value": "existing" },
+        { "path": "identity.existingSystem.repository", "op": "isEmpty" }
+      ],
+      "message": "El modo es 'sistema existente' pero no se indicó el repositorio o la ubicación del código.",
+      "rationale": "La ampliación de un sistema existente exige inspeccionar su código, dependencias y comportamiento actual antes de proponer cambios.",
+      "recommendation": "Indique el repositorio o la ruta del sistema y, si existen, su documentación y pruebas actuales."
+    },
+    {
+      "id": "R-INT-002",
+      "severity": "info",
+      "title": "Integraciones críticas sin estilo declarado",
+      "conditions": [
+        { "path": "functional.integrations", "op": "notEmpty" },
+        { "path": "classification.integrationStyle", "op": "isEmpty" }
+      ],
+      "message": "Se declararon integraciones sin indicar el estilo de integración.",
+      "rationale": "El estilo determina los contratos, la tolerancia a fallas y el acoplamiento temporal entre sistemas.",
+      "recommendation": "Indique para cada integración si es sincrónica, asincrónica o por lote, y cuál es el comportamiento esperado cuando la contraparte no responde."
+    },
+    {
+      "id": "R-LIC-001",
+      "severity": "warning",
+      "title": "Copyleft de red con modelo SaaS propietario",
+      "conditions": [
+        { "path": "classification.licensing", "op": "equals", "value": "agpl-3.0" },
+        { "path": "classification.monetization", "op": "includesAny", "value": ["white-label"] }
+      ],
+      "message": "Se combinó licencia AGPL-3.0 con comercialización white-label.",
+      "rationale": "La AGPL extiende las obligaciones de copyleft al uso en red: los receptores del servicio pueden exigir el código fuente correspondiente, lo que condiciona los esquemas de reventa bajo marca de terceros.",
+      "recommendation": "Revise la estrategia con asesoría legal: evalúe doble licencia o una licencia permisiva si el modelo requiere distribución cerrada."
+    },
+    {
+      "id": "R-LIC-002",
+      "severity": "info",
+      "title": "Licencia no declarada",
+      "conditions": [
+        { "path": "classification.licensing", "op": "isEmpty" }
+      ],
+      "message": "No se declaró licencia del sistema.",
+      "rationale": "La licencia determina las obligaciones de distribución, la compatibilidad con dependencias y el modelo de negocio posible.",
+      "recommendation": "Declare la licencia, aunque sea 'uso interno', y verifique la compatibilidad de las licencias de las dependencias elegidas."
+    },
+    {
+      "id": "R-PLAT-001",
+      "severity": "info",
+      "title": "Operación móvil en terreno sin soporte offline",
+      "conditions": [
+        { "path": "classification.platforms", "op": "includesAny", "value": ["android", "ios"] },
+        { "path": "classification.systemTypes", "op": "includesAny", "value": ["cmms", "wms", "tms", "nonprofit-management", "law-enforcement", "emergency-management"] },
+        { "path": "technology.offlineSupport", "op": "falsy" }
+      ],
+      "message": "Hay operación móvil en terreno sin soporte offline declarado.",
+      "rationale": "El trabajo en terreno ocurre con conectividad intermitente; sin almacenamiento local y sincronización posterior la aplicación queda inutilizable justo donde se necesita.",
+      "recommendation": "Defina almacenamiento local, estrategia de sincronización y política de resolución de conflictos."
+    },
+    {
+      "id": "R-PLAT-002",
+      "severity": "warning",
+      "title": "Canal público sin requisito de accesibilidad",
+      "conditions": [
+        { "path": "classification.systemTypes", "op": "includesAny", "value": ["e-government", "ecommerce", "lms", "cbt", "cms", "media-platform", "identity-provider"] },
+        { "path": "quality.accessibilityTarget", "op": "isEmpty" }
+      ],
+      "message": "Sistema de cara al público sin objetivo de accesibilidad declarado.",
+      "rationale": "En canales públicos, educativos y estatales la accesibilidad suele ser una obligación legal, y en todos los casos determina decisiones de interfaz desde el inicio.",
+      "recommendation": "Declare el nivel objetivo (por ejemplo WCAG 2.2 AA) y los criterios de verificación, incluidas las acomodaciones específicas si hay evaluaciones."
+    },
+    {
+      "id": "R-DATA-001",
+      "severity": "warning",
+      "title": "Retención sin política declarada en datos personales",
+      "conditions": [
+        { "path": "classification.dataSensitivity", "op": "includesAny", "value": ["personal", "sensitive-personal", "minors", "psychometric", "financial"] },
+        { "path": "capacity.retentionMonths", "op": "lte", "value": 0 }
+      ],
+      "message": "Se tratan datos personales sin plazo de conservación declarado.",
+      "rationale": "La limitación del plazo de conservación es un principio general de protección de datos y además determina el crecimiento del almacenamiento.",
+      "recommendation": "Declare el plazo de conservación por categoría de dato y el procedimiento de supresión o anonimización al vencimiento."
+    },
+    {
+      "id": "R-DATA-002",
+      "severity": "info",
+      "title": "Base de datos no declarada",
+      "conditions": [
+        { "path": "technology.databases", "op": "isEmpty" }
+      ],
+      "message": "No se declaró ningún motor de datos.",
+      "rationale": "El modelo de persistencia condiciona la consistencia, el dimensionamiento y la estrategia de migración.",
+      "recommendation": "Declare al menos el motor principal y el propósito de cada almacén adicional (caché, búsqueda, series temporales, objetos)."
+    },
+    {
+      "id": "R-DATA-003",
+      "severity": "warning",
+      "title": "Integridad transaccional con almacén sin transacciones declaradas",
+      "conditions": [
+        { "path": "classification.systemTypes", "op": "includesAny", "value": ["ledger", "core-banking", "payment-systems", "erp", "sis", "tax-administration"] },
+        { "path": "technology.transactionalIntegrity", "op": "falsy" }
+      ],
+      "message": "Sistema con exigencia de integridad contable o registral sin integridad transaccional declarada.",
+      "rationale": "En registros contables, financieros y oficiales un estado parcialmente aplicado es una falla grave; la atomicidad no es una optimización sino un requisito.",
+      "recommendation": "Declare el alcance transaccional, el motor que lo garantiza y, en caso de operaciones distribuidas, el patrón de compensación elegido."
+    }
+  ]
+}

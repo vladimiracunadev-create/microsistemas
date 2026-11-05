@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "sas.config.v1",
+  "meta": { "title": "Sistema industrial con telemetría y operación continua", "configVersion": "0.1.0" },
+  "identity": {
+    "name": "Plataforma Industrial Nahuel",
+    "purpose": "Supervisar y ejecutar la producción de una planta con operación continua, integrando sensores, controladores y mantenimiento de activos.",
+    "mode": "new",
+    "audience": "Operadores de sala de control, mantenimiento, planificación y gerencia de operaciones",
+    "owner": "Gerencia de Operaciones Industriales"
+  },
+  "classification": {
+    "systemTypes": ["mes", "scada", "iiot", "cmms", "eam"],
+    "sectors": ["industry"],
+    "serviceModel": ["on-premise-product"],
+    "architecture": ["distributed", "pipeline", "event-driven"],
+    "deployment": ["on-premise", "edge", "cloud"],
+    "tenancy": "single-tenant",
+    "platforms": ["web", "windows", "android", "embedded"],
+    "licensing": "proprietary",
+    "monetization": ["perpetual", "support-contract"],
+    "dataSensitivity": ["internal"],
+    "integrationStyle": ["industrial-protocol", "message-queue", "rest", "etl"]
+  },
+  "functional": {
+    "capabilities": [
+      "Adquisición de señales de controladores de planta",
+      "Visualización de proceso en tiempo real con gestión de alarmas",
+      "Órdenes de trabajo de producción con registro de consumo",
+      "Genealogía y trazabilidad de lote",
+      "Historización de series temporales de alta frecuencia",
+      "Mantenimiento preventivo por tiempo y por uso",
+      "Indicadores de eficiencia de equipos"
+    ],
+    "processes": ["Programación y ejecución de producción", "Atención de alarma de proceso", "Mantenimiento preventivo y correctivo", "Cierre de turno"],
+    "roles": [
+      { "name": "Operador de sala", "permissions": ["ver proceso", "reconocer alarmas", "acciones supervisorias autorizadas"] },
+      { "name": "Supervisor de turno", "permissions": ["cerrar turno", "autorizar desvíos", "reasignar órdenes"] },
+      { "name": "Mantenedor", "permissions": ["ejecutar órdenes de mantenimiento en terreno, con operación sin conexión"] },
+      { "name": "Planificador", "permissions": ["programar producción y mantenimiento"] }
+    ],
+    "organizations": { "model": "multi", "count": 3, "usersPerOrg": 120 },
+    "integrations": [
+      { "name": "Controladores de planta", "direction": "bidireccional", "style": "industrial-protocol", "criticality": "crítica", "notes": "Si el enlace cae, el control local continúa; la supervisión pasa a modo degradado y se reconcilia al reconectar." },
+      { "name": "ERP corporativo", "direction": "bidireccional", "style": "message-queue", "criticality": "media", "notes": "La planta no se detiene si el ERP no responde: las órdenes se almacenan y se sincronizan después." },
+      { "name": "Nube de analítica", "direction": "saliente", "style": "etl", "criticality": "baja", "notes": "Flujo unidireccional desde planta hacia la nube; nunca al revés." }
+    ]
+  },
+  "technology": {
+    "languages": ["C#", "Python", "TypeScript"],
+    "frameworks": [".NET", "React"],
+    "databases": [
+      { "engine": "TimescaleDB", "purpose": "series temporales de proceso" },
+      { "engine": "PostgreSQL", "purpose": "órdenes, activos y trazabilidad de lote" },
+      { "engine": "SQLite", "purpose": "almacenamiento local en terminales de terreno" }
+    ],
+    "infrastructure": ["Servidores redundantes en planta", "Nodos de borde", "Cola de mensajes local"],
+    "offlineSupport": true,
+    "transactionalIntegrity": true,
+    "consistencyStrategy": "Autonomía local por planta con reconciliación posterior; la nube es solo lectura derivada"
+  },
+  "security": {
+    "mfa": true,
+    "encryptionAtRest": true,
+    "encryptionInTransit": true,
+    "rowLevelAuthorization": true,
+    "auditTrail": true,
+    "secretsManagement": true,
+    "threatModel": true
+  },
+  "compliance": {
+    "jurisdictions": ["Chile"],
+    "regulations": ["Normativa de seguridad y salud ocupacional aplicable a los permisos de trabajo"],
+    "standards": ["ISA-95 (IEC 62264)", "IEC 62443", "OPC UA", "ISO 55000", "ISO 14224", "ISA-18.2"],
+    "dataResidency": "Datos de proceso permanecen en planta; solo agregados salen a la nube",
+    "auditRequirements": "Trazabilidad de acciones supervisorias y de autorizaciones de desvío."
+  },
+  "capacity": {
+    "registeredUsers": 360,
+    "dau": 300,
+    "mau": 360,
+    "peakConcurrentUsers": 90,
+    "sessionsPerUserPerDay": 3,
+    "requestsPerSession": 200,
+    "avgSessionMinutes": 480,
+    "readWriteRatio": 2,
+    "avgRecordKb": 0.3,
+    "filesPerUserPerMonth": 4,
+    "avgFileMb": 2,
+    "organizations": 3,
+    "regions": ["planta-norte", "planta-centro", "planta-sur"],
+    "peakFactor": 1.5,
+    "backgroundJobsPerDay": 8000000,
+    "retentionMonths": 60,
+    "slaAvailability": 99.9,
+    "latencyTargetMs": 250,
+    "latencyPercentile": 99,
+    "criticalResource": "Línea de producción y sus enclavamientos",
+    "egressPerRequestKb": 15
+  },
+  "evolution": {
+    "horizon": { "unit": "years", "value": 15, "openEnded": true },
+    "growthModel": "step",
+    "growthRatePercent": 15,
+    "scenarios": {
+      "conservative": { "ratePercent": 5, "note": "Mismas tres plantas, más sensores por línea." },
+      "expected": { "ratePercent": 15, "note": "Una planta nueva cada cinco años." },
+      "demanding": { "ratePercent": 40, "note": "Instrumentación completa con muestreo de alta frecuencia en todas las líneas." }
+    },
+    "milestones": [
+      { "id": "m1", "name": "Primera parada de planta con actualización completa", "kind": "condition", "condition": "Se programa la primera parada mayor de mantenimiento" },
+      { "id": "m2", "name": "Mantenimiento predictivo habilitado", "kind": "condition", "condition": "Existen datos de fallas reales suficientes para validar un modelo predictivo" },
+      { "id": "m3", "name": "Fin de soporte de un controlador", "kind": "condition", "condition": "El fabricante anuncia fin de soporte de un controlador en servicio" }
+    ],
+    "plannedChanges": ["Mantenimiento predictivo con datos de falla validados", "Nueva planta", "Reemplazo de controladores por fin de soporte"],
+    "reviewFrequencyMonths": 6
+  },
+  "quality": {
+    "priorities": { "reliability": 5, "availability": 5, "security": 5, "recoverability": 5, "observability": 4, "portability": 3, "evolvability": 4, "maintainability": 4 },
+    "accessibilityTarget": "Operación con guantes y en condiciones de baja visibilidad: objetivos de contraste y tamaño de control declarados",
+    "rpoMinutes": 5,
+    "rtoMinutes": 10,
+    "testStrategy": [
+      "unitarias de la lógica de órdenes y trazabilidad",
+      "integración con simulador de controladores",
+      "prueba de pérdida de enlace con planta",
+      "prueba de avalancha de alarmas",
+      "operación sin conexión de los terminales de terreno",
+      "carga de ingesta de telemetría sostenida"
+    ]
+  },
+  "operations": {
+    "teamSize": 12,
+    "onCall": true,
+    "observability": true,
+    "loadTesting": true,
+    "environments": ["desarrollo", "simulación de planta", "preproducción", "producción"],
+    "supportHours": "Permanente: la planta opera de forma continua",
+    "monthlyBudgetUsd": 14000,
+    "unitCosts": { "vcpuMonthUsd": 18, "gbRamMonthUsd": 4, "gbStorageMonthUsd": 0.08, "gbEgressUsd": 0.07, "perMillionTokensUsd": 0 }
+  },
+  "deliverables": { "prompts": [], "includeSkill": false, "includeAgents": false, "includeHarness": false, "includeMcp": false },
+  "decisions": {
+    "assumptions": [
+      "Los enclavamientos de seguridad se mantienen en sistemas certificados independientes de esta plataforma.",
+      "El horizonte se declara sin término conocido por la vida útil de los activos físicos."
+    ],
+    "pending": ["Definir la frecuencia de muestreo por tipo de señal y su política de retención.", "Definir qué agregados salen a la nube y con qué latencia."]
+  },
+  "notes": "Escenario de aceptación F."
+}

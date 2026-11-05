@@ -55,6 +55,17 @@ La suite se organiza en un **Dashboard Central** que actua como puerta de enlace
 
 ---
 
+### 🏛️ Arquitectura de Sistemas
+
+#### System Architect Studio
+
+* **Proposito**: Clasificar, dimensionar, especificar y proyectar la evolucion de cualquier familia de sistema informatico, y generar prompts y artefactos de ingenieria.
+* **Flujo recomendado**: cargue una de las 12 configuraciones de ejemplo, adaptela en las 18 secciones del formulario, revise las pestanas de compatibilidad, capacidad y evolucion, y exporte la especificacion o el paquete ZIP integral.
+* **Honestidad de los resultados**: las cifras de capacidad son escenarios con supuestos declarados, no capacidad verificada; citar un estandar no implica conformidad; y seleccionar una jurisdiccion no otorga cumplimiento legal.
+* **Nota tecnica**: usa `fetch()` para cargar sus catalogos, por lo que debe abrirse desde un servidor web (`http://`) y no con `file://`.
+
+---
+
 ### 🚀 DevOps e Infraestructura Pro
 
 #### Capacity Simulator

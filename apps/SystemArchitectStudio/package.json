@@ -1,0 +1,15 @@
+{
+  "name": "system-architect-studio",
+  "private": true,
+  "type": "module",
+  "description": "Plataforma modular de ingeniería, clasificación, diseño y generación de sistemas informáticos. Microsistema de la suite Microsistemas: se versiona con la suite y no declara versión propia.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test tests/",
+    "cli": "node adapters/cli/sas.mjs",
+    "doctor": "node adapters/cli/sas.mjs doctor"
+  }
+}

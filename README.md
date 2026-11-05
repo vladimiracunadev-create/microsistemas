@@ -35,8 +35,8 @@ Unifica microapps, Hub CLI, Docker, PHP CLI y servidor MCP local en una sola bas
 <tr>
 <td width="33%">
 
-**🧩 12 microapps**<br>
-Soporte, DevOps, aprendizaje y modernizacion PHP agrupadas por capa funcional.
+**🧩 13 microapps**<br>
+Arquitectura, soporte, DevOps, aprendizaje y modernizacion PHP agrupadas por capa funcional.
 
 </td>
 <td width="33%">
@@ -140,6 +140,7 @@ make help                      # Todos los comandos disponibles
 
 | App | Capa | Descripcion |
 | :--- | :---: | :--- |
+| [System Architect Studio](apps/SystemArchitectStudio) | `Arquitectura` | Clasificacion, dimensionamiento, especificacion y evolucion de sistemas con generacion determinista de prompts y artefactos |
 | [AWS Assistant Pro](apps/AwsGenerator) | `DevOps` | Recetas guiadas para AWS CLI con semaforo de riesgo y resaltado de sintaxis |
 | [CapacitySim](apps/CapacitySim) | `DevOps` | Simulador heuristico de capacidad, RPS y costos de infraestructura |
 | [CicdLibrary](apps/CicdLibrary) | `DevOps` | Biblioteca de 192 combinaciones CI/CD para GitHub, GitLab y Jenkins |

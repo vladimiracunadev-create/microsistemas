@@ -1,0 +1,167 @@
+{
+  "schemaVersion": "sas.config.v1",
+  "meta": { "title": "Proyección de un mismo sistema a lo largo de su vida útil", "configVersion": "0.1.0" },
+  "identity": {
+    "name": "Plataforma de Gestión Municipal",
+    "purpose": "Proyectar un mismo sistema desde su versión inicial de una comuna hasta su operación en una red de municipios, justificando cada cambio arquitectónico con una condición observable.",
+    "mode": "new",
+    "audience": "Funcionarios municipales y vecinos que realizan trámites",
+    "owner": "Dirección de Modernización"
+  },
+  "classification": {
+    "systemTypes": ["e-government", "public-records", "case-management", "dms", "identity-provider", "booking"],
+    "sectors": ["government"],
+    "serviceModel": ["saas"],
+    "architecture": ["modular-monolith"],
+    "deployment": ["cloud"],
+    "tenancy": "multi-tenant-schema",
+    "platforms": ["web", "pwa", "android"],
+    "licensing": "gpl-3.0",
+    "monetization": ["subscription"],
+    "dataSensitivity": ["personal", "sensitive-personal"],
+    "integrationStyle": ["rest", "webhooks", "file-batch"]
+  },
+  "functional": {
+    "capabilities": [
+      "Catálogo de trámites con formularios y plazos legales",
+      "Expediente electrónico con foliado y conservación",
+      "Identificación del solicitante y firma del trámite",
+      "Agendamiento de atención presencial",
+      "Notificación con constancia de recepción",
+      "Transparencia activa y solicitudes de acceso a la información"
+    ],
+    "processes": ["Solicitud de trámite", "Tramitación interna con plazos", "Resolución y notificación", "Archivo del expediente"],
+    "roles": [
+      { "name": "Vecino", "permissions": ["iniciar trámites", "ver el estado de los propios"] },
+      { "name": "Funcionario tramitador", "permissions": ["tramitar los expedientes de su unidad", "solicitar antecedentes"] },
+      { "name": "Jefatura", "permissions": ["resolver", "firmar actos administrativos"] },
+      { "name": "Archivero", "permissions": ["aplicar políticas de retención y transferencia"] }
+    ],
+    "organizations": { "model": "multi", "count": 1, "usersPerOrg": 200 },
+    "integrations": [
+      { "name": "Proveedor de identidad estatal", "direction": "bidireccional", "style": "rest", "criticality": "crítica", "notes": "Si no responde, las sesiones existentes siguen válidas por el plazo declarado y el canal presencial continúa disponible." },
+      { "name": "Pasarela de pago de derechos municipales", "direction": "bidireccional", "style": "webhooks", "criticality": "alta", "notes": "El trámite queda pendiente de pago conciliado; nunca se resuelve sin conciliación." },
+      { "name": "Registro civil y otros servicios públicos", "direction": "entrante", "style": "file-batch", "criticality": "media", "notes": "Si el intercambio se retrasa, se solicita el antecedente al interesado." }
+    ]
+  },
+  "technology": {
+    "languages": ["PHP", "JavaScript"],
+    "frameworks": ["Vanilla JS"],
+    "databases": [
+      { "engine": "PostgreSQL", "purpose": "expedientes, trámites y agendas" },
+      { "engine": "S3 compatible", "purpose": "documentos del expediente" }
+    ],
+    "infrastructure": ["Docker", "Nginx"],
+    "offlineSupport": false,
+    "transactionalIntegrity": true,
+    "consistencyStrategy": "Consistencia fuerte en una sola región, con partición por municipio"
+  },
+  "security": {
+    "mfa": true,
+    "encryptionAtRest": true,
+    "encryptionInTransit": true,
+    "rowLevelAuthorization": true,
+    "auditTrail": true,
+    "consentManagement": true,
+    "secretsManagement": true,
+    "threatModel": true
+  },
+  "compliance": {
+    "jurisdictions": ["Chile"],
+    "regulations": [
+      "Normativa de procedimiento administrativo electrónico y cómputo de plazos",
+      "Obligaciones de transparencia y acceso a la información pública",
+      "Protección de datos personales de los solicitantes",
+      "Obligación de accesibilidad universal en servicios públicos digitales"
+    ],
+    "standards": ["WCAG 2.2 AA", "ISO 15489", "ISO 14721 (OAIS)", "PDF/A (ISO 19005)"],
+    "dataResidency": "Territorio nacional",
+    "auditRequirements": "Trazabilidad del cómputo de plazos, de las notificaciones y de cada acceso a datos de terceros."
+  },
+  "capacity": {
+    "registeredUsers": 40000,
+    "dau": 1200,
+    "mau": 14000,
+    "peakConcurrentUsers": 350,
+    "sessionsPerUserPerDay": 1.2,
+    "requestsPerSession": 50,
+    "avgSessionMinutes": 14,
+    "readWriteRatio": 7,
+    "avgRecordKb": 5,
+    "filesPerUserPerMonth": 3,
+    "avgFileMb": 1.5,
+    "organizations": 1,
+    "regions": ["sa-east"],
+    "peakFactor": 6,
+    "seasonalPeakFactor": 4,
+    "backgroundJobsPerDay": 40000,
+    "retentionMonths": 360,
+    "slaAvailability": 99.5,
+    "latencyTargetMs": 600,
+    "latencyPercentile": 95,
+    "criticalResource": "Cupo de agenda de atención presencial",
+    "egressPerRequestKb": 70
+  },
+  "evolution": {
+    "horizon": { "unit": "years", "value": 12, "openEnded": false },
+    "growthModel": "step",
+    "growthRatePercent": 55,
+    "scenarios": {
+      "conservative": { "ratePercent": 15, "note": "Una sola comuna, más trámites digitalizados." },
+      "expected": { "ratePercent": 55, "note": "Se incorporan municipios vecinos en bloques." },
+      "demanding": { "ratePercent": 120, "note": "Adopción regional con decenas de municipios." }
+    },
+    "milestones": [
+      { "id": "m1", "name": "Primer trámite con plazo legal íntegramente digital", "kind": "time", "atMonth": 6 },
+      { "id": "m2", "name": "Segundo municipio en operación", "kind": "condition", "condition": "Se incorpora una segunda organización al mismo despliegue" },
+      { "id": "m3", "name": "Separación del almacenamiento documental", "kind": "condition", "condition": "El volumen documental supera el doble del proyectado inicialmente" },
+      { "id": "m4", "name": "Partición por municipio", "kind": "condition", "condition": "Un municipio concentra más del 40% de la carga de escritura" },
+      { "id": "m5", "name": "Preservación de largo plazo", "kind": "condition", "condition": "El primer conjunto de expedientes alcanza su plazo de transferencia al archivo histórico" },
+      { "id": "m6", "name": "Modernización tecnológica", "kind": "condition", "condition": "Una dependencia estructural anuncia fin de soporte" }
+    ],
+    "plannedChanges": [
+      "Incorporación de municipios en bloques",
+      "Preservación digital de largo plazo con migración de formatos",
+      "Nuevos trámites con firma avanzada",
+      "Canal móvil con notificaciones",
+      "Partición del almacén por municipio"
+    ],
+    "reviewFrequencyMonths": 6
+  },
+  "quality": {
+    "priorities": { "accessibility": 5, "privacy": 5, "reliability": 5, "recoverability": 5, "evolvability": 5, "maintainability": 4, "availability": 4, "costEfficiency": 4 },
+    "accessibilityTarget": "WCAG 2.2 nivel AA, con canal presencial alternativo garantizado",
+    "rpoMinutes": 15,
+    "rtoMinutes": 120,
+    "testStrategy": [
+      "unitarias del cómputo de plazos",
+      "integración con el proveedor de identidad",
+      "prueba de notificación con constancia",
+      "accesibilidad de los formularios de trámite",
+      "preservación: apertura de documentos archivados años después",
+      "carga del periodo de mayor demanda"
+    ]
+  },
+  "operations": {
+    "teamSize": 7,
+    "onCall": true,
+    "observability": true,
+    "loadTesting": true,
+    "environments": ["desarrollo", "pruebas", "preproducción", "producción"],
+    "supportHours": "Horario municipal, con guardia en periodos de alta demanda",
+    "monthlyBudgetUsd": 3000,
+    "unitCosts": { "vcpuMonthUsd": 20, "gbRamMonthUsd": 4.5, "gbStorageMonthUsd": 0.1, "gbEgressUsd": 0.08, "perMillionTokensUsd": 0 }
+  },
+  "deliverables": { "prompts": ["master", "evolution", "scalability", "architecture", "privacy"], "includeSkill": true, "includeAgents": false, "includeHarness": false, "includeMcp": false },
+  "decisions": {
+    "assumptions": [
+      "La conservación de 360 meses responde a obligaciones de archivo y domina la proyección de almacenamiento.",
+      "Cada municipio que se incorpora trae su propio volumen histórico, lo que produce saltos y no crecimiento suave."
+    ],
+    "pending": [
+      "Definir qué expedientes se transfieren al archivo histórico y en qué formato de conservación.",
+      "Confirmar con asesoría legal el efecto del silencio administrativo en cada trámite."
+    ]
+  },
+  "notes": "Escenario de aceptación K: proyecta un mismo sistema desde su versión inicial hasta etapas sucesivas de crecimiento."
+}

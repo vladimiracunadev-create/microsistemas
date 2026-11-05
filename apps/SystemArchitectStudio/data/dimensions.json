@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "sas.dimensions.v1",
+  "catalogVersion": "0.1.0",
+  "updatedAt": "2026-11-04",
+  "dimensions": [
+    {
+      "id": "serviceModel",
+      "name": "Modelo de servicio",
+      "multiple": true,
+      "description": "Forma en que la capacidad del sistema se entrega y se consume.",
+      "options": [
+        { "id": "on-premise-product", "name": "Producto instalable", "description": "El cliente opera la instalación en su propia infraestructura." },
+        { "id": "saas", "name": "SaaS", "description": "Software operado por el proveedor y consumido por suscripción." },
+        { "id": "paas", "name": "PaaS", "description": "Plataforma de ejecución administrada para desplegar aplicaciones." },
+        { "id": "iaas", "name": "IaaS", "description": "Infraestructura virtualizada administrada por el proveedor." },
+        { "id": "faas", "name": "FaaS", "description": "Ejecución por funciones bajo demanda, sin servidores administrados por el cliente." },
+        { "id": "dbaas", "name": "DBaaS", "description": "Motor de datos administrado como servicio." },
+        { "id": "aiaas", "name": "AIaaS", "description": "Capacidades de inferencia o modelos ofrecidos como servicio." },
+        { "id": "baas", "name": "BaaS", "description": "Servicios de backend empaquetados (autenticación, almacenamiento, notificaciones)." },
+        { "id": "self-hosted-oss", "name": "Open source autoalojado", "description": "Distribución abierta instalada y operada por el propio usuario." }
+      ]
+    },
+    {
+      "id": "architecture",
+      "name": "Estilo arquitectónico",
+      "multiple": true,
+      "description": "Organización estructural de los componentes de software.",
+      "options": [
+        { "id": "monolith", "name": "Monolítica", "description": "Un único artefacto desplegable." },
+        { "id": "modular-monolith", "name": "Monolito modular", "description": "Un desplegable con límites de módulo explícitos." },
+        { "id": "microservices", "name": "Microservicios", "description": "Servicios desplegables de forma independiente por capacidad de negocio." },
+        { "id": "soa", "name": "SOA", "description": "Servicios de grano grueso con contratos y bus de integración." },
+        { "id": "event-driven", "name": "Orientada a eventos", "description": "Comunicación asincrónica mediante eventos y suscriptores." },
+        { "id": "serverless", "name": "Serverless", "description": "Composición de funciones y servicios administrados." },
+        { "id": "client-server", "name": "Cliente-servidor", "description": "Cliente dedicado contra un servidor central." },
+        { "id": "distributed", "name": "Distribuida", "description": "Nodos cooperantes sin un único punto de ejecución." },
+        { "id": "pipeline", "name": "Pipeline de datos", "description": "Etapas de transformación encadenadas sobre flujos de datos." },
+        { "id": "layered", "name": "En capas", "description": "Separación estricta de presentación, dominio y datos." },
+        { "id": "plugin", "name": "Microkernel con plugins", "description": "Núcleo mínimo extendido por complementos." },
+        { "id": "p2p", "name": "Peer to peer", "description": "Nodos simétricos sin coordinador central." }
+      ]
+    },
+    {
+      "id": "deployment",
+      "name": "Despliegue",
+      "multiple": true,
+      "description": "Dónde se ejecuta el sistema.",
+      "options": [
+        { "id": "local", "name": "Local / estación de trabajo", "description": "Ejecución en el equipo del usuario." },
+        { "id": "on-premise", "name": "On-premise", "description": "Centro de datos propio de la organización." },
+        { "id": "cloud", "name": "Nube pública", "description": "Proveedor de nube pública." },
+        { "id": "private-cloud", "name": "Nube privada", "description": "Nube dedicada a una sola organización." },
+        { "id": "hybrid", "name": "Híbrido", "description": "Combinación de on-premise y nube con cargas repartidas." },
+        { "id": "edge", "name": "Edge", "description": "Nodos de cómputo cercanos al punto de generación de datos." },
+        { "id": "air-gapped", "name": "Red aislada", "description": "Entorno sin conectividad externa." }
+      ]
+    },
+    {
+      "id": "tenancy",
+      "name": "Aislamiento",
+      "multiple": false,
+      "description": "Cómo se separan los datos y la capacidad entre clientes.",
+      "options": [
+        { "id": "single-user", "name": "Monousuario", "description": "Una sola persona usa la instalación." },
+        { "id": "single-tenant", "name": "Single-tenant", "description": "Una instancia dedicada por organización." },
+        { "id": "multi-tenant-shared", "name": "Multi-tenant compartido", "description": "Una instancia y un esquema compartidos con discriminador de tenant." },
+        { "id": "multi-tenant-schema", "name": "Multi-tenant por esquema", "description": "Esquema o base de datos separada por tenant sobre infraestructura compartida." },
+        { "id": "hybrid-tenancy", "name": "Híbrido", "description": "Clientes grandes aislados y el resto compartido." }
+      ]
+    },
+    {
+      "id": "platforms",
+      "name": "Plataformas objetivo",
+      "multiple": true,
+      "description": "Entornos de ejecución de los clientes.",
+      "options": [
+        { "id": "web", "name": "Web", "description": "Navegador de escritorio y móvil." },
+        { "id": "pwa", "name": "PWA", "description": "Aplicación web instalable con soporte offline." },
+        { "id": "windows", "name": "Windows", "description": "Escritorio Windows." },
+        { "id": "linux", "name": "Linux", "description": "Escritorio o servidor Linux." },
+        { "id": "macos", "name": "macOS", "description": "Escritorio Apple." },
+        { "id": "android", "name": "Android", "description": "Móviles y tablets Android." },
+        { "id": "ios", "name": "iOS", "description": "iPhone y iPad." },
+        { "id": "chromeos", "name": "ChromeOS", "description": "Equipos Chromebook." },
+        { "id": "cli", "name": "CLI", "description": "Interfaz de línea de comandos." },
+        { "id": "embedded", "name": "Embebido", "description": "Dispositivos con recursos limitados." },
+        { "id": "api-only", "name": "Solo API", "description": "Sin interfaz propia; se consume por API." }
+      ]
+    },
+    {
+      "id": "licensing",
+      "name": "Licenciamiento",
+      "multiple": false,
+      "description": "Licencia bajo la que se distribuye el software.",
+      "options": [
+        { "id": "mit", "name": "MIT", "description": "Permisiva, atribución mínima." },
+        { "id": "apache-2.0", "name": "Apache-2.0", "description": "Permisiva con cláusula expresa de patentes." },
+        { "id": "bsd-3", "name": "BSD-3-Clause", "description": "Permisiva con cláusula de no endoso." },
+        { "id": "gpl-3.0", "name": "GPL-3.0", "description": "Copyleft fuerte para obras derivadas distribuidas." },
+        { "id": "agpl-3.0", "name": "AGPL-3.0", "description": "Copyleft que alcanza el uso en red." },
+        { "id": "lgpl-3.0", "name": "LGPL-3.0", "description": "Copyleft débil orientado a bibliotecas." },
+        { "id": "mpl-2.0", "name": "MPL-2.0", "description": "Copyleft por archivo." },
+        { "id": "proprietary", "name": "Propietaria", "description": "Código cerrado con licencia de uso." },
+        { "id": "dual", "name": "Doble licencia", "description": "Versión abierta y versión comercial." },
+        { "id": "internal", "name": "Uso interno", "description": "Sin distribución a terceros." }
+      ]
+    },
+    {
+      "id": "monetization",
+      "name": "Comercialización",
+      "multiple": true,
+      "description": "Cómo se cobra el sistema, si se cobra.",
+      "options": [
+        { "id": "none", "name": "Sin cobro", "description": "Uso interno o gratuito." },
+        { "id": "subscription", "name": "Suscripción", "description": "Cuota periódica por usuario u organización." },
+        { "id": "usage-based", "name": "Pago por uso", "description": "Cobro por consumo medido." },
+        { "id": "perpetual", "name": "Licencia perpetua", "description": "Pago único más mantenimiento opcional." },
+        { "id": "freemium", "name": "Freemium", "description": "Nivel gratuito y niveles pagados." },
+        { "id": "white-label", "name": "White-label", "description": "Revendido bajo marca del cliente." },
+        { "id": "support-contract", "name": "Contrato de soporte", "description": "Software abierto con soporte pagado." },
+        { "id": "transaction-fee", "name": "Comisión por transacción", "description": "Porcentaje o monto fijo por operación procesada." }
+      ]
+    },
+    {
+      "id": "dataSensitivity",
+      "name": "Sensibilidad de los datos",
+      "multiple": true,
+      "description": "Categorías de datos tratados, que condicionan los controles exigibles.",
+      "options": [
+        { "id": "public", "name": "Públicos", "description": "Sin restricción de divulgación." },
+        { "id": "internal", "name": "Internos", "description": "Restringidos a la organización." },
+        { "id": "personal", "name": "Personales", "description": "Identifican o permiten identificar a una persona." },
+        { "id": "sensitive-personal", "name": "Personales sensibles", "description": "Salud, biometría, origen, creencias u otras categorías especiales." },
+        { "id": "financial", "name": "Financieros", "description": "Cuentas, pagos y medios de pago." },
+        { "id": "cardholder", "name": "Datos de tarjeta", "description": "Datos de titular de tarjeta en el alcance de PCI DSS." },
+        { "id": "minors", "name": "Datos de menores", "description": "Tratamiento de datos de niños y adolescentes." },
+        { "id": "psychometric", "name": "Resultados psicométricos", "description": "Puntuaciones e interpretaciones de instrumentos de evaluación." },
+        { "id": "classified", "name": "Clasificados", "description": "Sujetos a clasificación de seguridad nacional o equivalente." }
+      ]
+    },
+    {
+      "id": "integrationStyle",
+      "name": "Estilo de integración",
+      "multiple": true,
+      "description": "Mecanismos por los que el sistema se comunica con terceros.",
+      "options": [
+        { "id": "rest", "name": "API REST", "description": "HTTP con recursos y JSON." },
+        { "id": "graphql", "name": "GraphQL", "description": "Consulta declarativa sobre un esquema único." },
+        { "id": "grpc", "name": "gRPC", "description": "RPC binario sobre HTTP/2." },
+        { "id": "soap", "name": "SOAP", "description": "Servicios XML con contrato WSDL, frecuente en banca y gobierno." },
+        { "id": "webhooks", "name": "Webhooks", "description": "Notificaciones salientes HTTP ante eventos." },
+        { "id": "message-queue", "name": "Colas de mensajes", "description": "Integración asincrónica mediante broker." },
+        { "id": "file-batch", "name": "Archivos por lote", "description": "Intercambio de ficheros planos en ventanas programadas." },
+        { "id": "etl", "name": "ETL / ELT", "description": "Cargas programadas hacia almacenes analíticos." },
+        { "id": "cdc", "name": "Change Data Capture", "description": "Propagación de cambios leídos del log de la base de datos." },
+        { "id": "industrial-protocol", "name": "Protocolos industriales", "description": "OPC UA, Modbus, MQTT y similares." },
+        { "id": "healthcare-protocol", "name": "Protocolos sanitarios", "description": "HL7 v2, FHIR, DICOM." },
+        { "id": "financial-protocol", "name": "Protocolos financieros", "description": "ISO 20022, ISO 8583, SWIFT MT." },
+        { "id": "learning-protocol", "name": "Protocolos educativos", "description": "LTI, SCORM, xAPI, QTI, OneRoster." },
+        { "id": "mcp", "name": "Model Context Protocol", "description": "Exposición de herramientas y contexto a clientes de IA." }
+      ]
+    }
+  ]
+}

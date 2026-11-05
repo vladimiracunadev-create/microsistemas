@@ -1,0 +1,177 @@
+{
+  "schemaVersion": "sas.config.v1",
+  "meta": { "title": "Plataforma de evaluación educativa y psicométrica", "configVersion": "0.1.0" },
+  "identity": {
+    "name": "Plataforma de Evaluación Educativa Altair",
+    "purpose": "Administrar, aplicar, puntuar y analizar evaluaciones educativas y psicométricas para hasta 100.000 estudiantes, con controles de validez y reportes diferenciados por audiencia.",
+    "mode": "new",
+    "audience": "Estudiantes, docentes, equipos psicoeducativos, jefaturas técnicas y sostenedores",
+    "owner": "Dirección de Evaluación"
+  },
+  "classification": {
+    "systemTypes": ["assessment-management", "item-bank", "cbt", "scoring-engine", "psychometric-analysis", "norms-management", "assessment-reporting", "sis"],
+    "sectors": ["education"],
+    "serviceModel": ["saas"],
+    "architecture": ["modular-monolith", "event-driven"],
+    "deployment": ["cloud"],
+    "tenancy": "multi-tenant-schema",
+    "platforms": ["web", "pwa", "chromeos", "android", "ios"],
+    "licensing": "proprietary",
+    "monetization": ["subscription", "usage-based"],
+    "dataSensitivity": ["personal", "sensitive-personal", "minors", "psychometric"],
+    "integrationStyle": ["rest", "learning-protocol", "webhooks", "etl"]
+  },
+  "functional": {
+    "capabilities": [
+      "Banco de ítems con revisión, pilotaje y control de exposición",
+      "Ensamblaje de formas por especificación de contenido y estadística",
+      "Aplicación con control de tiempo, reanudación y acomodaciones de accesibilidad",
+      "Puntuación por clave y por rúbrica, con doble corrección y resolución de discrepancias",
+      "Análisis de confiabilidad, discriminación y funcionamiento diferencial del ítem",
+      "Baremos versionados por población de referencia con vigencia",
+      "Informes por audiencia con error de medición declarado",
+      "Seguimiento longitudinal por estudiante y por curso"
+    ],
+    "processes": [
+      "Construcción y revisión del instrumento",
+      "Pilotaje y calibración",
+      "Planificación y aplicación de la evaluación",
+      "Puntuación y validación de resultados",
+      "Análisis psicométrico y decisión de uso del instrumento",
+      "Entrega y comunicación de resultados"
+    ],
+    "roles": [
+      { "name": "Estudiante", "permissions": ["rendir las evaluaciones asignadas", "ver sus propios resultados cuando se liberan"] },
+      { "name": "Docente", "permissions": ["ver resultados de sus cursos", "corregir respuestas construidas asignadas"] },
+      { "name": "Psicólogo educacional", "permissions": ["ver resultados psicométricos individuales", "registrar interpretación profesional"] },
+      { "name": "Constructor de ítems", "permissions": ["crear y editar ítems", "no ver resultados individuales"] },
+      { "name": "Psicometrista", "permissions": ["ejecutar análisis estadísticos", "gestionar baremos", "calibrar ítems"] },
+      { "name": "Administrador de aplicación", "permissions": ["programar aplicaciones", "gestionar sedes y supervisores", "registrar incidencias"] }
+    ],
+    "organizations": { "model": "multi", "count": 300, "usersPerOrg": 340 },
+    "integrations": [
+      { "name": "Sistemas académicos de los establecimientos", "direction": "entrante", "style": "learning-protocol", "criticality": "alta", "notes": "Si no responde, la nómina se carga por archivo y se concilia después." },
+      { "name": "Plataforma de aprendizaje institucional", "direction": "bidireccional", "style": "learning-protocol", "criticality": "media", "notes": "Integración por LTI; su caída no impide la aplicación directa." },
+      { "name": "Servicio de análisis estadístico por lotes", "direction": "saliente", "style": "message-queue", "criticality": "media", "notes": "Procesamiento diferido; no está en la ruta de la aplicación." }
+    ]
+  },
+  "technology": {
+    "languages": ["TypeScript", "Python"],
+    "frameworks": ["Node.js", "React"],
+    "databases": [
+      { "engine": "PostgreSQL", "purpose": "transaccional: respuestas, aplicaciones y puntajes" },
+      { "engine": "Redis", "purpose": "estado de sesión de examen y cola de admisión" },
+      { "engine": "S3 compatible", "purpose": "evidencias de aplicación y archivos de informe" },
+      { "engine": "DuckDB/Parquet", "purpose": "analítica psicométrica reproducible" }
+    ],
+    "infrastructure": ["Kubernetes", "CDN", "Cola de mensajes"],
+    "offlineSupport": true,
+    "transactionalIntegrity": true,
+    "consistencyStrategy": "Escritura confirmada por respuesta antes de avanzar; analítica con consistencia eventual"
+  },
+  "security": {
+    "mfa": true,
+    "encryptionAtRest": true,
+    "encryptionInTransit": true,
+    "rowLevelAuthorization": true,
+    "auditTrail": true,
+    "consentManagement": true,
+    "secretsManagement": true,
+    "threatModel": true
+  },
+  "compliance": {
+    "jurisdictions": ["Chile"],
+    "regulations": [
+      "Protección de datos personales de estudiantes, con resguardo reforzado por tratarse de menores de edad",
+      "Autorización del adulto responsable para la aplicación de instrumentos psicométricos",
+      "Obligación de accesibilidad en evaluaciones del sistema educativo"
+    ],
+    "standards": ["QTI", "LTI 1.3", "OneRoster", "WCAG 2.2 AA", "ISO/IEC 27701"],
+    "dataResidency": "Territorio nacional para datos identificables de estudiantes",
+    "auditRequirements": "Trazabilidad de clave de corrección aplicada, versión de baremo y acceso a resultados individuales."
+  },
+  "capacity": {
+    "registeredUsers": 100000,
+    "dau": 12000,
+    "mau": 85000,
+    "peakConcurrentUsers": 25000,
+    "sessionsPerUserPerDay": 1.2,
+    "requestsPerSession": 90,
+    "avgSessionMinutes": 55,
+    "readWriteRatio": 3,
+    "avgRecordKb": 2,
+    "filesPerUserPerMonth": 2,
+    "avgFileMb": 0.4,
+    "organizations": 300,
+    "regions": ["sa-east"],
+    "peakFactor": 12,
+    "seasonalPeakFactor": 3,
+    "backgroundJobsPerDay": 400000,
+    "retentionMonths": 144,
+    "slaAvailability": 99.95,
+    "latencyTargetMs": 300,
+    "latencyPercentile": 99,
+    "criticalResource": "Sesión de examen en curso y escritura de respuesta",
+    "egressPerRequestKb": 35
+  },
+  "evolution": {
+    "horizon": { "unit": "years", "value": 5, "openEnded": false },
+    "growthModel": "step",
+    "growthRatePercent": 35,
+    "scenarios": {
+      "conservative": { "ratePercent": 10, "note": "Solo los establecimientos actuales." },
+      "expected": { "ratePercent": 35, "note": "Incorporación anual de nuevas redes de establecimientos." },
+      "demanding": { "ratePercent": 80, "note": "Adopción a escala regional con aplicación censal." }
+    },
+    "milestones": [
+      { "id": "m1", "name": "Primera aplicación censal con 25.000 concurrentes", "kind": "condition", "condition": "Una ventana de aplicación supera 20.000 sesiones concurrentes" },
+      { "id": "m2", "name": "Primer baremo propio calibrado", "kind": "condition", "condition": "Se alcanza la muestra mínima declarada para calibración" },
+      { "id": "m3", "name": "Revisión de vigencia de baremos", "kind": "time", "atMonth": 36 },
+      { "id": "m4", "name": "Aplicación adaptativa habilitada", "kind": "condition", "condition": "El banco de ítems tiene parámetros calibrados suficientes para aplicación adaptativa" }
+    ],
+    "plannedChanges": [
+      "Aplicación adaptativa cuando exista calibración suficiente",
+      "Analítica del aprendizaje con alertas tempranas",
+      "Módulo de orientación vocacional",
+      "Expansión a una segunda jurisdicción"
+    ],
+    "reviewFrequencyMonths": 4
+  },
+  "quality": {
+    "priorities": { "reliability": 5, "availability": 5, "accessibility": 5, "privacy": 5, "security": 5, "performance": 5, "observability": 4, "evolvability": 4, "recoverability": 5 },
+    "accessibilityTarget": "WCAG 2.2 nivel AA, con acomodaciones de tiempo extendido, ampliación y lector de pantalla en la interfaz de examen",
+    "rpoMinutes": 0,
+    "rtoMinutes": 15,
+    "testStrategy": [
+      "unitarias del motor de puntuación",
+      "integración de la aplicación de pruebas",
+      "carga de la ventana de aplicación completa",
+      "inyección de cortes de red durante el examen",
+      "accesibilidad de la interfaz de examen",
+      "reproducibilidad del análisis psicométrico"
+    ]
+  },
+  "operations": {
+    "teamSize": 14,
+    "onCall": true,
+    "observability": true,
+    "loadTesting": true,
+    "environments": ["desarrollo", "pruebas", "preproducción", "producción"],
+    "supportHours": "Cobertura ampliada durante las ventanas de aplicación, con guardia permanente",
+    "monthlyBudgetUsd": 12000,
+    "unitCosts": { "vcpuMonthUsd": 20, "gbRamMonthUsd": 4.5, "gbStorageMonthUsd": 0.1, "gbEgressUsd": 0.08, "perMillionTokensUsd": 0 }
+  },
+  "deliverables": { "prompts": [], "includeSkill": true, "includeAgents": false, "includeHarness": false, "includeMcp": false },
+  "decisions": {
+    "assumptions": [
+      "Los instrumentos serán propios o de uso libre: no se digitalizarán instrumentos protegidos sin licencia del titular.",
+      "La muestra de normalización se definirá con el equipo de psicometría antes de publicar cualquier baremo."
+    ],
+    "pending": [
+      "Definir la muestra mínima por nivel para calibrar ítems.",
+      "Definir qué resultados ve cada audiencia y en qué momento se liberan.",
+      "Validar con asesoría legal el mecanismo de consentimiento del adulto responsable."
+    ]
+  },
+  "notes": "Escenario de aceptación C. Los contenidos de ejemplo son originales; no se incorporan instrumentos psicométricos protegidos."
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Architect Studio | Microsistemas</title>
+    <meta name="description"
+        content="Plataforma de ingeniería para clasificar, dimensionar, especificar y proyectar la evolución de sistemas informáticos. Funciona localmente, sin Internet y sin servicios de IA.">
+    <link rel="stylesheet" href="ui/styles.css">
+</head>
+
+<body>
+    <a class="skip-link" href="#form-panel">Saltar al formulario</a>
+
+    <a class="back-link" href="../../index.php">&larr; Volver al Dashboard</a>
+
+    <header class="app-header">
+        <div class="brand">
+            <h1>System Architect Studio</h1>
+            <span class="version" id="version-badge" title="Versión del contrato de configuración">—</span>
+            <span class="tagline">Diseño, dimensionamiento y evolución de sistemas</span>
+        </div>
+        <div class="toolbar">
+            <label class="sr-only" for="example-select">Cargar configuración de ejemplo</label>
+            <select id="example-select" style="width:auto">
+                <option value="">Cargar ejemplo…</option>
+            </select>
+            <button type="button" id="btn-import">Importar JSON</button>
+            <input type="file" id="file-input" accept="application/json,.json" hidden>
+            <button type="button" id="btn-save">Guardar</button>
+            <label class="sr-only" for="saved-select">Configuraciones guardadas</label>
+            <select id="saved-select" style="width:auto">
+                <option value="">Guardadas…</option>
+            </select>
+            <button type="button" id="btn-reset" class="danger">Restablecer</button>
+            <button type="button" id="btn-theme" aria-pressed="false" title="Alternar modo claro y oscuro">Modo
+                claro</button>
+        </div>
+    </header>
+
+    <p class="notice" id="file-notice" hidden></p>
+    <p class="notice error" id="load-error" hidden></p>
+
+    <main class="layout">
+        <nav class="panel section-nav" aria-label="Secciones del formulario">
+            <h2>Secciones</h2>
+            <ol id="section-list"></ol>
+            <div class="completeness">
+                <strong>Completitud</strong>
+                <div class="meter" role="img" aria-labelledby="completeness-label">
+                    <span id="completeness-bar" style="width:0%"></span>
+                </div>
+                <span id="completeness-label">0% declarado</span>
+                <p class="muted" style="margin:8px 0 0;font-size:0.8rem">No se exige completar campos irrelevantes. Lo
+                    no declarado se registra como decisión pendiente.</p>
+            </div>
+        </nav>
+
+        <section class="panel form-panel" id="form-panel" aria-labelledby="section-title" tabindex="-1">
+            <div class="search-row">
+                <label class="sr-only" for="field-search">Buscar un campo del formulario</label>
+                <input type="search" id="field-search" placeholder="Buscar un campo (por ejemplo: concurrencia, baremo, licencia)">
+            </div>
+            <div id="search-results" hidden></div>
+            <h2 id="section-title">—</h2>
+            <p class="panel-help" id="section-help"></p>
+            <form id="dynamic-form" novalidate></form>
+            <div class="toolbar" style="margin-top:18px;justify-content:space-between">
+                <button type="button" id="btn-prev">← Sección anterior</button>
+                <button type="button" id="btn-next">Sección siguiente →</button>
+            </div>
+        </section>
+
+        <section class="panel results" aria-labelledby="results-title">
+            <h2 id="results-title">Resultado</h2>
+            <p class="panel-help">Se recalcula con cada cambio. Todo cálculo declara su fórmula, sus unidades y sus
+                supuestos.</p>
+            <div class="tabs" role="tablist" aria-label="Vistas del resultado" id="result-tabs"></div>
+            <div class="result-body" id="result-body" role="tabpanel" aria-live="polite"></div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <nav class="footer-nav" aria-label="Navegación del entorno">
+            <a href="../../index.php">← Dashboard de Microsistemas</a>
+            <a href="../../doc.php?file=USER_MANUAL.md">Manual de Usuario</a>
+            <a href="../../doc.php?file=SYSTEMS_CATALOG.md">Catálogo de Sistemas</a>
+            <a href="README.md">README de esta herramienta</a>
+        </nav>
+        <p><strong>System Architect Studio</strong> es una aplicación más de la suite Microsistemas: se versiona con
+            la suite y no declara versión propia. Funciona localmente, sin Internet y sin servicios de IA: la
+            generación es determinista y no consume tokens.</p>
+        <p>Las cifras de capacidad son escenarios con supuestos declarados, no capacidad verificada. Las referencias a
+            estándares son de encuadre conceptual y no constituyen declaración de conformidad ni certificación.
+            Seleccionar una jurisdicción no otorga cumplimiento legal.</p>
+        <p><a href="README.md">Documentación del microsistema</a> · <a href="docs/">Documentación extendida</a></p>
+    </footer>
+
+    <div id="toast" role="status" hidden></div>
+
+    <script type="module" src="ui/app.js"></script>
+</body>
+
+</html>

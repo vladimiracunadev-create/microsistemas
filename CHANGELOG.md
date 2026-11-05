@@ -4,6 +4,51 @@ Todos los cambios notables en este proyecto seran documentados en este archivo. 
 
 ## [Unreleased]
 
+### Agregado
+
+- Nueva microaplicacion **System Architect Studio** en
+  `apps/SystemArchitectStudio/`: plataforma de ingenieria para clasificar,
+  dimensionar, especificar y proyectar la evolucion de sistemas informaticos.
+  Funciona localmente, sin Internet y sin servicios de IA; la generacion es
+  determinista y no consume tokens.
+- Catalogo versionado de 127 tipos de sistema en 12 familias
+  (`data/systems/*.json`), 9 dimensiones de clasificacion independientes
+  (`data/dimensions.json`) y 39 reglas de compatibilidad declarativas
+  (`data/rules.json`), con pruebas de integridad y referencias cruzadas.
+- Nucleo determinista compartido por la interfaz web y el adaptador CLI:
+  contrato `sas.config.v1`, validacion y saneamiento de entradas, motor de
+  reglas, motor de capacidad con formula y supuestos declarados por resultado,
+  motor de evolucion temporal de horizonte libre, motor de arquitectura,
+  motor de requisitos sobre ISO/IEC 25010 y motor de prompts por disciplina.
+- Formulario dinamico de 18 secciones con busqueda de campos, campos
+  condicionales, ayuda contextual, indicador de completitud, modo claro y
+  oscuro, navegacion por teclado y adaptacion movil.
+- Exportaciones locales: configuracion JSON, especificacion, plan de
+  arquitectura, plan de escalabilidad, hoja de ruta, plan de pruebas, prompts
+  en Markdown y paquete ZIP integral con manifiesto reproducible.
+- Adaptador de linea de comandos (`adapters/cli/sas.mjs`) con 17 comandos
+  sobre el mismo nucleo, sin duplicar el motor en otro lenguaje.
+- Skill reutilizable `skills/system-architect/` con carga progresiva de
+  contexto, y generadores de skill, definiciones de agentes, sistema
+  multiagente, especificacion de harness y especificacion de adaptador MCP.
+- 12 configuraciones de ejemplo que cubren los escenarios de aceptacion A-L
+  (`templates/systems/`), usadas tambien como fixtures de prueba.
+- 188 pruebas automatizadas con `node --test`, incluidas integridad de
+  catalogo, reglas, capacidad, evolucion, exportaciones, reproducibilidad,
+  escenarios de aceptacion, funcionamiento sin recursos externos e
+  integracion con el dashboard y el Hub.
+- Documentacion del microsistema en `apps/SystemArchitectStudio/docs/`
+  (arquitectura, taxonomia, capacidad, evolucion, prompts, contratos,
+  skill/agentes/MCP/harness, seguridad, pruebas, limitaciones, roadmap y
+  ejemplos) y registro explicito de lo no implementado.
+
+### Cambiado
+
+- `index.php` incorpora la tarjeta de System Architect Studio sin alterar el
+  orden ni el contenido de las tarjetas existentes.
+- README, `docs/SYSTEMS_CATALOG.md`, `docs/USER_MANUAL.md` y la wiki
+  registran la nueva aplicacion.
+
 ### Seguridad
 
 - Actualizado el runtime Docker de PHP `8.5.7` a `8.5.12` y la demo Kubernetes

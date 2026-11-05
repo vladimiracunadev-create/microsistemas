@@ -1,0 +1,179 @@
+{
+  "schemaVersion": "sas.config.v1",
+  "meta": { "title": "Escenario de alta escala con supuestos explícitos", "configVersion": "0.1.0" },
+  "identity": {
+    "name": "Plataforma de Mensajería Social Austral",
+    "purpose": "Evaluar un escenario de millones de usuarios con supuestos explícitos, criterios de dimensionamiento y un plan de validación empírica antes de comprometer capacidad.",
+    "mode": "new",
+    "audience": "Usuarios finales de una plataforma de mensajería y contenido",
+    "owner": "Dirección de Ingeniería"
+  },
+  "classification": {
+    "systemTypes": ["media-platform", "cms", "iam", "observability", "data-platform", "vector-database", "rag"],
+    "sectors": ["other", "software"],
+    "serviceModel": ["saas"],
+    "architecture": ["microservices", "event-driven", "distributed"],
+    "deployment": ["cloud", "edge"],
+    "tenancy": "multi-tenant-shared",
+    "platforms": ["web", "pwa", "android", "ios"],
+    "licensing": "proprietary",
+    "monetization": ["freemium", "usage-based"],
+    "dataSensitivity": ["personal", "sensitive-personal", "minors"],
+    "integrationStyle": ["rest", "graphql", "grpc", "message-queue", "cdc", "webhooks"]
+  },
+  "functional": {
+    "capabilities": [
+      "Publicación y distribución de contenido con entrega adaptativa",
+      "Mensajería entre usuarios con entrega confirmada",
+      "Búsqueda de contenido y de personas",
+      "Moderación de contenido con revisión humana",
+      "Recomendación personalizada con explicación disponible",
+      "Gestión de identidad, privacidad y bloqueo entre usuarios"
+    ],
+    "processes": ["Registro y verificación de cuenta", "Publicación y distribución", "Reporte y moderación de contenido", "Atención de solicitudes de privacidad"],
+    "roles": [
+      { "name": "Usuario", "permissions": ["publicar", "mensajear", "controlar su privacidad", "solicitar supresión de sus datos"] },
+      { "name": "Moderador", "permissions": ["revisar contenido reportado", "aplicar medidas con registro de justificación"] },
+      { "name": "Operador de plataforma", "permissions": ["operar la infraestructura", "sin acceso al contenido privado de los usuarios"] }
+    ],
+    "organizations": { "model": "single", "count": 1, "usersPerOrg": 0 },
+    "integrations": [
+      { "name": "Red de distribución de contenido", "direction": "saliente", "style": "rest", "criticality": "crítica", "notes": "Sin ella la transferencia desde el origen se vuelve económicamente inviable; su degradación obliga a reducir la calidad entregada." },
+      { "name": "Proveedores de notificación móvil", "direction": "saliente", "style": "webhooks", "criticality": "alta", "notes": "Entrega al menos una vez; las notificaciones duplicadas se descartan en el cliente." },
+      { "name": "Servicio de clasificación de contenido", "direction": "bidireccional", "style": "grpc", "criticality": "alta", "notes": "Si no responde, el contenido queda en cola de revisión humana en lugar de publicarse sin revisar." }
+    ]
+  },
+  "technology": {
+    "languages": ["Go", "TypeScript", "Python"],
+    "frameworks": ["Node.js", "React Native"],
+    "databases": [
+      { "engine": "PostgreSQL particionado", "purpose": "cuentas, relaciones y metadatos" },
+      { "engine": "Cassandra", "purpose": "mensajes y líneas de tiempo con alta tasa de escritura" },
+      { "engine": "Redis", "purpose": "caché de línea de tiempo y límites de tasa" },
+      { "engine": "OpenSearch", "purpose": "búsqueda de contenido" },
+      { "engine": "S3 compatible", "purpose": "medios" },
+      { "engine": "pgvector", "purpose": "búsqueda semántica de contenido" }
+    ],
+    "infrastructure": ["Kubernetes multirregión", "Kafka", "Red de distribución de contenido", "Nodos de borde"],
+    "offlineSupport": true,
+    "transactionalIntegrity": false,
+    "consistencyStrategy": "Consistencia fuerte en identidad y privacidad; consistencia eventual en líneas de tiempo, contadores y búsqueda",
+    "aiUsage": {
+      "enabled": true,
+      "provider": "inferencia propia en la plataforma",
+      "purpose": "Clasificación de contenido para moderación y recomendación de contenido",
+      "automatedDecisions": true,
+      "budgetControls": true,
+      "tokensPerOperation": 1200,
+      "operationsPerDay": 90000000
+    }
+  },
+  "security": {
+    "mfa": true,
+    "encryptionAtRest": true,
+    "encryptionInTransit": true,
+    "rowLevelAuthorization": true,
+    "auditTrail": true,
+    "consentManagement": true,
+    "secretsManagement": true,
+    "threatModel": true
+  },
+  "compliance": {
+    "jurisdictions": ["Chile", "Unión Europea", "Brasil"],
+    "regulations": [
+      "Protección de datos personales en cada jurisdicción declarada, con bases legales distintas",
+      "Resguardo reforzado para usuarios menores de edad",
+      "Obligaciones de moderación y de reporte de contenido ilícito",
+      "Derecho a explicación de las decisiones automatizadas que afectan a usuarios"
+    ],
+    "standards": ["ISO/IEC 27001", "ISO/IEC 27701", "ISO/IEC 42001", "WCAG 2.2 AA", "HLS y MPEG-DASH"],
+    "dataResidency": "Datos de usuarios de la Unión Europea almacenados en la región europea",
+    "auditRequirements": "Trazabilidad de cada decisión automatizada de moderación, con su versión de modelo y la posibilidad de revisión humana."
+  },
+  "capacity": {
+    "registeredUsers": 20000000,
+    "dau": 4000000,
+    "mau": 13000000,
+    "peakConcurrentUsers": 600000,
+    "sessionsPerUserPerDay": 5,
+    "requestsPerSession": 80,
+    "avgSessionMinutes": 12,
+    "readWriteRatio": 40,
+    "avgRecordKb": 1,
+    "filesPerUserPerMonth": 12,
+    "avgFileMb": 2.5,
+    "organizations": 1,
+    "regions": ["sa-east", "eu-central", "us-east"],
+    "peakFactor": 3.5,
+    "seasonalPeakFactor": 2,
+    "backgroundJobsPerDay": 500000000,
+    "retentionMonths": 60,
+    "slaAvailability": 99.95,
+    "latencyTargetMs": 150,
+    "latencyPercentile": 99,
+    "criticalResource": "Escritura de la línea de tiempo de cuentas con muchos seguidores",
+    "egressPerRequestKb": 120
+  },
+  "evolution": {
+    "horizon": { "unit": "years", "value": 5, "openEnded": false },
+    "growthModel": "accelerated",
+    "growthRatePercent": 50,
+    "scenarios": {
+      "conservative": { "ratePercent": 15, "note": "Mercado nacional, crecimiento orgánico." },
+      "expected": { "ratePercent": 50, "note": "Expansión regional con campañas de adquisición." },
+      "demanding": { "ratePercent": 140, "note": "Viralización sostenida y entrada a nuevos mercados." }
+    },
+    "milestones": [
+      { "id": "m1", "name": "Primer millón de usuarios activos diarios", "kind": "condition", "condition": "Los activos diarios superan 1.000.000" },
+      { "id": "m2", "name": "Partición de la línea de tiempo", "kind": "condition", "condition": "Una partición concentra más del 20% de las escrituras" },
+      { "id": "m3", "name": "Segunda región en servicio activo", "kind": "condition", "condition": "Más del 15% de la demanda proviene de otra región" },
+      { "id": "m4", "name": "Revisión del costo por usuario activo", "kind": "time", "atMonth": 12 },
+      { "id": "m5", "name": "Pruebas de carga al escenario exigente", "kind": "condition", "condition": "Antes de cada etapa, se valida con carga real el nivel proyectado" }
+    ],
+    "plannedChanges": [
+      "Separación del servicio de línea de tiempo",
+      "Regionalización completa con residencia por jurisdicción",
+      "Moderación asistida con revisión humana obligatoria en casos de impacto",
+      "Búsqueda semántica sobre contenido público"
+    ],
+    "reviewFrequencyMonths": 3
+  },
+  "quality": {
+    "priorities": { "availability": 5, "performance": 5, "costEfficiency": 5, "privacy": 5, "security": 5, "observability": 5, "reliability": 4, "evolvability": 4, "accessibility": 4 },
+    "accessibilityTarget": "WCAG 2.2 nivel AA en web y equivalente en las aplicaciones móviles",
+    "rpoMinutes": 5,
+    "rtoMinutes": 30,
+    "testStrategy": [
+      "carga al escenario exigente de la etapa siguiente, antes de entrar en ella",
+      "resistencia prolongada para detectar degradación acumulada",
+      "saturación hasta el rechazo con degradación controlada",
+      "inyección de fallas entre servicios y entre regiones",
+      "pruebas de supresión efectiva de datos personales en todos los almacenes",
+      "evaluación de equidad y de error de la clasificación automática de contenido"
+    ]
+  },
+  "operations": {
+    "teamSize": 90,
+    "onCall": true,
+    "observability": true,
+    "loadTesting": true,
+    "environments": ["desarrollo", "integración", "preproducción", "producción"],
+    "supportHours": "Permanente con seguimiento del sol",
+    "monthlyBudgetUsd": 450000,
+    "unitCosts": { "vcpuMonthUsd": 18, "gbRamMonthUsd": 4, "gbStorageMonthUsd": 0.023, "gbEgressUsd": 0.05, "perMillionTokensUsd": 0.4 }
+  },
+  "deliverables": { "prompts": [], "includeSkill": true, "includeAgents": true, "includeHarness": false, "includeMcp": false },
+  "decisions": {
+    "assumptions": [
+      "Todas las cifras de este escenario son supuestos de planificación: ninguna proviene de medición sobre una implementación real.",
+      "El costo de CPU por solicitud que usa el motor es un valor por omisión y debe reemplazarse por perfilado real antes de comprometer capacidad.",
+      "La distribución de carga entre cuentas es muy desigual: el promedio no representa el caso crítico de las cuentas con muchos seguidores."
+    ],
+    "pending": [
+      "Ejecutar pruebas de carga que conviertan las estimaciones en capacidad verificada antes de comprometer presupuesto.",
+      "Definir la estrategia de residencia por jurisdicción y qué datos son globales.",
+      "Definir el umbral de revisión humana obligatoria en la moderación automatizada."
+    ]
+  },
+  "notes": "Escenario de aceptación L: alta escala con supuestos explícitos y plan de validación."
+}

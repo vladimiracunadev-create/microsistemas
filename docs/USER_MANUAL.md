@@ -71,6 +71,24 @@ La suite se organiza en un **Dashboard Central** que actua como puerta de enlace
 
 ---
 
+### 🏛️ Arquitectura de Sistemas
+
+#### System Architect Studio
+
+* **Proposito**: Clasificar, dimensionar, especificar y proyectar la evolucion de cualquier familia de sistema informatico, y generar prompts y artefactos de ingenieria de forma determinista.
+* **Workflow Pro**:
+  1. Cargue una de las **12 configuraciones de ejemplo** (escenarios A–L) desde el selector superior y adaptela, en lugar de partir del formulario vacio.
+  2. Recorra las **18 secciones** del formulario; el panel de resultado se recalcula con cada cambio. Use el buscador de campos si sabe que busca ("concurrencia", "baremo", "licencia").
+  3. Revise la pestana **Compatibilidad**: el motor advierte incompatibilidades reales con su justificacion y su recomendacion, sin prohibir combinaciones tecnicamente validas.
+  4. En **Capacidad**, lea la formula y los supuestos de cada cifra antes que el numero. Los supuestos del motor aparecen listados aparte.
+  5. En **Evolucion**, declare el horizonte (cualquier plazo, o "sin fecha de termino conocida") y prefiera hitos por condicion observable antes que por fecha.
+  6. Exporte desde **Exportar**: configuracion JSON, especificacion, plan de arquitectura, plan de escalabilidad, hoja de ruta, plan de pruebas, prompts individuales o el paquete ZIP integral.
+* **Linea de comandos**: el mismo motor sin navegador, con `node apps/SystemArchitectStudio/adapters/cli/sas.mjs ayuda`.
+* **Honestidad de los resultados**: las cifras de capacidad son escenarios con supuestos declarados, no capacidad verificada; las referencias a estandares no constituyen conformidad; y seleccionar una jurisdiccion no otorga cumplimiento legal. La herramienta lo repite en la interfaz y en cada documento.
+* **Nota tecnica**: esta app usa `fetch()` para cargar sus catalogos JSON. **Debe abrirse desde un servidor web** (`http://`) — con `file://` muestra un aviso y no carga los catalogos. Con PHP CLI use `http://127.0.0.1:8000/apps/SystemArchitectStudio/`; con Docker use `http://localhost:8080/apps/SystemArchitectStudio/`.
+
+---
+
 ### 🚀 DevOps e Infraestructura Pro
 
 #### Capacity Simulator

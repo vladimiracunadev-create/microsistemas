@@ -1,0 +1,163 @@
+{
+  "schemaVersion": "sas.config.v1",
+  "meta": { "title": "Sistema multiagente con límites de herramientas", "configVersion": "0.1.0" },
+  "identity": {
+    "name": "Mesa de Análisis Multiagente",
+    "purpose": "Coordinar especialistas automatizados que analizan documentación técnica interna, con herramientas acotadas, presupuesto de tokens y revisión humana de las conclusiones.",
+    "mode": "new",
+    "audience": "Equipos de arquitectura e ingeniería que necesitan análisis asistido con trazabilidad",
+    "owner": "Oficina de Arquitectura"
+  },
+  "classification": {
+    "systemTypes": ["multi-agent", "agent-platform", "rag", "vector-database", "llmops", "mcp-server", "model-evaluation", "ai-governance", "harness"],
+    "sectors": ["ai"],
+    "serviceModel": ["self-hosted-oss", "aiaas"],
+    "architecture": ["modular-monolith", "event-driven"],
+    "deployment": ["private-cloud"],
+    "tenancy": "single-tenant",
+    "platforms": ["web", "cli", "api-only"],
+    "licensing": "apache-2.0",
+    "monetization": ["none"],
+    "dataSensitivity": ["internal", "personal"],
+    "integrationStyle": ["rest", "mcp", "message-queue"]
+  },
+  "functional": {
+    "capabilities": [
+      "Definición de especialistas con herramientas autorizadas por tarea",
+      "Supervisor que activa solo a los especialistas relevantes",
+      "Recuperación aumentada sobre documentación interna con permisos del usuario",
+      "Presupuesto de tokens por tarea y por ejecución, con corte efectivo",
+      "Puertas de aprobación humana antes de toda acción con efecto externo",
+      "Registro auditable de cada invocación de herramienta y su resultado",
+      "Conjuntos de evaluación versionados con reporte de variabilidad"
+    ],
+    "processes": [
+      "Planificación de la tarea y selección de especialistas",
+      "Ejecución con puntos de control reanudables",
+      "Consolidación de resultados y resolución de contradicciones",
+      "Revisión humana y cierre"
+    ],
+    "roles": [
+      { "name": "Solicitante", "permissions": ["crear tareas", "ver el resultado y su traza"] },
+      { "name": "Revisor", "permissions": ["aprobar o rechazar acciones con efecto externo", "cerrar la tarea"] },
+      { "name": "Administrador de la plataforma", "permissions": ["configurar especialistas, herramientas y presupuestos"] }
+    ],
+    "organizations": { "model": "single", "count": 1, "usersPerOrg": 120 },
+    "integrations": [
+      { "name": "Repositorio documental interno", "direction": "entrante", "style": "rest", "criticality": "alta", "notes": "La recuperación aplica los permisos del usuario que consulta; si el repositorio no responde, la tarea se detiene en lugar de responder sin fuentes." },
+      { "name": "Proveedor de inferencia", "direction": "saliente", "style": "rest", "criticality": "alta", "notes": "Si no responde o agota la cuota, la ejecución se detiene de forma ordenada y persiste su estado." },
+      { "name": "Servidor MCP de solo lectura", "direction": "bidireccional", "style": "mcp", "criticality": "media", "notes": "Expone consultas; no se exponen herramientas destructivas." }
+    ]
+  },
+  "technology": {
+    "languages": ["TypeScript", "Python"],
+    "frameworks": ["Node.js"],
+    "databases": [
+      { "engine": "PostgreSQL", "purpose": "tareas, trazas, aprobaciones y contabilidad de consumo" },
+      { "engine": "pgvector", "purpose": "índice vectorial de la documentación interna" },
+      { "engine": "Redis", "purpose": "colas de tareas y límites de tasa" }
+    ],
+    "infrastructure": ["Kubernetes", "Entorno de ejecución aislado por tarea"],
+    "offlineSupport": false,
+    "transactionalIntegrity": true,
+    "consistencyStrategy": "Consistencia fuerte en el registro de trazas y aprobaciones",
+    "aiUsage": {
+      "enabled": true,
+      "provider": "proveedor externo de inferencia",
+      "purpose": "Análisis de documentación técnica y redacción de hallazgos, siempre con fuentes citadas",
+      "automatedDecisions": false,
+      "budgetControls": true,
+      "tokensPerOperation": 45000,
+      "operationsPerDay": 400
+    }
+  },
+  "security": {
+    "mfa": true,
+    "encryptionAtRest": true,
+    "encryptionInTransit": true,
+    "rowLevelAuthorization": true,
+    "auditTrail": true,
+    "secretsManagement": true,
+    "threatModel": true
+  },
+  "compliance": {
+    "jurisdictions": ["Chile"],
+    "regulations": ["Protección de datos personales que pudieran aparecer en la documentación interna indexada"],
+    "standards": ["ISO/IEC 42001", "ISO/IEC 23894", "OWASP Top 10 para aplicaciones con modelos de lenguaje", "Model Context Protocol"],
+    "dataResidency": "",
+    "auditRequirements": "Reconstrucción completa de por qué el sistema produjo cada conclusión, con las fuentes recuperadas."
+  },
+  "capacity": {
+    "registeredUsers": 120,
+    "dau": 60,
+    "mau": 110,
+    "peakConcurrentUsers": 20,
+    "sessionsPerUserPerDay": 2,
+    "requestsPerSession": 30,
+    "avgSessionMinutes": 20,
+    "readWriteRatio": 4,
+    "avgRecordKb": 12,
+    "organizations": 1,
+    "regions": ["sa-east"],
+    "peakFactor": 3,
+    "backgroundJobsPerDay": 1200,
+    "retentionMonths": 36,
+    "slaAvailability": 99.5,
+    "latencyTargetMs": 3000,
+    "latencyPercentile": 95,
+    "criticalResource": "Cuota de inferencia del proveedor",
+    "egressPerRequestKb": 30
+  },
+  "evolution": {
+    "horizon": { "unit": "months", "value": 24, "openEnded": false },
+    "growthModel": "accelerated",
+    "growthRatePercent": 60,
+    "scenarios": {
+      "conservative": { "ratePercent": 20, "note": "Uso acotado al equipo de arquitectura." },
+      "expected": { "ratePercent": 60, "note": "Adopción por los equipos de ingeniería." },
+      "demanding": { "ratePercent": 150, "note": "Adopción transversal con tareas automáticas programadas." }
+    },
+    "milestones": [
+      { "id": "m1", "name": "Primera evaluación comparativa entre versiones de plantilla", "kind": "time", "atMonth": 3 },
+      { "id": "m2", "name": "Presupuesto de tokens alcanzado en producción", "kind": "condition", "condition": "El consumo mensual de tokens supera el presupuesto declarado" },
+      { "id": "m3", "name": "Cambio de versión de modelo del proveedor", "kind": "condition", "condition": "El proveedor publica una versión nueva que altera el comportamiento" }
+    ],
+    "plannedChanges": ["Inferencia local para datos de mayor sensibilidad", "Más especialistas", "Programación automática de tareas recurrentes"],
+    "reviewFrequencyMonths": 3
+  },
+  "quality": {
+    "priorities": { "security": 5, "privacy": 5, "observability": 5, "costEfficiency": 5, "reliability": 4, "testability": 4, "evolvability": 4 },
+    "accessibilityTarget": "WCAG 2.2 nivel AA",
+    "rpoMinutes": 60,
+    "rtoMinutes": 240,
+    "testStrategy": [
+      "unitarias del orquestador y de los límites de presupuesto",
+      "pruebas de inyección de instrucciones en el contenido recuperado",
+      "verificación de que la recuperación respeta los permisos del usuario",
+      "conjuntos de evaluación con reporte de variabilidad",
+      "pruebas de corte por presupuesto y por número de iteraciones"
+    ]
+  },
+  "operations": {
+    "teamSize": 5,
+    "onCall": false,
+    "observability": true,
+    "loadTesting": false,
+    "environments": ["desarrollo", "pruebas", "producción"],
+    "supportHours": "Horario de oficina",
+    "monthlyBudgetUsd": 3500,
+    "unitCosts": { "vcpuMonthUsd": 20, "gbRamMonthUsd": 4.5, "gbStorageMonthUsd": 0.1, "gbEgressUsd": 0.08, "perMillionTokensUsd": 6 }
+  },
+  "deliverables": { "prompts": [], "includeSkill": true, "includeAgents": true, "includeHarness": true, "includeMcp": true },
+  "decisions": {
+    "assumptions": [
+      "El consumo declarado de tokens por operación es un piso: el real depende del contexto efectivo y de los reintentos.",
+      "Ninguna acción con efecto externo se ejecuta sin aprobación humana."
+    ],
+    "pending": [
+      "Definir el umbral de aceptación de los conjuntos de evaluación antes de poner un especialista en producción.",
+      "Decidir qué documentación queda fuera del índice por sensibilidad."
+    ]
+  },
+  "notes": "Escenario de aceptación G."
+}

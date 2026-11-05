@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "sas.config.v1",
+  "meta": { "title": "Comercio electrónico con demanda estacional", "configVersion": "0.1.0" },
+  "identity": {
+    "name": "Tienda Digital Meridiano",
+    "purpose": "Vender en línea con picos estacionales fuertes, múltiples medios de pago, inventario compartido con tiendas físicas y gran volumen de transacciones.",
+    "mode": "new",
+    "audience": "Compradores finales, equipo comercial, bodega y atención al cliente",
+    "owner": "Gerencia de Comercio Digital"
+  },
+  "classification": {
+    "systemTypes": ["ecommerce", "oms", "pim", "payment-gateway", "wms", "helpdesk"],
+    "sectors": ["enterprise"],
+    "serviceModel": ["saas"],
+    "architecture": ["modular-monolith", "event-driven"],
+    "deployment": ["cloud", "edge"],
+    "tenancy": "single-tenant",
+    "platforms": ["web", "pwa", "android", "ios"],
+    "licensing": "proprietary",
+    "monetization": ["transaction-fee"],
+    "dataSensitivity": ["personal", "financial", "cardholder"],
+    "integrationStyle": ["rest", "webhooks", "message-queue", "cdc"]
+  },
+  "functional": {
+    "capabilities": [
+      "Catálogo con búsqueda y filtros",
+      "Carrito y pago con varios medios locales",
+      "Promesa de inventario con reserva temporal",
+      "Promociones y cupones con reglas de acumulación",
+      "Seguimiento de pedido y devoluciones",
+      "Enrutamiento de despacho entre bodega y tiendas"
+    ],
+    "processes": ["Navegación a compra", "Pago a confirmación", "Pedido a despacho", "Devolución a reembolso"],
+    "roles": [
+      { "name": "Comprador", "permissions": ["comprar", "ver sus pedidos", "solicitar devolución"] },
+      { "name": "Atención al cliente", "permissions": ["ver pedidos", "emitir notas de crédito hasta el límite declarado"] },
+      { "name": "Administrador de catálogo", "permissions": ["publicar productos", "configurar promociones"] }
+    ],
+    "organizations": { "model": "single", "count": 1, "usersPerOrg": 0 },
+    "integrations": [
+      { "name": "Pasarela de pago", "direction": "bidireccional", "style": "rest", "criticality": "crítica", "notes": "Si no responde, el checkout ofrece otro medio de pago; nunca se confirma un pedido sin confirmación de pago conciliada." },
+      { "name": "Operadores de despacho", "direction": "bidireccional", "style": "webhooks", "criticality": "alta", "notes": "Entrega al menos una vez; los estados duplicados se ignoran por identificador de evento." },
+      { "name": "ERP de inventario y facturación", "direction": "bidireccional", "style": "cdc", "criticality": "alta", "notes": "Si se retrasa, la promesa de inventario usa el último valor conocido con margen de seguridad." }
+    ]
+  },
+  "technology": {
+    "languages": ["TypeScript"],
+    "frameworks": ["Node.js", "React"],
+    "databases": [
+      { "engine": "PostgreSQL", "purpose": "pedidos, pagos e inventario reservado" },
+      { "engine": "Redis", "purpose": "carrito, sesiones y caché de catálogo" },
+      { "engine": "OpenSearch", "purpose": "búsqueda de catálogo" }
+    ],
+    "infrastructure": ["Kubernetes", "CDN", "Cola de mensajes"],
+    "offlineSupport": false,
+    "transactionalIntegrity": true,
+    "consistencyStrategy": "Consistencia fuerte en pago y reserva de inventario; eventual en catálogo y búsqueda"
+  },
+  "security": {
+    "mfa": true,
+    "encryptionAtRest": true,
+    "encryptionInTransit": true,
+    "rowLevelAuthorization": true,
+    "auditTrail": true,
+    "secretsManagement": true,
+    "threatModel": true
+  },
+  "compliance": {
+    "jurisdictions": ["Chile"],
+    "regulations": ["Derechos del consumidor en ventas a distancia", "Protección de datos personales de compradores", "Normativa de documento tributario electrónico"],
+    "standards": ["PCI DSS", "WCAG 2.2 AA", "schema.org"],
+    "dataResidency": "",
+    "auditRequirements": "Trazabilidad de cada intento de pago, su resultado y su conciliación."
+  },
+  "capacity": {
+    "registeredUsers": 1200000,
+    "dau": 90000,
+    "mau": 600000,
+    "peakConcurrentUsers": 18000,
+    "sessionsPerUserPerDay": 1.4,
+    "requestsPerSession": 70,
+    "avgSessionMinutes": 9,
+    "readWriteRatio": 25,
+    "avgRecordKb": 2,
+    "filesPerUserPerMonth": 0,
+    "avgFileMb": 0,
+    "organizations": 1,
+    "regions": ["sa-east"],
+    "peakFactor": 5,
+    "seasonalPeakFactor": 8,
+    "backgroundJobsPerDay": 900000,
+    "retentionMonths": 72,
+    "slaAvailability": 99.95,
+    "latencyTargetMs": 250,
+    "latencyPercentile": 95,
+    "criticalResource": "Última unidad de stock disponible",
+    "egressPerRequestKb": 80
+  },
+  "evolution": {
+    "horizon": { "unit": "months", "value": 48, "openEnded": false },
+    "growthModel": "seasonal",
+    "growthRatePercent": 25,
+    "scenarios": {
+      "conservative": { "ratePercent": 8, "note": "Mercado maduro, sin nuevas categorías." },
+      "expected": { "ratePercent": 25, "note": "Crecimiento con nuevas categorías de producto." },
+      "demanding": { "ratePercent": 60, "note": "Apertura de marketplace con vendedores externos." }
+    },
+    "milestones": [
+      { "id": "m1", "name": "Primera temporada alta en el sistema nuevo", "kind": "time", "atMonth": 11 },
+      { "id": "m2", "name": "Separación del servicio de búsqueda", "kind": "condition", "condition": "La búsqueda consume más del 40% de la capacidad de lectura" },
+      { "id": "m3", "name": "Marketplace de terceros", "kind": "condition", "condition": "Se decide incorporar vendedores externos" }
+    ],
+    "plannedChanges": ["Marketplace con vendedores externos", "Pago en más países", "Recomendación personalizada"],
+    "reviewFrequencyMonths": 3
+  },
+  "quality": {
+    "priorities": { "availability": 5, "performance": 5, "security": 5, "costEfficiency": 4, "observability": 4, "reliability": 5, "accessibility": 4 },
+    "accessibilityTarget": "WCAG 2.2 nivel AA en catálogo y checkout",
+    "rpoMinutes": 5,
+    "rtoMinutes": 30,
+    "testStrategy": ["unitarias", "integración", "contrato con la pasarela", "carga de temporada alta", "saturación del checkout", "idempotencia de pagos"]
+  },
+  "operations": {
+    "teamSize": 16,
+    "onCall": true,
+    "observability": true,
+    "loadTesting": true,
+    "environments": ["desarrollo", "pruebas", "preproducción", "producción"],
+    "supportHours": "Permanente",
+    "monthlyBudgetUsd": 18000,
+    "unitCosts": { "vcpuMonthUsd": 20, "gbRamMonthUsd": 4.5, "gbStorageMonthUsd": 0.1, "gbEgressUsd": 0.085, "perMillionTokensUsd": 0 }
+  },
+  "deliverables": { "prompts": [], "includeSkill": false, "includeAgents": false, "includeHarness": false, "includeMcp": false },
+  "decisions": {
+    "assumptions": ["La tokenización del medio de pago queda del lado de la pasarela para reducir el alcance de PCI DSS."],
+    "pending": ["Definir la política de sobreventa aceptable por categoría.", "Definir el margen de seguridad de la promesa de inventario."]
+  },
+  "notes": "Escenario de aceptación D."
+}

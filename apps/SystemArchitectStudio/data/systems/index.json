@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "sas.catalog-index.v1",
+  "catalogVersion": "0.1.0",
+  "updatedAt": "2026-11-04",
+  "note": "Para agregar una familia nueva: cree el archivo data/systems/<id>.json con la estructura { family, systems } y añada su nombre a 'files'. El loader y las pruebas de integridad la recogen sin cambios de código.",
+  "files": [
+    "enterprise.json",
+    "automation.json",
+    "education.json",
+    "finance.json",
+    "health.json",
+    "industry.json",
+    "science.json",
+    "government.json",
+    "software.json",
+    "ai.json",
+    "security.json",
+    "other.json"
+  ]
+}
